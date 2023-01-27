@@ -7,6 +7,7 @@ public class ReviewDTO {
 	private int idx;
 	private int idx_member;
 	private String moimname;
+	private String writer;
 	private String local;
 	private String hobby;
 	private String subject;
@@ -18,12 +19,13 @@ public class ReviewDTO {
 		super();
 	}
 
-	public ReviewDTO(int idx, int idx_member, String moimname, String local, String hobby, String subject,
-			String content, String img, Date writedate) {
+	public ReviewDTO(int idx, int idx_member, String moimname, String writer, String local, String hobby,
+			String subject, String content, String img, Date writedate) {
 		super();
 		this.idx = idx;
 		this.idx_member = idx_member;
 		this.moimname = moimname;
+		this.writer = writer;
 		this.local = local;
 		this.hobby = hobby;
 		this.subject = subject;
@@ -54,6 +56,14 @@ public class ReviewDTO {
 
 	public void setMoimname(String moimname) {
 		this.moimname = moimname;
+	}
+
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 
 	public String getLocal() {
@@ -100,10 +110,9 @@ public class ReviewDTO {
 		return writedate;
 	}
 
-	public void setWirtedate(Date wirtedate) {
-		this.writedate = wirtedate;
+	public void setWritedate(Date writedate) {
+		this.writedate = writedate;
 	}
-	
-	
+
 	
 }

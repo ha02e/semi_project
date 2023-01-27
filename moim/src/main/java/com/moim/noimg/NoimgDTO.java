@@ -8,6 +8,7 @@ public class NoimgDTO {
 	private int idx_member;
 	private int idx_info;
 	private int category;
+	private String writer;
 	private String subject;
 	private String content;
 	private Date writedate;
@@ -18,20 +19,31 @@ public class NoimgDTO {
 	public NoimgDTO() {
 		super();
 	}
+	
 
-	public NoimgDTO(int idx, int idx_member, int idx_info, int category, String subject, String content, Date writedate,
-			int ref, int lev, int sunbun) {
+	public NoimgDTO(int idx, int idx_member, int idx_info, int category, String writer, String subject, String content,
+			Date writedate, int ref, int lev, int sunbun) {
 		super();
 		this.idx = idx;
 		this.idx_member = idx_member;
 		this.idx_info = idx_info;
 		this.category = category;
+		this.writer = writer;
 		this.subject = subject;
 		this.content = content;
 		this.writedate = writedate;
 		this.ref = ref;
 		this.lev = lev;
 		this.sunbun = sunbun;
+	}
+
+
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 
 	public int getIdx() {
