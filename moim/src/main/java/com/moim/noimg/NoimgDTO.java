@@ -10,7 +10,7 @@ public class NoimgDTO {
 	private int category;
 	private String subject;
 	private String content;
-	private Date wirtedate;
+	private Date writedate;
 	private int ref;
 	private int lev;
 	private int sunbun;
@@ -19,7 +19,7 @@ public class NoimgDTO {
 		super();
 	}
 
-	public NoimgDTO(int idx, int idx_member, int idx_info, int category, String subject, String content, Date wirtedate,
+	public NoimgDTO(int idx, int idx_member, int idx_info, int category, String subject, String content, Date writedate,
 			int ref, int lev, int sunbun) {
 		super();
 		this.idx = idx;
@@ -28,7 +28,7 @@ public class NoimgDTO {
 		this.category = category;
 		this.subject = subject;
 		this.content = content;
-		this.wirtedate = wirtedate;
+		this.writedate = writedate;
 		this.ref = ref;
 		this.lev = lev;
 		this.sunbun = sunbun;
@@ -82,12 +82,12 @@ public class NoimgDTO {
 		this.content = content;
 	}
 
-	public Date getWirtedate() {
-		return wirtedate;
+	public Date getWritedate() {
+		return writedate;
 	}
 
-	public void setWirtedate(Date wirtedate) {
-		this.wirtedate = wirtedate;
+	public void setWritedate(Date writedate) {
+		this.writedate = writedate;
 	}
 
 	public int getRef() {

@@ -12,14 +12,14 @@ public class ReviewDTO {
 	private String subject;
 	private String content;
 	private String img;
-	private Date wirtedate;
+	private Date writedate;
 	
 	public ReviewDTO() {
 		super();
 	}
 
 	public ReviewDTO(int idx, int idx_member, String moimname, String local, String hobby, String subject,
-			String content, String img, Date wirtedate) {
+			String content, String img, Date writedate) {
 		super();
 		this.idx = idx;
 		this.idx_member = idx_member;
@@ -29,7 +29,7 @@ public class ReviewDTO {
 		this.subject = subject;
 		this.content = content;
 		this.img = img;
-		this.wirtedate = wirtedate;
+		this.writedate = writedate;
 	}
 
 	public int getIdx() {
@@ -96,12 +96,12 @@ public class ReviewDTO {
 		this.img = img;
 	}
 
-	public Date getWirtedate() {
-		return wirtedate;
+	public Date getWritedate() {
+		return writedate;
 	}
 
 	public void setWirtedate(Date wirtedate) {
-		this.wirtedate = wirtedate;
+		this.writedate = wirtedate;
 	}
 	
 	
