@@ -1,50 +1,74 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<jsp:useBean id="rdto" class="com.moim.review.ReviewDTO" scope="page"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-section{
-margin:0px auto;
+body {
+	text-align: center;
+	margin-right: 100px auto;
 }
-table{
-	border:5px double dark;
-	text-align : center;
+
+table {
+	border: 5px double dark;
+	text-align: center;
+	margin: 0px auto;
 }
 </style>
 </head>
 <body>
-	<section>
-		<article>
-			<table>
-				<tr>
-					<th>Á¦¸ñ</th>
-					<td><input type="text" name="subject"></td>
-					<td rowspan ="4" width="300px">
-					ÀÌ¹ÌÁö
-					<input type ="">
-					</td>
-				</tr>
-				<tr>
-					<th>¸ğÀÓÀÌ¸§</th>
-					<td><input type="text" name="moimname"></td>
-				</tr>
-				<tr>
-					<th>Áö¿ª</th>
-					<td><input type="text" name="local"></td>
-				</tr>
-				<tr>
-					<th>³»¿ë</th>
-					<td><input type="text" name="content"></td>
-				</tr>
-			</table>
+<%-- <% 
+String detail="";
+if(request.getParameter("detail")!=null){
+detail= request.getParameter("detail");
+%> --%>
+	<%@include file="/header.jsp"%>
+	<form name="write" action="writeReview_ok.jsp" method="post">
+		<section>
+			<article>
+				<table>
+					<tr>
+						<th>ì œëª©</th>
+						<td><input type="text" name="subject"></td>
+						
+						<td rowspan="4" width="300px">ì´ë¯¸ì§€<br> <input
+							type="button" value="ì‚¬ì§„ ì—…ë¡œë“œ"><br> <input
+							type="submit" value="ê¸€ì“°ê¸°">
+						</td>
 
-		</article>
-	</section>      
+					</tr>
+					<tr>
+						<th>ëª¨ì„ì´ë¦„</th>
+						<td><input type="text" name="moimname" value="ê°’ê°€ì ¸ì˜¤ê¸°"></td>
+					</tr>
+					<tr>
+						<th>ì§€ì—­</th>
+						<td><input type="text" name="local" value="ê°’ê°€ì ¸ì˜¤ê¸°"></td>
+					</tr>
 
 
+					<tr>
+						<th>ë‚´ìš©</th>
+						<td><input type="text" name="content" value="ê°’ê°€ì ¸ì˜¤ê¸°"></td>
+					</tr>
+					<tr>
+					<input type = "hidden" name="idx_memeber" >;
+					<input type = "hidden" name="hobby">;
+					<input type = "hidden" name="writer">;
+					<input type = "hidden" name="writedate">;
+					<input type = "hidden" name="ref">;
+					<input type = "hidden" name="sunbun">;
+					</tr>
+				</table>
 
+			</article>
+		</section>
+	</form>
+
+
+	<%@include file="/footer.jsp"%>
 </body>
 </html>

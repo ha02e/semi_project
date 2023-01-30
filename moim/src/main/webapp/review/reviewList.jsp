@@ -1,87 +1,118 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-
 	
 </script>
 <style>
-section div{
-margin : 0px auto;
+div {
+	text-align: center;
+	margin: 0px auto;
 }
-table{
+
+table {
 	border-top: 3px;
 	border-left: 3px double dark;
 	border-right: 3px solid dark;
 	border-bottom: 3px solid dark;
-	
 	text-align: center;
-	margin : 0px auto;
-	width : 600px;
+	margin: 0px auto;
+	width: 600px;
 }
-thead{
-	margin-bottom : 70px;
-	margin : 0px auto;
-	border-pacing : 70px;
-}
-tfoot{
 
+thead {
+	margin-bottom: 70px;
+	margin: 0px auto;
+	border-pacing: 70px;
 }
-div{
-margin:0px auto;
-texxt-align : center;
+
+tfoot {
+	
+}
+
+div {
+	margin: 0px auto;
+	texxt-align: center;
 }
 </style>
 </head>
 <body>
+	<%@include file="/header.jsp"%>
 	<section>
 		<article>
-		<div>
-				<select name="category" >
-					<option value="Ä«Å×°í¸®">Ä«Å×°í¸®</option>
-					<option value="¿îµ¿">¿îµ¿</option>
-					<option value="°ÔÀÓ">°ÔÀÓ</option>
-					<option value="¿©Çà">¿©Çà</option>
-					<option value="°ø¿¬">°ø¿¬</option>
-					<option value="¿ä¸®">¿ä¸®</option>
-					<option value="À½¾Ç">À½¾Ç</option>
-					<option value="ºÀ»çÈ°µ¿">ºÀ»çÈ°µ¿</option>
-					<option value="´í½º">´í½º</option>
-				</select>
-				<input type="text" name="search">
-				<input type="button" onclick="show()" value="°Ë»ö">
-			</div>	
-		<table>
+			<div>
+				<select name="category">
+					<option value="ì¹´í…Œê³ ë¦¬">ì¹´í…Œê³ ë¦¬</option>
+					<option value="ìš´ë™">ìš´ë™</option>
+					<option value="ê²Œì„">ê²Œì„</option>
+					<option value="ì—¬í–‰">ì—¬í–‰</option>
+					<option value="ê³µì—°">ê³µì—°</option>
+					<option value="ìš”ë¦¬">ìš”ë¦¬</option>
+					<option value="ìŒì•…">ìŒì•…</option>
+					<option value="ë´‰ì‚¬í™œë™">ë´‰ì‚¬í™œë™</option>
+					<option value="ëŒ„ìŠ¤">ëŒ„ìŠ¤</option>
+				</select> <input type="text" name="search"> <input type="button"
+					onclick="show()" value="ê²€ìƒ‰">
+			</div>
+			<table>
 
-			<tfoot>
-				<tr>
-				<td></td>
-				<td></td>
-					<td>
-						<input type="button" onclick="location.href='writeReview.jsp'" value="ÈÄ±â¾²·¯°¡±â">
-					</td>
-				</tr>
-			</tfoot>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td></td>
+						<td><input type="button"
+							onclick="location.href='writeReview.jsp'" value="í›„ê¸°ì“°ëŸ¬ê°€ê¸°">
+						</td>
+					</tr>
+				</tfoot>
 
-			<thead>			
-				<tr>
-					<th>Ä«Å×°í¸®</th>
-					<th>¸ğÀÓÀÌ¸§</th>
-					<th>Á¦¸ñ</th>
-				</tr>
-			</thead>
-			<tbody>
-				<th>1</th>
-				<th>2</th>
-				<th>3</th>
-			</tbody>
+				<thead>
+					<tr>
+						<th>ì¹´í…Œê³ ë¦¬</th>
+						<th>ëª¨ì„ì´ë¦„</th>
+						<th>ì œëª©</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%-- 
+					
+					<%
+					ArrayList<BbsDTO> arr = bdao.bbsList(listSize, cp);
+					if (arr == null || arr.size() == 0) {
+					%>
+
+					<tr>
+						<td colspan="5">ë“±ë¡ëœ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤</td>
+					</tr>
+					<%
+					} else {
+					for (int i = 0; i < arr.size(); i++) {
+					%>
+
+					<tr>
+						<td><%=arr.get(i).getIdx()%></td>
+						<td><a href="bbsContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject()%></a>
+						</td>
+						<!-- ? ë‹¤ìŒì€ í‚¤ì™€ ê°’ì´ë‹¤ -->
+						<td><%=arr.get(i).getWriter()%></td>
+						<td><%=arr.get(i).getWritedate()%></td>
+						<td><%=arr.get(i).getReadnum()%></td>
+					</tr>
+
+					<%
+					}
+					}
+					%>
+ --%>
+				</tbody>
 
 			</table>
 		</article>
 	</section>
+	<%@include file="/footer.jsp"%>
 </body>
 </html>
