@@ -1,6 +1,7 @@
 package com.moim.member;
 
 import java.sql.*;
+import java.util.*;
 
 public class MemberDAO {
 	
