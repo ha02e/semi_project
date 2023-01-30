@@ -1,6 +1,7 @@
 package com.moim.noimg;
 
 import java.sql.*;
+import java.util.*;
 
 public class NoimgDAO {
 	

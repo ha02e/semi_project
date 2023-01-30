@@ -1,6 +1,7 @@
 package com.moim.info;
 
 import java.sql.*;
+import java.util.*;
 
 public class InfoDAO {
 	Connection conn;
@@ -10,4 +11,6 @@ public class InfoDAO {
 	public InfoDAO() {
 		// TODO Auto-generated constructor stub
 	}
+	
+
 }

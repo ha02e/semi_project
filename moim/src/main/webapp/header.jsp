@@ -58,7 +58,7 @@ body{
 <ul class="navbar_ul">
 <li><img src="/webTest/img/logo.png" alt="로고"></li>
 <li>회사소개</li>
-<li>모임하기</li>
+<li><a href="/moim/info/infoList.jsp">모임하기</a></li>
 <li>후기보기</li>
 <li>공지사항</li>
 </ul>
