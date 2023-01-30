@@ -1,16 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.moim.info.*" %>
+<jsp:useBean id="idao" class="com.moim.info.InfoDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<%
-String detail="";
-if(request.getParameter("detail")!=null){
-detail=request.getParameter("detail");
-}
-%>
+<title>모임게시판</title>
 <style>
 div table{
 	margin: 0px 100px;
@@ -74,6 +71,16 @@ input[type="checkbox"] {
   }
 </style>
 </head>
+<%
+String detail="";
+if(request.getParameter("detail")!=null){
+detail=request.getParameter("detail");
+}
+String hobby="total";
+if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals("")){
+	hobby=(String)session.getAttribute("hobby");
+}
+%>
 <body>
 <%@include file="/header.jsp" %>
 <section>
@@ -95,7 +102,7 @@ input[type="checkbox"] {
 						<td><input type="checkbox" name="hobby" value="공연">공연</td>
 						<td><input type="checkbox" name="hobby" value="요리">요리</td>
 						<td><input type="checkbox" name="hobby" value="음악">음악</td>
-						<td><input type="checkbox" name="hobby" value="봉사활동">봉사활동</td>
+						<td><input type="checkbox" name="hobby" value="봉사">봉사</td>
 						<td><input type="checkbox" name="hobby" value="댄스">댄스</td>
 					</tr>
 					<tr>
@@ -107,15 +114,15 @@ input[type="checkbox"] {
 							<option value="경기도">경기도</option>
 							<option value="인천">인천</option>
 							<option value="강원도">강원도</option>
-							<option value="충청북도">충청북도</option>
-							<option value="충청남도">충청남도</option>
+							<option value="충북">충북</option>
+							<option value="충남">충남</option>
 							<option value="대전">대전</option>
 							<option value="세종">세종</option>
-							<option value="전라북도">전라북도</option>
-							<option value="전라남도">전라남도</option>
+							<option value="전북">전북</option>
+							<option value="전남">전남</option>
 							<option value="광주">광주</option>
-							<option value="경상북도">경상북도</option>
-							<option value="경상남도">경상남도</option>
+							<option value="경북">경북</option>
+							<option value="경남">경남</option>
 							<option value="대구">대구</option>
 							<option value="울산">울산</option>
 							<option value="부산">부산</option>
@@ -136,27 +143,39 @@ input[type="checkbox"] {
 	<article>
 	<h3>맞춤 추천</h3>
 		<div>
-		<%for(int i=0;i<=1;i++){ %>
+		<%
+		ArrayList<InfoDTO> fitarr=idao.getList(hobby);
+		if(fitarr!=null){
+		for(int i=0;i<fitarr.size()&&i<=1;i++){ %>
 			<table class="infotab">
 				<tr>
 					<td></td>
 				</tr>
 			</table>
 			<ul>
-				<li>제목</li>
-				<li>지역</li>
-				<li>카테고리</li>
-				<li>인원</li>
+				<li><a href="infoContent.jsp?idx=<%=fitarr.get(i).getIdx()%>"><%=fitarr.get(i).getMoimname() %></a></li>
+				<li><%=fitarr.get(i).getLocal() %></li>
+				<li><%=fitarr.get(i).getHobby() %></li>
+				<li><%=fitarr.get(i).getNowmem() %>/<%=fitarr.get(i).getMaxmem() %></li>
 			</ul>
-			<%} %>
+			<%
+		}
+		}else{%>
+			<h3>모임이 없습니다.</h3>
+		<%} %>
 		</div>
 	</article>
 	<hr>
 	<article>
 		<h3 id="infoh3">현재 모집중인 소모임</h3>
-		<h3 id="infoh32">더보기</h3>
+		<h3 id="infoh32"><a href="infoSearch.jsp">더보기</a></h3>
 		<div id="infodiv2">
-		<%for(int i=1;i<=4;i++){ %>
+		<%
+		ArrayList<InfoDTO> needarr=idao.getList("total");
+		if(needarr==null||needarr.size()==0){
+			%><h2>현재 모집중인 모임이 없습니다</h2><%
+		}else{
+		for(int i=0;i<needarr.size()&&i<4;i++){ %>
 			<table class="infotab" id="infotab">
 				<tr>
 					<td></td>
@@ -170,15 +189,15 @@ input[type="checkbox"] {
 				<tr>
 					<td>
 					<ul>
-						<li>제목</li>
-						<li>지역</li>
-						<li>카테고리</li>
-						<li>인원</li>
+						<li><a href="infoContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a></li>
+						<li><%=needarr.get(i).getLocal() %></li>
+						<li><%=needarr.get(i).getHobby() %></li>
+						<li><%=needarr.get(i).getNowmem() %>/<%=needarr.get(i).getMaxmem() %></li>
 					</ul>
 					</td>
 				</tr>
 			</table>
-		<%} %>
+		<%}} %>
 		</div>
 		<hr>
 		<div id="buttondiv">
