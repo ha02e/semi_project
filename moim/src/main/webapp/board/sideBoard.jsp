@@ -16,6 +16,11 @@
     border-radius: 20px;
     padding: 10px;
     box-sizing: 500px;
+	float:left;
+	margin:left;
+}
+ul{
+	list-style: none;
 }
 </style>
 </head>
@@ -25,9 +30,9 @@
 	<img src="" alt="제목이미지">
 	<ul>
 	<li>~님</li>
-	<li><a href="" class="item"><div><h2>내 정보 변경</h2></div></a></li>
-	<li><a href="" class="item"><div><h2>내가 쓴 글</h2></div></a></li>
-	<li><a href="" class="item"><div><h2>참여중인 모임</h2></div></a></li>
+	<li><a href="myInfo.jsp" class="item"><h3>내 정보 변경</h3></a></li>
+	<li><a href="myWriting.jsp" class="item"><h3>내가 쓴 글</h3></a></li>
+	<li><a href="myMoim.jsp" class="item"><h3>참여중인 모임</h3></a></li>
 	</ul>
 </div>
 </section>
