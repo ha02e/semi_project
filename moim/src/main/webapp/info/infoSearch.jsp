@@ -1,5 +1,9 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.moim.info.*" %>
+<jsp:useBean id="idao" class="com.moim.info.InfoDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,14 +11,39 @@
 <title>Insert title here</title>
 </head>
 <%
-String str[]=null;
+String hobby[]=null;
 if(request.getParameterValues("hobby")!=null){
-str=request.getParameterValues("hobby");
+hobby=request.getParameterValues("hobby");
 }
 String detail="";
 if(request.getParameter("detail")!=null){
 	detail=request.getParameter("detail");
 }
+String keyword=null;
+if(request.getParameter("keyword")!=null){
+	keyword=request.getParameter("keyword");
+}
+String local="전체";
+if(request.getParameter("local")!=null){
+	local=request.getParameter("local");
+}
+%>
+<%
+int totalCnt=idao.getTotalCnt();//DB
+int listSize=5;//내맘
+int pageSize=5;//내맘
+
+String cp_s=request.getParameter("cp");
+if(cp_s==null||cp_s.equals("")){
+	cp_s="1";
+}
+int cp=Integer.parseInt(cp_s);//핵심요소 사용자로부터
+
+int totalPage=totalCnt/listSize+1;
+if(totalCnt%listSize==0)totalPage--;
+
+int userGroup=cp/pageSize;
+if(cp%pageSize==0)userGroup--;
 %>
 <body>
 <%@include file="/header.jsp" %>
@@ -22,7 +51,7 @@ if(request.getParameter("detail")!=null){
 	<article>
 		<form name="infoSearch" action="infoSearch.jsp">
 			<input type="submit" value="검색">
-			<input type="text" name="moimname">
+			<input type="text" name="keyword">
 			<%if(detail.equals("on")){ %>
 			<input type="button" value="세부 검색" onclick="javascript:location.href='infoSearch.jsp'">
 				<div id="detaildiv">
@@ -37,7 +66,7 @@ if(request.getParameter("detail")!=null){
 						<td><input type="checkbox" name="hobby" value="공연">공연</td>
 						<td><input type="checkbox" name="hobby" value="요리">요리</td>
 						<td><input type="checkbox" name="hobby" value="음악">음악</td>
-						<td><input type="checkbox" name="hobby" value="봉사활동">봉사활동</td>
+						<td><input type="checkbox" name="hobby" value="봉사">봉사</td>
 						<td><input type="checkbox" name="hobby" value="댄스">댄스</td>
 					</tr>
 					<tr>
@@ -46,18 +75,18 @@ if(request.getParameter("detail")!=null){
 						<select name="local">
 							<option value="전체" selected>전체</option>
 							<option value="서울">서울</option>
-							<option value="경기도">경기도</option>
+							<option value="경기">경기</option>
 							<option value="인천">인천</option>
-							<option value="강원도">강원도</option>
-							<option value="충청북도">충청북도</option>
-							<option value="충청남도">충청남도</option>
+							<option value="강원">강원</option>
+							<option value="충북도">충북</option>
+							<option value="충남">충남</option>
 							<option value="대전">대전</option>
 							<option value="세종">세종</option>
-							<option value="전라북도">전라북도</option>
-							<option value="전라남도">전라남도</option>
+							<option value="전북">전북</option>
+							<option value="전남">전남</option>
 							<option value="광주">광주</option>
-							<option value="경상북도">경상북도</option>
-							<option value="경상남도">경상남도</option>
+							<option value="경북">경북</option>
+							<option value="경남">경남</option>
 							<option value="대구">대구</option>
 							<option value="울산">울산</option>
 							<option value="부산">부산</option>
@@ -76,12 +105,44 @@ if(request.getParameter("detail")!=null){
 	</article>
 	<article>
 		<table>
+	<%
+		//if(keyword==null&&hobby==null&&local.equals("전체")){	
+			ArrayList<InfoDTO> arr=idao.searchInfo(keyword);
+			if(arr!=null){
+				for(int i=0;i<arr.size();i++){
+	%>
 			<tr>
 				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td><%=arr.get(i).getMoimname() %></td>
+				<td><%=arr.get(i).getLocal() %></td>
+				<td><%=arr.get(i).getHobby() %></td>
+				<td><%=arr.get(i).getNowmem() %>/<%=arr.get(i).getMaxmem() %></td>
 			</tr>
+	<%			}		
+			//}
+		} %>
+		<tfoot>
+				<tr>
+					<td colspan="4" align="center">
+						<%
+							if(userGroup!=0){
+								%><a href="infoSearch.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+							}
+							%>
+							<%
+							for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
+								%>&nbsp;&nbsp;<a href="infoSearch.jsp?cp=<%=i%>"><%=i%></a>&nbsp;&nbsp;<%
+								if(i==totalPage)break;
+							}
+							%>
+							<%
+							if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
+								%><a href="infoSearch.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+							}
+						%>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
 	</article>
 	<hr>

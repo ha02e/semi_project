@@ -87,7 +87,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 	<article>
 		<form name="infoSearch" action="infoSearch.jsp">
 			<input type="submit" value="검색">
-			<input type="text" name="moimname">
+			<input type="text" name="keyword">
 			<%if(detail.equals("on")){ %>
 			<input type="button" value="세부 검색" onclick="javascript:location.href='infoList.jsp'">
 				<div id="detaildiv">
@@ -111,9 +111,9 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 						<select name="local">
 							<option value="전체" selected>전체</option>
 							<option value="서울">서울</option>
-							<option value="경기도">경기도</option>
+							<option value="경기">경기</option>
 							<option value="인천">인천</option>
-							<option value="강원도">강원도</option>
+							<option value="강원">강원</option>
 							<option value="충북">충북</option>
 							<option value="충남">충남</option>
 							<option value="대전">대전</option>
@@ -201,7 +201,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		</div>
 		<hr>
 		<div id="buttondiv">
-		<input type="button" value="모임만들기">
+		<input type="button" value="모임만들기" onclick="javascript:location.href='moimwrite.jsp'">
 		</div>
 	</article>
 </section>
