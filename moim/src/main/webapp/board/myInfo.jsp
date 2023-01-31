@@ -87,8 +87,6 @@ MemberDTO dto=mdao.getMem(idx);
 			<option value="댄스">댄스</option>
 			</select>
 			</li>
-			<li><label>가입날짜:</label>
-			<input type="text" value="<%=dto.getJoindate()%>"></li>
 			</ul>
 		
 		<div>

@@ -16,7 +16,7 @@ public class MemberDAO {
 	public MemberDTO getMem(int idx) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_member where idx=?";
+			String sql="select * from moim_member where moim_member_idx=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			rs=ps.executeQuery();
