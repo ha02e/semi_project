@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.util.*"%>
+<%@page import="java.sql.*"%>
+<%@page import="com.moim.review.*"%>
+
+<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,10 +45,30 @@ div {
 }
 </style>
 </head>
+<%
+int totalCnt = rdao.getTotalCnt(); // db로부터 가져와야하는 정보
+int listSize = 10;//내 맘
+int pageSize = 5;//내 맘
+String cp_s = request.getParameter("cp");
+if (cp_s == null || cp_s.equals("")) {
+	cp_s = "1";
+}
+int cp = Integer.parseInt(cp_s);//핵심요소 사용자로부터 / 사용자의 위치
+
+int totalPage = totalCnt / listSize + 1;
+if (totalCnt % listSize == 0)
+	totalPage--;
+%>
+<%
+////////////사용자 위치///////
+int userGroup = cp / pageSize;
+if (cp % pageSize == 0)
+	userGroup--;
+%>
 <body>
-	<%@include file="/header.jsp"%>
 	<section>
 		<article>
+			<%@include file="/header.jsp"%>
 			<div>
 				<select name="category">
 					<option value="카테고리">카테고리</option>
@@ -56,14 +81,34 @@ div {
 					<option value="봉사활동">봉사활동</option>
 					<option value="댄스">댄스</option>
 				</select> <input type="text" name="search"> <input type="button"
-					onclick="show()" value="검색">
+					value="검색">
 			</div>
 			<table>
 
 				<tfoot>
 					<tr>
-						<td></td>
-						<td></td>
+						<td colsapn="2">
+							<%
+							if (userGroup != 0) {
+							%><a
+							href="reviewList.jsp?cp=<%=(userGroup - 1) * pageSize + pageSize%>">&lt;
+								&lt;</a> <%
+ }
+ %> <%
+ for (int i = userGroup * pageSize + 1; i <= userGroup * pageSize + pageSize; i++) {
+ %>&nbsp;&nbsp;<a href="reviewList.jsp?cp=<%=i%>"><%=i%></a>&nbsp;&nbsp;<%
+ if (i == totalPage)
+ 	break;
+ }
+ %> <%
+ // 오른쪽 화살표
+ if (userGroup != (totalPage / pageSize - (totalPage % pageSize == 0 ? 1 : 0))) {
+ %><a href="reviewList.jsp?cp=<%=(userGroup + 1) * pageSize + 1%>">&gt;&gt;</a>
+							<%
+							}
+							%>
+						</td>
+
 						<td><input type="button"
 							onclick="location.href='writeReview.jsp'" value="후기쓰러가기">
 						</td>
@@ -72,21 +117,20 @@ div {
 
 				<thead>
 					<tr>
+
 						<th>카테고리</th>
 						<th>모임이름</th>
 						<th>제목</th>
 					</tr>
 				</thead>
 				<tbody>
-					<%-- 
-					
 					<%
-					ArrayList<BbsDTO> arr = bdao.bbsList(listSize, cp);
+					ArrayList<ReviewDTO> arr = rdao.getList(listSize, cp);
 					if (arr == null || arr.size() == 0) {
 					%>
 
 					<tr>
-						<td colspan="5">등록된 글이 없습니다</td>
+						<td colspan="3">등록된 글이 없습니다</td>
 					</tr>
 					<%
 					} else {
@@ -94,20 +138,16 @@ div {
 					%>
 
 					<tr>
-						<td><%=arr.get(i).getIdx()%></td>
-						<td><a href="bbsContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject()%></a>
+						<td><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getHobby()%></a>
 						</td>
-						<!-- ? 다음은 키와 값이다 -->
-						<td><%=arr.get(i).getWriter()%></td>
-						<td><%=arr.get(i).getWritedate()%></td>
-						<td><%=arr.get(i).getReadnum()%></td>
+						<td><%=arr.get(i).getMoimname()%></td>
+						<td><%=arr.get(i).getSubject()%></td>
 					</tr>
 
 					<%
 					}
 					}
 					%>
- --%>
 				</tbody>
 
 			</table>

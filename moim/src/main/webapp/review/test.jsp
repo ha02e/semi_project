@@ -8,7 +8,7 @@
 </head>
 <body>
 	<form action="writeReview.jsp">
-		<th>idx</th>
+		<th>idx_member</th>
 		<td><input type="text" name="idx_member"></td>
 		<br>
 		<th>모임이름</th>
@@ -21,7 +21,7 @@
 		<td><input type="text" name="hobby"></td>
 		<br>
 		<th>작성자</th>
-		<td><input type="text" name="write"></td>
+		<td><input type="text" name="writer"></td>
 		<br>
 		<th>제목</th>
 		<td><input type="text" name="subject"></td>
