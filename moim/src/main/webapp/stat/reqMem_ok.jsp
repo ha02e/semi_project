@@ -7,8 +7,9 @@
 
 <%
 int idx_member=0;
+int idx_info=0;
 String content=request.getParameter("contentApply");
 
-int result=mdao.reqMem(idx_member, content);
+int result=mdao.reqMem(idx_member, idx_info, content);
 String msg=result>0?"가입 신청이 완료되었습니다.":"가입 신청을 실패하였습니다. 다시 시도해주세요.";
 %>
