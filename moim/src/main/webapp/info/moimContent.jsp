@@ -103,6 +103,8 @@ section .button div{
 	overflow: hidden;
 	transition: max-height 0.5s;
 	background:#eeeeee;
+		align-items:center;
+	justify-content:space-between;
 }
 #accordion label + input[type="radio"]:checked + .content{
 	max-height:400px;
@@ -129,6 +131,20 @@ section .button div{
 }
 #qnacontent td{
 	border:0;
+}
+.qnabutton a{
+	background-color: #999999;
+	color:#ffffff;
+    width:48px;
+    heigth:16px;
+    padding:4px 6px;
+    border-radius:4px;
+    font-size:12px;
+}
+.qnabutton a:link, .qnabutton a:visited{
+	text-decoration: none;
+	cursor:pointer;
+	color:#ffffff;
 }
 .rebutton{
 	background-color: #999999;
@@ -159,7 +175,7 @@ section .button div{
 	text-align:center;
 	margin:10px 0 0 0;
 }
-.paging a:link, a:visited{
+.paging a:link, .paging a:visited{
 	color:#333333;
     text-decoration: none;
     font-size:13px;
@@ -194,6 +210,16 @@ function qnaReWrite(){
 	var left=Math.ceil((window.screen.width-w)/2);
 	var top=Math.ceil((window.screen.height-h)/2);  
 	window.open('/moim/noimg/qnaReWrite.jsp', 'qnaReWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
+}
+
+function qnaUpdate(){
+	var w=320;
+	var h=340;
+	 
+	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+	var left=Math.ceil((window.screen.width-w)/2);
+	var top=Math.ceil((window.screen.height-h)/2);  
+	window.open('/moim/noimg/qnaUpdate.jsp?', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
 
 function qnaDisplay(){
@@ -239,7 +265,7 @@ if(cp%pageSize==0)userGroup--;
 <%@include file="/header.jsp" %>
 <section>
 <article>
-   <h2>홍대 독서모임</h2>
+   <h2><%=dto.getMoimname()%></h2>
    <div class="content">
       <div class="moiminfo">
       <form name="moimContent">
@@ -306,10 +332,14 @@ if(cp%pageSize==0)userGroup--;
 				<input type="radio" name="accordion" id="first">
 				
 				<div class="content">
-				<p><%=arr.get(i).getContent() %></p>
-					<div>
-							<a href="">수정</a>
-							<a href="">삭제</a>
+				<div><%=arr.get(i).getContent() %></div>
+					<div class="qnabutton">
+								<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
+								<a href="javascript:qnaUpdate();">수정</a>
+							<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
+								<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
+									<input type="submit" value="삭제">
+							</form>
 					</div>
 				</div>
 				<%
