@@ -11,26 +11,25 @@
 <title>Insert title here</title>
 </head>
 <%
-String hobby[]=null;
+String hobby[]=null;		//취미
 if(request.getParameterValues("hobby")!=null){
 hobby=request.getParameterValues("hobby");
 }
-String detail="";
+String detail="";			//세부검색 열렸는지 여부
 if(request.getParameter("detail")!=null){
 	detail=request.getParameter("detail");
 }
-String keyword=null;
+String keyword="";		//키워드
 if(request.getParameter("keyword")!=null){
 	keyword=request.getParameter("keyword");
 }
-String local="전체";
+String local="전체";			//지역
 if(request.getParameter("local")!=null){
 	local=request.getParameter("local");
 }
 %>
 <%
-int totalCnt=idao.getTotalCnt();//DB
-int listSize=5;//내맘
+int listSize=1;//내맘
 int pageSize=5;//내맘
 
 String cp_s=request.getParameter("cp");
@@ -38,6 +37,20 @@ if(cp_s==null||cp_s.equals("")){
 	cp_s="1";
 }
 int cp=Integer.parseInt(cp_s);//핵심요소 사용자로부터
+ArrayList <InfoDTO> arr=null;
+	int totalCnt=idao.getTotalCnt();//DB
+if(keyword==""&&hobby==null&&local.equals("전체")){	
+	arr=idao.searchInfo("", listSize, cp);
+}else if(keyword!=""&&hobby==null&&local.equals("전체")){
+	arr=idao.searchInfo(keyword,listSize,cp);
+	totalCnt=idao.getTotalCntDeatil(hobby, keyword, local);
+}else if(keyword!=""){
+	arr=idao.searchDetailInKey(hobby, local, keyword, listSize, cp);
+	totalCnt=idao.getTotalCntDeatil(hobby, keyword, local);
+}else{
+	arr=idao.searchDeatilNoKey(hobby, local,listSize,cp);
+	totalCnt=idao.getTotalCntDeatil(hobby, keyword, local);
+}
 
 int totalPage=totalCnt/listSize+1;
 if(totalCnt%listSize==0)totalPage--;
@@ -105,12 +118,11 @@ if(cp%pageSize==0)userGroup--;
 	</article>
 	<article>
 		<table>
-	<%
-		//if(keyword==null&&hobby==null&&local.equals("전체")){	
-			ArrayList<InfoDTO> arr=idao.searchInfo(keyword);
+		<%
+		
 			if(arr!=null){
 				for(int i=0;i<arr.size();i++){
-	%>
+		%>
 			<tr>
 				<td></td>
 				<td><%=arr.get(i).getMoimname() %></td>
@@ -118,26 +130,39 @@ if(cp%pageSize==0)userGroup--;
 				<td><%=arr.get(i).getHobby() %></td>
 				<td><%=arr.get(i).getNowmem() %>/<%=arr.get(i).getMaxmem() %></td>
 			</tr>
-	<%			}		
-			//}
-		} %>
+		<%		}		
+			}else{ %>
+			<tr>
+				<td colspan="4"><h2>게시글이 없습니다</h2></td>
+			</tr>
+			
+			<%} %>
 		<tfoot>
 				<tr>
 					<td colspan="4" align="center">
 						<%
 							if(userGroup!=0){
-								%><a href="infoSearch.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+								%><a href="infoSearch.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&local=<%=local%>&keyword=<%=keyword%>
+								<%if(hobby!=null)for(int i=0;i<hobby.length;i++){
+									%>&hobby=<%=hobby[i]%><%
+								}%>">&lt;&lt;</a><%
 							}
 							%>
 							<%
 							for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-								%>&nbsp;&nbsp;<a href="infoSearch.jsp?cp=<%=i%>"><%=i%></a>&nbsp;&nbsp;<%
+								%>&nbsp;&nbsp;<a href="infoSearch.jsp?cp=<%=i%>&local=<%=local%>&keyword=<%=keyword%>
+								<%if(hobby!=null)for(int z=0;z<hobby.length;z++){
+									%>&hobby=<%=hobby[z]%><%
+								}%>"><%=i%></a>&nbsp;&nbsp;<%
 								if(i==totalPage)break;
 							}
 							%>
 							<%
 							if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
-								%><a href="infoSearch.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+								%><a href="infoSearch.jsp?cp=<%=(userGroup+1)*pageSize+1%>&local=<%=local%>&keyword=<%=keyword%>
+								<%if(hobby!=null)for(int i=0;i<hobby.length;i++){
+									%>&hobby=<%=hobby[i]%><%
+								}%>">&gt;&gt;</a><%
 							}
 						%>
 					</td>

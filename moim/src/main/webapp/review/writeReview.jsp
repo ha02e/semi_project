@@ -81,8 +81,7 @@ detail= request.getParameter("detail");
 					<input type = "hidden" name="idx_memeber" value="<%=rdto.getIdx_member()%>">;
 					<input type = "hidden" name="hobby"value="<%=hobby%>">;
 					<input type = "hidden" name="writer"value="<%=writer%>">;
-					<input type = "hidden" name="ref"value="<%=rdto.getRef()%>">;
-					<input type = "hidden" name="sunbun"value="<%=rdto.getSunbun()%>">;
+
 					</tr>
 				</table>
 
