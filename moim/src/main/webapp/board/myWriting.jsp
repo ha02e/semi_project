@@ -25,52 +25,85 @@ th{
 <%@include file="/header.jsp" %>
 <%@include file="sideBoard.jsp" %>
 <section>
-내가 쓴 후기
-<%
-ArrayList<ReviewDTO> dto2=mdao.getMyReview(2, 1);
-
-%>
-<nav>
-<table border="1">
-	<tr>
-	<th>카테고리</th>
-	<th>제목</th>
-	<th>등록일자</th>
-	<th>수정,삭제</th>
-	</tr>
-	<tr>
-	<td><a href="">카테고리</a></td>
-	<td><a href="">제목</a></td>
-	<td><a href="">등록일자</a></td>
-	<td>
-	<input type="submit" value="수정">
-	<input type="submit" value="삭제">
-	</td>
-	</tr>
-</table>
-</nav>
-<br>
-내가 쓴 댓글(QnA)
-<%
-ArrayList<NoimgDTO> dto1=mdao.getMyQna(2, 1);
-if()
-%>
-<nav>
-<table border="1">
-	<tr>
-	<th>모임이름</th>
-	<th>제목</th>
-	<th>등록일자</th>
-	<th>삭제</th>
-	</tr>
-	<tr>
-	<td><a href="">모임이름</a></td>
-	<td><a href="">제목</a></td>
-	<td><a href="">등록일자</a></td>
-	<td><input type="submit" value="삭제"></td>
-	</tr>
-</table>
-</nav>
+	<article>
+		<h3>내가 쓴 후기</h3>
+		<table border="1">
+			<thead>
+				<tr>
+				<th>카테고리</th>
+				<th>제목</th>
+				<th>등록일자</th>
+				<th>수정,삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%
+			ArrayList<ReviewDTO> dto1=mdao.getMyReview(2, 1);
+			if(dto1==null||dto1.size()==0){
+				%>
+				<tr>
+					<td colspan="5" align="center">
+					등록된 후기가 없습니다.
+					</td>
+				</tr>
+				<%
+			}else{
+				for(int i=0;i<dto1.size();i++){
+					%>
+					<tr>
+						<td><%=dto1.get(i).getHobby() %></td>
+						<td><a href=""><%=dto1.get(i).getSubject() %></a></td>
+						<td><%=dto1.get(i).getWritedate() %></td>
+						<td>
+						<input type="submit" value="수정">
+						<input type="submit" value="삭제">
+						</td>
+					</tr>
+					<%
+				}
+			}
+			%>
+			</tbody>
+			
+		</table>
+		<br>
+		<h3>내가 쓴 댓글(QnA)</h3>
+			<table border="1">
+				<thead>
+					<tr>
+					<th>모임이름</th>
+					<th>제목</th>
+					<th>등록일자</th>
+					<th>삭제</th>
+					</tr>
+				</thead>
+				<tbody>
+				<%
+				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, 1);
+				if(dto2==null||dto2.size()==0){
+					%>
+					<tr>
+						<td colspan="5" align="center">
+						등록된 댓글이 없습니다.
+						</td>
+					</tr>
+					<%
+				}else{
+					for(int i=0;i<dto2.size();i++){
+						%>
+						<tr>
+							<td><%=dto2.get(i).getIdx_info() %></td>
+							<td><%=dto2.get(i).getSubject() %></td>
+							<td><%=dto2.get(i).getWritedate() %></td>
+							<td><input type="submit" value="삭제"></td>
+						</tr>
+						<%
+					}
+				}
+				%>
+				</tbody>
+			</table>
+</article>
 </section>
 <%@include file="/footer.jsp" %>
 </body>

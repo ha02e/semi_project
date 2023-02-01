@@ -1,6 +1,7 @@
 package com.moim.member;
 
 import com.moim.noimg.*;
+import com.moim.info.*;
 import com.moim.review.*;
 import java.sql.*;
 import java.util.*;
@@ -73,7 +74,7 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
-	/**후기 조회 메서드*/
+	/**댓글 조회 메서드*/
 	public ArrayList<NoimgDTO> getMyQna(int category,int idx_member){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
@@ -109,7 +110,7 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
-	/**댓글 조회 메서드*/
+	/**후기 조회 메서드*/
 	public ArrayList<ReviewDTO> getMyReview(int category,int idx_member){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
@@ -142,6 +143,22 @@ public class MemberDAO {
 				if(rs!=null)rs.close();
 				if(ps!=null)ps.close();
 				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	
+	/**모임이름 가져오기 메서드*/
+	public HashMap<Integer, String> moimName(){
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select * from ";
+			ps=conn.prepareStatement(sql);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
 			}catch(Exception e2) {}
 		}
 	}
