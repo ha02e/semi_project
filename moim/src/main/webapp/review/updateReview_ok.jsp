@@ -6,7 +6,7 @@
 
 
 	<%
-	/* int result= edao.empUpdate2_ok(edto); */
+
 	int result= rdao.updateReview(rdto);
 	String msg=result>0? "수정성공":"수정실패";
 	%>

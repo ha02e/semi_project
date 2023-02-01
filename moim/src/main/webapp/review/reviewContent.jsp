@@ -43,6 +43,7 @@ table {
 	<%@include file="/header.jsp"%>
 	<form name="reviewupdateForm" action="updateReview.jsp">
 	<h2>독서 모임 후기</h2>
+	<input type="hidden" name="idx" value="<%=idx%>">
 	<h4>-모임명 : <%=dto.getMoimname()%>&nbsp;&nbsp;&nbsp;&nbsp;-지역 : <%=dto.getLocal() %></h4>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<section>

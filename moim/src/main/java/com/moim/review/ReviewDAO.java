@@ -284,55 +284,6 @@ public class ReviewDAO {
 		}
 	}
 
-	/** 수정용 조회 테스트 관련 메소드 */
-	public ReviewDTO updateReviewForm2(ReviewDTO dto) {
-		try {
-//			dbConnect();
-			conn = com.moim.db.MoimDB.getConn();
-			String sql = "select * from moim_review";
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			
-			ReviewDTO dto =null;
-			if (rs.next()) {
-				int idx = rs.getInt("idx");
-				int idx_member = rs.getInt("idx_member");
-				String moimname = rs.getString("moimname");
-				String writer = rs.getString("writer");
-				String local = rs.getString("local");
-				String hobby = rs.getString("hobby");
-				String subject = rs.getString("subject");
-				String content = rs.getString("content");
-				String img = rs.getString("img");
-				Date writedate = rs.getDate("writedate");
-				int ref = rs.getInt("ref");
-				int sunbun = rs.getInt("sunbun");
-				
-				dto = new ReviewDTO(idx, idx_member, moimname, writer, local, hobby, subject, content, img, writedate,
-						ref, sunbun);
-
-			}
-
-			return dto;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			try {
-
-				if (rs != null)
-					rs.close();
-				if (ps != null)
-					ps.close();
-				if (ps != null)
-					conn.close();
-			} catch (Exception e2) {
-
-			}
-		}
-	}
-
 	/** 수정 관련 메소드 */
 	public int updateReview(ReviewDTO dto) {
 		try {
