@@ -113,6 +113,6 @@ public class ReviewDTO {
 	public void setWritedate(Date writedate) {
 		this.writedate = writedate;
 	}
-
+	
 	
 }
