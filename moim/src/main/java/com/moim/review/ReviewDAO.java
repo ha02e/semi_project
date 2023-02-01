@@ -48,7 +48,7 @@ public class ReviewDAO {
 			conn = com.moim.db.MoimDB.getConn();
 
 			int maxref = getMaxRef();
-			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate,?,?)";
+			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getIdx_member());
 			ps.setString(2, dto.getMoimname());
@@ -58,8 +58,6 @@ public class ReviewDAO {
 			ps.setString(6, dto.getSubject());
 			ps.setString(7, dto.getContent());
 			ps.setString(8, dto.getImg());
-			ps.setInt(9, maxref + 1);
-			ps.setInt(10, dto.getSunbun());
 
 			int count = ps.executeUpdate();
 			return count;
@@ -164,10 +162,9 @@ public class ReviewDAO {
 				String content = rs.getString("content");
 				String img = rs.getString("img");
 				Date writedate = rs.getDate("writedate");
-				int ref = rs.getInt("ref");
-				int sunbun = rs.getInt("sunbun");
+			
 				ReviewDTO dto = new ReviewDTO(idx, idx_member, moimname, writer, local, hobby, subject, content, img,
-						writedate, ref, sunbun);
+						writedate);
 				arr.add(dto);
 			}
 			return arr;
@@ -209,10 +206,7 @@ public class ReviewDAO {
 				String content = rs.getString("content");
 				String img = rs.getString("img");
 				Date writedate = rs.getDate("writedate");
-				int ref = rs.getInt("ref");
-				int sunbun = rs.getInt("sunbun");
-				dto = new ReviewDTO(idx, idx_member, moimname, writer, local, hobby, subject, content, img, writedate,
-						ref, sunbun);
+				dto = new ReviewDTO(idx, idx_member, moimname, writer, local, hobby, subject, content, img, writedate);
 
 			}
 
@@ -257,10 +251,7 @@ public class ReviewDAO {
 				String content = rs.getString("content");
 				String img = rs.getString("img");
 				Date writedate = rs.getDate("writedate");
-				int ref = rs.getInt("ref");
-				int sunbun = rs.getInt("sunbun");
-				dto = new ReviewDTO(idx, idx_member, moimname, writer, local, hobby, subject, content, img, writedate,
-						ref, sunbun);
+				dto = new ReviewDTO(idx, idx_member, moimname, writer, local, hobby, subject, content, img, writedate);
 
 			}
 
@@ -336,8 +327,4 @@ public class ReviewDAO {
 			}
 		}
 	}
-	
-	
-	
-	
 }

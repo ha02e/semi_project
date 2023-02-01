@@ -14,28 +14,24 @@ public class ReviewDTO {
 	private String content;
 	private String img;
 	private Date writedate;
-	private int ref;
-	private int sunbun;
 	
 	public ReviewDTO() {
 		super();
 	}
 
 	public ReviewDTO(int idx, int idx_member, String moimname, String writer, String local, String hobby,
-			String subject, String content, String img, Date writedate, int ref, int sunbun) {
+			String subject, String content, String img, Date writedate) {
 		super();
 		this.idx = idx;
 		this.idx_member = idx_member;
 		this.moimname = moimname;
+		this.writer = writer;
 		this.local = local;
 		this.hobby = hobby;
-		this.writer = writer;
 		this.subject = subject;
 		this.content = content;
 		this.img = img;
 		this.writedate = writedate;
-		this.ref = ref;
-		this.sunbun = sunbun;
 	}
 
 	public int getIdx() {
@@ -117,21 +113,6 @@ public class ReviewDTO {
 	public void setWritedate(Date writedate) {
 		this.writedate = writedate;
 	}
-
-	public int getRef() {
-		return ref;
-	}
-
-	public void setRef(int ref) {
-		this.ref = ref;
-	}
-
-	public int getSunbun() {
-		return sunbun;
-	}
-
-	public void setSunbun(int sunbun) {
-		this.sunbun = sunbun;
-	}
-
+	
+	
 }
