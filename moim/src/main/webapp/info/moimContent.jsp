@@ -2,10 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.moim.noimg.*" %>
+<%@ page import="com.moim.info.*" %>
 
 <jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO"></jsp:useBean>
+
+<jsp:useBean id="mdto2" class="com.moim.info.InfoDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="mdto"/>
+<jsp:useBean id="mdao2" class="com.moim.info.InfoDAO"></jsp:useBean>
 
 <!DOCTYPE html>
 <html>
@@ -33,7 +38,6 @@ section .img{
 	background:gray;
 	width:240px;
 	height:160px;
-	/*margin:0 auto 10px auto;*/
 }
 
 section .moiminfo table{
@@ -46,8 +50,9 @@ section .moiminfo table th{
 	padding-right:10px;
 }
 section .moiminfo table td{
-	padding:4px 0;
+	padding:4px 6px;
 }
+
 section .button{
 	width:200px;
 	padding:0 20px;
@@ -201,7 +206,17 @@ function qnaDisplay(){
 }
 </script>
 </head>
-</head>
+<%
+/**
+String idx_s=request.getParameter("idx");
+if(idx_s==null || idx_s.equals("")){
+	idx_s="0";
+}
+*/
+int idx=3;  //int idx=Integer.parseInt(idx_s);
+InfoDTO dto=mdao2.getInfo(idx);
+
+%>
 <%
 int idx_info=0;
 int totalCnt=mdao.getTotalCnt(idx_info);
@@ -234,17 +249,16 @@ if(cp%pageSize==0)userGroup--;
                   <div class="img"></div>
                </td>
             </tr>
-            <tr>
-               <td>지역 : 서울</td>
+            <tr class="moimtext">
+               <td>지역 : <%=dto.getLocal()%></td>
             </tr>
-            <tr>
-               <td>인원 : 1/4</td>
+            <tr class="moimtext">
+               <td>인원 : 1/<%=dto.getMaxmem() %></td>
             </tr>
-            <tr>
+            <tr class="moimtext">
                <td>
-                  내용~~~~<br>
-                  독서에 관심 있는 분들 모집합니다!<br>
-                  비용은 없습니다.
+                  내용 :<br>
+                  <%=dto.getContent() %>
                </td>
             </tr>
          </table>
