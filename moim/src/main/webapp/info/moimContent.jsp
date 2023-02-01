@@ -75,76 +75,39 @@ section .button div{
     display: inline-block;
     font-size:14px;
 }
-#accordion{
-	width:800px;
-	text-align:center;
-	/*border-collapse: collapse;*/
-}
-#accordion li{
-	list-style: none;
-	width:100%;
-	margin-bottom:10px;
-	padding:10px;
-}
-#accordion li label{
-	padding:10px;
-	display:flex;
-	align-items:center;
-	justify-content:space-between;
-	cursor:pointer;
-	border:1px solid #eeeeee;
-}
-#accordion label + input[type="radio"]{
-	/*display:none;*/
-}
-#accordion .content{
-	padding:0 10px;
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 0.5s;
-	background:#eeeeee;
-		align-items:center;
-	justify-content:space-between;
-}
-#accordion label + input[type="radio"]:checked + .content{
-	max-height:400px;
-	padding:40px 20px;
-	text-align:center;
-}
-/*
-.recruit td,th{
-	border-top:1px solid #999999;
-	border-bottom:1px solid #999999;
-	height:34px;
-} 
-*/
-.qnasubject{
-	text-align:left;
-	padding-left:20px;
-	cursor:pointer;
-}
-#qnacontent{
+
+input[id*="click"]{
 	display:none;
-	/**background:#eeeeee;*/
-	text-align:center;
+}
+input[id*="click"] + label{
+	display:block;
 	padding:20px;
-}
-#qnacontent td{
-	border:0;
-}
-.qnabutton a{
-	background-color: #999999;
-	color:#ffffff;
-    width:48px;
-    heigth:16px;
-    padding:4px 6px;
-    border-radius:4px;
-    font-size:12px;
-}
-.qnabutton a:link, .qnabutton a:visited{
-	text-decoration: none;
+	border:1px solid #e8e8e8;
+	border-bottom:0;
 	cursor:pointer;
-	color:#ffffff;
+}
+input[id*="click"] + label span.go{
+	display:inline-bolck;
+	width:30px;
+	height:30px;
+	margin-left:10px;
+	font-weight:900;
+	color:red;
+}
+input[id*="click"] + label + div{
+	max-height:0;
+	transition:max-height 0.5s;
+	overflow: hidden;
+	background:#eeeeee;
+}
+input[id*="click"] + label + div p{
+	display:inline-block;
+	padding:20px;
+	text-align: center;
+	justify-content: center;
+}
+input[id*="click"]:checked + label + div{
+	max-height:100px;
 }
 .rebutton{
 	background-color: #999999;
@@ -300,20 +263,14 @@ if(cp%pageSize==0)userGroup--;
 <article>
    <h2>QnA</h2>
    <form name="qna" method="post">
- 	<ul id="accordion">
-	<!-- 
-	<li>
-			<div>
-				<span class="qnawriter">작성자</span>
-				<span class="qnasubject">제목</span>
-				<span class="qnadate">날짜</span>
-				<span class="qnabutton">답글</span>
-			</div>
-		</li>
-		<li>
-	 -->
-	 <li>
-	 <%
+	<div class="qnabbs">
+		<div class="qnahead">
+			<span>작성자</span>
+			<span>제목</span>
+			<span>날짜</span>
+			<span>답글작성</span>
+		</div>
+		<%
 		ArrayList<NoimgDTO> arr=mdao.getQnaList(idx_info,listSize,cp);
 		if(arr==null || arr.size()==0){
 			%>
@@ -321,64 +278,63 @@ if(cp%pageSize==0)userGroup--;
 			<%
 		}else{
 			for(int i=0;i<arr.size();i++){
-				%>
-				<label for="<%=i%>">
-					<span><%=arr.get(i).getWriter() %></span>
-					<span><%=arr.get(i).getSubject() %></span>
-					<span><%=arr.get(i).getWritedate() %></span>
-					<span class="rebutton"><a href="javascript:qnaReWrite();">답변작성</a></span>
+			%>
+			<div class="qnacontent">
+				<input type="radio" name="qnacontent" id="click<%=i%>">
+				<label for="click<%=i%>">
+				<span><%=arr.get(i).getWriter() %></span>
+				<span class="qnasubject"><%=arr.get(i).getSubject() %><span class="go">&gt;</span></span>
+				<span><%=arr.get(i).getWritedate() %></span>
+				<span class="rebutton"><a href="javascript:qnaReWrite();">답변작성</a></span>
 				</label>
-				
-				<input type="radio" name="accordion" id="first">
-				
-				<div class="content">
-				<div><%=arr.get(i).getContent() %></div>
+				<div>
+					<p><%=arr.get(i).getContent() %></p>
 					<div class="qnabutton">
-								<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-								<a href="javascript:qnaUpdate();">수정</a>
-							<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
-								<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-									<input type="submit" value="삭제">
-							</form>
+						<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
+						<a href="javascript:qnaUpdate();">수정</a>
+						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
+							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
+							<input type="submit" value="삭제">
+						</form>
 					</div>
 				</div>
-				<%
-				}
+			</div>
+		</div>
+			<%
 			}
-	 %>
-		
-	</li>
-	</ul>
+		}
+		%>
+	</div>
 	
-   <div class="paging">
+	<div class="paging">
       <%
       if(userGroup!=0){
-         %>
-         <a href="moimContent.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a>
-         <%
+		%>
+		<a href="moimContent.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a>
+		<%
       }
       %>
       <%
       for(int i=userGroup*pageSize+1;
-            i<=userGroup*pageSize+pageSize;i++){
-         %>
-         &nbsp;&nbsp;<a href="moimContent.jsp?cp=<%=i %>"><%=i %></a>&nbsp;&nbsp;
-         <%
-         if(i==totalPage)break;
+			i<=userGroup*pageSize+pageSize;i++){
+		%>
+		&nbsp;&nbsp;<a href="moimContent.jsp?cp=<%=i %>"><%=i %></a>&nbsp;&nbsp;
+		<%
+		if(i==totalPage)break;
       }
       %>
       <%
       if(userGroup!=((totalPage/pageSize)-(totalPage%pageSize==0?1:0))){
-         %>
-         <a href="moimContent.jsp?cp=<%=(userGroup+1)*pageSize+1 %>">&gt;&gt;</a>
-         <%
+		%>
+		<a href="moimContent.jsp?cp=<%=(userGroup+1)*pageSize+1 %>">&gt;&gt;</a>
+		<%
       }
       %>
-   </div>
-   <div class="writebutton">
-      <input type="submit" value="글작성" onclick="qnaWrite()">
-   </div>
-   </form>
+	</div>
+	<div class="writebutton">
+		<input type="submit" value="글작성" onclick="qnaWrite()">
+	</div>
+	</form>
 </article>
 </section>
 <%@include file="/footer.jsp" %>
