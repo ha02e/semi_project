@@ -44,7 +44,7 @@ function pwd_check(){
 </script>
 </head>
 <%
-int idx=1;
+int idx=21;
 if(session.getAttribute("idx")!=null&&!session.getAttribute("idx").equals("")){
 	String idx_s=(String)session.getAttribute("idx");
 	idx=Integer.parseInt(idx_s);

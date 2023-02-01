@@ -1,5 +1,5 @@
 package com.moim.member;
-
+import com.moim.stat.*;
 import com.moim.noimg.*;
 import com.moim.info.*;
 import com.moim.review.*;
@@ -21,7 +21,7 @@ public class MemberDAO {
 	public MemberDTO getMem(int idx) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_member where moim_member_idx=?";
+			String sql="select * from moim_member where idx=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			rs=ps.executeQuery();
@@ -52,7 +52,7 @@ public class MemberDAO {
 	public int updateMem(MemberDTO dto) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="update moim_member set name=?,id=?,pwd=?,email=?,local=?,age=?,hobby=? where moim_member_idx=?";
+			String sql="update moim_member set name=?,id=?,pwd=?,email=?,local=?,age=?,hobby=? where idx=?";
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, dto.getName());
 			ps.setString(2, dto.getId());
@@ -146,13 +146,47 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
-	
-	/**모임이름 가져오기 메서드*/
-	public HashMap<Integer, String> moimName(){
+	/**모임 카테고리 가져오기 메서드*/
+	public HashMap<Integer,String> moimCategory(){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from ";
+			String sql="select idx,hobby from moim_info";
 			ps=conn.prepareStatement(sql);
+			HashMap<Integer,String> map=new HashMap<>();
+			rs=ps.executeQuery();
+			
+			while(rs.next()) {
+				int idx=rs.getInt(1);
+				String hobby=rs.getString(2);
+				map.put(idx, hobby);
+			}
+			return map;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				
+			}catch(Exception e2) {}
+		}
+	}
+	
+	/**모임 인원 가져오기 메서드*/
+	public ArrayList<Integer> getNowMem(int idx){
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select nowmem,maxmem from moim_info where idx=?";
+			ps=conn.prepareStatement(sql);
+			ArrayList<Integer> arr=new ArrayList<Integer>();
+			ps.setInt(1, idx);
+			rs=ps.executeQuery();
+			
+			if(rs.next()) {
+				int nowmem=rs.getInt("nowmem");
+				int maxmem=rs.getInt("maxmem");
+				
+			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -162,7 +196,62 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
+	/**모임이름 가져오기 메서드*/
+	public HashMap<Integer, String> moimName(){
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select idx,moimname from moim_info";
+			ps=conn.prepareStatement(sql);
+			HashMap<Integer, String> map=new HashMap<>();
+			rs=ps.executeQuery();
+			
+			while(rs.next()) {
+				int idx=rs.getInt(1);
+				String moimname=rs.getString(2);
+				map.put(idx, moimname);
+			}
+			return map;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
 	
+	/**참여중인 모임 조회 메서드*/
+	public ArrayList<StatDTO> getMyStat(int idx_member){
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select * from moim_stat where idx_member=?";
+			ps=conn.prepareStatement(sql);
+			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
+			ps.setInt(1, idx_member);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				int idx=rs.getInt("idx");
+				int idx_info=rs.getInt("idx_info");
+				int stat=rs.getInt("stat");
+				java.sql.Date joindate=rs.getDate("joindate");
+				String content=rs.getString("content");
+				StatDTO dto=new StatDTO(idx, idx_member, idx_info, stat, joindate, content);
+				arr.add(dto);
+			}
+			return arr;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				
+			}catch(Exception e2) {}
+		}
+	}
 	
 //	/**탈퇴하기 메서드*/
 //	public int dropMem(int idx) {

@@ -21,6 +21,11 @@ th{
 }
 </style>
 </head>
+<%
+int idx=22;
+
+
+%>
 <body>
 <%@include file="/header.jsp" %>
 <%@include file="sideBoard.jsp" %>
@@ -55,8 +60,8 @@ th{
 						<td><a href=""><%=dto1.get(i).getSubject() %></a></td>
 						<td><%=dto1.get(i).getWritedate() %></td>
 						<td>
-						<input type="submit" value="수정">
-						<input type="submit" value="삭제">
+						<input type="button" value="수정" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+						<input type="button" value="삭제" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						</td>
 					</tr>
 					<%
@@ -79,6 +84,7 @@ th{
 				</thead>
 				<tbody>
 				<%
+				HashMap<Integer,String> map1=mdao.moimName();
 				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, 1);
 				if(dto2==null||dto2.size()==0){
 					%>
@@ -92,7 +98,7 @@ th{
 					for(int i=0;i<dto2.size();i++){
 						%>
 						<tr>
-							<td><%=dto2.get(i).getIdx_info() %></td>
+							<td><%=map1.get(dto2.get(i).getIdx_info())%></td>
 							<td><%=dto2.get(i).getSubject() %></td>
 							<td><%=dto2.get(i).getWritedate() %></td>
 							<td><input type="submit" value="삭제"></td>
