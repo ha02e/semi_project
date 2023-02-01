@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.moim.member.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.net.*" %>
+<%@ page import="com.moim.noimg.*" %>
+<%@ page import="com.moim.review.*" %>
+<jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +26,10 @@ th{
 <%@include file="sideBoard.jsp" %>
 <section>
 내가 쓴 후기
+<%
+ArrayList<ReviewDTO> dto2=mdao.getMyReview(2, 1);
+
+%>
 <nav>
 <table border="1">
 	<tr>
@@ -29,9 +39,9 @@ th{
 	<th>수정,삭제</th>
 	</tr>
 	<tr>
-	<td><a href="">a</a></td>
-	<td><a href="">a</a></td>
-	<td><a href="">a</a></td>
+	<td><a href="">카테고리</a></td>
+	<td><a href="">제목</a></td>
+	<td><a href="">등록일자</a></td>
 	<td>
 	<input type="submit" value="수정">
 	<input type="submit" value="삭제">
@@ -41,6 +51,10 @@ th{
 </nav>
 <br>
 내가 쓴 댓글(QnA)
+<%
+ArrayList<NoimgDTO> dto1=mdao.getMyQna(2, 1);
+if()
+%>
 <nav>
 <table border="1">
 	<tr>
@@ -50,9 +64,9 @@ th{
 	<th>삭제</th>
 	</tr>
 	<tr>
-	<td><a href="">a</a></td>
-	<td><a href="">a</a></td>
-	<td><a href="">a</a></td>
+	<td><a href="">모임이름</a></td>
+	<td><a href="">제목</a></td>
+	<td><a href="">등록일자</a></td>
 	<td><input type="submit" value="삭제"></td>
 	</tr>
 </table>
