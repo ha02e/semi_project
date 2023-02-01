@@ -310,5 +310,34 @@ public class ReviewDAO {
 			}
 		}
 	}
+	/**삭제 관련 메서드*/
+	public int delReview(ReviewDTO dto) {
+		try {
 
+			conn = com.moim.db.MoimDB.getConn();
+			String sql = "delete from moim_review where idx=?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, dto.getIdx());
+
+			int count = ps.executeUpdate();
+			return count;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+
+			}
+		}
+	}
+	
+	
+	
+	
 }

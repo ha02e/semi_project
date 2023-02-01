@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@page import="com.moim.review.* "%>
+<%@page import="com.moim.review.* "%>
 
-	<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
-	<%
+<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
+<%
 String idx_s = request.getParameter("idx");
 if (idx_s == null || idx_s.equals("")) {
 	idx_s = "0";
@@ -30,7 +30,7 @@ return;
 </head>
 <style>
 h2, h4 {
-text-align: center;
+	text-align: center;
 	margin: 0px auto;
 }
 
@@ -41,40 +41,45 @@ table {
 </style>
 <body>
 	<%@include file="/header.jsp"%>
-	<form name="reviewupdateForm" action="updateReview.jsp">
-	<h2>독서 모임 후기</h2>
+
+	<h2><%=dto.getSubject() %></h2>
 	<input type="hidden" name="idx" value="<%=idx%>">
-	<h4>-모임명 : <%=dto.getMoimname()%>&nbsp;&nbsp;&nbsp;&nbsp;-지역 : <%=dto.getLocal() %></h4>
+	<h4>
+		-모임명 :
+		<%=dto.getMoimname()%>&nbsp;&nbsp;&nbsp;&nbsp;-지역 :
+		<%=dto.getLocal()%></h4>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<section>
-		<article>
-			<table>
-				<thead>
-					<tr>
-						<th>이미지</th>
+		<table>
+			<thead>
+				<article>
+				<tr>
+					<th>이미지</th>
 
-						<th>이미지</th>
+					<th>이미지</th>
 
-						<th>이미지</th>
-					</tr>
-				</thead>
-				<tr height="150">
-					<td colspan="3"><%=dto.getContent().replaceAll("\n", "\r")%>
-					</td>
+					<th>이미지</th>
 				</tr>
-				<tfoot>
-					<tr>
-						<td colspan="3"><input type="button" value="목록"
-							onclick="location.href='reviewList.jsp'"> <input
-							type="submit" name="modify" value="수정" > <input
-							type="button" name="delete" value="삭제"></td>
-					</tr>
-				</tfoot>
-					
-			</table>
-		</article>
+				</article>
+			</thead>
+
+			<tr height="150">
+				<td colspan="3"><%=dto.getContent().replaceAll("\n", "\r")%></td>
+			</tr>
+			<tfoot>
+				<tr>
+				<td colspan="3"><input type="button" value="목록"
+						onclick="location.href='reviewList.jsp'"> <input
+						type="button" name="modify" value="수정"
+						onclick="javascript:location.href='updateReview.jsp?idx=<%=idx%>'">
+						<input type="button" name="delete" value="삭제"
+						onclick="javascript:location.href='reviewDel.jsp?idx=<%=idx%>'"></td>
+				</tr>
+			</tfoot>
+
+		</table>
 	</section>
-	</form>
+
 	<%@include file="/footer.jsp"%>
 </body>
 </html>

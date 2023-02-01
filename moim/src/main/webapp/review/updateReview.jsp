@@ -34,7 +34,7 @@ table {
 </style>
 <body>
 	<%@include file="/header.jsp"%>
-	<h2>독서 모임 후기</h2>
+	<h2><%=dto.getSubject()%></h2>
 	<form name="reviewupdate" action="updateReview_ok.jsp">
 		<input type="hidden" name="idx" value="<%=idx%>">
 		<%
