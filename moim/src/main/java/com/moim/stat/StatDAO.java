@@ -37,5 +37,25 @@ public class StatDAO {
 		}
 	}
 
-	
+	/**모임탈퇴 관련 메서드*/
+	public int delMem(int idx_member, int idx_info) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="delete from moim_stat where idx_member=? and idx_info=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx_member);
+			ps.setInt(2, idx_info);
+			
+			int count=ps.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			} catch (Exception e2) {}
+		}
+	}
 }
