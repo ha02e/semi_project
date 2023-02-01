@@ -62,12 +62,12 @@ section .img{
 	<h2>모임 만들기</h2>
 	<div class="moimcontent">
 		<div class="contents write">
-		<form name="moimWrite">
+		<form name="moimWrite" action="moimWrite_ok.jsp">
 			<table>
 				<tr>
 					<th>카테고리</th>
 					<td>
-						<select name="category">
+						<select name="hobby">
 							<option value="운동">운동</option>
 							<option value="게임">게임</option>
 							<option value="여행">여행</option>
@@ -133,16 +133,16 @@ section .img{
 					</td>
 				</tr>
 			</table>
-		</form>
 		</div>
 		<div class="contents imgupload">
 			<div class="img"></div>
 			<div><input type="button" value="이미지 업로드"></div>
 		</div>
-	</div>
-	<div class="button">
-		<input type="submit" value="모임 만들기">
-	</div>
+		</div>
+		<div class="button">
+			<input type="submit" value="모임 만들기">
+		</div>
+		</form>
 </article>
 </section>
 <%@include file="/footer.jsp" %>

@@ -17,5 +17,6 @@ String msg=result>0?"QnA 글이 등록되었습니다.":"글 등록에 실패하
 %>
 <script>
 window.alert('<%=msg%>');
-window.close();
+opener.location.reload();
+window.self.close();
 </script>
