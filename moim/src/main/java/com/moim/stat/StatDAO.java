@@ -12,30 +12,25 @@ public class StatDAO {
 	public StatDAO() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	/**모임 신청하기 관련 메서드*/
-	public int reqMem(int idx_member, int idx_info, String content) {
+	public String test() {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="insert into moim_stat values(moim_stat_idx.nextval,?,?,?,sysdate,?)";
-			ps=conn.prepareStatement(sql);
-			ps.setInt(1, idx_member);
-			ps.setInt(2, idx_info); //**idx_info 넘겨받기**
-			ps.setInt(3, 2);
-			ps.setString(4, content);
-			
-			int count=ps.executeUpdate();
-			return count;
-		} catch (Exception e) {
+		String sql="Select * from emp";
+		ps=conn.prepareStatement(sql);
+		rs=ps.executeQuery();
+		rs.next();
+		String str = rs.getString(1);
+		return str;
+		}catch(Exception e) {
 			e.printStackTrace();
-			return -1;
-		}finally {
+			return null;
+		}finally{
 			try {
-				if(ps!=null)ps.close();
-				if(conn!=null)conn.close();
-			} catch (Exception e2) {}
+				
+			}catch(Exception e2) {
+				
+			}
 		}
 	}
 
-	
 }
