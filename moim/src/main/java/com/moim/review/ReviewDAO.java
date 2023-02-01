@@ -3,6 +3,7 @@ package com.moim.review;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
+import com.oreilly.servlet.MultipartRequest;
 
 public class ReviewDAO {
 
@@ -47,7 +48,6 @@ public class ReviewDAO {
 		try {
 			conn = com.moim.db.MoimDB.getConn();
 
-			int maxref = getMaxRef();
 			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getIdx_member());
@@ -162,7 +162,7 @@ public class ReviewDAO {
 				String content = rs.getString("content");
 				String img = rs.getString("img");
 				Date writedate = rs.getDate("writedate");
-			
+
 				ReviewDTO dto = new ReviewDTO(idx, idx_member, moimname, writer, local, hobby, subject, content, img,
 						writedate);
 				arr.add(dto);
@@ -301,7 +301,8 @@ public class ReviewDAO {
 			}
 		}
 	}
-	/**삭제 관련 메서드*/
+
+	/** 삭제 관련 메서드 */
 	public int delReview(ReviewDTO dto) {
 		try {
 
@@ -327,4 +328,63 @@ public class ReviewDAO {
 			}
 		}
 	}
+
+	/** 이미지 관련 등록 관련 메서드 */
+
+	public int addImage(MultipartRequest mr/* , String id */) {
+		try {
+			conn = com.moim.db.MoimDB.getConn();
+			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
+			ps = conn.prepareStatement(sql);
+			/*
+			 * int idx_member = 0;
+			 * 
+			 * if (mr.getParameter("idx_member") != null &&
+			 * !(mr.getParameter("idx_member").equals(""))) { idx_member =
+			 * Integer.parseInt(mr.getParameter("idx_member")); }
+			 */
+			
+			String idx_member_s = mr.getParameter("idx_member");
+			if (idx_member_s == null || idx_member_s.equals("")) {
+				idx_member_s = "0";
+			}
+			int idx_member = Integer.parseInt(idx_member_s);
+			
+			
+			String moimname = mr.getParameter("moimname");
+			String local = mr.getParameter("local");
+			String hobby = mr.getParameter("hobby");
+			String writer = mr.getParameter("writer");
+			String subject = mr.getParameter("subject");
+			String content = mr.getParameter("content");
+			String img = mr.getFilesystemName("upload");
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx_member);
+			ps.setString(2, moimname);
+			ps.setString(3, local);
+			ps.setString(4, hobby);
+			ps.setString(5, writer);
+			ps.setString(6, subject);
+			ps.setString(7, content);
+			ps.setString(8, img);
+			int count = ps.executeUpdate();
+			return count;
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (conn != null)
+					conn.close();
+
+			} catch (Exception e2) {
+
+			}
+		}
+	}
+
 }

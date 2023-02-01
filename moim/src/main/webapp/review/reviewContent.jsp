@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="com.moim.review.* "%>
-
 <jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
 <%
 String idx_s = request.getParameter("idx");
@@ -42,7 +41,7 @@ table {
 <body>
 	<%@include file="/header.jsp"%>
 
-	<h2><%=dto.getSubject() %></h2>
+	<h2><%=dto.getSubject()%></h2>
 	<input type="hidden" name="idx" value="<%=idx%>">
 	<h4>
 		-모임명 :
@@ -53,22 +52,20 @@ table {
 		<table>
 			<thead>
 				<article>
-				<tr>
-					<th>이미지</th>
-
-					<th>이미지</th>
-
-					<th>이미지</th>
-				</tr>
+					<tr>
+						<td width ="200" height ="200"><img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200></td>
+						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200"></td>
+						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200"></td>
+					</tr>
 				</article>
 			</thead>
 
 			<tr height="150">
-				<td colspan="3"><%=dto.getContent().replaceAll("\n", "\r")%></td>
+				<td colspan="3"><%=dto.getContent().replaceAll("\n","\r")%></td>
 			</tr>
 			<tfoot>
 				<tr>
-				<td colspan="3"><input type="button" value="목록"
+					<td colspan="3"><input type="button" value="목록"
 						onclick="location.href='reviewList.jsp'"> <input
 						type="button" name="modify" value="수정"
 						onclick="javascript:location.href='updateReview.jsp?idx=<%=idx%>'">
