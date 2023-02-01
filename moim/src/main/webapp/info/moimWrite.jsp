@@ -62,7 +62,7 @@ section .img{
 	<h2>모임 만들기</h2>
 	<div class="moimcontent">
 		<div class="contents write">
-		<form name="moimWrite">
+		<form name="moimWrite" action="moimWrite_ok.jsp">
 			<table>
 				<tr>
 					<th>카테고리</th>
