@@ -10,6 +10,7 @@
 <%
 int result = rdao.setReview(rdto);
 String msg = result > 0 ? "글쓰기 성공" : "글쓰기 실패";
+
 %>
 
 <script>

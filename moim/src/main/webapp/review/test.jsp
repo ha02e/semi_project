@@ -23,23 +23,11 @@
 		<th>작성자</th>
 		<td><input type="text" name="writer"></td>
 		<br>
-		<th>제목</th>
+	<!-- 	<th>제목</th>
 		<td><input type="text" name="subject"></td>
 		<br>
 		<th>내용</th>
-		<td><input type="text" name="content"></td>
-		<br>
-		<th>이미지</th>
-		<td><input type="text" name="img"></td>
-		<br>
-		<th>날짜</th>
-		<td><input type="text" name="writedate"></td>
-		<br>
-		<th>ref</th>
-		<td><input type="text" name="ref"></td>
-		<br>
-		<th>sunbun</th>
-		<td><input type="text" name="sunbun"></td>
+		<td><input type="text" name="content"></td> -->
 		<br> <input type="submit" name="test" vlaue="테스트">
 	</form>
 </body>
