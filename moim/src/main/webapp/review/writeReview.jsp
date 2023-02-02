@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
 <%@page import="com.moim.review.*"%>
+<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
 
 <!DOCTYPE html>
 <html>
@@ -136,8 +136,9 @@ String img = request.getParameter("img");
 						<div>
 							<legend>이미지 올리기</legend>
 							<ul>
-								<li><label>이미지</label><input type="file" name="upload">
-								</li>
+								<li><label>이미지</label><input type="file" name="upload" multiple/>	</li>
+								<li><label>이미지</label><input type="file" name="upload" multiple/>	</li>
+								<li><label>이미지</label><input type="file" name="upload" multiple/>	</li>
 							</ul>
 						</div>
 					</div>
