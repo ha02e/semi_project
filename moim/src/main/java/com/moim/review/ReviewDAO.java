@@ -3,6 +3,7 @@ package com.moim.review;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
+import com.oreilly.servlet.MultipartRequest;
 
 public class ReviewDAO {
 
@@ -47,7 +48,6 @@ public class ReviewDAO {
 		try {
 			conn = com.moim.db.MoimDB.getConn();
 
-			int maxref = getMaxRef();
 			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getIdx_member());
@@ -79,13 +79,40 @@ public class ReviewDAO {
 
 	/** 총 게시물 수 관련 메서드 */
 
-	public int getTotalCnt() {
+	public int getTotalCnt(String userhobby, String keyword, boolean boo) {
 		try {
 			conn = com.moim.db.MoimDB.getConn();
-			String sql = "select count(*) from moim_review";
-			ps = conn.prepareStatement(sql);
+			String sql = "select count(*) from moim_review ";
+			int count2 = 0;
+			
+			if(boo) {
+				sql=sql+ " where ";
+				
+			}
+			
+			if (!userhobby.equals("전체")) {
+				sql = sql + " hobby ='" +userhobby+ "' ";
+				count2++;
+			}
+			if (!keyword.equals("")) {
+				if(count2==1) {
+					sql = sql+" and ";
+					
+				}
+				keyword = "%" + keyword.replace(" ", "%") + "%";
+				sql = sql + " moimname like ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, keyword);
+				
+			} else {
+				ps = conn.prepareStatement(sql);
+			}
+
 			rs = ps.executeQuery();
 			rs.next();
+			
+			
+			
 			int count = rs.getInt(1);
 			return count == 0 ? 1 : count;
 
@@ -107,47 +134,50 @@ public class ReviewDAO {
 
 	}
 
-	/** 순서 변경 관련 메서드 */
-	public void setUpdateSun(int ref, int sunbun) {
-		try {
-			// 답변을 받고 하는것이니 conn 은 따로 받지 않는다
-			String sql = "update moim_review set sunbun = sunbun+1 where ref=? and sunbun>=?";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, ref);
-			ps.setInt(2, sunbun);
-			ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (ps != null)
-					ps.close();
-			} catch (Exception e2) {
-
-			}
-		}
-	}
-
 	/** 목록 출력 관련 메서드 */
 	// 애초에 전부 다 가져와도 된다
-	public ArrayList<ReviewDTO> getList(int ls, int cp) {
+	public ArrayList<ReviewDTO> getList(int ls, int cp, String userhobby, String keyword, boolean boo) {
 //		ls = listSize
 		try {
 			conn = com.moim.db.MoimDB.getConn();
-			/* String sql = "select * from jsp_bbs order by idx desc"; */
 
 			int start = (cp - 1) * ls + 1;
 			int end = cp * ls;
-			// 쿼리에 계산식은 들어가면 안된다
 			String sql =
 
-					"select * from " + "(select rownum as rnum,a.* from " + "(select * from moim_review)a)b "
-							+ "where rnum>=? and rnum<=?";
+					"select * from " + "(select rownum as rnum,a.* from "
+							+ "(select * from moim_review  ";
+			
+			int count2 = 0;
+			if(boo) {
+				sql=sql+" where ";
+			}
+				
+				
+			if (!userhobby.equals("전체")) {
+				sql = sql + " hobby ='" + userhobby + "' ";
+				count2++;
+			}
+			if (!keyword.equals("")) {
+				if(count2==1) {
+					sql = sql+" and ";
+					
+				}
+				keyword = "%" + keyword.replace(" ", "%") + "%";
+				sql = sql + " moimname like ? order by idx desc)a)b where rnum>=? and rnum<=? ";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, keyword);
+				ps.setInt(2, start);
+				ps.setInt(3, end);
+				
+			} else {
+				sql = sql + " order by idx desc)a)b where rnum>=? and rnum<=? ";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, start);
+				ps.setInt(2, end);
+			}
+		
 
-			ps = conn.prepareStatement(sql);
-
-			ps.setInt(1, start);
-			ps.setInt(2, end);
 			rs = ps.executeQuery();
 			ArrayList<ReviewDTO> arr = new ArrayList<ReviewDTO>();
 
@@ -162,10 +192,12 @@ public class ReviewDAO {
 				String content = rs.getString("content");
 				String img = rs.getString("img");
 				Date writedate = rs.getDate("writedate");
-			
+
 				ReviewDTO dto = new ReviewDTO(idx, idx_member, moimname, writer, local, hobby, subject, content, img,
 						writedate);
 				arr.add(dto);
+				
+
 			}
 			return arr;
 
@@ -301,7 +333,8 @@ public class ReviewDAO {
 			}
 		}
 	}
-	/**삭제 관련 메서드*/
+
+	/** 삭제 관련 메서드 */
 	public int delReview(ReviewDTO dto) {
 		try {
 
@@ -322,6 +355,88 @@ public class ReviewDAO {
 					ps.close();
 				if (conn != null)
 					conn.close();
+			} catch (Exception e2) {
+
+			}
+		}
+	}
+
+	/** 이미지 관련 등록 관련 메서드 */
+
+	public int addImage(MultipartRequest mr/* , String id */) {
+		try {
+			conn = com.moim.db.MoimDB.getConn();
+			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
+			ps = conn.prepareStatement(sql);
+			/*
+			 * int idx_member = 0;
+			 * 
+			 * if (mr.getParameter("idx_member") != null &&
+			 * !(mr.getParameter("idx_member").equals(""))) { idx_member =
+			 * Integer.parseInt(mr.getParameter("idx_member")); }
+			 */
+
+			String idx_member_s = mr.getParameter("idx_member");
+			if (idx_member_s == null || idx_member_s.equals("")) {
+				idx_member_s = "0";
+			}
+			int idx_member = Integer.parseInt(idx_member_s);
+
+			String moimname = mr.getParameter("moimname");
+			String local = mr.getParameter("local");
+			String hobby = mr.getParameter("hobby");
+			String writer = mr.getParameter("writer");
+			String subject = mr.getParameter("subject");
+			String content = mr.getParameter("content");
+			String img = mr.getFilesystemName("upload");
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx_member);
+			ps.setString(2, moimname);
+			ps.setString(3, local);
+			ps.setString(4, hobby);
+			ps.setString(5, writer);
+			ps.setString(6, subject);
+			ps.setString(7, content);
+			ps.setString(8, img);
+			int count = ps.executeUpdate();
+			return count;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (conn != null)
+					conn.close();
+
+			} catch (Exception e2) {
+
+			}
+		}
+	}
+	/**이미지 삭제 관련 메서드*/
+	public int imgDel(int idx) {
+		try {
+			conn = com.moim.db.MoimDB.getConn();
+			String sql = "delete img from moim_review where idx = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+
+			int count = ps.executeUpdate();
+			return count;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (conn != null)
+					conn.close();
+
 			} catch (Exception e2) {
 
 			}
