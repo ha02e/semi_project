@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>  
+    pageEncoding="UTF-8"%>
+<%@ page import="com.moim.noimg.*" %>
+<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="mdto"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,40 +37,34 @@ function popupclose(){
 </script>
 </head>
 <%
-String idx=request.getParameter("idx");
 String subject=request.getParameter("subject");
-String ref=request.getParameter("ref");
-String lev=request.getParameter("lev");
-String sunbun=request.getParameter("sunbun");
+String content=request.getParameter("content");
+int idx=mdto.getIdx();
 %>
 <body>
-<h2>QnA 답변 작성하기</h2>
-	<form name="qnaReWrite" action="qnaReWrite_ok.jsp" method="post">
-	<input type="hidden" name="idx" value="<%=idx %>">
-	<input type="hidden" name="subject" value="<%=subject %>">
-	<input type="hidden" name="ref" value="<%=ref %>">
-	<input type="hidden" name="lev" value="<%=lev %>">
-	<input type="hidden" name="sunbun" value="<%=sunbun%>">
+<h2>QnA 글 수정하기</h2>
+	<form name="qnaUpdate" action="qnaUpdate_ok.jsp">
 <table>
 	<tr>
 		<th>제목</th>
 	</tr>
 	<tr>
 		<td>
-			<input type="text" name="subject" size="38" value="ㄴRe:<%=subject%>">
+			<input type="text" name="subject" size="38" value="<%=mdto.getSubject()%>">
 		</td>
 	</tr>
 	<tr>
 		<th>내용</th>
 	</tr>
-	<tr> 
+	<tr>
 		<td>
-			<textarea name="content" rows="3" cols="38"></textarea>
+			<textarea name="content" rows="3" cols="38"><%=mdto.getContent()%></textarea>
 		</td>
 	</tr>
 </table>
 <div>
 	<input type="button" value="취소하기" onclick="popupclose()">
+	
 	<input type="submit" value="작성하기" class="abutton">
 </div>
 </form>
