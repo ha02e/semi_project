@@ -12,11 +12,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<<<<<<< HEAD
-<%=dao.test() %>
-=======
+
 <%@include file="/header.jsp" %>
->>>>>>> dfa4fc7db55e19818854b4064637d7e03b873010
+
 <h1>index</h1>
 <h2>index2</h2>
 <%=sdao.test() %>
