@@ -9,6 +9,42 @@
 <head>
 <meta charset="UTF-8">
 <title>모임 가입</title>
+<style>
+section {
+	width:1280px;
+	padding: 20px;
+}
+section table{
+	margin: 0px auto;
+	width: 1200px;
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+section img{
+	width: 200px;
+	heigth:200px;
+}
+section table .intab{
+	border-bottom: 1px solid black;
+	height: 200px;
+}
+input[type="checkbox"] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #999;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  input[type="checkbox"]:checked {
+    background: black;
+    border: none;
+  }
+#detaildiv{
+	margin-top: 10px;
+}
+</style>
 </head>
 <%
 String hobby[]=null;		//취미
@@ -31,6 +67,7 @@ if(request.getParameter("local")!=null){
 <%
 int listSize=2;//내맘
 int pageSize=5;//내맘
+
 
 String cp_s=request.getParameter("cp");
 if(cp_s==null||cp_s.equals("")){
@@ -68,6 +105,7 @@ if(cp%pageSize==0)userGroup--;
 			<%if(detail.equals("on")){ %>
 			<input type="button" value="세부 검색" onclick="javascript:location.href='infoSearch.jsp'">
 				<div id="detaildiv">
+				<fieldset>
 				<table>
 					<tr>
 					<th>
@@ -108,6 +146,7 @@ if(cp%pageSize==0)userGroup--;
 						</td>
 					</tr>
 				</table>
+				</fieldset>
 				</div>
 			<%}else{
 				%>
@@ -124,11 +163,11 @@ if(cp%pageSize==0)userGroup--;
 				for(int i=0;i<arr.size();i++){
 		%>
 			<tr>
-				<td></td>
-				<td><%=arr.get(i).getMoimname() %></td>
-				<td><%=arr.get(i).getLocal() %></td>
-				<td><%=arr.get(i).getHobby() %></td>
-				<td><%=arr.get(i).getNowmem() %>/<%=arr.get(i).getMaxmem() %></td>
+				<td class="intab"><img alt="img<%=i %>" src="<%=arr.get(i).getImg()%>"></td>
+				<td class="intab"><a href="infoContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname() %></a></td>
+				<td class="intab"><%=arr.get(i).getLocal() %></td>
+				<td class="intab"><%=arr.get(i).getHobby() %></td>
+				<td class="intab"><%=arr.get(i).getNowmem() %>/<%=arr.get(i).getMaxmem() %></td>
 			</tr>
 		<%		}		
 			}else{ %>

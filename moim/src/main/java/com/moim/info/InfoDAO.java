@@ -72,7 +72,7 @@ public class InfoDAO {
 			}catch(Exception e2) {}
 		}
 	}
-	/**세부검색 게시물 총 개수 검색 관렴 메서드*/
+	/**세부검색 게시물 총 개수 검색 관련 메서드*/
 	public int getTotalCntDeatil(String userhobby[],String keyword,String userlocal) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
@@ -156,7 +156,7 @@ public class InfoDAO {
 			int start=(cp-1)*ls+1;
 			int end=(cp*ls);
 			ArrayList<InfoDTO> arr=new ArrayList<InfoDTO>();
-			String sql="select * from (select rownum as rnum,a.* from (select * from moim_info where nowmem<maxmem and moimname like=? ";
+			String sql="select * from (select rownum as rnum,a.* from (select * from moim_info where nowmem<maxmem and moimname like ? and ";
 			if(userhobby!=null) {
 				if(!userlocal.equals("전체")) {
 					sql=sql+"local='"+userlocal+"' and ";

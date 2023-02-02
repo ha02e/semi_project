@@ -13,9 +13,8 @@ div table{
 	margin: 0px 100px;
 }
 .infotab{
-	width:150px;
-	height:150px;
-	background-color: gray;
+	width:200px;
+	height:200px;
 	float: left;
 }
 section ul{
@@ -43,8 +42,8 @@ table ul{
 	margin-right: 20px;
 }
 .infotable{
-	width:150px;
-	height:150px;
+	width:200px;
+	height:200px;
 	float: left;
 }
 #buttondiv{
@@ -53,7 +52,6 @@ table ul{
 }
 #detaildiv{
 	height:100px;
-	background-color: gray;
 	margin-top:20px;
 }
 input[type="checkbox"] {
@@ -68,6 +66,10 @@ input[type="checkbox"] {
   input[type="checkbox"]:checked {
     background: black;
     border: none;
+  }
+  section img{
+  width: 200px;
+  height: 200px;
   }
 </style>
 </head>
@@ -91,6 +93,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 			<%if(detail.equals("on")){ %>
 			<input type="button" value="세부 검색" onclick="javascript:location.href='infoList.jsp'">
 				<div id="detaildiv">
+				<fieldset>
 				<table>
 					<tr>
 					<th>
@@ -131,6 +134,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 						</td>
 					</tr>
 				</table>
+				</fieldset>
 				</div>
 			<%}else{
 				%>
@@ -149,7 +153,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		for(int i=0;i<fitarr.size()&&i<=1;i++){ %>
 			<table class="infotab">
 				<tr>
-					<td></td>
+					<td><img alt="fitimg<%=i%> %>" src="<%=fitarr.get(i).getImg()%>"></td>
 				</tr>
 			</table>
 			<ul>
@@ -178,7 +182,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		for(int i=0;i<needarr.size()&&i<4;i++){ %>
 			<table class="infotab" id="infotab">
 				<tr>
-					<td></td>
+					<td><img alt="needimg<%=i %>" src="<%=needarr.get(i).getImg()%>"></td>
 				</tr>
 			</table>
 		<%} %>
