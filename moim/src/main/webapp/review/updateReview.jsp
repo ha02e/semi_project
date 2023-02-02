@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="com.moim.review.*"%>
 <jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
@@ -12,15 +12,6 @@ if (idx_s == null || idx_s.equals("")) {
 int idx = Integer.parseInt(idx_s);
 ReviewDTO dto = rdao.updateReviewForm(idx);
 
-boolean boo = false;
-
-String userimg = null;
-if (userimg != null)
-	userimg = request.getParameter("img");
-
-if (dto.getImg() == null) {
-	boo = true;
-}
 %>
 
 
@@ -61,6 +52,7 @@ section .moimcontent {
 
 section .write {
 	width: 500px;
+	height: 900px;
 }
 
 section .write table th {
@@ -112,7 +104,7 @@ section .img {
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<section>
 			<article>
-				<h2>모임 만들기</h2>
+				<h2>후기 게시판 수정</h2>
 				<div class="moimcontent">
 					<div class="contents write">
 						<table>
@@ -120,6 +112,31 @@ section .img {
 								<th>내용</th>
 								<td><textarea name="content" rows="10" cols="50"><%=dto.getContent()%></textarea></td>
 							</tr>
+							<%
+							if (dto.getImg() == null || dto.getImg().equals("")) {
+							%>
+							<h3>이미지 없음</h3>
+							<thead>
+								<div class="contents imgupload">
+
+									<img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200>
+									<div>
+										<legend>이미지 올리기</legend>
+										<ul>
+											<li><label>이미지</label><input type="file" name="upload"></li>
+										</ul>
+									</div>
+								</div>
+							</thead>
+							<tfoot>
+								<div class="button">
+									<input type="submit" value="수정하기">
+									<input type="button" value="취소하기" onclick="location.href='reviewList.jsp'"> 
+								</div>
+							</tfoot>
+							<%
+							} else {
+							%>
 							<thead>
 								<tr>
 									<td width="200" height="200"><img alt="이미지"
@@ -128,30 +145,30 @@ section .img {
 										height=200"></td>
 									<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
 										height=200"></td>
+										
 								</tr>
 							</thead>
+							<tfoot>
+								<div class="button">
+									<input type="submit" value="수정하기"> &nbsp;&nbsp;<input
+										type="button" value="이미지 삭제"
+										onclick="javascript:location.href='reviewImgDel.jsp?idx=<%=idx%>'">
+										<input type="button" value="취소하기" onclick="location.href='reviewList.jsp'"> 
+								</div>
+							</tfoot>
+							<%
+							}
+							%>
 
 						</table>
 
 					</div>
-					<div class="contents imgupload">
 
-						<img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200>
-						<div>
-							<legend>이미지 올리기</legend>
-							<ul>
-								<li><label>이미지</label><input type="file" name="upload"></li>
-							</ul>
-						</div>
-					</div>
 				</div>
-				<div class="button">
-					<input type="submit" value="수정하기"> &nbsp;&nbsp;<input
-						type="button" value="이미지 삭제">
-				</div>
+
 			</article>
 		</section>
 	</form>
 	<%@include file="/footer.jsp"%>
 </body>
-</html>
+</html> --%>

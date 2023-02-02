@@ -420,7 +420,7 @@ public class ReviewDAO {
 	public int imgDel(int idx) {
 		try {
 			conn = com.moim.db.MoimDB.getConn();
-			String sql = "delete from moim_review where idx = ?";
+			String sql = "delete img from moim_review where idx = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 
