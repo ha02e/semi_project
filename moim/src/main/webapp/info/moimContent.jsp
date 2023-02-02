@@ -12,6 +12,7 @@
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao2" class="com.moim.info.InfoDAO"></jsp:useBean>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,9 +82,8 @@ input[id*="click"]{
 }
 input[id*="click"] + label{
 	display:block;
-	padding:20px;
+	padding:10px 20px;
 	border:1px solid #e8e8e8;
-	border-bottom:0;
 	cursor:pointer;
 }
 input[id*="click"] + label span.go{
@@ -102,26 +102,47 @@ input[id*="click"] + label + div{
 }
 input[id*="click"] + label + div p{
 	display:inline-block;
-	padding:20px;
+	padding:18px 0;
 	text-align: center;
 	justify-content: center;
 }
 input[id*="click"]:checked + label + div{
-	max-height:100px;
+	max-height:200px;
+}
+.qnabutton{
+	text-align: center;
+	margin:0 0 12px 0;
+}
+.display p{
+	width:100%;
+}
+
+.qnahead{
+	padding:10px 20px;
+	border:1px solid #e8e8e8;
+}
+.qnawriter{
+	display:inline-block;
+	width:80px;
+	text-align:center;
+}
+.qnasubject{
+	display:inline-block;
+	width:400px;
+	padding-left:20px;
+}
+.qnadate{
+	display:inline-block;
+	width:120px;
+	text-align:center;
 }
 .rebutton{
-	background-color: #999999;
-	color:white;
-    width:48px;
-    heigth:16px;
-    padding:4px 6px;
-    border-radius:4px;
-    font-size:12px;
+	display:inline-block;
+	width:120px;
+	text-align:center;
 }
-.rebutton a:link, a:visited{
-	text-decoration: none;
-	cursor:pointer;
-	color:white;
+.qnahead .qnasubject{
+	text-align:center;
 }
 .writebutton{
 	text-align:right;
@@ -144,6 +165,20 @@ input[id*="click"]:checked + label + div{
     font-size:13px;
 }
 </style>
+<%
+int idx_info=0;
+int listSize=5;
+int pageSize=5;
+
+String cp_s=request.getParameter("cp");
+if(cp_s==null || cp_s.equals("")){
+   cp_s="1";
+}
+int cp=Integer.parseInt(cp_s);
+int totalCnt=mdao.getTotalCnt(idx_info);
+ArrayList<NoimgDTO> arr=mdao.getQnaList(idx_info,listSize,cp);
+%>
+		
 <script>
 function moimApply(){
 	var w=320;
@@ -169,30 +204,20 @@ function qnaReWrite(){
 	var w=320;
 	var h=340;
 	 
-	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
 	var left=Math.ceil((window.screen.width-w)/2);
 	var top=Math.ceil((window.screen.height-h)/2);  
-	window.open('/moim/noimg/qnaReWrite.jsp', 'qnaReWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
+	window.open('/moim/noimg/qnaReWrite.jsp?idx=<%=mdto.getIdx()%>&subject=<%=mdto.getSubject()%>&ref=<%=mdto.getRef()%>&lev=<%=mdto.getLev()%>&sunbun=<%=mdto.getSunbun()%>', 'qnaReWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
 
 function qnaUpdate(){
 	var w=320;
 	var h=340;
 	 
-	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
 	var left=Math.ceil((window.screen.width-w)/2);
 	var top=Math.ceil((window.screen.height-h)/2);  
-	window.open('/moim/noimg/qnaUpdate.jsp?', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
+	window.open('/moim/noimg/qnaUpdate.jsp?idx=', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
 
-function qnaDisplay(){
-	var qna=document.getElementById('qnacontent');
-    if(qna.style.display=='none'){ 		
-    	qna.style.display = 'block'; 	
-    }else{ 		
-    	qna.style.display = 'none'; 	
-    } 
-}
 </script>
 </head>
 <%
@@ -207,16 +232,9 @@ InfoDTO dto=mdao2.getInfo(idx);
 
 %>
 <%
-int idx_info=0;
-int totalCnt=mdao.getTotalCnt(idx_info);
-int listSize=5;
-int pageSize=5;
 
-String cp_s=request.getParameter("cp");
-if(cp_s==null || cp_s.equals("")){
-   cp_s="1";
-}
-int cp=Integer.parseInt(cp_s);
+
+
 
 int totalPage=(totalCnt/listSize)+1;
 if(totalCnt%listSize==0)totalPage--;
@@ -262,16 +280,16 @@ if(cp%pageSize==0)userGroup--;
 </article>
 <article>
    <h2>QnA</h2>
-   <form name="qna" method="post">
+   <form name="qna">
 	<div class="qnabbs">
 		<div class="qnahead">
-			<span>작성자</span>
-			<span>제목</span>
-			<span>날짜</span>
-			<span>답글작성</span>
+			<span class="qnawriter">작성자</span>
+			<span class="qnasubject">제목</span>
+			<span class="qnadate">날짜</span>
+			<span class="rebutton"></span>
 		</div>
 		<%
-		ArrayList<NoimgDTO> arr=mdao.getQnaList(idx_info,listSize,cp);
+
 		if(arr==null || arr.size()==0){
 			%>
 			<span>등록된 글이 없습니다.</span>
@@ -282,16 +300,35 @@ if(cp%pageSize==0)userGroup--;
 			<div class="qnacontent">
 				<input type="radio" name="qnacontent" id="click<%=i%>">
 				<label for="click<%=i%>">
-				<span><%=arr.get(i).getWriter() %></span>
-				<span class="qnasubject"><%=arr.get(i).getSubject() %><span class="go">&gt;</span></span>
-				<span><%=arr.get(i).getWritedate() %></span>
-				<span class="rebutton"><a href="javascript:qnaReWrite();">답변작성</a></span>
+				<span class="qnawriter"><%=arr.get(i).getWriter() %></span>
+				<span class="qnasubject">
+					<%
+					for(int z=0;z<arr.get(i).getLev();z++){
+						out.println("&nbsp;&nbsp;");
+					}
+					%>
+					<%=arr.get(i).getSubject() %><span class="go">&gt;</span>
+				</span>
+				<span class="qnadate"><%=arr.get(i).getWritedate() %></span>
+				<span class="rebutton">
+					<form name="qnaRewrite">
+						<input type="hidden" name="idx" value="<%=arr.get(i).getIdx()%>">
+						<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
+						<input type="hidden" name="ref" value="<%=arr.get(i).getRef() %>">
+						<input type="hidden" name="lev" value="<%=arr.get(i).getLev() %>">
+						<input type="hidden" name="sunbun" value="<%=arr.get(i).getSunbun() %>">
+					<input type="submit" value="답변작성" onclick="qnaReWrite();">
+					</form>
+				</span>
 				</label>
-				<div>
-					<p><%=arr.get(i).getContent() %></p>
+				<div class="display">
+					<p><%=arr.get(i).getContent()%></p>
 					<div class="qnabutton">
 						<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-						<a href="javascript:qnaUpdate();">수정</a>
+						<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
+						<input type="hidden" name="content" value="<%=arr.get(i).getContent() %>">
+						<input type="submit" value="수정" onclick="qnaUpdate();">
+						
 						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
 							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
 							<input type="submit" value="삭제">
