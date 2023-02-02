@@ -115,7 +115,7 @@ public class NoimgDAO {
    }
    
    /**총 게시글 수 관련 메서드*/
-   public int getTotalCnt(int idx_info) {
+   public int getQnaTotalCnt(int idx_info) {
       try {
          conn=com.moim.db.MoimDB.getConn();
          String sql="select count(*) from moim_noimg where category=2 and idx_info=?";
@@ -186,51 +186,7 @@ public class NoimgDAO {
       }
    } 
    
-   /**QnA 글 수정하기 관련 메서드*/
-   public int updateQna(NoimgDTO dto) {
-	   try {
-	          conn=com.moim.db.MoimDB.getConn();
-	          String sql="update moim_noimg set subject=?, content=? where idx=?";
-	          ps=conn.prepareStatement(sql);
-	          ps.setString(1, dto.getSubject());
-	          ps.setString(2, dto.getContent());
-	          ps.setInt(3, dto.getIdx());
-	          int count=ps.executeUpdate();
-	          return count;
-	       }catch(Exception e) {
-	          e.printStackTrace();
-	          return -1;
-	       }finally {
-	          try {
-	             if(ps!=null)ps.close();
-	             if(conn!=null)conn.close();
-	          }catch(Exception e2) {
-	             
-	          }
-	       }
-   }
    
-   /**QnA 글 삭제 관련 메서드*/
-   public int delQna(int idx) {
-      try {
-         conn=com.moim.db.MoimDB.getConn();
-         String sql="delete from moim_noimg where idx=?";
-         ps=conn.prepareStatement(sql);
-         ps.setInt(1, idx);
-         int count=ps.executeUpdate();
-         return count;
-      }catch(Exception e) {
-         e.printStackTrace();
-         return -1;
-      }finally{
-         try {
-            if(ps!=null)ps.close();
-            if(conn!=null)conn.close();
-         }catch(Exception e2) {
-            
-         }
-      }
-   }
    
    
 }

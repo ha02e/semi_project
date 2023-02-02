@@ -175,7 +175,7 @@ if(cp_s==null || cp_s.equals("")){
    cp_s="1";
 }
 int cp=Integer.parseInt(cp_s);
-int totalCnt=mdao.getTotalCnt(idx_info);
+int totalCnt=mdao.getQnaTotalCnt(idx_info);
 ArrayList<NoimgDTO> arr=mdao.getQnaList(idx_info,listSize,cp);
 %>
 		
