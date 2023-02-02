@@ -5,6 +5,7 @@
 <%@ page import="java.net.*" %>
 <%@ page import="com.moim.stat.*" %>
 <%@ page import="com.moim.noimg.*" %>
+<%@ page import="com.moim.info.*" %>
 <jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
@@ -38,6 +39,8 @@ th{
 			</thead>
 			<tbody>
 			<%
+			ArrayList<StatDTO> dto3=mdao.getMyStat(21);
+			ArrayList<InfoDTO> dto4=mdao.getNowMem(21);
 			HashMap<Integer,String> map2=mdao.moimCategory();
 			HashMap<Integer,String> map1=mdao.moimName();
 			ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, 1);
@@ -56,10 +59,10 @@ th{
 					<tr>
 					<td><%=map2.get(dto1.get(i).getIdx_info())%></td>
 					<td><%=map1.get(dto2.get(i).getIdx_info())%></td>
-					<td>모임 인원</td>
+					<td><%=dto4.get(i).getNowmem()%>/<%=dto4.get(i).getMaxmem() %></td>
 					<td>
-					<input type="submit" value="모임게시판">
-					<input type="submit" value="후기쓰기">
+					<input type="submit" value="모임게시판" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<input type="submit" value="후기쓰기" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 					</td>
 					</tr>
 					<%
@@ -81,16 +84,32 @@ th{
 				</tr>
 			</thead>
 			<tbody>
+			<%
+			if(dto3==null||dto3.size()==0){
+				%>
 				<tr>
-				<td><a href="">카테고리</a></td>
-				<td><a href="">모임 이름</a></td>
-				<td><a href="">모임 인원</a></td>
-				<td>
-				<input type="submit" value="모임게시판">
-				<input type="submit" value="모임관리">
-				<input type="submit" value="모임삭제">
-				</td>
+					<td colspan="5" align="center">
+					내가 만든 모임이 없습니다.
+					</td>
 				</tr>
+				<%
+			}else{
+				for(int i=0;i<dto3.size();i++){
+					%>
+					<tr>
+					<td><%=map2.get(dto1.get(i).getIdx_info()) %></td>
+					<td><%=map1.get(dto2.get(i).getIdx_info()) %></td>
+					<td><%=dto4.get(i).getNowmem()%>/<%=dto4.get(i).getMaxmem() %></td>
+					<td>
+					<input type="submit" value="모임게시판" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<input type="submit" value="모임관리" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<input type="submit" value="모임삭제" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">					
+					</td>
+					</tr>
+					<%
+				}
+			}
+			%>
 			</tbody>
 		</table>
 	</article>

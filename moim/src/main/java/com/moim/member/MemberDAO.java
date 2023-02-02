@@ -166,33 +166,43 @@ public class MemberDAO {
 			return null;
 		}finally {
 			try {
-				
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
 			}catch(Exception e2) {}
 		}
 	}
 	
 	/**모임 인원 가져오기 메서드*/
-	public ArrayList<Integer> getNowMem(int idx){
+	public ArrayList<InfoDTO> getNowMem(int idx){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			String sql="select nowmem,maxmem from moim_info where idx=?";
 			ps=conn.prepareStatement(sql);
-			ArrayList<Integer> arr=new ArrayList<Integer>();
+			ArrayList<InfoDTO> arr=new ArrayList<InfoDTO>();
 			ps.setInt(1, idx);
 			rs=ps.executeQuery();
-			
-			if(rs.next()) {
+			while(rs.next()) {
+				String hobby=rs.getString("hobby");
+				String moimname=rs.getString("moimname");
+				String content=rs.getString("content");
+				String local=rs.getString("local");
 				int nowmem=rs.getInt("nowmem");
 				int maxmem=rs.getInt("maxmem");
+				String imt=rs.getString("img");
 				
+				InfoDTO dto=new InfoDTO(idx, hobby, moimname, content, local, nowmem, maxmem, imt);
+				arr.add(dto);
 			}
-			
-			
+			return arr;
 		}catch(Exception e) {
 			e.printStackTrace();
+			return null;
 		}finally {
 			try {
-				
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
 			}catch(Exception e2) {}
 		}
 	}
@@ -248,11 +258,58 @@ public class MemberDAO {
 			return null;
 		}finally {
 			try {
-				
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
 			}catch(Exception e2) {}
 		}
 	}
 	
+	/**총 작성 수 관련 메서드*/
+	/**cul 
+	 * 1.idx_member=1
+	 * 2.and category=2
+	 * 3.and stat in(1,0)
+	 * 4.and stat=0*/
+	
+	public int getTotal(String table,int idx_member,int cul) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select count(*) from ? where idx_member=? ";
+			if(table=="moim_review"&&cul==1) {
+				ps=conn.prepareStatement(sql);
+			}else if(table=="moim_noimg"&&cul==2) {
+				sql=sql+"and category=2";
+				ps=conn.prepareStatement(sql);
+			}else if(table=="moim_stat"&&cul==3) {
+				sql=sql+"and stat in(1,0)";
+				ps=conn.prepareStatement(sql);
+			}else if(table=="moim_stat"&&cul==4){
+				sql=sql+"and stat=0";
+				ps=conn.prepareStatement(sql);
+			}
+			ps=conn.prepareStatement(sql);
+			int count=0;
+			ps.setString(1, table);
+			ps.setInt(2, idx_member);
+			ps.setInt(3, cul);
+			rs=ps.executeQuery();
+			rs.next();
+			count=rs.getInt(1);
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 1;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	
+
 //	/**탈퇴하기 메서드*/
 //	public int dropMem(int idx) {
 //		try {

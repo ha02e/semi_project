@@ -24,7 +24,6 @@ th{
 <%
 int idx=22;
 
-
 %>
 <body>
 <%@include file="/header.jsp" %>
