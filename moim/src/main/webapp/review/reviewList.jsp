@@ -63,7 +63,7 @@ if(userhobby.equals("전체") && keyword.equals("")){
 	boo=false;
 }
 
-int listSize = 3;//내 맘
+int listSize = 10;//내 맘
 int pageSize = 5;//내 맘
 String cp_s = request.getParameter("cp");
 if (cp_s == null || cp_s.equals("")) {

@@ -176,10 +176,7 @@ public class ReviewDAO {
 				ps.setInt(1, start);
 				ps.setInt(2, end);
 			}
-			System.out.println(userhobby);
-			System.out.println(keyword);
-			System.out.println(boo);
-			System.out.println(sql);
+		
 
 			rs = ps.executeQuery();
 			ArrayList<ReviewDTO> arr = new ArrayList<ReviewDTO>();
@@ -419,5 +416,30 @@ public class ReviewDAO {
 			}
 		}
 	}
+	/**이미지 삭제 관련 메서드*/
+	public int imgDel(int idx) {
+		try {
+			conn = com.moim.db.MoimDB.getConn();
+			String sql = "delete from moim_review where idx = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
 
+			int count = ps.executeUpdate();
+			return count;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (conn != null)
+					conn.close();
+
+			} catch (Exception e2) {
+
+			}
+		}
+	}
 }

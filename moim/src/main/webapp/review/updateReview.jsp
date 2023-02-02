@@ -11,6 +11,16 @@ if (idx_s == null || idx_s.equals("")) {
 
 int idx = Integer.parseInt(idx_s);
 ReviewDTO dto = rdao.updateReviewForm(idx);
+
+boolean boo = false;
+
+String userimg = null;
+if (userimg != null)
+	userimg = request.getParameter("img");
+
+if (dto.getImg() == null) {
+	boo = true;
+}
 %>
 
 
@@ -93,9 +103,7 @@ section .img {
 	<h2><%=dto.getSubject()%></h2>
 	<form name="reviewupdate" action="updateReview_ok.jsp">
 		<input type="hidden" name="idx" value="<%=idx%>">
-		<%
-		System.out.println("222222");
-		%>
+
 		<h4>
 			-모임명 :
 			<%=dto.getMoimname()%>
@@ -109,43 +117,37 @@ section .img {
 					<div class="contents write">
 						<table>
 							<tr>
-								<th><%=dto.getSubject()%></th>
-
-							</tr>
-							<tr>
-								<th><%=dto.getMoimname()%></th>
-
-							</tr>
-							<tr>
-								<th><%=dto.getLocal()%></th>
-							</tr>
-							<tr>
 								<th>내용</th>
 								<td><textarea name="content" rows="10" cols="50"><%=dto.getContent()%></textarea></td>
 							</tr>
-							<tr>
+							<thead>
+								<tr>
+									<td width="200" height="200"><img alt="이미지"
+										src="img/<%=dto.getImg()%>" width=200 height=200></td>
+									<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
+										height=200"></td>
+									<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
+										height=200"></td>
+								</tr>
+							</thead>
 
-							</tr>
 						</table>
 
 					</div>
 					<div class="contents imgupload">
-						<%-- 						<div class="img">
-							<img alt="이미지" src="img/<%=()%>">
-							이미지 들어가는 곳 / 오류가 생기면 name = 확인바람
-						</div>
- --%>
+
+						<img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200>
 						<div>
 							<legend>이미지 올리기</legend>
 							<ul>
-								<li><label>이미지</label><input type="file" name="upload"
-									multiple /></li>
+								<li><label>이미지</label><input type="file" name="upload"></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="button">
-					<input type="submit" value="글쓰기">
+					<input type="submit" value="수정하기"> &nbsp;&nbsp;<input
+						type="button" value="이미지 삭제">
 				</div>
 			</article>
 		</section>
