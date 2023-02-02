@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>모임 가입</title>
 </head>
 <%
 String hobby[]=null;		//취미
@@ -29,7 +29,7 @@ if(request.getParameter("local")!=null){
 }
 %>
 <%
-int listSize=1;//내맘
+int listSize=2;//내맘
 int pageSize=5;//내맘
 
 String cp_s=request.getParameter("cp");
