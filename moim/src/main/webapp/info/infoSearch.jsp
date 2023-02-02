@@ -16,7 +16,7 @@ section {
 }
 section table{
 	margin: 0px auto;
-	width: 1200px;
+	width: 1100px;
 	border-spacing: 0px;
 	border-collapse: collapse;
 }
@@ -65,7 +65,7 @@ if(request.getParameter("local")!=null){
 }
 %>
 <%
-int listSize=2;//내맘
+int listSize=5;//내맘
 int pageSize=5;//내맘
 
 
@@ -101,7 +101,7 @@ if(cp%pageSize==0)userGroup--;
 	<article>
 		<form name="infoSearch" action="infoSearch.jsp">
 			<input type="submit" value="검색">
-			<input type="text" name="keyword">
+			<input type="text" name="keyword" placeholder="검색어를 입력하세요">
 			<%if(detail.equals("on")){ %>
 			<input type="button" value="세부 검색" onclick="javascript:location.href='infoSearch.jsp'">
 				<div id="detaildiv">

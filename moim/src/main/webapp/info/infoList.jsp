@@ -89,7 +89,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 	<article>
 		<form name="infoSearch" action="infoSearch.jsp">
 			<input type="submit" value="검색">
-			<input type="text" name="keyword">
+			<input type="text" name="keyword" placeholder="검색어를 입력하세요">
 			<%if(detail.equals("on")){ %>
 			<input type="button" value="세부 검색" onclick="javascript:location.href='infoList.jsp'">
 				<div id="detaildiv">
