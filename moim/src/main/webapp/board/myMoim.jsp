@@ -22,6 +22,28 @@ th{
 }
 </style>
 </head>
+<%
+int totalCnt3=mdao.getTotal("moim_stat", 22, 3);
+int totalCnt4=mdao.getTotal("moim_stat", 22, 4);
+
+int listSize=5;
+int pageSize=5;
+
+String idx_member_s=request.getParameter("idx_member");
+if(idx_member_s==null||idx_member_s.equals("")){
+	idx_member_s="1";
+}
+int idx_member=Integer.parseInt(idx_member_s);
+
+int totalPage3=totalCnt3/listSize+1;
+if(totalCnt3%listSize==0)totalPage3--;
+
+int totalPage4=totalCnt4/listSize+1;
+if(totalCnt4%listSize==0)totalPage4--;
+
+int userGroup=idx_member/pageSize;
+if(idx_member%pageSize==0)userGroup--;
+%>
 <body>
 <%@include file="/header.jsp" %>
 <%@include file="sideBoard.jsp" %>
@@ -62,6 +84,7 @@ th{
 					<td><%=dto4.get(i).getNowmem()%>/<%=dto4.get(i).getMaxmem() %></td>
 					<td>
 					<input type="submit" value="모임게시판" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<!-- idx,지역,모임이름 -->
 					<input type="submit" value="후기쓰기" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 					</td>
 					</tr>
@@ -70,6 +93,28 @@ th{
 			}
 			%>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4" align="center">
+					<%
+					if(userGroup!=0){
+						%><a href="myWriting.jsp?=idx_member=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+					}
+					%>
+					<%
+					for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
+						%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+						if(i==totalPage3)break;
+					}
+					%>
+					<%
+					if(userGroup!=(totalPage3/pageSize-(totalPage3%pageSize==0?1:0))){
+						%><a href="myWriting.jsp?idx_member=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+					}
+					%>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
 		
 		<br>
@@ -101,7 +146,8 @@ th{
 					<td><%=map1.get(dto2.get(i).getIdx_info()) %></td>
 					<td><%=dto4.get(i).getNowmem()%>/<%=dto4.get(i).getMaxmem() %></td>
 					<td>
-					<input type="submit" value="모임게시판" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<input type="submit" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<!-- info_idx -->
 					<input type="submit" value="모임관리" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 					<input type="submit" value="모임삭제" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">					
 					</td>
@@ -111,6 +157,28 @@ th{
 			}
 			%>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4" align="center">
+					<%
+					if(userGroup!=0){
+						%><a href="myWriting.jsp?=idx_member=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+					}
+					%>
+					<%
+					for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
+						%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+						if(i==totalPage4)break;
+					}
+					%>
+					<%
+					if(userGroup!=(totalPage4/pageSize-(totalPage4%pageSize==0?1:0))){
+						%><a href="myWriting.jsp?idx_member=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+					}
+					%>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
 	</article>
 </section>
