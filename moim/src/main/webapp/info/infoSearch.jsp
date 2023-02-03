@@ -41,8 +41,18 @@ input[type="checkbox"] {
     background: black;
     border: none;
   }
-#detaildiv{
-	margin-top: 10px;
+label.detail{
+	border: 1px groove black;
+	background-color: #f4f4f4;
+}
+input#detail{
+	display:none;
+}
+div#detaildiv{
+	display: none;
+}
+input#detail:checked + div#detaildiv{
+	display: block;
 }
 </style>
 </head>
@@ -102,8 +112,8 @@ if(cp%pageSize==0)userGroup--;
 		<form name="infoSearch" action="infoSearch.jsp">
 			<input type="submit" value="검색">
 			<input type="text" name="keyword" placeholder="검색어를 입력하세요">
-			<%if(detail.equals("on")){ %>
-			<input type="button" value="세부 검색" onclick="javascript:location.href='infoSearch.jsp'">
+			<label class="detail" for="detail">세부검색</label>
+			<input type="checkbox" id="detail">
 				<div id="detaildiv">
 				<fieldset>
 				<table>
@@ -148,11 +158,6 @@ if(cp%pageSize==0)userGroup--;
 				</table>
 				</fieldset>
 				</div>
-			<%}else{
-				%>
-				<input type="button" value="세부 검색" onclick="javascript:location.href='infoSearch.jsp?detail=on'">
-				<%}
-				%>
 		</form>
 	</article>
 	<article>
