@@ -37,13 +37,14 @@ function popupclose(){
 </script>
 </head>
 <%
+String idx=request.getParameter("idx");
 String subject=request.getParameter("subject");
 String content=request.getParameter("content");
-int idx=mdto.getIdx();
 %>
 <body>
 <h2>QnA 글 수정하기</h2>
 	<form name="qnaUpdate" action="qnaUpdate_ok.jsp">
+	<input type="hidden" name="idx" value="<%=mdto.getIdx() %>">
 <table>
 	<tr>
 		<th>제목</th>
@@ -64,7 +65,6 @@ int idx=mdto.getIdx();
 </table>
 <div>
 	<input type="button" value="취소하기" onclick="popupclose()">
-	
 	<input type="submit" value="작성하기" class="abutton">
 </div>
 </form>

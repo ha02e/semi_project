@@ -4,13 +4,13 @@
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.info.*" %>
 
-<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO"></jsp:useBean>
+<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO" scope="session"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
-<jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO" scope="session"></jsp:useBean>
 
-<jsp:useBean id="mdto2" class="com.moim.info.InfoDTO"></jsp:useBean>
+<jsp:useBean id="mdto2" class="com.moim.info.InfoDTO" scope="session"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
-<jsp:useBean id="mdao2" class="com.moim.info.InfoDAO"></jsp:useBean>
+<jsp:useBean id="mdao2" class="com.moim.info.InfoDAO" scope="session"></jsp:useBean>
 
 
 <!DOCTYPE html>
@@ -24,7 +24,6 @@ section{
 	margin:0 auto;
 }
 section h2{
-	
 }
 section .content{
 	display:flex;
@@ -36,11 +35,18 @@ section .moiminfo{
 	width:600px;
 }
 section .img{
-	background:gray;
 	width:240px;
 	height:160px;
+	position: relative;
+	overflow: hidden;
 }
-
+section .img img{
+	position:absolute;
+	width: 100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
 section .moiminfo table{
 	width:600px;
 	border:1px solid #eeeeee;
@@ -99,19 +105,22 @@ input[id*="click"] + label + div{
 	transition:max-height 0.5s;
 	overflow: hidden;
 	background:#eeeeee;
+	border-left:1px solid #eeeeee;
+	border-right:1px solid #eeeeee;
 }
 input[id*="click"] + label + div p{
 	display:inline-block;
-	padding:18px 0;
-	text-align: center;
-	justify-content: center;
+	padding:10px 40px 0 40px;
 }
 input[id*="click"]:checked + label + div{
-	max-height:200px;
+	max-height:500px;
 }
 .qnabutton{
 	text-align: center;
-	margin:0 0 12px 0;
+	margin:0 0 20px 0;
+}
+.qnabutton form{
+	display:inline;
 }
 .display p{
 	width:100%;
@@ -123,26 +132,37 @@ input[id*="click"]:checked + label + div{
 }
 .qnawriter{
 	display:inline-block;
-	width:80px;
+	width:100px;
 	text-align:center;
 }
 .qnasubject{
 	display:inline-block;
-	width:400px;
+	width:460px;
 	padding-left:20px;
 }
 .qnadate{
 	display:inline-block;
-	width:120px;
-	text-align:center;
-}
-.rebutton{
-	display:inline-block;
-	width:120px;
+	width:140px;
 	text-align:center;
 }
 .qnahead .qnasubject{
 	text-align:center;
+}
+.Q,.A{
+	font-weight:900;
+	color:red;
+}
+.rewrite fieldset{
+	width:700px;
+	margin:0 auto 20px auto;
+	border:1px solid #999999;
+	
+}
+.rewrite input[type="textarea"]{
+	margin:0 auto;
+}
+.rewrite td{
+	text-align: right;
 }
 .writebutton{
 	text-align:right;
@@ -166,17 +186,7 @@ input[id*="click"]:checked + label + div{
 }
 </style>
 <%
-int idx_info=0;
-int listSize=5;
-int pageSize=5;
-
-String cp_s=request.getParameter("cp");
-if(cp_s==null || cp_s.equals("")){
-   cp_s="1";
-}
-int cp=Integer.parseInt(cp_s);
-int totalCnt=mdao.getQnaTotalCnt(idx_info);
-ArrayList<NoimgDTO> arr=mdao.getQnaList(idx_info,listSize,cp);
+//int idx=mdto.getIdx();
 %>
 		
 <script>
@@ -200,14 +210,6 @@ function qnaWrite(){
 	 
 	window.open('/moim/noimg/qnaWrite.jsp', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
-function qnaReWrite(){
-	var w=320;
-	var h=340;
-	 
-	var left=Math.ceil((window.screen.width-w)/2);
-	var top=Math.ceil((window.screen.height-h)/2);  
-	window.open('/moim/noimg/qnaReWrite.jsp?idx=<%=mdto.getIdx()%>&subject=<%=mdto.getSubject()%>&ref=<%=mdto.getRef()%>&lev=<%=mdto.getLev()%>&sunbun=<%=mdto.getSunbun()%>', 'qnaReWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
-}
 
 function qnaUpdate(){
 	var w=320;
@@ -215,7 +217,7 @@ function qnaUpdate(){
 	 
 	var left=Math.ceil((window.screen.width-w)/2);
 	var top=Math.ceil((window.screen.height-h)/2);  
-	window.open('/moim/noimg/qnaUpdate.jsp?idx=', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
+	window.open('/moim/noimg/qnaUpdate.jsp', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
 
 </script>
@@ -227,18 +229,23 @@ if(idx_s==null || idx_s.equals("")){
 	idx_s="0";
 }
 */
-int idx=3;  //int idx=Integer.parseInt(idx_s);
+int idx=10;  //int idx=Integer.parseInt(idx_s);
 InfoDTO dto=mdao2.getInfo(idx);
-
 %>
 <%
+int listSize=5;
+int pageSize=5;
 
-
-
-
+int idx_info=0;
+int totalCnt=mdao.getQnaTotalCnt(idx_info);
 int totalPage=(totalCnt/listSize)+1;
 if(totalCnt%listSize==0)totalPage--;
 
+String cp_s=request.getParameter("cp");
+if(cp_s==null || cp_s.equals("")){
+   cp_s="1";
+}
+int cp=Integer.parseInt(cp_s);
 int userGroup=cp/pageSize;
 if(cp%pageSize==0)userGroup--;
 %>
@@ -253,7 +260,9 @@ if(cp%pageSize==0)userGroup--;
          <table>
             <tr>
                <td rowspan="4" class="moimimg">
-                  <div class="img"></div>
+                  <div class="img">
+                  	<img src="/moim/userimg/<%=dto.getImg()%>">
+                  </div>
                </td>
             </tr>
             <tr class="moimtext">
@@ -286,10 +295,9 @@ if(cp%pageSize==0)userGroup--;
 			<span class="qnawriter">작성자</span>
 			<span class="qnasubject">제목</span>
 			<span class="qnadate">날짜</span>
-			<span class="rebutton"></span>
 		</div>
 		<%
-
+		ArrayList<NoimgDTO> arr=mdao.getQnaList(idx_info,listSize,cp);
 		if(arr==null || arr.size()==0){
 			%>
 			<span>등록된 글이 없습니다.</span>
@@ -304,36 +312,63 @@ if(cp%pageSize==0)userGroup--;
 				<span class="qnasubject">
 					<%
 					for(int z=0;z<arr.get(i).getLev();z++){
-						out.println("&nbsp;&nbsp;");
+						out.println("&nbsp;&nbsp;"+"ㄴ&nbsp;"+"<span class='A'>A.&nbsp;</span>");
+					}
+					if(arr.get(i).getLev()==0){
+						%>
+						<span class="Q">Q.&nbsp;</span><%=arr.get(i).getSubject() %><span class="go">&gt;</span>
+						<%
+					}else{
+						%>
+						<%=arr.get(i).getSubject() %><span class="go">&gt;</span>
+						<%
 					}
 					%>
-					<%=arr.get(i).getSubject() %><span class="go">&gt;</span>
 				</span>
 				<span class="qnadate"><%=arr.get(i).getWritedate() %></span>
-				<span class="rebutton">
-					<form name="qnaRewrite">
-						<input type="hidden" name="idx" value="<%=arr.get(i).getIdx()%>">
-						<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
-						<input type="hidden" name="ref" value="<%=arr.get(i).getRef() %>">
-						<input type="hidden" name="lev" value="<%=arr.get(i).getLev() %>">
-						<input type="hidden" name="sunbun" value="<%=arr.get(i).getSunbun() %>">
-					<input type="submit" value="답변작성" onclick="qnaReWrite();">
-					</form>
-				</span>
 				</label>
+				
 				<div class="display">
 					<p><%=arr.get(i).getContent()%></p>
 					<div class="qnabutton">
-						<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-						<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
-						<input type="hidden" name="content" value="<%=arr.get(i).getContent() %>">
-						<input type="submit" value="수정" onclick="qnaUpdate();">
+						<form name="qnaUpdate" action="/moim/noimg/qnaUpdate.jsp">
+							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
+							<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
+							<input type="hidden" name="content" value="<%=arr.get(i).getContent() %>">
+							<input type="submit" value="수정" onclick="qnaUpdate();">
+						</form>
 						
 						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
 							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
 							<input type="submit" value="삭제">
 						</form>
 					</div>
+					<%
+					if(arr.get(i).getLev()==0){	
+					%>
+						<div class="rewrite">
+							<fieldset>
+							<legend>답변작성</legend>
+							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?subject=<%=arr.get(i).getSubject()%>&ref=<%=arr.get(i).getRef() %>">
+							<table>
+								<tr> 
+									<td>
+										<textarea name="content" rows="3" cols="94"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>		
+										<input type="submit" value="작성">
+									</td>
+								</tr>
+							</table>
+							</form>
+							</fieldset>
+						</div>
+						<%
+					}
+					%>
+
 				</div>
 			</div>
 		</div>

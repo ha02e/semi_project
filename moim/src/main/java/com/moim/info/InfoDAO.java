@@ -3,6 +3,8 @@ package com.moim.info;
 import java.sql.*;
 import java.util.*;
 
+import com.oreilly.servlet.MultipartRequest;
+
 public class InfoDAO {
 	Connection conn;
 	PreparedStatement ps;
@@ -13,17 +15,26 @@ public class InfoDAO {
 	}
 	
 	/**모임글 작성 관련 메서드*/
-	public int setInfo(InfoDTO dto) {
+	public int setInfo(MultipartRequest mr, InfoDTO dto) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			String sql="insert into moim_info values(moim_info_idx.nextval, ?, ?, ?, ?, 1, ?, ?)";
 			ps=conn.prepareStatement(sql);
-			ps.setString(1,dto.getHobby());
-			ps.setString(2,dto.getMoimname());
-			ps.setString(3, dto.getContent());
-			ps.setString(4, dto.getLocal());
-			ps.setInt(5, dto.getMaxmem());
-			ps.setString(6, dto.getImg());
+			
+			String hobby=mr.getParameter("hobby");
+			String moimname=mr.getParameter("moimname");
+			String content=mr.getParameter("content");
+			String local=mr.getParameter("local");
+			String maxmem_s=mr.getParameter("maxmem");
+			int maxmem=Integer.parseInt(maxmem_s);
+			String img=mr.getFilesystemName("upload");
+			
+			ps.setString(1, hobby);
+			ps.setString(2, moimname);
+			ps.setString(3, content);
+			ps.setString(4, local);
+			ps.setInt(5, maxmem);
+			ps.setString(6, img);
 			int count=ps.executeUpdate();
 			return count;
 		} catch (Exception e) {

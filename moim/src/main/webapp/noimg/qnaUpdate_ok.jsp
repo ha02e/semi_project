@@ -13,6 +13,7 @@ String msg=result>0?"QnA 글이 수정되었습니다.":"QnA 글 수정에 실�
 %>
 <script>
 window.alert('<%=msg%>');
-opener.location.reload();
-window.self.close();
+/*opener.location.reload();*/
+/*window.self.close();*/
+location.href='/moim/info/moimContent.jsp';
 </script>

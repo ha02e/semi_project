@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:useBean id="mdto" class="com.moim.info.InfoDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="mdto"/>
+<jsp:useBean id="mdao" class="com.moim.info.InfoDAO"></jsp:useBean>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +17,7 @@ section{
 section h2{
 	text-align:center;
 }
+/*
 section .moimcontent{
 	display:flex;
 	margin:0 auto;
@@ -20,9 +25,12 @@ section .moimcontent{
 	height:260px;
 	padding:10px 0 30px 0;
 }
+*/
+/*
 section .write{
 	width:500px;
 }
+*/
 section .write table th{
 	text-align:left;
 	font-size:18px;
@@ -31,18 +39,21 @@ section .write table th{
 section .write table td{
 	padding:4px 0;
 }
+/*
 section .imgupload{
 	width:300px;
 	text-align:center;
 }
+
 section .img{
 	background:#eeeeee;
 	width:160px;
 	height:160px;
 	margin:0 auto 10px auto;
 }
+*/
 .button{
-	text-align: right;
+	text-align: center;
 	padding:0 40px 20px 0;
 	
 }
@@ -62,7 +73,7 @@ section .img{
 	<h2>모임 만들기</h2>
 	<div class="moimcontent">
 		<div class="contents write">
-		<form name="moimWrite" action="moimWrite_ok.jsp">
+		<form name="moimWrite" action="moimWrite_ok.jsp" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<th>카테고리</th>
@@ -132,15 +143,36 @@ section .img{
 						</select>
 					</td>
 				</tr>
+				<tr>
+					<th>이미지</th>
+					<td><input type="file" name="upload" value="이미지 올리기" accept="image/*"></td>
+				
+				</tr>
 			</table>
 		</div>
+		<!--  	
+			<script>
+			function preview(input){
+				if(input.files && input.files[0]){
+					var reader=new FileReader();
+					reader.onload=function(e){
+						document.getElementById('viewimg').src=e.target.result;
+					}
+					reader.readAsDataURL(input.files[0]);
+				}else{
+					documemt.getElementById('viewimg').src="";
+				}
+			}
+			</script> 
+	 
 		<div class="contents imgupload">
-			<div class="img"></div>
-			<div><input type="button" value="이미지 업로드">
-			<input type="file" class="real-upload" accept="image/*" required multiple>
+			<div class="img"><img id="viewimg"></div>
+			<form name="imgUpload" method="post" enctype="multipart/form-data">
+			<input type="file" name="upload" value="이미지 올리기" accept="image/*" onchange="preview(this);">
+			</form>
 			</div>
 		</div>
-		</div>
+		-->
 		<div class="button">
 			<input type="submit" value="모임 만들기">
 		</div>
