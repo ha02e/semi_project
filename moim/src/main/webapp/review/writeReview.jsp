@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <style>
 section {
 	width: 800px;
@@ -78,26 +79,27 @@ String moimname = request.getParameter("moimname");
 String local = request.getParameter("local");
 String hobby = request.getParameter("hobby");
 String writer = request.getParameter("writer");
-/* String subect= request.getParameter("subject"); */
-/* String content= request.getParameter("content"); */
-String img = request.getParameter("img");
 %>
 <script>
-	function openImg() {
-		window.open('reviewImgUp.jsp', 'imgUpload', 'width=450', 'height=300');
 
-	}
+
 </script>
+<%
+
+
+
+
+%>
 <body>
 
 	<%@include file="/header.jsp"%>
 
 	<form name="imgUpload" method="post" action="reviewImgUp_ok.jsp"
+	
 		enctype="multipart/form-data">
-		<!-- 	<form name="write" action="writeReview_ok.jsp" method="post"> -->
 		<section>
 			<article>
-				<h2>모임 만들기</h2>
+				<h2>후기 게시판 작성</h2>
 				<div class="moimcontent">
 					<div class="contents write">
 						<table>
@@ -109,11 +111,11 @@ String img = request.getParameter("img");
 							<tr>
 								<th>모임이름</th>
 								<td><input type="text" name="moimname" size="52"
-									value="<%=moimname%>"></td>
+									value="<%=moimname%>" readonly></td>
 							</tr>
 							<tr>
 								<th>지역</th>
-								<td><input type="text" name="local" value="<%=local%>"></td>
+								<td><input type="text" name="local" value="<%=local%> " readonly></td>
 							</tr>
 							<tr>
 								<th>내용</th>
@@ -121,30 +123,21 @@ String img = request.getParameter("img");
 										placeholder="내용을 입력해주세요"></textarea></td>
 							</tr>
 							<tr>
-								<td colspan="3"><input type="hidden" name="idx_memeber" value="<%=idx_member%>">
-								<input type="hidden" name="hobby" value="<%=hobby%>">
-								<input type="hidden" name="writer" value="<%=writer%>"></td>
+								<th>이미지</th>
+								 <td><input type="file" name="upload"></td>
+							</tr>
+							<tr>
+								<td><input type="hidden" name="idx_memeber"
+									value="<%=idx_member%>"> <input type="hidden"
+									name="hobby" value="<%=hobby%>"> <input type="hidden"
+									name="writer" value="<%=writer%>"></td>
 							</tr>
 						</table>
-
-					</div>
-					<div class="contents imgupload">
-						<div class="img">
-							<%-- <img alt="이미지" src="img/<%=()%>"> --%>이미지 들어가는 곳 / 오류가 생기면 name =
-							확인바람
-						</div>
-						<div>
-							<legend>이미지 올리기</legend>
-							<ul>
-								<li><label>이미지</label><input type="file" name="upload" multiple/>	</li>
-								<li><label>이미지</label><input type="file" name="upload" multiple/>	</li>
-								<li><label>이미지</label><input type="file" name="upload" multiple/>	</li>
-							</ul>
-						</div>
 					</div>
 				</div>
 				<div class="button">
-					<input type="submit" value="글쓰기">
+					<input type="submit" value="글쓰기" >&nbsp;&nbsp;
+					<input type="button" value="취소" onclick = "location.href='reviewList.jsp'">
 				</div>
 			</article>
 		</section>

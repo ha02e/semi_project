@@ -1,16 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
 <%@page import="com.moim.review.*"%>
-
-
-
-
+<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
 <%
-/* int idx= (int)session.getAttribute("idx");
-int result = imgdao.imgDel(idx); */
 
-/* String idx_s=request.getParameter("idx"); 아래로 축약 */
+out.println("사용안함 똑같아");
 
 String idx_s = request.getParameter("idx");
 if (idx_s == null || idx_s.equals("")) {
@@ -18,11 +12,11 @@ if (idx_s == null || idx_s.equals("")) {
 }
 int idx = Integer.parseInt(idx_s);
 
+
+
 int result = rdao.imgDel(idx);
 String msg = result > 0 ? "이미지 삭제 성공" : "이미지 삭제 실패";
 %>
-
-
 <script>
 window.alert('<%=msg%>');
 	location.href = "updateReview.jsp"

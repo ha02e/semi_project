@@ -42,9 +42,9 @@ public class ReviewDAO {
 		}
 	}
 
-	/** 글쓰기 관련 메서드 */
+	/** 글쓰기 관련 메서드 이미지 작성*/
 
-	public int setReview(ReviewDTO dto) {
+/*	public int setReview(ReviewDTO dto) {
 		try {
 			conn = com.moim.db.MoimDB.getConn();
 
@@ -76,7 +76,7 @@ public class ReviewDAO {
 			}
 		}
 	}
-
+*/
 	/** 총 게시물 수 관련 메서드 */
 
 	public int getTotalCnt(String userhobby, String keyword, boolean boo) {
@@ -271,9 +271,10 @@ public class ReviewDAO {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			rs = ps.executeQuery();
-
+			
 			ReviewDTO dto = null;
 			if (rs.next()) {
+				
 				int idx_member = rs.getInt("idx_member");
 				String moimname = rs.getString("moimname");
 				String writer = rs.getString("writer");
@@ -308,14 +309,19 @@ public class ReviewDAO {
 	}
 
 	/** 수정 관련 메소드 */
-	public int updateReview(ReviewDTO dto) {
+	public int updateReview(ReviewDTO dto, MultipartRequest mr ) {
 		try {
 //			dbConnect();
 			conn = com.moim.db.MoimDB.getConn();
-			String sql = "update moim_review set content=? where idx=?";
+			String sql = "update moim_review set content=? , img=? where idx=?";
+//			String sql = "update moim_review set content=? where idx=?";
 			ps = conn.prepareStatement(sql);
+			
+			String img = mr.getFilesystemName("upload");
+			
 			ps.setString(1, dto.getContent());
-			ps.setInt(2, dto.getIdx());
+			ps.setString(2, img);
+			ps.setInt(3, dto.getIdx());
 			int count = ps.executeUpdate();
 			return count;
 
@@ -442,4 +448,35 @@ public class ReviewDAO {
 			}
 		}
 	}
+	/** 이미지 가져오기 메서드 */
+	public String getAdrImg(int idx) {
+		try {
+
+			conn = com.moim.db.MoimDB.getConn();
+			String sql = "select img from moim_review where idx =?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			
+			rs=ps.executeQuery();
+			
+			rs.next();
+			String str = rs.getString("img");
+			
+			return str ;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if(rs!=null)rs.close();
+				if (ps != null)
+					ps.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+
+			}
+		}
+	}
+	
 }

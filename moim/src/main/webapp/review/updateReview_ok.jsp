@@ -7,8 +7,10 @@
 
 	<%
 
-	int result= rdao.updateReview(rdto);
+	int result = rdao.updateReview(rdto);
 	String msg=result>0? "수정성공":"수정실패";
+	
+	System.out.println(msg);
 	%>
 	<script>
 	window.alert('<%=msg%>');

@@ -47,16 +47,28 @@ table {
 		-모임명 :
 		<%=dto.getMoimname()%>&nbsp;&nbsp;&nbsp;&nbsp;-지역 :
 		<%=dto.getLocal()%></h4>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<section>
 		<table>
 			<thead>
 				<article>
+					<%
+				if (dto.getImg() == null || dto.getImg().equals("")) {
+				%>
+
+				
+
+					<%
+				}else{
+					%>
 					<tr>
-						<td width ="200" height ="200"><img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200></td>
-						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200"></td>
-						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200"></td>
+						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
+							height=200></td>
+						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
+							height=200"></td>
+						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
+							height=200"></td>
 					</tr>
+					<%} %>
 				</article>
 			</thead>
 
