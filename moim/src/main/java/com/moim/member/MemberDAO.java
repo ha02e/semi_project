@@ -282,26 +282,25 @@ public class MemberDAO {
 	public int getTotal(String table,int idx_member,int cul) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select count(*) from ? where idx_member=? ";
-			if(table=="moim_review"&&cul==1) {
+			String sql="select count(*) from "+table+" where idx_member=? ";
+			if(table.equals("moim_review")&&cul==1) {
 				ps=conn.prepareStatement(sql);
-			}else if(table=="moim_noimg"&&cul==2) {
+			}else if(table.equals("moim_noimg")&&cul==2) {
 				sql=sql+"and category=2";
 				ps=conn.prepareStatement(sql);
-			}else if(table=="moim_stat"&&cul==3) {
+			}else if(table.equals("moim_stat")&&cul==3) {
 				sql=sql+"and stat in(1,0)";
 				ps=conn.prepareStatement(sql);
-			}else if(table=="moim_stat"&&cul==4){
+			}else if(table.equals("moim_stat")&&cul==4){
 				sql=sql+"and stat=0";
 				ps=conn.prepareStatement(sql);
-			}else if(table=="moim_noimg"&&cul==5) {
+			}else if(table.equals("moim_noimg")&&cul==5) {
 				sql=sql+"and category=3";
 			}
 			ps=conn.prepareStatement(sql);
 			int count=0;
-			ps.setString(1, table);
-			ps.setInt(2, idx_member);
-			ps.setInt(3, cul);
+
+			ps.setInt(1, idx_member);
 			rs=ps.executeQuery();
 			rs.next();
 			count=rs.getInt(1);
@@ -321,10 +320,11 @@ public class MemberDAO {
 	public ArrayList<NoimgDTO> getList(int idx_info,int category,int ls,int cp){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_noimg where category=?";
+			String sql="select * from moim_noimg where idx_info=? and category=?";
 			ps=conn.prepareStatement(sql);
 			ArrayList<NoimgDTO> arr=new ArrayList<NoimgDTO>();
-			ps.setInt(1, category);
+			ps.setInt(1, idx_info);
+			ps.setInt(2, category);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
@@ -357,18 +357,16 @@ public class MemberDAO {
 	public int writeChat(NoimgDTO dto) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="insert into moim_noimg values(?,?,?,?,?,?,?,sysdate,?,?,?)";
+			String sql="insert into moim_noimg values(idx.nextval,?,?,3,?,?,?,sysdate,?,?,?)";
 			ps=conn.prepareStatement(sql);
-			ps.setInt(1, dto.getIdx());
-			ps.setInt(2, dto.getIdx_member());
-			ps.setInt(3, dto.getIdx_info());
-			ps.setInt(4, dto.getCategory());
-			ps.setString(5, dto.getWriter());
-			ps.setString(6, dto.getSubject());
-			ps.setString(7, dto.getContent());
-			ps.setInt(8, dto.getRef());
-			ps.setInt(9, dto.getLev());
-			ps.setInt(10, dto.getSunbun());
+			ps.setInt(1, dto.getIdx_member());
+			ps.setInt(2, dto.getIdx_info());
+			ps.setString(3, dto.getWriter());
+			ps.setString(4, dto.getSubject());
+			ps.setString(5, dto.getContent());
+			ps.setInt(6, dto.getRef());
+			ps.setInt(7, dto.getLev());
+			ps.setInt(8, dto.getSunbun());
 			
 			int count=ps.executeUpdate();
 			return count;
@@ -388,11 +386,16 @@ public class MemberDAO {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			setUpdateSun(dto.getRef(),dto.getSunbun()+1);
-			String sql="insert into moim_noimg values(idx.nextval,?,?,?)";
+			String sql="insert into moim_noimg values(idx.nextval,?,?,3,?,?,?,sysdate,?,?,?)";
 			ps=conn.prepareStatement(sql);
-			ps.setString(1, dto.getWriter());
-			ps.setString(2, dto.getSubject());
-			ps.setString(3, dto.getContent());
+			ps.setInt(1, dto.getIdx_member());
+			ps.setInt(2, dto.getIdx_info());
+			ps.setString(3, dto.getWriter());
+			ps.setString(4, dto.getSubject());
+			ps.setString(5, dto.getContent());
+			ps.setInt(6, dto.getRef());
+			ps.setInt(7, dto.getLev());
+			ps.setInt(8, dto.getSunbun());
 			int count=ps.executeUpdate();
 			return count;
 		}catch(Exception e) {
@@ -422,25 +425,41 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
-
-//	/**탈퇴하기 메서드*/
-//	public int dropMem(int idx) {
-//		try {
-//			conn=com.moim.db.MoimDB.getConn();
-//			String sql="delete from ";
-//			ps=conn.prepareStatement(sql);
-//			ps.setInt(1, idx);
-//			int count=ps.executeUpdate();
-//			return count;
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//			return -1;
-//		}finally {
-//			try {
-//				if(ps!=null)ps.close();
-//				if(conn!=null)conn.close();
-//			}catch(Exception e2) {}
-//		}
-//	}
+	
+	/**모임게시판 글 보기 메서드*/
+	public NoimgDTO moimChatContent(int idx, int category) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select * from moim_noimg where idx=? and category=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			ps.setInt(2, category);
+			rs=ps.executeQuery();
+			NoimgDTO dto=null;
+			if(rs.next()) {
+				int idx_member=rs.getInt("idx_member");
+				int idx_info=rs.getInt("idx_info");
+				String writer=rs.getString("writer");
+				String subject=rs.getString("subject");
+				String content=rs.getString("content");
+				java.sql.Date writedate=rs.getDate("writedate");
+				int ref=rs.getInt("ref");
+				int lev=rs.getInt("lev");
+				int sunbun=rs.getInt("sunbun");
+				dto=new NoimgDTO(idx, idx_member, idx_info, category, writer, subject, content, writedate, ref, lev, sunbun);
+				
+			}
+			return dto;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
 
 }

@@ -26,7 +26,9 @@ form{
 </style>
 </head>
 <%
-int idx=21;
+
+int idx=22;
+int category=3;
 MemberDTO dto=mdao.getMem(idx);
 
 int totalCnt=mdao.getTotal("moim_noimg", 22, 5);
@@ -62,7 +64,7 @@ if(idx_member%pageSize==0)userGroup--;
 		</thead>
 		<tbody>
 		<%
-		ArrayList<NoimgDTO> dto2=mdao.getList(0, 0, 5, 1);
+		ArrayList<NoimgDTO> dto2=mdao.getList(0, 3, 5, 1);
 		if(dto2==null||dto2.size()==0){
 			%>
 			<tr>
@@ -76,7 +78,13 @@ if(idx_member%pageSize==0)userGroup--;
 				%>
 				<tr>
 					<td><%=dto2.get(i).getWriter() %></td>
-					<td><%=dto2.get(i).getSubject() %></td>
+					<td>
+						<%
+						for(int z=0;z<dto2.get(i).getLev();z++){
+							out.println("&nbsp;&nbsp;");
+						}
+						%>
+						<a href="moimChatContent.jsp?idx=<%=dto2.get(i).getIdx()%>"><%=dto2.get(i).getSubject() %></a></td>
 					<td><%=dto2.get(i).getWritedate() %></td>
 				</tr>
 				<%
@@ -100,7 +108,7 @@ if(idx_member%pageSize==0)userGroup--;
 			%>	
 			<%
 			if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
-				
+				%><a href="moimChat.jsp?idx_member=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
 			}
 			%>
 		</tr>
