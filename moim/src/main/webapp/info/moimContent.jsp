@@ -24,19 +24,20 @@ section{
 	margin:0 auto;
 }
 section h2{
-}
-section .content{
-	display:flex;
-	margin:0 auto;
-	width:800px;
-	padding:10px 0 30px 0;
+	margin:50px 0 10px 0;
 }
 section .moiminfo{
-	width:600px;
+	width:800px;
+	height:240px;
+	display: flex;
+	margin-bottom:30px;
+}
+.moimimg{
+	padding:10px 0;
 }
 section .img{
-	width:240px;
-	height:160px;
+	width:284px;
+	height:226px;
 	position: relative;
 	overflow: hidden;
 }
@@ -46,23 +47,43 @@ section .img img{
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+
 }
-section .moiminfo table{
-	width:600px;
-	border:1px solid #eeeeee;
+.moim-content{
+	width:320px;
+	height:130px;
+	overflow:auto;
+	word-wrap:break-word;
 }
-section .moiminfo table th{
-	text-align:left;
-	font-size:18px;
-	padding-right:10px;
+.con-icon1{
+	display:inline-block;
+	width:18px;
+	height:18px;
+	vertical-align: top;
+	background-image: url("/moim/img/icon01.png");
+	background-size: cover;
 }
-section .moiminfo table td{
+.con-icon2{
+	display:inline-block;
+	width:18px;
+	height:18px;
+	vertical-align: top;
+	background-image: url("/moim/img/icon02.png");
+	background-size: cover;
+}
+.moiminfo table{
+	width:650px;
+	margin:0 10px 0 6px;
+	border-spacing:10px;
+}
+.moiminfo table td{
 	padding:4px 6px;
+	border:2px solid #f0f0f0;
+	border-radius: 4px;
+	background:#f8f8f8;
 }
 
 section .button{
-	width:200px;
-	padding:0 20px;
 	display:flex;
 	flex-direction: column;
 }
@@ -73,7 +94,7 @@ section .button div{
 .button a:link, a:visited{
 	background-color: #999999;
 	color:white;
-    width:110px;
+    width:90px;
     heigth:30px;
     padding: 10px 20px;
     border-radius:6px;
@@ -83,6 +104,31 @@ section .button div{
     font-size:14px;
 }
 
+.qnabbs-title{
+	list-style: none;
+	width:800px;
+	padding:30px 0 0 0;
+	border-top:1px solid #999999;
+}
+.qnabbs-title li{
+	display: inline-block;
+	width:396px;
+}
+.qnabbs-title h2{
+	margin:0;
+}
+.qnabbs-btn{
+	text-align:right;
+}
+.qnabbs-btn input{
+	border:0;
+	outline:none;
+	width:100px;
+	height:30px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
 input[id*="click"]{
 	display:none;
 }
@@ -129,6 +175,8 @@ input[id*="click"]:checked + label + div{
 .qnahead{
 	padding:10px 20px;
 	border:1px solid #e8e8e8;
+	
+	background:#f3f3f3;
 }
 .qnawriter{
 	display:inline-block;
@@ -152,13 +200,18 @@ input[id*="click"]:checked + label + div{
 	font-weight:900;
 	color:red;
 }
+
+#qnabbs-write{
+	display:none;
+}
+
 .rewrite fieldset{
 	width:700px;
 	margin:0 auto 20px auto;
 	border:1px solid #999999;
 	
 }
-.rewrite input[type="textarea"]{
+.rewrite textarea{
 	margin:0 auto;
 }
 .rewrite td{
@@ -177,12 +230,29 @@ input[id*="click"]:checked + label + div{
 }
 .paging{
 	text-align:center;
-	margin:10px 0 0 0;
+	margin:10px 0 30px 0;
 }
 .paging a:link, .paging a:visited{
 	color:#333333;
     text-decoration: none;
     font-size:13px;
+}
+.list-btn{
+	text-align: center;
+	padding:20px 0 40px 0;
+}
+.list-btn a:link, .list-btn a:visited{
+	display:inline-block;
+	padding:10px 50px;
+	background:#999999;
+	color:white;
+	text-decoration: none;
+	font-size: 14px;
+	cursor: pointer;
+}
+.list-btn a:hover{
+	background: #00cdac;
+	transition: 0.3s;
 }
 </style>
 <%
@@ -219,7 +289,6 @@ function qnaUpdate(){
 	var top=Math.ceil((window.screen.height-h)/2);  
 	window.open('/moim/noimg/qnaUpdate.jsp', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
-
 </script>
 </head>
 <%
@@ -229,7 +298,7 @@ if(idx_s==null || idx_s.equals("")){
 	idx_s="0";
 }
 */
-int idx=10;  //int idx=Integer.parseInt(idx_s);
+int idx=15;  //int idx=Integer.parseInt(idx_s);
 InfoDTO dto=mdao2.getInfo(idx);
 %>
 <%
@@ -253,42 +322,42 @@ if(cp%pageSize==0)userGroup--;
 <%@include file="/header.jsp" %>
 <section>
 <article>
-   <h2><%=dto.getMoimname()%></h2>
-   <div class="content">
-      <div class="moiminfo">
-      <form name="moimContent">
-         <table>
-            <tr>
-               <td rowspan="4" class="moimimg">
-                  <div class="img">
-                  	<img src="/moim/userimg/<%=dto.getImg()%>">
-                  </div>
-               </td>
+	<h2><%=dto.getMoimname()%></h2>
+		<div class="moiminfo">
+		<div class="moimContent moimimg">
+			<div class="img"><img src="/moim/userimg/<%=dto.getImg()%>"></div>
+		</div>	
+		<table class="moimContent">
+			<tr class="moimtext">
+				<td><span class="con-icon1"></span>&nbsp;지역 : <%=dto.getLocal()%></td>
             </tr>
             <tr class="moimtext">
-               <td>지역 : <%=dto.getLocal()%></td>
+				<td><span class="con-icon2"></span>&nbsp;인원 : 1/<%=dto.getMaxmem() %></td>
             </tr>
             <tr class="moimtext">
-               <td>인원 : 1/<%=dto.getMaxmem() %></td>
-            </tr>
-            <tr class="moimtext">
-               <td>
-                  내용 :<br>
-                  <%=dto.getContent() %>
-               </td>
+				<td>
+					<div class="moim-content">
+						<span class="con-icon3"></span>
+						내용 :<br>
+						<%=dto.getContent().replaceAll("\n","<br>") %>
+					</div>
+				</td>
             </tr>
          </table>
-      </form>
-      </div>
       <div class="button">
          <div><a href="">채팅하러 가기</a></div>
          <div><a href="javascript:moimApply()">참여하기</a></div>
          <div><a href="">탈퇴하기</a></div>
       </div>
-   </div>
+      </div>
 </article>
 <article>
-   <h2>QnA</h2>
+	<ul class="qnabbs-title">
+	<li><h2>QnA</h2></li>
+	<li class="qnabbs-btn">
+	<input type="submit" value="문의하기" onclick="qnaWrite();">
+	</li>
+	</ul>
    <form name="qna">
 	<div class="qnabbs">
 		<div class="qnahead">
@@ -300,13 +369,13 @@ if(cp%pageSize==0)userGroup--;
 		ArrayList<NoimgDTO> arr=mdao.getQnaList(idx_info,listSize,cp);
 		if(arr==null || arr.size()==0){
 			%>
-			<span>등록된 글이 없습니다.</span>
+			<span>모임에 대해 궁금한 내용을 남겨주세요.</span>
 			<%
 		}else{
 			for(int i=0;i<arr.size();i++){
 			%>
 			<div class="qnacontent">
-				<input type="radio" name="qnacontent" id="click<%=i%>">
+				<input type="checkbox" name="qnacontent" id="click<%=i%>">
 				<label for="click<%=i%>">
 				<span class="qnawriter"><%=arr.get(i).getWriter() %></span>
 				<span class="qnasubject">
@@ -329,13 +398,23 @@ if(cp%pageSize==0)userGroup--;
 				</label>
 				
 				<div class="display">
+					<div id="qnabbs-write">
+						<ul>
+							<li><span class="title">제목</span><span><input type="text" name="subject"></span></li>
+							<li><span class="text">내용</span><span><textarea name="content" rows="10" cols="50">내용을 입력해주세요.</textarea></span></li>
+						</ul>
+						<div>
+							<span class="qnabbs-write-btn">취소</span>
+							<span class="qnabbs-write-btn btn-ok"><input type="submit" value="수정" onclick="open_write();"></span>
+						</div>
+					</div>
 					<p><%=arr.get(i).getContent()%></p>
 					<div class="qnabutton">
 						<form name="qnaUpdate" action="/moim/noimg/qnaUpdate.jsp">
 							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
 							<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
 							<input type="hidden" name="content" value="<%=arr.get(i).getContent() %>">
-							<input type="submit" value="수정" onclick="qnaUpdate();">
+							<input type="submit" value="수정">
 						</form>
 						
 						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
@@ -368,7 +447,6 @@ if(cp%pageSize==0)userGroup--;
 						<%
 					}
 					%>
-
 				</div>
 			</div>
 		</div>
@@ -403,10 +481,10 @@ if(cp%pageSize==0)userGroup--;
       }
       %>
 	</div>
-	<div class="writebutton">
-		<input type="submit" value="글작성" onclick="qnaWrite()">
-	</div>
 	</form>
+	<div class="list-btn">
+		<a href="infoList.jsp">목록으로</a>
+	</div>
 </article>
 </section>
 <%@include file="/footer.jsp" %>
