@@ -43,6 +43,7 @@ function popupclose(){
 <body>
 <h2>모임 가입하기</h2>
 <p>모임 가입을 위해 인사말을 작성해주세요.</p>
+<form name="reqMem" action="reqMem_ok.jsp">
 <table>
 	<tr>
 		<th>인사말</th>
@@ -54,10 +55,9 @@ function popupclose(){
 	</tr>
 </table>
 <div>
-	<form name="reqMem" action="reqMem_ok.jsp">
 	<input type="button" value="취소하기" onclick="popupclose()">
 		<input type="submit" value="신청하기" class="abutton">
-	</form>
 </div>
+</form>
 </body>
 </html>

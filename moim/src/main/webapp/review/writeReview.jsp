@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="com.moim.review.*"%>
-<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="rdto" class="com.moim.review.ReviewDTO" scope="page"></jsp:useBean>
 
 <!DOCTYPE html>
 <html>
@@ -10,90 +9,44 @@
 <title>Insert title here</title>
 
 <style>
-section {
-	width: 800px;
-	margin: 0 auto;
-}
-
-section h2 {
+body {
 	text-align: center;
+	margin-right: 100px auto;
 }
 
-section .moimcontent {
-	display: flex;
-	margin: 0 auto;
-	width: 800px;
-	height: 260px;
-	padding: 10px 0 30px 0;
-}
-
-section .write {
-	width: 500px;
-}
-
-section .write table th {
-	text-align: left;
-	font-size: 18px;
-	padding-right: 10px;
-}
-
-section .write table td {
-	padding: 4px 0;
-}
-
-section .imgupload {
-	width: 300px;
+table {
+	border: 5px double dark;
 	text-align: center;
-}
-
-section .img {
-	background: #eeeeee;
-	width: 200px;
-	height: 200px;
-	margin: 0 auto 10px auto;
-}
-
-.button {
-	text-align: right;
-	padding: 0 40px 20px 0;
-}
-
-.button input {
-	border: 0;
-	outline: none;
-	width: 100px;
-	height: 30px;
-	cursor: pointer;
+	margin: 0px auto;
 }
 </style>
-
 </head>
 <%
 String idx_member_s = request.getParameter("idx_member");
-if (idx_member_s == null || idx_member_s.equals("")) {
+ if (idx_member_s == null || idx_member_s.equals("")) {
 	idx_member_s = "0";
 }
-int idx_member = Integer.parseInt(idx_member_s);
+int idx_member= Integer.parseInt(idx_member_s); 
 
 String moimname = request.getParameter("moimname");
-String local = request.getParameter("local");
+String local= request.getParameter("local");
 String hobby = request.getParameter("hobby");
-String writer = request.getParameter("writer");
-%>
-<script>
-
-
-</script>
-<%
-
-
-
-
+String writer= request.getParameter("writer");
+/* String subect= request.getParameter("subject"); */
+/* String content= request.getParameter("content"); */
+String img = request.getParameter("img");
+String ref = request.getParameter("ref");
+String sunbun = request.getParameter("sunbun");
 %>
 <body>
+<%-- <% 
+String detail="";
+if(request.getParameter("detail")!=null){
+detail= request.getParameter("detail");
+%> --%>
+
 
 	<%@include file="/header.jsp"%>
-
 	<form name="imgUpload" method="post" action="reviewImgUp_ok.jsp"
 	
 		enctype="multipart/form-data">
