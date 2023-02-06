@@ -11,21 +11,19 @@
 <title>Insert title here</title>
 <style>
 fieldset{
-	height:340px;
-	width:800px;
-	background-color: gray;
-	float:center;
-	font-size: 30px;
-	margin:0px auto;
-}
-fieldset div{
-	float:right;
+	background-color:gray;
+	margin-right:300px;
+	margin-bottom:300px;
+	margin-left:300px;
 }
 select{
 	font-size: 25px;
 }
 input{
 	font-size: 25px;
+}
+div.input{
+	float:left;
 }
 </style>
 <script>

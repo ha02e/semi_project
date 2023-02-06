@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.moim.member.*" %>
-<jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +19,7 @@
     box-sizing: 500px;
 	float:left;
 	margin:left;
+	
 }
 ul{
 	list-style: none;
@@ -27,19 +27,15 @@ ul{
 </style>
 </head>
 <%
-int idx=21;
-if(session.getAttribute("idx")!=null&&!session.getAttribute("idx").equals("")){
-	String idx_s=(String)session.getAttribute("idx");
-	idx=Integer.parseInt(idx_s);
-}
-MemberDTO dto=mdao.getMem(idx);
+//이름 수정
+String name=(String)session.getAttribute("name");
 %>
 <body>
 <section>
 <div class="mymenu">
 	<img src="" alt="제목이미지">
 	<ul>
-	<li><%=dto.getIdx()%>님</li>
+	<li><%=name %>님</li>
 	<li><a href="myInfo.jsp" class="item"><h3>내 정보 변경</h3></a></li>
 	<li><a href="myWriting.jsp" class="item"><h3>내가 쓴 글</h3></a></li>
 	<li><a href="myMoim.jsp" class="item"><h3>참여중인 모임</h3></a></li>
