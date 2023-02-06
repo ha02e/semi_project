@@ -23,17 +23,18 @@ th{
 </style>
 </head>
 <%
-int totalCnt3=mdao.getTotal("moim_stat", 22, 3);
-int totalCnt4=mdao.getTotal("moim_stat", 22, 4);
-
-int listSize=5;
-int pageSize=5;
-
 String idx_member_s=request.getParameter("idx_member");
 if(idx_member_s==null||idx_member_s.equals("")){
 	idx_member_s="1";
 }
 int idx_member=Integer.parseInt(idx_member_s);
+
+int totalCnt3=mdao.getTotal("moim_stat", idx_member, 3);
+int totalCnt4=mdao.getTotal("moim_stat", idx_member, 4);
+
+int listSize=5;
+int pageSize=5;
+
 
 int totalPage3=totalCnt3/listSize+1;
 if(totalCnt3%listSize==0)totalPage3--;
@@ -83,7 +84,7 @@ if(idx_member%pageSize==0)userGroup--;
 					<td><%=map1.get(dto2.get(i).getIdx_info())%></td>
 					<td><%=dto4.get(i).getNowmem()%>/<%=dto4.get(i).getMaxmem() %></td>
 					<td>
-					<input type="submit" value="모임게시판" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<input type="submit" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 					<!-- idx,지역,모임이름 -->
 					<input type="submit" value="후기쓰기" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 					</td>

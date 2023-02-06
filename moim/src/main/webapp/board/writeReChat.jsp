@@ -18,6 +18,9 @@ if(session.getAttribute("idx")!=null&&!session.getAttribute("idx").equals("")){
 	idx=Integer.parseInt(idx_s);
 }
 String subject=request.getParameter("subject");
+String ref=request.getParameter("ref");
+String lev=request.getParameter("lev");
+String sunbun=request.getParameter("sunbun");
 MemberDTO dto=mdao.getMem(idx);
 %>
 <body>
@@ -26,6 +29,9 @@ MemberDTO dto=mdao.getMem(idx);
 	<article>
 		<h3>모임게시판 답변 글쓰기</h3>
 		<form name="writeReChat" action="writeReChat_ok.jsp">
+		<input type="hidden" name="ref" value="<%=ref%>">
+		<input type="hidden" name="lev" value="<%=lev%>">
+		<input type="hidden" name="sunbun" value="<%=sunbun%>">
 		<table>
 			<tr>
 				<th>작성자</th>

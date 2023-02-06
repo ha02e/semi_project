@@ -119,14 +119,13 @@ public class MemberDAO {
 		}
 	}
 	/**후기 조회 메서드*/
-	public ArrayList<ReviewDTO> getMyReview(int category,int idx_member){
+	public ArrayList<ReviewDTO> getMyReview(int idx_member){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_review where category=? and idx_member=?";
+			String sql="select * from moim_review where idx_member=?";
 			ps=conn.prepareStatement(sql);
 			ArrayList<ReviewDTO> arr=new ArrayList<ReviewDTO>();
-			ps.setInt(1, category);
-			ps.setInt(2, idx_member);
+			ps.setInt(1, idx_member);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
@@ -304,7 +303,8 @@ public class MemberDAO {
 			rs=ps.executeQuery();
 			rs.next();
 			count=rs.getInt(1);
-			return count;
+			System.out.println(count);
+			return count==0?1:count;
 		}catch(Exception e) {
 			e.printStackTrace();
 			return 1;
@@ -352,22 +352,41 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
+	/**마지막 ref 구하기 관련 메서드*/
+	public int getMaxRef() {
+		try {
+			String sql="select max(ref) from moim_noimg";
+			ps=conn.prepareStatement(sql);
+			rs=ps.executeQuery();
+			int max=0;
+			if(rs.next()) {
+				max=rs.getInt(1);
+			}
+			return max;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+			}catch(Exception e2) {}
+		}
+	}
 	
 	/**모임게시판 글쓰기 */
 	public int writeChat(NoimgDTO dto) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="insert into moim_noimg values(idx.nextval,?,?,3,?,?,?,sysdate,?,?,?)";
+			int maxref=getMaxRef();
+			String sql="insert into moim_noimg values(idx.nextval,?,?,3,?,?,?,sysdate,?,0,0)";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, dto.getIdx_member());
 			ps.setInt(2, dto.getIdx_info());
 			ps.setString(3, dto.getWriter());
 			ps.setString(4, dto.getSubject());
 			ps.setString(5, dto.getContent());
-			ps.setInt(6, dto.getRef());
-			ps.setInt(7, dto.getLev());
-			ps.setInt(8, dto.getSunbun());
-			
+			ps.setInt(6, maxref+1);
 			int count=ps.executeUpdate();
 			return count;
 		}catch(Exception e) {
@@ -430,7 +449,7 @@ public class MemberDAO {
 	public NoimgDTO moimChatContent(int idx, int category) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_noimg where idx=? and category=?";
+			String sql="select * from moim_noimg where idx=? and category=? order by idx desc";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			ps.setInt(2, category);
@@ -456,6 +475,46 @@ public class MemberDAO {
 		}finally {
 			try {
 				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	
+	/**내가 쓴 후기 삭제 메서드*/
+	public int delReview(int idx) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="delete from moim_review where idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			int count=ps.executeUpdate();
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	
+	/**내가 쓴 QnA 삭제 메서드*/
+	public int delNoimg(int idx) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="delete from moim_noimg where idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			int count=ps.executeUpdate();
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}finally {
+			try {
 				if(ps!=null)ps.close();
 				if(conn!=null)conn.close();
 			}catch(Exception e2) {}

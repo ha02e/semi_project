@@ -65,7 +65,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 			</thead>
 			<tbody>
 			<%
-			ArrayList<ReviewDTO> dto1=mdao.getMyReview(2, 1);
+			ArrayList<ReviewDTO> dto1=mdao.getMyReview(idx_member);
 			if(dto1==null||dto1.size()==0){
 				%>
 				<tr>
@@ -83,7 +83,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 						<td><%=dto1.get(i).getWritedate() %></td>
 						<td>
 						<input type="button" value="수정" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
-						<input type="button" value="삭제" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+						<input type="button" value="삭제" onclick="javascript:location.href='myWritingDelReview_ok.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						</td>
 					</tr>
 					<%
@@ -101,7 +101,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 				%>
 				<%
 				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=idx_member%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
 					if(i==totalPage)break;
 				}
 				%>
@@ -145,7 +145,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 							<td><%=map1.get(dto2.get(i).getIdx_info())%></td>
 							<td><%=dto2.get(i).getSubject() %></td>
 							<td><%=dto2.get(i).getWritedate() %></td>
-							<td><input type="submit" value="삭제"></td>
+							<td><input type="submit" value="삭제" onclick="javascript:location.href='myWritingDelQna_ok.jsp?idx=<%=dto2.get(i).getIdx()%>'"></td>
 						</tr>
 						<%
 					}
@@ -162,14 +162,15 @@ if(totalCnt2%listSize==0)totalPage2--;
 				%>
 				<%
 				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
-					if(i==totalPage)break;
+					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=idx_member%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+					if(i==totalPage2)break;
 				}
 				%>
 				<%
 				if(userGroup!=(totalPage2/pageSize-(totalPage2%pageSize==0?1:0))){
 					%><a href="myWriting.jsp?idx_member=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
 				}
+				
 				%>
 				</td>
 			</tr>
