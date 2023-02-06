@@ -7,6 +7,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%
+Integer idx = (Integer) session.getAttribute("idx");
+if (idx==null) {
+%>
+<script>
+	window.alert('로그인 후 이용가능합니다');
+	location.href = '/moim/review/reviewList.jsp';
+</script>
+<%
+return;
+}
+%>
+
 <style>
 body {
 	text-align: center;
@@ -34,8 +47,6 @@ String writer= request.getParameter("writer");
 /* String subect= request.getParameter("subject"); */
 /* String content= request.getParameter("content"); */
 String img = request.getParameter("img");
-String ref = request.getParameter("ref");
-String sunbun = request.getParameter("sunbun");
 %>
 <body>
 <%-- <% 
@@ -46,44 +57,51 @@ detail= request.getParameter("detail");
 
 
 	<%@include file="/header.jsp"%>
-	<form name="write" action="writeReview_ok.jsp" method="post">
-		
+	<form name="imgUpload" method="post" action="reviewImgUp_ok.jsp"
+	
+		enctype="multipart/form-data">
 		<section>
 			<article>
-				<table>
-					<tr>
-						<th>제목</th>
-						<td><input type="text" name="subject" placeholder="내용을 입력해주세요"></td>
-						
-						<td rowspan="4" width="300px">이미지<br> <input
-							type="button" value="사진업로드"><br> <input
-							type="submit" value="글쓰기">
-						</td>
-
-					</tr>
-					<tr>
-						<th>모임이름</th>
-						<td><input type="text" name="moimname" value="<%=moimname%>"></td>
-					</tr>
-					<tr>
-						<th>지역</th>
-						<td><input type="text" name="local" value="<%=local%>"></td>
-					</tr>
-
-
-					<tr>
-						<th>내용</th>
-						<td><textarea rows="10" cols="55" name="content" placeholder="내용을 입력해주세요"></textarea></td>
-					</tr>
-					<tr>
-						
-					<input type = "hidden" name="img" value="<%=img%>">;
-					<input type = "hidden" name="idx_memeber" value="<%=rdto.getIdx_member()%>">;
-					<input type = "hidden" name="hobby"value="<%=hobby%>">;
-					<input type = "hidden" name="writer"value="<%=writer%>">;
-					</tr>
-				</table>
-
+				<h2>후기 게시판 작성</h2>
+				<div class="moimcontent">
+					<div class="contents write">
+						<table>
+							<tr>
+								<th>제목</th>
+								<td><input type="text" name="subject"
+									placeholder="내용을 입력해주세요"></td>
+							</tr>
+							<tr>
+								<th>모임이름</th>
+								<td><input type="text" name="moimname" size="52"
+									value="<%=moimname%>" readonly></td>
+							</tr>
+							<tr>
+								<th>지역</th>
+								<td><input type="text" name="local" value="<%=local%> " readonly></td>
+							</tr>
+							<tr>
+								<th>내용</th>
+								<td><textarea name="content" rows="10" cols="50"
+										placeholder="내용을 입력해주세요"></textarea></td>
+							</tr>
+							<tr>
+								<th>이미지</th>
+								 <td><input type="file" name="upload"></td>
+							</tr>
+							<tr>
+								<td><input type="hidden" name="idx_memeber"
+									value="<%=idx_member%>"> <input type="hidden"
+									name="hobby" value="<%=hobby%>"> <input type="hidden"
+									name="writer" value="<%=writer%>"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="button">
+					<input type="submit" value="글쓰기" >&nbsp;&nbsp;
+					<input type="button" value="취소" onclick = "location.href='reviewList.jsp'">
+				</div>
 			</article>
 		</section>
 	</form>

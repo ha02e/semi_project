@@ -31,7 +31,7 @@ if(cks!=null){
 }
 %>
 
-<form name="login" action="login_ok.jsp" method="post">
+<form name="login" action="login_ok.jsp" method="post" enctype="UTF-8">
 <table class="input">
 	<tr>
 	<td><input type="text" name="id" placeholder="아이디" maxlength="45" value="<%=saveid%>"></td>
