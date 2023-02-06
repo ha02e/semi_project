@@ -54,12 +54,11 @@ div#detaildiv{
 input#detail:checked + div#detaildiv{
 	display: block;
 }
-</style>
-<script>
-function makemoim(){
-	
+#buttondiv{
+	text-align: right;
+
 }
-</script>
+</style>
 </head>
 <%
 String hobby[]=null;		//취미
