@@ -31,7 +31,7 @@ table{
 <body>
 <%@include file="header.jsp" %>
 <section class="mainImg">
-<a href="/moim/review/reviewList.jsp"><img src="/moim/img/banner1-1.png" alt="매인 배너"></a>
+<a href="/moim/review/reviewList.jsp"><img src="/moim/img/banner_main.jpg" alt="매인 배너"></a>
 </section>
 
 <section class="content">

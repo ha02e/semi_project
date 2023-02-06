@@ -104,8 +104,7 @@ fieldset div{
 							
 						<li><label>본인 확인 이메일</label></br> 
 							<input type="text" name="email"></li>
-							
-						<li><label>나이</label></br>	
+						
 						<li><label>나이</label></br>	
 						<input type="text" name="age"></li>
 						
