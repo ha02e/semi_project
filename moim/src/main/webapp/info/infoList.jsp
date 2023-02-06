@@ -71,6 +71,19 @@ input[type="checkbox"] {
   width: 200px;
   height: 200px;
   }
+label.detail{
+	border: 1px groove black;
+	background-color: #f4f4f4;
+}
+input#detail{
+	display:none;
+}
+div#detaildiv{
+	display: none;
+}
+input#detail:checked + div#detaildiv{
+	display: block;
+}
 </style>
 </head>
 <%
@@ -90,8 +103,8 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		<form name="infoSearch" action="infoSearch.jsp">
 			<input type="submit" value="검색">
 			<input type="text" name="keyword" placeholder="검색어를 입력하세요">
-			<%if(detail.equals("on")){ %>
-			<input type="button" value="세부 검색" onclick="javascript:location.href='infoList.jsp'">
+			<label class="detail" for="detail">세부검색</label>
+			<input type="checkbox" id="detail">
 				<div id="detaildiv">
 				<fieldset>
 				<table>
@@ -136,11 +149,6 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 				</table>
 				</fieldset>
 				</div>
-			<%}else{
-				%>
-				<input type="button" value="세부 검색" onclick="javascript:location.href='infoList.jsp?detail=on'">
-				<%}
-				%>
 		</form>
 	</article>
 	<hr>
