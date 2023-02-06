@@ -93,7 +93,7 @@ public class NoimgDAO {
          ps=conn.prepareStatement(sql);
          ps.setInt(1, dto.getIdx_member());
          ps.setInt(2, dto.getIdx_info());
-         ps.setString(3, dto.getWriter());
+         ps.setString(3, "루피"); //ps.setString(3, dto.getWriter());
          ps.setString(4, dto.getSubject());
          ps.setString(5, dto.getContent());
          ps.setInt(6, dto.getRef());
@@ -186,7 +186,49 @@ public class NoimgDAO {
       }
    } 
    
+   /**QnA 글 수정하기 관련 메서드*/
+   public int updateQna(NoimgDTO dto) {
+	   try {
+	          conn=com.moim.db.MoimDB.getConn();
+	          String sql="update moim_noimg set subject=?, content=? where idx=?";
+	          ps=conn.prepareStatement(sql);
+	          ps.setString(1, dto.getSubject());
+	          ps.setString(2, dto.getContent());
+	          ps.setInt(3, dto.getIdx());
+	          int count=ps.executeUpdate();
+	          return count;
+	       }catch(Exception e) {
+	          e.printStackTrace();
+	          return -1;
+	       }finally {
+	          try {
+	             if(ps!=null)ps.close();
+	             if(conn!=null)conn.close();
+	          }catch(Exception e2) {
+	             
+	          }
+	       }
+   } 
    
-   
-   
+   /**QnA 글 삭제 관련 메서드*/
+   public int delQna(int idx) {
+      try {
+         conn=com.moim.db.MoimDB.getConn();
+         String sql="delete from moim_noimg where idx=?";
+         ps=conn.prepareStatement(sql);
+         ps.setInt(1, idx);
+         int count=ps.executeUpdate();
+         return count;
+      }catch(Exception e) {
+         e.printStackTrace();
+         return -1;
+      }finally{
+         try {
+            if(ps!=null)ps.close();
+            if(conn!=null)conn.close();
+         }catch(Exception e2) {
+            
+         }
+      }
+   }
 }

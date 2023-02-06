@@ -1,8 +1,20 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="com.moim.review.*"%>
 <jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
-
+<!-- login -->
+<%
+Integer idx_l = (Integer) session.getAttribute("idx");
+if (idx_l==null) {
+%>
+<script>
+	window.alert('로그인 후 이용가능합니다');
+	location.href = '/moim/review/reviewList.jsp';
+</script>
+<%
+return;
+}
+%>
 <%
 String idx_s = request.getParameter("idx");
 if (idx_s == null || idx_s.equals("")) {
@@ -12,6 +24,18 @@ if (idx_s == null || idx_s.equals("")) {
 int idx = Integer.parseInt(idx_s);
 ReviewDTO dto = rdao.updateReviewForm(idx);
 
+String idx_member_s = request.getParameter("idx_member");
+if (idx_member_s == null || idx_member_s.equals(""))
+	idx_member_s = "0";
+
+int idx_meber = Integer.parseInt(idx_member_s);
+String moimname = request.getParameter("moimname");
+String local = request.getParameter("local");
+String hobby = request.getParameter("hobby");
+String writer = request.getParameter("writer");
+String subect = request.getParameter("subject");
+/* String content= request.getParameter("content"); */
+String img = request.getParameter("img");
 %>
 
 
@@ -23,7 +47,7 @@ ReviewDTO dto = rdao.updateReviewForm(idx);
 <title>Insert title here</title>
 </head>
 <style>
-h2, h4 {
+h2, h3, h4 {
 	text-align: center;
 	margin: 0px auto;
 }
@@ -90,85 +114,114 @@ section .img {
 	cursor: pointer;
 }
 </style>
+<script>
+	function imgch() {
+		document.getElementByld("imgchange").src = "";
+	}
+</script>
 <body>
 	<%@include file="/header.jsp"%>
-	<h2><%=dto.getSubject()%></h2>
-	<form name="reviewupdate" action="updateReview_ok.jsp">
-		<input type="hidden" name="idx" value="<%=idx%>">
-
-		<h4>
-			-모임명 :
-			<%=dto.getMoimname()%>
-			&nbsp;&nbsp;&nbsp;&nbsp; -지역 :
-			<%=dto.getLocal()%></h4>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<section>
-			<article>
+	<section>
+		<%
+		if (dto.getImg() == null || dto.getImg().equals("")) {
+		%>
+		<article>
+			<form name="reviewupdate" action="updateReviewImg.jsp" method="post">
 				<h2>후기 게시판 수정</h2>
 				<div class="moimcontent">
 					<div class="contents write">
 						<table>
 							<tr>
-								<th>내용</th>
-								<td><textarea name="content" rows="10" cols="50"><%=dto.getContent()%></textarea></td>
+								<th>제목</th>
+								<td><%=dto.getSubject()%>
 							</tr>
-							<%
-							if (dto.getImg() == null || dto.getImg().equals("")) {
-							%>
-							<h3>이미지 없음</h3>
-							<thead>
-								<div class="contents imgupload">
+							<tr>
+								<th>모임이름</th>
+								<td><%=dto.getMoimname()%>
+							</tr>
+							<tr>
+								<th>지역</th>
+								<td><%=dto.getLocal()%></td>
+							</tr>
+							<tr>
+								<th>내용</th>
+								<td><textarea name="content" rows="10" cols="50"
+										<%=dto.getContent()%>></textarea></td>
+							</tr>
+							<tr>
+								<th>이미지</th>
+								<td><input type="file" name="upload"></td>
+							</tr>
 
-									<img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200>
-									<div>
-										<legend>이미지 올리기</legend>
-										<ul>
-											<li><label>이미지</label><input type="file" name="upload"></li>
-										</ul>
-									</div>
-								</div>
-							</thead>
-							<tfoot>
-								<div class="button">
-									<input type="submit" value="수정하기">
-									<input type="button" value="취소하기" onclick="location.href='reviewList.jsp'"> 
-								</div>
-							</tfoot>
-							<%
-							} else {
-							%>
-							<thead>
-								<tr>
-									<td width="200" height="200"><img alt="이미지"
-										src="img/<%=dto.getImg()%>" width=200 height=200></td>
-									<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
-										height=200"></td>
-									<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
-										height=200"></td>
-										
-								</tr>
-							</thead>
-							<tfoot>
-								<div class="button">
-									<input type="submit" value="수정하기"> &nbsp;&nbsp;<input
-										type="button" value="이미지 삭제"
-										onclick="javascript:location.href='reviewImgDel.jsp?idx=<%=idx%>'">
-										<input type="button" value="취소하기" onclick="location.href='reviewList.jsp'"> 
-								</div>
-							</tfoot>
-							<%
-							}
-							%>
-
+							<input type="hidden" name="idx_memeber"
+								value="<%=dto.getIdx_member()%>">
+							<input type="hidden" name="hobby" value="<%=hobby%>">
+							<input type="hidden" name="writer" value="<%=writer%>">
 						</table>
-
 					</div>
+				</div>
+				<div class="button">
+					<input type="hidden" name="idx" value="<%=idx%>"> <input
+						type="submit" value="수정하기"> <input type="button"
+						onclick="location.href='reviewList.jsp'" value="취소">
+				</div>
+			</form>
+		</article>
+		<%
+		} else {
+		%>
+		<article>
+			<form name="reviewupdate" action="updateReviewImg.jsp" method="post" enctype="multipart/form-data" >
+				<h2>후기 게시판 수정</h2>
+				<div class="moimcontent">
+					<div class="contents write">
+						<table>
+							<tr>
+								<th>제목</th>
+								<td><%=dto.getSubject()%>
+							</tr>
+							<tr>
+								<th>모임이름</th>
+								<td><%=dto.getMoimname()%>
+							</tr>
+							<tr>
+								<th>지역</th>
+								<td><%=dto.getLocal()%></td>
+							</tr>
+							<tr>
+								<th>내용</th>
+								<td><textarea name="content" rows="10" cols="50">
+										<%=dto.getContent()%></textarea></td>
+							</tr>
+							<tr>
+								<th>이미지</th>
+								<td><input type="file" name="upload"></td>
+							</tr>
+
+							<input type="hidden" name="idx_memeber"
+								value="<%=dto.getIdx_member()%>">
+							<input type="hidden" name="hobby" value="<%=hobby%>">
+							<input type="hidden" name="writer" value="<%=writer%>">
+						</table>
+					</div>
+					<div class="contents imgupload">
+						<div class="img">
+							<img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200>
+						</div>
+					</div>
+				</div>
+				<div class="button">
+					<input type="hidden" name="idx" value="<%=dto.getIdx()%>">
+					<input type="submit" value="수정하기"> <input type="button"
+						onclick="location.href='reviewList.jsp'" value="취소">
 
 				</div>
-
-			</article>
-		</section>
-	</form>
+			</form>
+		</article>
+		<%
+		}
+		%>
+	</section>
 	<%@include file="/footer.jsp"%>
 </body>
-</html> --%>
+</html>

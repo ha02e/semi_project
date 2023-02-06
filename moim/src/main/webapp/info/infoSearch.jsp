@@ -54,6 +54,10 @@ div#detaildiv{
 input#detail:checked + div#detaildiv{
 	display: block;
 }
+#buttondiv{
+	text-align: right;
+
+}
 </style>
 </head>
 <%
@@ -215,6 +219,9 @@ if(cp%pageSize==0)userGroup--;
 		</table>
 	</article>
 	<hr>
+	<div id="buttondiv">
+		<input type="button" value="모임만들기" onclick="javascript:location.href='moimWrite.jsp'">
+		</div>
 </section>
 <%@include file="/footer.jsp" %>
 </body>

@@ -42,9 +42,8 @@ String sunbun=request.getParameter("sunbun");
 %>
 <body>
 <h2>QnA 답변 작성하기</h2>
-	<form name="qnaReWrite" action="qnaReWrite_ok.jsp" method="post">
+	<form name="qnaReWrite_ok" action="qnaReWrite_ok.jsp" method="post">
 	<input type="hidden" name="idx" value="<%=idx %>">
-	<input type="hidden" name="subject" value="<%=subject %>">
 	<input type="hidden" name="ref" value="<%=ref %>">
 	<input type="hidden" name="lev" value="<%=lev %>">
 	<input type="hidden" name="sunbun" value="<%=sunbun%>">

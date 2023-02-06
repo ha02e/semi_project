@@ -16,6 +16,7 @@ public class StatDAO {
 	/**이름 가져오는 메서드
 	 * 해쉬맵이름.get(idx_member) 하면 이름나옴*/
 	public HashMap<Integer,String> getName(){
+	
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			HashMap<Integer,String> hm=new HashMap<Integer,String>();
@@ -126,6 +127,7 @@ public class StatDAO {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			String sql="update moim_stat set stat=1 where idx=?";
+			/////
 			ps=conn.prepareStatement(sql);
 			int count=ps.executeUpdate();
 			/**moim_info에서 멤버 추가
