@@ -130,6 +130,8 @@ public class StatDAO {
 			/////
 			ps=conn.prepareStatement(sql);
 			int count=ps.executeUpdate();
+			/**moim_info에서 멤버 추가
+			 * nownum을 +1*/
 			return count;
 		}catch (Exception e) {
 			e.printStackTrace();
