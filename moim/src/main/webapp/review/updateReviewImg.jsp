@@ -9,15 +9,11 @@
 
 <%
 
-
-System.out.println("1111");
-
 DefaultFileRenamePolicy policy=  new DefaultFileRenamePolicy();
 
 String savepath = request.getRealPath("/review/img");
 
 MultipartRequest mr = new MultipartRequest(request, savepath, 2097152, "utf-8", policy);
-System.out.println("2");
 
 System.out.println("저장되는 경로:" + savepath);
 
@@ -28,7 +24,6 @@ String beforeimg = rdao.getAdrImg(idx);
 String fileName = beforeimg;
 System.out.println("저장된 이름 : " + fileName);
 
-System.out.println("3");
 
 
 
@@ -36,14 +31,12 @@ String befimg = fileName;
 
 String delimgname = request.getRealPath("/review/img/") + befimg;
 File delimg = new File(delimgname);
-System.out.println("4");
 
 if(delimg.exists() && delimg.isFile()){
 	delimg.delete();
 	System.out.println("삭제된 이전 사진 : "+ befimg);
 }
 
-System.out.println("5");
 
 rdto.setContent(mr.getParameter("content"));
 idx = Integer.parseInt((mr.getParameter("idx")));
