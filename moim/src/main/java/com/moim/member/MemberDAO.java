@@ -86,7 +86,7 @@ public class MemberDAO {
 				String email=rs.getString("email");
 				String local=rs.getString("local");
 				int age=rs.getInt("age");
-				String hobby=rs.getString("hobby1");
+				String hobby=rs.getString("hobby");
 				java.sql.Date joindate=rs.getDate("joindate");
 				int manager=rs.getInt("manager");
 				
