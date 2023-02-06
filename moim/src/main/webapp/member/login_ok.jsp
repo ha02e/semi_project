@@ -12,7 +12,6 @@ String pwd=request.getParameter("pwd");
 String saveid=request.getParameter("saveid");
 
 MemberDTO dto=mdao.login(id, pwd);
-
 //로그인 검증 및 session 값 저장
 if(dto==null){
 %>
@@ -25,7 +24,7 @@ location.href='login.jsp';
 	session.setAttribute("name", dto.getName());
 	session.setAttribute("manager", dto.getManager());
 	session.setAttribute("hobby", dto.getHobby());
-	
+
 	//아이디 저장하기
 	if(saveid==null){
 		Cookie cookie=new Cookie("saveid",id);

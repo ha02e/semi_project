@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.moim.info.*" %>
 <jsp:useBean id="mdto" class="com.moim.info.InfoDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
-<jsp:useBean id="mdao" class="com.moim.info.InfoDAO"></jsp:useBean>
-
+<jsp:useBean id="mdao" class="com.moim.info.InfoDAO"></jsp:useBean>    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,20 @@ section p{
 	margin:10px 0 20px 0;
 	color:#666666;
 }
-
+/*
+section .moimcontent{
+	display:flex;
+	margin:0 auto;
+	width:800px;
+	height:260px;
+	padding:10px 0 30px 0;
+}
+*/
+/*
+section .write{
+	width:500px;
+}
+*/
 section .write table{
 	width:800px;
 	border-top:3px solid #333333;
@@ -44,17 +58,16 @@ section .write table td{
 	margin:30px 0;
 	border-top:1px solid #999999;
 }
-select{
+select {
 	width: 100px; 
 	padding: 6px 18px; 
 	border: 1px solid #999999; 
 	border-radius: 0px; 
-	font-size: 14px;
 }
 input[type="text"] {
 	border: 1px solid #999999; 
 	border-radius: 0px; 
-	padding:8px;
+	padding:7px;
 }
 textarea{
 	border: 1px solid #999999; 
@@ -65,6 +78,9 @@ textarea{
 	text-align: center;
 	padding:20px 0 40px 0;
 }
+.button input[type="submit"]{
+	background:#333333;
+}
 .button input{
 	border:0;
 	outline:none;
@@ -74,9 +90,6 @@ textarea{
 	background:#999999;
 	color:white;
 }
-.button input[type="submit"]{
-	background:#333333;
-}
 .button input:hover{
 	background: #00cdac;
 	transition: 0.3s;
@@ -84,19 +97,26 @@ textarea{
 </style>
 <script>
 function pageBack(){
-	location.href='infoList.jsp';
+	location.href='';
 }
 </script>
 </head>
+<%
+int idx=11;
+System.out.println(idx);
+//String idx=request.getParameter("idx");
+String moimname=request.getParameter("moimname");
+String content=request.getParameter("content");
+%>
 <body>
 <%@include file="/header.jsp" %>
 <section>
 <article>
-	<h2>모임 만들기</h2>
-	<p>모임의 기본 정보를 입력해주세요 :)</p>
+	<h2>모임 수정하기</h2>
+	<p>수정할 모임 정보를 입력해주세요 :)</p>
 	<div class="moimcontent">
 		<div class="contents write">
-		<form name="moimWrite" action="moimWrite_ok.jsp" method="post" enctype="multipart/form-data">
+		<form name="moimUpdate" action="moimUpdate_ok.jsp" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<th>카테고리</th>
@@ -116,13 +136,13 @@ function pageBack(){
 				<tr>
 					<th>모임이름</th>
 					<td>
-						<input type="text" name="moimname" size="52" placeholder="모임이름을 입력해주세요.">
+						<input type="text" name="moimname" size="52" placeholder="<%=mdto.getMoimname()%>">
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea name="content" rows="10" cols="80">내용을 입력해주세요.</textarea>
+						<textarea name="content" rows="10" cols="80"><%=mdto.getContent() %></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -169,6 +189,7 @@ function pageBack(){
 				<tr>
 					<th>이미지</th>
 					<td><input type="file" name="upload" value="이미지 올리기" accept="image/*"></td>
+				
 				</tr>
 			</table>
 		</div>
@@ -197,7 +218,7 @@ function pageBack(){
 		-->
 		<div class="button">
 			<input type="button" value="취소하기" onclick="pageBack();">
-			<input type="submit" value="모임 만들기">
+			<input type="submit" value="모임 수정하기">
 		</div>
 		</form>
 </article>
