@@ -7,6 +7,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%
+Integer idx = (Integer) session.getAttribute("idx");
+if (idx==null) {
+%>
+<script>
+	window.alert('로그인 후 이용가능합니다');
+	location.href = '/moim/review/reviewList.jsp';
+</script>
+<%
+return;
+}
+%>
 
 <style>
 body {
@@ -35,8 +47,6 @@ String writer= request.getParameter("writer");
 /* String subect= request.getParameter("subject"); */
 /* String content= request.getParameter("content"); */
 String img = request.getParameter("img");
-String ref = request.getParameter("ref");
-String sunbun = request.getParameter("sunbun");
 %>
 <body>
 <%-- <% 

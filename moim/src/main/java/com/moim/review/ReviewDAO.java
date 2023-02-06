@@ -42,41 +42,6 @@ public class ReviewDAO {
 		}
 	}
 
-	/** 글쓰기 관련 메서드 이미지 작성*/
-
-/*	public int setReview(ReviewDTO dto) {
-		try {
-			conn = com.moim.db.MoimDB.getConn();
-
-			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, dto.getIdx_member());
-			ps.setString(2, dto.getMoimname());
-			ps.setString(3, dto.getLocal());
-			ps.setString(4, dto.getHobby());
-			ps.setString(5, dto.getWriter());
-			ps.setString(6, dto.getSubject());
-			ps.setString(7, dto.getContent());
-			ps.setString(8, dto.getImg());
-
-			int count = ps.executeUpdate();
-			return count;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		} finally {
-			try {
-				if (ps != null)
-					ps.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e2) {
-
-			}
-		}
-	}
-*/
 	/** 총 게시물 수 관련 메서드 */
 
 	public int getTotalCnt(String userhobby, String keyword, boolean boo) {
@@ -135,9 +100,7 @@ public class ReviewDAO {
 	}
 
 	/** 목록 출력 관련 메서드 */
-	// 애초에 전부 다 가져와도 된다
 	public ArrayList<ReviewDTO> getList(int ls, int cp, String userhobby, String keyword, boolean boo) {
-//		ls = listSize
 		try {
 			conn = com.moim.db.MoimDB.getConn();
 
@@ -314,7 +277,6 @@ public class ReviewDAO {
 //			dbConnect();
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "update moim_review set content=? , img=? where idx=?";
-//			String sql = "update moim_review set content=? where idx=?";
 			ps = conn.prepareStatement(sql);
 			
 			String img = mr.getFilesystemName("upload");
@@ -422,32 +384,7 @@ public class ReviewDAO {
 			}
 		}
 	}
-	/**이미지 삭제 관련 메서드*/
-	public int imgDel(int idx) {
-		try {
-			conn = com.moim.db.MoimDB.getConn();
-			String sql = "delete img from moim_review where idx = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, idx);
 
-			int count = ps.executeUpdate();
-			return count;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		} finally {
-			try {
-				if (ps != null)
-					ps.close();
-				if (conn != null)
-					conn.close();
-
-			} catch (Exception e2) {
-
-			}
-		}
-	}
 	/** 이미지 가져오기 메서드 */
 	public String getAdrImg(int idx) {
 		try {

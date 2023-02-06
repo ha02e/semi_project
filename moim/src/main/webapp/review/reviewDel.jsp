@@ -4,11 +4,9 @@
 <jsp:setProperty property="*" name="rdto" />
 <jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
 <%
-
 int result = rdao.delReview(rdto);
 String msg = result > 0 ? "후기 삭제 완료" : "후기 삭제 실패";
 %>
-
 <script>
 window.alert('<%=msg%>');
 	location.href = "reviewList.jsp";

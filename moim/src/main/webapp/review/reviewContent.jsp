@@ -54,19 +54,13 @@ table {
 					<%
 				if (dto.getImg() == null || dto.getImg().equals("")) {
 				%>
-
-				
-
+					
 					<%
 				}else{
 					%>
 					<tr>
-						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
+						<td clsapn = "3"><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
 							height=200></td>
-						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
-							height=200"></td>
-						<td><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
-							height=200"></td>
 					</tr>
 					<%} %>
 				</article>

@@ -2,7 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@page import="com.moim.review.*"%>
 <jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
-
+<!-- login -->
+<%
+Integer idx_l = (Integer) session.getAttribute("idx");
+if (idx_l==null) {
+%>
+<script>
+	window.alert('로그인 후 이용가능합니다');
+	location.href = '/moim/review/reviewList.jsp';
+</script>
+<%
+return;
+}
+%>
 <%
 String idx_s = request.getParameter("idx");
 if (idx_s == null || idx_s.equals("")) {

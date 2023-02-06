@@ -25,8 +25,6 @@ String fileName = beforeimg;
 System.out.println("저장된 이름 : " + fileName);
 
 
-
-
 String befimg = fileName;
 
 String delimgname = request.getRealPath("/review/img/") + befimg;
@@ -50,7 +48,3 @@ System.out.println(msg2);
 window.alert('<%=msg2%>');
 	location.href = "/moim/review/reviewList.jsp";
 </script>
-
-
-
-

@@ -10,7 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <style>
 div {
 	text-align: center;
@@ -69,7 +68,7 @@ if (cp_s == null || cp_s.equals("")) {
 }
 int cp = Integer.parseInt(cp_s);//핵심요소 사용자로부터 / 사용자의 위치
 
-int totalCnt = rdao.getTotalCnt(userhobby, keyword, boo); // db로부터 가져와야하는 정보
+int totalCnt = rdao.getTotalCnt(userhobby, keyword, boo); 
 ArrayList<ReviewDTO> arr = rdao.getList(listSize, cp, userhobby, keyword, boo);
 
 int totalPage = totalCnt / listSize + 1;
@@ -130,7 +129,7 @@ if (cp % pageSize == 0)
 							}
 							%>
 						</td>
-					
+
 						<td><input type="button"
 							onclick="location.href='writeReview.jsp'" value="후기쓰러가기">
 						</td>
