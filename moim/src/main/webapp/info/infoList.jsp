@@ -213,7 +213,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		</div>
 		<hr>
 		<div id="buttondiv">
-		<input type="button" value="모임만들기" onclick="javascript:location.href='moimwrite.jsp'">
+		<input type="button" value="모임만들기" onclick="javascript:location.href='moimWrite.jsp'">
 		</div>
 	</article>
 </section>

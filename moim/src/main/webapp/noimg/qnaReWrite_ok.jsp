@@ -10,10 +10,8 @@ request.setCharacterEncoding("UTF-8");
 <%
 int result=mdao.setReNoimg(mdto);
 String msg=result>0?"답변글이 등록되었습니다.":"답변글 등록에 실패하였습니다.";
-
 %>
 <script>
 window.alert('<%=msg%>');
-opener.location.reload();
-window.self.close();
+location.href='/moim/info/moimContent.jsp';
 </script>
