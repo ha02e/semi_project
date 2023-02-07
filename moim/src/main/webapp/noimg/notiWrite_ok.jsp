@@ -5,7 +5,7 @@
 
 <%request.setCharacterEncoding("utf-8"); %>
 
-<jsp:useBean id="ndao" class="com.moim.noimg.NoimgDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="ndao" class="com.moim.noimg.NoimgDAO"></jsp:useBean>
 
 <%
 //idx_member 값 받기

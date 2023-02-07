@@ -147,7 +147,7 @@ public class NoimgDAO {
          
          String sql="select * from "
                + "(select rownum as rnum, a.* from "
-               + "(select * from moim_noimg where idx_info=? order by ref desc,sunbun asc) a)b "
+               + "(select * from moim_noimg where idx_info=? and category=2 order by ref desc,sunbun asc) a)b "
                + "where rnum>=? and rnum<=?";
          
          ps=conn.prepareStatement(sql);

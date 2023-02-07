@@ -18,5 +18,5 @@ String msg=result>0?"모임이 등록되었습니다.":"모임 등록에 실패�
 %>
 <script>
 window.alert('<%=msg%>');
-location.href='/moim/info/moimContent.jsp'; //(임시)모임리스트 게시판으로 이동
+location.href='/moim/info/infoList.jsp'; //(임시)모임리스트 게시판으로 이동
 </script>
