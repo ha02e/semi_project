@@ -2,7 +2,6 @@ package com.moim.member;
 import com.moim.stat.*;
 import com.moim.noimg.*;
 import com.moim.info.*;
-import com.moim.review.*;
 import java.sql.*;
 import java.util.*;
 

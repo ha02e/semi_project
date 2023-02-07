@@ -22,6 +22,7 @@ public class StatDAO {
 			HashMap<Integer,String> hm=new HashMap<Integer,String>();
 			String sql="select idx,name from moim_member";
 			ps=conn.prepareStatement(sql);
+			System.out.println("1111");
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt(1);
@@ -51,6 +52,7 @@ public class StatDAO {
 			rs=ps.executeQuery();
 			rs.next();
 			int count=rs.getInt(1);
+			System.out.println(count);
 			return count>1?count:1;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -69,6 +71,7 @@ public class StatDAO {
 	public ArrayList<StatDTO> getNewPerStatList(int idx_info, int stat,int ls,int cp){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
+			System.out.println("22222");
 			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
 			int start=(cp-1)*ls+1;
 	        int end=(cp*ls);
@@ -77,7 +80,8 @@ public class StatDAO {
 			ps.setInt(1, idx_info);
 			ps.setInt(2, stat);
 			ps.setInt(3, start);
-			ps.setInt(4, end);
+			ps.setInt(4, end); 		
+			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
 				int idx_member=rs.getInt("idx_member");
@@ -233,6 +237,63 @@ public class StatDAO {
 			}catch (Exception e2) {}
 		}
 	}
+	
+	
+	/**모임 신청하기용 사용자관련 메서드*/
+	public StatDTO getUserStat(int idx_member) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select * from moim_stat where idx_member=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx_member);
+			rs=ps.executeQuery();
+			rs.next();
+			int idx=rs.getInt("idx");
+			int idx_info=rs.getInt("idx_info");
+			int stat=rs.getInt("stat");
+			java.sql.Date joindate=rs.getDate("joindate");
+			String content=rs.getString("content");
+
+			StatDTO dto=new StatDTO(idx, idx_member, idx_info, stat, joindate, content);
+			return dto;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch (Exception e2) {}
+		}
+	}
+	
+	
+	/**모임 신청하기 관련 메서드*/
+	public int reqMem(int idx_member, int idx_info, String content) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="insert into moim_stat values(moim_stat_idx.nextval,?,?,?,sysdate,?)";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx_member);
+			ps.setInt(2, idx_info); //**idx_info 넘겨받기**
+			ps.setInt(3, 2);
+			ps.setString(4, content);
+			
+			int count=ps.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			} catch (Exception e2) {}
+		}
+	}
+
+	
 }
 
 

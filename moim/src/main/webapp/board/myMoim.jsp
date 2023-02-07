@@ -47,6 +47,7 @@ if(cp%pageSize==0)userGroup--;
 %>
 <body>
 <%@include file="/header.jsp" %>
+
 <%@include file="sideBoard.jsp" %>
 <section>
 	<article>

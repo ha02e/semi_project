@@ -39,7 +39,8 @@ table ul{
 	margin-top: 20px;
 }
 #infotab{
-	margin-right: 20px;
+	margin-right: 5px;
+
 }
 .infotable{
 	width:200px;
@@ -54,6 +55,7 @@ table ul{
 	height:100px;
 	margin-top:20px;
 }
+/*세부사항 내 관심사*/
 input[type="checkbox"] {
     width: 10px;
     height: 10px;
@@ -71,6 +73,7 @@ input[type="checkbox"] {
   width: 200px;
   height: 200px;
   }
+/*세부사항 토글관련*/
 label.detail{
 	border: 1px groove black;
 	background-color: #f4f4f4;
@@ -161,11 +164,11 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		for(int i=0;i<fitarr.size()&&i<=1;i++){ %>
 			<table class="infotab">
 				<tr>
-					<td><img alt="fitimg<%=i%> %>" src="<%=fitarr.get(i).getImg()%>"></td>
+					<td><img alt="fitimg<%=i%> %>" src="/moim/userimg/<%=fitarr.get(i).getImg()%>"></td>
 				</tr>
 			</table>
 			<ul>
-				<li><a href="infoContent.jsp?idx=<%=fitarr.get(i).getIdx()%>"><%=fitarr.get(i).getMoimname() %></a></li>
+				<li><a href="moimContent.jsp?idx=<%=fitarr.get(i).getIdx()%>"><%=fitarr.get(i).getMoimname() %></a></li>
 				<li><%=fitarr.get(i).getLocal() %></li>
 				<li><%=fitarr.get(i).getHobby() %></li>
 				<li><%=fitarr.get(i).getNowmem() %>/<%=fitarr.get(i).getMaxmem() %></li>
@@ -190,18 +193,18 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		for(int i=0;i<needarr.size()&&i<4;i++){ %>
 			<table class="infotab" id="infotab">
 				<tr>
-					<td><img alt="needimg<%=i %>" src="<%=needarr.get(i).getImg()%>"></td>
+					<td><img alt="needimg<%=i %>" src="/moim/userimg/<%=needarr.get(i).getImg()%>"></td>
 				</tr>
 			</table>
 		<%} %>
 		</div>
 		<div id="infodiv2">
-		<%for (int i=1;i<=4;i++){ %>
+		<%for (int i=0;i<needarr.size()&&i<4;i++){ %>
 		<table class="infotable" id="infotab">
 				<tr>
 					<td>
 					<ul>
-						<li><a href="infoContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a></li>
+						<li><a href="moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a></li>
 						<li><%=needarr.get(i).getLocal() %></li>
 						<li><%=needarr.get(i).getHobby() %></li>
 						<li><%=needarr.get(i).getNowmem() %>/<%=needarr.get(i).getMaxmem() %></li>

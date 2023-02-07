@@ -5,6 +5,21 @@
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao" class="com.moim.info.InfoDAO"></jsp:useBean>    
     
+<%--
+String idx_s = request.getParameter("idx");
+if (idx_s == null || idx_s.equals("")) {
+	idx_s = "0";
+}
+
+int idx = Integer.parseInt(idx_s);
+
+
+--%>  
+<%
+int idx=15;
+InfoDTO dto = mdao.getMoimCon(idx);  
+%> 
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,11 +117,15 @@ function pageBack(){
 </script>
 </head>
 <%
-int idx=11;
+//int idx=11;
 System.out.println(idx);
 //String idx=request.getParameter("idx");
+String hobby=request.getParameter("hobby");
 String moimname=request.getParameter("moimname");
 String content=request.getParameter("content");
+String local=request.getParameter("");
+String img=request.getParameter("img");
+
 %>
 <body>
 <%@include file="/header.jsp" %>
@@ -136,13 +155,13 @@ String content=request.getParameter("content");
 				<tr>
 					<th>모임이름</th>
 					<td>
-						<input type="text" name="moimname" size="52" placeholder="<%=mdto.getMoimname()%>">
+						<input type="text" name="moimname" size="52" value="<%=dto.getMoimname()%>">
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea name="content" rows="10" cols="80"><%=mdto.getContent() %></textarea>
+						<textarea name="content" rows="10" cols="80"><%=dto.getContent() %></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -189,35 +208,14 @@ String content=request.getParameter("content");
 				<tr>
 					<th>이미지</th>
 					<td><input type="file" name="upload" value="이미지 올리기" accept="image/*"></td>
-				
+						<input type="hidden" name="idx" value="<%=dto.getIdx()%>">
 				</tr>
 			</table>
 		</div>
-		<!--  	
-			<script>
-			function preview(input){
-				if(input.files && input.files[0]){
-					var reader=new FileReader();
-					reader.onload=function(e){
-						document.getElementById('viewimg').src=e.target.result;
-					}
-					reader.readAsDataURL(input.files[0]);
-				}else{
-					documemt.getElementById('viewimg').src="";
-				}
-			}
-			</script> 
-	 
-		<div class="contents imgupload">
-			<div class="img"><img id="viewimg"></div>
-			<form name="imgUpload" method="post" enctype="multipart/form-data">
-			<input type="file" name="upload" value="이미지 올리기" accept="image/*" onchange="preview(this);">
-			</form>
-			</div>
-		</div>
-		-->
+
 		<div class="button">
 			<input type="button" value="취소하기" onclick="pageBack();">
+			<input type="hidden" name="idx" value="<%=dto.getIdx()%>">
 			<input type="submit" value="모임 수정하기">
 		</div>
 		</form>

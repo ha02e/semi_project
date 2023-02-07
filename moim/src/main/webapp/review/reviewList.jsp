@@ -11,35 +11,44 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-div {
-	text-align: center;
-	margin: 0px auto;
-}
-
 table {
-	border-top: 3px;
-	border-left: 3px double dark;
-	border-right: 3px solid dark;
-	border-bottom: 3px solid dark;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
 	text-align: center;
-	margin: 0px auto;
-	width: 800px;
+	border-collapse: collapse;
 }
 
-table thead {
-	margin-bottom: 70px;
-	margin: 0px auto;
-	border-pacing: 70px;
-}
-
-table tfoot {
+table th {
+	height: 30px;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+	background-color: gray;
 	text-align: center;
-	margin: 0px auto;
+	vertical-align: inherit;
 }
 
-div {
-	margin: 0px auto;
-	texxt-align: center;
+table td {
+	border-bottom: 1px solid gray;
+	padding: 10px;
+}
+
+table #idx {
+	width: 5%;
+}
+
+table #subject {
+	width: 70%;
+	text-align: left;
+}
+
+table #writedate {
+	width: 15%;
+}
+
+#b {
+	text-align: center;
+	margin: 10px;
 }
 </style>
 </head>
@@ -68,7 +77,7 @@ if (cp_s == null || cp_s.equals("")) {
 }
 int cp = Integer.parseInt(cp_s);//핵심요소 사용자로부터 / 사용자의 위치
 
-int totalCnt = rdao.getTotalCnt(userhobby, keyword, boo); 
+int totalCnt = rdao.getTotalCnt(userhobby, keyword, boo);
 ArrayList<ReviewDTO> arr = rdao.getList(listSize, cp, userhobby, keyword, boo);
 
 int totalPage = totalCnt / listSize + 1;
@@ -106,6 +115,7 @@ if (cp % pageSize == 0)
 				<tfoot>
 					<tr>
 						<td></td>
+
 						<td>
 							<%
 							if (userGroup != 0) {
@@ -129,10 +139,8 @@ if (cp % pageSize == 0)
 							}
 							%>
 						</td>
+						<td></td>
 
-						<td><input type="button"
-							onclick="location.href='writeReview.jsp'" value="후기쓰러가기">
-						</td>
 					</tr>
 				</tfoot>
 
@@ -174,7 +182,10 @@ if (cp % pageSize == 0)
 
 					</tr>
 				</tbody>
-
+				<td></td>
+				<td></td>
+				<td><input type="button"
+					onclick="location.href='writeReview.jsp'" value="후기쓰러가기"></td>
 			</table>
 		</article>
 	</section>
