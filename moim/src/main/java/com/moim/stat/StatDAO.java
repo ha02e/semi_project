@@ -22,7 +22,6 @@ public class StatDAO {
 			HashMap<Integer,String> hm=new HashMap<Integer,String>();
 			String sql="select idx,name from moim_member";
 			ps=conn.prepareStatement(sql);
-			System.out.println("1111");
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt(1);
@@ -71,7 +70,6 @@ public class StatDAO {
 	public ArrayList<StatDTO> getNewPerStatList(int idx_info, int stat,int ls,int cp){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			System.out.println("22222");
 			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
 			int start=(cp-1)*ls+1;
 	        int end=(cp*ls);

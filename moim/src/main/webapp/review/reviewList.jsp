@@ -50,6 +50,26 @@ table #writedate {
 	text-align: center;
 	margin: 10px;
 }
+.button{
+   text-align: center;
+   padding:20px 0 40px 0;
+}
+.button input{
+   border:0;
+   outline:none;
+   width:160px;
+   height:40px;
+   cursor: pointer;
+   background:#999999;
+   color:white;
+}
+.button input[type="submit"]{
+   background:#333333;
+}
+.button input:hover{
+   background: #00cdac;
+   transition: 0.3s;
+}
 </style>
 </head>
 <%
@@ -91,6 +111,7 @@ if (cp % pageSize == 0)
 	userGroup--;
 %>
 <body>
+	<h2>후기 게시판</h2>
 	<section>
 		<article>
 			<%@include file="/header.jsp"%>
@@ -182,10 +203,11 @@ if (cp % pageSize == 0)
 
 					</tr>
 				</tbody>
-				<td></td>
-				<td></td>
-				<td><input type="button"
-					onclick="location.href='writeReview.jsp'" value="후기쓰러가기"></td>
+
+				<div >
+					<input type="button" id ="b" onclick="location.href='writeReview.jsp'"
+						value="후기쓰러가기">
+				</div>
 			</table>
 		</article>
 	</section>
