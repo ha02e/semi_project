@@ -49,16 +49,16 @@ int cp=Integer.parseInt(scp);
 .mainImg Img{
 	width: 1280px;
 }
-.content h2{
+.current_moim h2{
 	text-align:center;
 }
 
-.content div{
-	height: 250px;
-}
-
-.infotable h2{
-	text-align: center;
+.current_moim_box1{
+	align-content: center;
+	margin:0px auto;
+	display:flex;
+	justify-content:space-around;
+	height:200px;
 }
 
 .notice{
@@ -76,7 +76,7 @@ int cp=Integer.parseInt(scp);
 	text-align:center;
 	display:felx;
 	width:70%;
-	margin: auto;
+	margin: 0 auto;
 	padding: 10px 29px 10px 29px;
 }
 
@@ -102,56 +102,41 @@ int cp=Integer.parseInt(scp);
 }
 
 .notice #moreInfo{
-	text-align:right;
+	float:right;
+	margin-top:10px;
 }
-
-.current_moim{
-	align-content: center;
-	margin:0px auto;
-	display:flex;
-	justify-content:space-between;
-	width:800px;
-}
-
-.content #content_tb{
-	border:1px solid red;
-}
-
 
 </style>
 </head>
 <body>
 <%@include file="header.jsp" %>
 <section class="mainImg">
-<a href="/moim/noimg/listNoti.jsp"><img src="/moim/img/banner_main.jpg" alt="매인 배너"></a>
+<a href="/moim/noimg/notiList.jsp"><img src="/moim/img/banner_main.jpg" alt="매인 배너"></a>
 </section>
 
-<section class="content">
+<section class="current_moim">
 <h2>현재 모집 중인 소모임</h2>
-<div class="current_moim">
+<div class="current_moim_box1">
 <%
 		ArrayList<InfoDTO> needarr=idao.getList("total");
 		if(needarr==null||needarr.size()==0){
 			%><h2>현재 모집중인 모임이 없습니다</h2>
 		<%
 		}else{
-		for(int i=0;i<needarr.size();i++){ %>
-			<div id="content_tb">
-			<table >
-				<tr>
-					<td rowspan="3"><img alt="needimg<%=i%>" src="<%=needarr.get(i).getImg()%>"></td>
-					<td><a href="infoContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a></td>
-
-				</tr>
-				<tr>
-					<td><%=needarr.get(i).getLocal() %></td>
-				</tr>
-				<tr>
-					<td><%=needarr.get(i).getHobby() %></td>
-					</tr>
-	
-				
-				</table>
+		for(int i=0;i<needarr.size()&&i<6;i++){ %>
+			<div id="current_moim_box2">
+			<div class="info">
+				<img alt="needimg<%=i%>" src="<%=needarr.get(i).getImg()%>">
+			</div>
+			<div class="info">
+				<a href="infoContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a>
+			</div>
+			<div class="info">
+			<%=needarr.get(i).getLocal() %>	
+			</div>
+			<div class="info">
+			<%=needarr.get(i).getHobby() %>
+			</div>
 </div>
 	<%}} %>
 </div>
@@ -159,7 +144,6 @@ int cp=Integer.parseInt(scp);
 
 <section class="notice">
 <h2>공지사항</h2>
-<div id="moreInfo"><a href="/moim/noimg/notiList.jsp?idx_info=<%=session.getAttribute("idx_info")%>">더보기 > </a></div>
 <div id="notice_tb"> 
 <table>
 	<thead>
@@ -185,6 +169,7 @@ int cp=Integer.parseInt(scp);
 				}%>
 	</tbody>
 </table>
+<div id="moreInfo"><a href="/moim/noimg/notiList.jsp?idx_info=<%=session.getAttribute("idx_info")%>">더보기 > </a></div>
 </div>
 </section>
 <%@include file="footer.jsp" %>

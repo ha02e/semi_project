@@ -58,9 +58,30 @@ table div{
 	display:inline;
 }
 
-#a,#b{
+/* #a,#b{
 	text-align:left;
 	margin: 10px;
+} */
+
+.button{
+	text-align: center;
+	padding:20px 0 40px 0;
+}
+.button input{
+	border:0;
+	outline:none;
+	width:100px;
+	height:40px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+.button input[type="submit"]{
+	background:#333333;
+}
+.button input:hover{
+	background: #00cdac;
+	transition: 0.3s;
 }
 </style>
 
@@ -125,20 +146,20 @@ function write_button(){
 				<tfoot>
 					<tr>
 					<td>
-					<div>
+					<div class="button">
 					<form name="update1" action="notiUpdate.jsp">
-					<input type="hidden" name="idx" value="<%=dto.getIdx() %>">
-					<input type="hidden" name="subject" value="<%=dto.getSubject() %>">
-					<input type="hidden" name="content" value="<%=dto.getContent()%>">
-					<input type="submit" value="수정" id="a">
+						<input type="hidden" name="idx" value="<%=dto.getIdx() %>">
+						<input type="hidden" name="subject" value="<%=dto.getSubject() %>">
+						<input type="hidden" name="content" value="<%=dto.getContent()%>">
+						<input type="submit" value="수정" id="a">
+						<input type="button" value="삭제" id="b" 
+						onclick="javascript:location.href='notiDel.jsp?idx=<%=dto.getIdx()%>'">
 					</form>
-					<input type="button" value="삭제" id="b" 
-					onclick="javascript:location.href='notiDel.jsp?idx=<%=dto.getIdx()%>'">
 					</div>
 					</td>
 					<td>
-					<div>
-					<input type="button" value="목록" id="c" onclick="javascript:location.href='notiList.jsp?idx_info=<%=dto.getIdx_info()%>&category=<%=dto.getCategory()%>'">
+					<div class="button">
+						<input type="button" value="목록" id="c" onclick="javascript:location.href='notiList.jsp?idx_info=<%=dto.getIdx_info()%>&category=<%=dto.getCategory()%>'">
 					</div>
 					</td>
 					</tr>
