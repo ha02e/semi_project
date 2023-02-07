@@ -22,12 +22,13 @@ section table{
 }
 section img{
 	width: 200px;
-	heigth:200px;
+	height:200px;
 }
 section table .intab{
 	border-bottom: 1px solid black;
 	height: 200px;
 }
+/*세부검색 내 관심사*/
 input[type="checkbox"] {
     width: 10px;
     height: 10px;
@@ -41,6 +42,7 @@ input[type="checkbox"] {
     background: black;
     border: none;
   }
+  /*세부사항 토글관련*/
 label.detail{
 	border: 1px groove black;
 	background-color: #f4f4f4;
@@ -172,8 +174,8 @@ if(cp%pageSize==0)userGroup--;
 				for(int i=0;i<arr.size();i++){
 		%>
 			<tr>
-				<td class="intab"><img alt="img<%=i %>" src="<%=arr.get(i).getImg()%>"></td>
-				<td class="intab"><a href="infoContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname() %></a></td>
+				<td class="intab"><img alt="img<%=i %>" src="/moim/userimg/<%=arr.get(i).getImg()%>"></td>
+				<td class="intab"><a href="moimContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname() %></a></td>
 				<td class="intab"><%=arr.get(i).getLocal() %></td>
 				<td class="intab"><%=arr.get(i).getHobby() %></td>
 				<td class="intab"><%=arr.get(i).getNowmem() %>/<%=arr.get(i).getMaxmem() %></td>
