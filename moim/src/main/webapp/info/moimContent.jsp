@@ -292,13 +292,13 @@ function qnaUpdate(){
 </script>
 </head>
 <%
-/**
+
 String idx_s=request.getParameter("idx");
 if(idx_s==null || idx_s.equals("")){
 	idx_s="0";
 }
-*/
-int idx=15;  //int idx=Integer.parseInt(idx_s);
+
+int idx=Integer.parseInt(idx_s);
 InfoDTO dto=mdao2.getInfo(idx);
 %>
 <%

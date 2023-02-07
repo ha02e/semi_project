@@ -190,7 +190,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		for(int i=0;i<needarr.size()&&i<4;i++){ %>
 			<table class="infotab" id="infotab">
 				<tr>
-					<td><img alt="needimg<%=i %>" src="<%=needarr.get(i).getImg()%>"></td>
+					<td><img alt="needimg<%=i%>" src="<%=needarr.get(i).getImg()%>"></td>
 				</tr>
 			</table>
 		<%} %>

@@ -46,10 +46,13 @@ fieldset div{
 
 <script>
 	function idcheck() {
-		window.open('idCheck.jsp', 'idcheck','width:300, height:100', 'margin:0px auto');
-	}
-	
+		var w='500';
+		var h='300';
 
+		var l=Math.ceil((window.screen.width-w)/2);
+		var t=Math.ceil((window.screen.height-h)/2);
+		window.open('idCheck.jsp', 'idcheck', 'width='+w+',height='+h+',left='+l+',top='+t);
+	}
 	function pwd_check(){
 		var pwd1=document.getElementById('pwd').value;
 		var pwd2=document.getElementById('pwd_confirm').value;
