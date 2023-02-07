@@ -78,6 +78,7 @@ public class StatDAO {
 			ps.setInt(2, stat);
 			ps.setInt(3, start);
 			ps.setInt(4, end);
+			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
 				int idx_member=rs.getInt("idx_member");
@@ -190,12 +191,12 @@ public class StatDAO {
 			String sql="delete from moim_stat where idx=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx);
-			ps.executeUpdate();
+			int count=ps.executeUpdate();
 			sql="update moim_info set nowmem=? where idx=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, nowmem-1);
 			ps.setInt(2, idx_info);
-			int count=ps.executeUpdate();
+			ps.executeUpdate();
 			return count;
 		}catch(Exception e) {
 			e.printStackTrace();
