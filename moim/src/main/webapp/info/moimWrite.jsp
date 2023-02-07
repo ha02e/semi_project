@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%
+Integer idx = (Integer) session.getAttribute("idx");
+if (idx==null) {
+%>
+<script>
+	window.alert('로그인 후 이용가능합니다');
+	location.href = '/moim/info/infoList.jsp';
+</script>
+<%
+return;
+}
+%>
+    
 <jsp:useBean id="mdto" class="com.moim.info.InfoDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao" class="com.moim.info.InfoDAO"></jsp:useBean>
@@ -122,7 +136,7 @@ function pageBack(){
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea name="content" rows="10" cols="80">내용을 입력해주세요.</textarea>
+						<textarea name="content" rows="10" cols="80" placeholder="내용을 입력해주세요."></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -172,29 +186,7 @@ function pageBack(){
 				</tr>
 			</table>
 		</div>
-		<!--  	
-			<script>
-			function preview(input){
-				if(input.files && input.files[0]){
-					var reader=new FileReader();
-					reader.onload=function(e){
-						document.getElementById('viewimg').src=e.target.result;
-					}
-					reader.readAsDataURL(input.files[0]);
-				}else{
-					documemt.getElementById('viewimg').src="";
-				}
-			}
-			</script> 
-	 
-		<div class="contents imgupload">
-			<div class="img"><img id="viewimg"></div>
-			<form name="imgUpload" method="post" enctype="multipart/form-data">
-			<input type="file" name="upload" value="이미지 올리기" accept="image/*" onchange="preview(this);">
-			</form>
-			</div>
-		</div>
-		-->
+
 		<div class="button">
 			<input type="button" value="취소하기" onclick="pageBack();">
 			<input type="submit" value="모임 만들기">

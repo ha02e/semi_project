@@ -4,13 +4,13 @@
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.info.*" %>
 
-<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO" ></jsp:useBean>
+<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO" scope="session"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
-<jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO" ></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO"></jsp:useBean>
 
-<jsp:useBean id="mdto2" class="com.moim.info.InfoDTO" ></jsp:useBean>
+<jsp:useBean id="mdto2" class="com.moim.info.InfoDTO" scope="session"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
-<jsp:useBean id="mdao2" class="com.moim.info.InfoDAO"></jsp:useBean>
+<jsp:useBean id="mdao2" class="com.moim.info.InfoDAO" scope="session"></jsp:useBean>
 
 
 <!DOCTYPE html>
@@ -91,7 +91,7 @@ section .button div{
 	margin:10px;
 	align-items: center;
 }
-.button a:link, a:visited{
+.button a.moim-btn:link, a.moim-btn:visited{
 	background-color: #999999;
 	color:white;
     width:90px;
@@ -237,11 +237,11 @@ input[id*="click"]:checked + label + div{
     text-decoration: none;
     font-size:13px;
 }
-.list-btn{
+.bottom-btn{
 	text-align: center;
 	padding:20px 0 40px 0;
 }
-.list-btn a:link, .list-btn a:visited{
+.bottom-btn a.list-btn:link, .bottom-btn a.list-btn:visited{
 	display:inline-block;
 	padding:10px 50px;
 	background:#999999;
@@ -250,7 +250,7 @@ input[id*="click"]:checked + label + div{
 	font-size: 14px;
 	cursor: pointer;
 }
-.list-btn a:hover{
+.bottom-btn a.list-btn:hover{
 	background: #00cdac;
 	transition: 0.3s;
 }
@@ -261,7 +261,7 @@ input[id*="click"]:checked + label + div{
 		
 <script>
 function moimApply(){
-	var w=320;
+	var w=500;
 	var h=340;
 	 
 	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
@@ -270,8 +270,16 @@ function moimApply(){
 	 
 	window.open('/moim/stat/reqMem.jsp', 'reqMem', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
+function moimOut(){
+	
+	var msg=confirm("모임에서 탈퇴하시겠습니까?");
+	if(msg){
+		window.open('/moim/stat/delMem.jsp', 'delMem', 'width=400px, height=300px')
+	}else{
+	}
+}
 function qnaWrite(){
-	var w=320;
+	var w=50;
 	var h=340;
 	 
 	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
@@ -282,7 +290,7 @@ function qnaWrite(){
 }
 
 function qnaUpdate(){
-	var w=320;
+	var w=500;
 	var h=340;
 	 
 	var left=Math.ceil((window.screen.width-w)/2);
@@ -293,12 +301,9 @@ function qnaUpdate(){
 </head>
 <%
 
-String idx_s=request.getParameter("idx");
-if(idx_s==null || idx_s.equals("")){
-	idx_s="0";
-}
 
-int idx=Integer.parseInt(idx_s);
+
+int idx=15;  //int idx=Integer.parseInt(idx_s);
 InfoDTO dto=mdao2.getInfo(idx);
 %>
 <%
@@ -332,7 +337,7 @@ if(cp%pageSize==0)userGroup--;
 				<td><span class="con-icon1"></span>&nbsp;지역 : <%=dto.getLocal()%></td>
             </tr>
             <tr class="moimtext">
-				<td><span class="con-icon2"></span>&nbsp;인원 : 1/<%=dto.getMaxmem() %></td>
+				<td><span class="con-icon2"></span>&nbsp;인원 : <%=dto.getNowmem() %>/<%=dto.getMaxmem() %></td>
             </tr>
             <tr class="moimtext">
 				<td>
@@ -345,9 +350,9 @@ if(cp%pageSize==0)userGroup--;
             </tr>
          </table>
       <div class="button">
-         <div><a href="">채팅하러 가기</a></div>
-         <div><a href="javascript:moimApply()">참여하기</a></div>
-         <div><a href="">탈퇴하기</a></div>
+         <div><a href="/moim/board/myMoim.jsp" class="moim-btn">채팅하러 가기</a></div>
+         <div><a href="javascript:moimApply()" class="moim-btn">참여하기</a></div>
+         <div><a href="javascript:moimOut()" class="moim-btn">탈퇴하기</a></div>
       </div>
       </div>
 </article>
@@ -482,8 +487,8 @@ if(cp%pageSize==0)userGroup--;
       %>
 	</div>
 	</form>
-	<div class="list-btn">
-		<a href="infoList.jsp">목록으로</a>
+	<div class="bottom-btn">
+		<a href="infoList.jsp" class="list-btn">목록으로</a>
 	</div>
 </article>
 </section>
