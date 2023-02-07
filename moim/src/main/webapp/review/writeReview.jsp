@@ -21,15 +21,76 @@ return;
 %>
 
 <style>
-body {
-	text-align: center;
-	margin-right: 100px auto;
+section{
+	width:800px;
+	margin:0 auto;
+}
+section h2{
+	margin:40px 0 0 0;
+}
+section p{
+	font-size: 14px;
+	margin:10px 0 20px 0;
+	color:#666666;
 }
 
-table {
-	border: 5px double dark;
+section .write table{
+	width:800px;
+	border-top:3px solid #333333;
+	border-bottom:3px solid #333333;
+	padding:10px 20px 20px 20px;
+	background:#f6f6f6;
+}
+section .write table th{
+	text-align:left;
+	font-size:18px;
+	padding:14px 10px 14px 0;
+}
+section .write table td{
+	padding:4px 0;
+}
+
+.write table tr{
+	/*padding:40px 0;*/
+	margin:30px 0;
+	border-top:1px solid #999999;
+}
+select{
+	width: 100px; 
+	padding: 6px 18px; 
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	font-size: 14px;
+}
+input[type="text"] {
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	padding:8px;
+}
+textarea{
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+}
+
+.button{
 	text-align: center;
-	margin: 0px auto;
+	padding:20px 0 40px 0;
+}
+.button input{
+	border:0;
+	outline:none;
+	width:160px;
+	height:40px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+.button input[type="submit"]{
+	background:#333333;
+}
+.button input:hover{
+	background: #00cdac;
+	transition: 0.3s;
 }
 </style>
 </head>

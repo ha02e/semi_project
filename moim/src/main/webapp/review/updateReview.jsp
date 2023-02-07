@@ -47,71 +47,76 @@ String img = request.getParameter("img");
 <title>Insert title here</title>
 </head>
 <style>
-h2, h3, h4 {
+section{
+	width:800px;
+	margin:0 auto;
+}
+section h2{
+	margin:40px 0 0 0;
+}
+section p{
+	font-size: 14px;
+	margin:10px 0 20px 0;
+	color:#666666;
+}
+
+section .write table{
+	width:800px;
+	border-top:3px solid #333333;
+	border-bottom:3px solid #333333;
+	padding:10px 20px 20px 20px;
+	background:#f6f6f6;
+}
+section .write table th{
+	text-align:left;
+	font-size:18px;
+	padding:14px 10px 14px 0;
+}
+section .write table td{
+	padding:4px 0;
+}
+
+.write table tr{
+	/*padding:40px 0;*/
+	margin:30px 0;
+	border-top:1px solid #999999;
+}
+select{
+	width: 100px; 
+	padding: 6px 18px; 
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	font-size: 14px;
+}
+input[type="text"] {
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	padding:8px;
+}
+textarea{
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+}
+
+.button{
 	text-align: center;
-	margin: 0px auto;
+	padding:20px 0 40px 0;
 }
-
-table {
-	text-align: center;
-	margin: 0px auto;
-}
-
-section {
-	width: 800px;
-	margin: 0 auto;
-}
-
-section h2 {
-	text-align: center;
-}
-
-section .moimcontent {
-	display: flex;
-	margin: 0 auto;
-	width: 800px;
-	height: 260px;
-	padding: 10px 0 30px 0;
-}
-
-section .write {
-	width: 500px;
-	height: 900px;
-}
-
-section .write table th {
-	text-align: left;
-	font-size: 18px;
-	padding-right: 10px;
-}
-
-section .write table td {
-	padding: 4px 0;
-}
-
-section .imgupload {
-	width: 300px;
-	text-align: center;
-}
-
-section .img {
-	background: #eeeeee;
-	width: 200px;
-	height: 200px;
-	margin: 0 auto 10px auto;
-}
-
-.button {
-	text-align: right;
-	padding: 0 40px 20px 0;
-}
-
-.button input {
-	border: 0;
-	outline: none;
-	width: 100px;
-	height: 30px;
+.button input{
+	border:0;
+	outline:none;
+	width:160px;
+	height:40px;
 	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+.button input[type="submit"]{
+	background:#333333;
+}
+.button input:hover{
+	background: #00cdac;
+	transition: 0.3s;
 }
 </style>
 <script>
@@ -179,10 +184,16 @@ section .img {
 							<tr>
 								<th>제목</th>
 								<td><input type="text" name ="subject" value="<%=dto.getSubject()%>"></td>
+								<td rowspan = "3"><div class="contents imgupload">
+						<div class="img">
+							<img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200>
+						</div>
+					</div></td>
 							</tr>
 							<tr>
 								<th>모임이름</th>
-								<td><%=dto.getMoimname()%>
+								<td><%=dto.getMoimname()%></td>
+								
 							</tr>
 							<tr>
 								<th>지역</th>
@@ -195,7 +206,7 @@ section .img {
 							</tr>
 							<tr>
 								<th>이미지</th>
-								<td><input type="file" name="upload"></td>
+								<td><input type="file" name="upload"></td><td></td>
 							</tr>
 
 							<input type="hidden" name="idx_memeber"
@@ -203,11 +214,6 @@ section .img {
 							<input type="hidden" name="hobby" value="<%=hobby%>">
 							<input type="hidden" name="writer" value="<%=writer%>">
 						</table>
-					</div>
-					<div class="contents imgupload">
-						<div class="img">
-							<img alt="이미지" src="img/<%=dto.getImg()%>" width=200 height=200>
-						</div>
 					</div>
 				</div>
 				<div class="button">
