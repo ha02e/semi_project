@@ -89,7 +89,7 @@ function login_popup(){
 String name=(String)session.getAttribute("name");
 if(name!=null){
 %>
-<div class="id"><%=name%>님&nbsp;&nbsp;&nbsp;&nbsp;마이페이지&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="id"><%=name%>님&nbsp;&nbsp;&nbsp;&nbsp;<a href="/moim/board/myInfo.jsp">마이페이지</a>&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="/moim/member/logout.jsp">로그아웃</a></div>
 <%}else{ %>
 <div class="id"><a href="javascript:login_popup()">로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;

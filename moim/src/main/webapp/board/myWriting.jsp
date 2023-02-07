@@ -22,26 +22,28 @@ th{
 </style>
 </head>
 <%
-int idx=22;
+Integer idx=(Integer)session.getAttribute("idx");
+if(idx==null){
+	idx=0;
+}
 
-int totalCnt=mdao.getTotal("moim_review", 22, 1);
-
-int listSize=5;
+int totalCnt=mdao.getTotal("moim_review", 21, 1);
+int listSize=2;
 int pageSize=5;
 
-String idx_member_s=request.getParameter("idx_member_s");
-if(idx_member_s==null||idx_member_s.equals("")){
-	idx_member_s="1";
+String cp_s=request.getParameter("cp");
+if(cp_s==null||cp_s.equals("")){
+	cp_s="1";
 }
-int idx_member=Integer.parseInt(idx_member_s);
+int cp=Integer.parseInt(cp_s);
 
 int totalPage=totalCnt/listSize+1;
 if(totalCnt%listSize==0)totalPage--;
 
-int userGroup=idx_member/pageSize;
-if(idx_member%pageSize==0)userGroup--;
+int userGroup=cp/pageSize;
+if(cp%pageSize==0)userGroup--;
 
-int totalCnt2=mdao.getTotal("moim_noimg", 22, 2);
+int totalCnt2=mdao.getTotal("moim_noimg", 21, 2);
 
 int totalPage2=totalCnt2/listSize+1;
 if(totalCnt2%listSize==0)totalPage2--;
@@ -65,7 +67,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 			</thead>
 			<tbody>
 			<%
-			ArrayList<ReviewDTO> dto1=mdao.getMyReview(idx_member);
+			ArrayList<ReviewDTO> dto1=mdao.getMyReview(21,listSize,cp);
 			if(dto1==null||dto1.size()==0){
 				%>
 				<tr>
@@ -96,18 +98,18 @@ if(totalCnt2%listSize==0)totalPage2--;
 				<td colspan="4" align="center">
 				<%
 				if(userGroup!=0){
-					%><a href="myWriting.jsp?idx_member=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+					%><a href="myWriting.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
 				}
 				%>
 				<%
 				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=idx_member%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+					%>&nbsp;&nbsp;<a href="myWriting.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
 					if(i==totalPage)break;
 				}
 				%>
 				<%
 				if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
-					%><a href="myWriting.jsp?idx_member=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+					%><a href="myWriting.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
 				}
 				%>
 				</td>
@@ -129,7 +131,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 				<tbody>
 				<%
 				HashMap<Integer,String> map1=mdao.moimName();
-				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, 1);
+				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, 21,1,cp);
 				if(dto2==null||dto2.size()==0){
 					%>
 					<tr>
@@ -162,7 +164,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 				%>
 				<%
 				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=idx_member%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=21%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
 					if(i==totalPage2)break;
 				}
 				%>

@@ -14,7 +14,7 @@ if(idx_s==null||idx_s.equals("")){
 }
 int idx=Integer.parseInt(idx_s);
 
-NoimgDTO dto=mdao.moimChatContent(idx,3);
+NoimgDTO dto=mdao.getContent(idx,3);
 if(dto==null){
 	%>
 	<script>
