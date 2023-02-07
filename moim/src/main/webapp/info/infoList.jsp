@@ -196,7 +196,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		<%} %>
 		</div>
 		<div id="infodiv2">
-		<%for (int i=1;i<=4;i++){ %>
+		<%for (int i=0;i<needarr.size()&&i<4;i++){ %>
 		<table class="infotable" id="infotab">
 				<tr>
 					<td>
