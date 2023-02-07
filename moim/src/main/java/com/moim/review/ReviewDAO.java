@@ -15,32 +15,6 @@ public class ReviewDAO {
 		// TODO Auto-generated constructor stub
 	}
 
-	/** 마지막 ref 구하기 ㅣ관련 메서드 */
-	public int getMaxRef() {
-		try {
-			String sql = "select max(ref) from moim_review";
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			int max = 0;
-			if (rs.next()) {
-				max = rs.getInt(1);
-			}
-			return max;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 0;
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (ps != null)
-					ps.close();
-			} catch (Exception e2) {
-
-			}
-		}
-	}
 
 	/** 총 게시물 수 관련 메서드 */
 
@@ -276,14 +250,15 @@ public class ReviewDAO {
 		try {
 //			dbConnect();
 			conn = com.moim.db.MoimDB.getConn();
-			String sql = "update moim_review set content=? , img=? where idx=?";
+			String sql = "update moim_review set subject=?, content=? , img=? where idx=?";
 			ps = conn.prepareStatement(sql);
 			
 			String img = mr.getFilesystemName("upload");
 			
-			ps.setString(1, dto.getContent());
-			ps.setString(2, img);
-			ps.setInt(3, dto.getIdx());
+			ps.setString(1, dto.getSubject());
+			ps.setString(2, dto.getContent());
+			ps.setString(3, img);
+			ps.setInt(4, dto.getIdx());
 			int count = ps.executeUpdate();
 			return count;
 

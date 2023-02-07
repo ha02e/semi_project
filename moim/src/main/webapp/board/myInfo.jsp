@@ -51,7 +51,7 @@ MemberDTO dto=mdao.getMem(idx);
 %>
 <body>
 <%@include file="/header.jsp" %>
-<%@include file="sideBoard.jsp" %>
+<%@include file = "sideBoard.jsp" %>
 <section>
 <article>
 	<form name="myInfoUpdate" action="myInfoUpdate_ok.jsp">

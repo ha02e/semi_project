@@ -50,7 +50,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 %>
 <body>
 <%@include file="/header.jsp" %>
-<%@include file="sideBoard.jsp" %>
+<%@include file = "sideBoard.jsp" %>
 <section>
 	<article>
 		<h3>내가 쓴 후기</h3>
