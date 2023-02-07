@@ -36,9 +36,9 @@ String name2=(String)session.getAttribute("name");
 	<img src="" alt="제목이미지">
 	<ul>
 	<li><%=name2 %>님</li>
-	<li><a href="myInfo.jsp" class="item">내 정보 변경</a></li>
-	<li><a href="myWriting.jsp" class="item">내가 쓴 글</a></li>
-	<li><a href="myMoim.jsp" class="item">참여중인 모임</a></li>
+	<li><a href="myInfo.jsp" class="item"><h3>내 정보 변경</h3></a></li>
+	<li><a href="myWriting.jsp" class="item"><h3>내가 쓴 글</h3></a></li>
+	<li><a href="myMoim.jsp" class="item"><h3>참여중인 모임</h3></a></li>
 	</ul>
 </div>
 </section>

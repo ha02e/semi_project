@@ -47,7 +47,8 @@ if(idx_member%pageSize==0)userGroup--;
 %>
 <body>
 <%@include file="/header.jsp" %>
-<%@include file = "sideBoard.jsp" %>
+
+<%@include file="sideBoard.jsp" %>
 <section>
 	<article>
 		<h3>참여중인 모임</h3>

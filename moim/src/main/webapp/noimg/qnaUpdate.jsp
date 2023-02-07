@@ -2,6 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.info.*" %>
+
+<%
+Integer idx = (Integer) session.getAttribute("idx");
+if (idx==null) {
+%>
+<script>
+	window.alert('로그인 후 이용가능합니다');
+	location.href = '/moim/info/moimContent.jsp';
+</script>
+<%
+return;
+}
+%>  
+
 <jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
 
@@ -158,10 +172,10 @@ function pageBack(){
 String idx_s=request.getParameter("idx");
 if(idx_s==null || idx_s.equals("")){
 	idx_s="0";
-}
-*/
-int idx=15;  //int idx=Integer.parseInt(idx_s);
-InfoDTO dto=mdao2.getInfo(idx);
+}*/
+int idx_i=15;
+//int idx_i=Integer.parseInt(idx_s);
+InfoDTO dto=mdao2.getInfo(idx_i);
 %>
 <%
 //String idx=request.getParameter("idx");
