@@ -97,10 +97,32 @@ table #writedate{
 	width:15%;
 }
 
-#b{
-	text-align:center;
-	margin: 10px;
+.button{
+	text-align: center;
+	margin-left: 1000px;
+	padding:20px 0 40px 0;
 }
+.button input{
+	border:0;
+	outline:none;
+	width:160px;
+	height:40px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+.button input[type="submit"]{
+	background:#333333;
+}
+.button input:hover{
+	background: #00cdac;
+	transition: 0.3s;
+}
+
+/* #b{
+	margin:10px 0px 10px 1100px;
+} */
+
 </style>
 
 <script>
@@ -172,9 +194,11 @@ function write_button(){
 					}%>
 				</tbody>
 			</table>
-			<div>
-					<input type="button" value="글쓰기" id="b" style="text-align:right;" onclick="javascript:location.href='notiWrite.jsp'">
+	
+			<div class="button">
+					<input type="button" value="글쓰기" id="b" onclick="javascript:location.href='notiWrite.jsp'">
 			</div>
+	
 		</article>
 	</section>
 <%@include file="/footer.jsp" %>

@@ -8,7 +8,7 @@ request.setCharacterEncoding("UTF-8");
 <jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO"></jsp:useBean>
 
 <%
-int result=mdao.updateQna(mdto);
+int result=mdao.updateNoimg(mdto);
 String msg=result>0?"QnA 글이 수정되었습니다.":"QnA 글 수정에 실패하였습니다.";
 %>
 <script>

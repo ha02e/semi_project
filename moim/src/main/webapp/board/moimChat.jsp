@@ -27,26 +27,25 @@ form{
 </head>
 <%
 
-int idx=22;
-int category=3;
+int idx=21;
 MemberDTO dto=mdao.getMem(idx);
 
-int totalCnt=mdao.getTotal("moim_noimg", 22, 5);
+int totalCnt=mdao.getTotal("moim_noimg", 0, 5);
 
 int listSize=10;
 int pageSize=5;
 
-String idx_member_s=request.getParameter("idx_member_s");
-if(idx_member_s==null||idx_member_s.equals("")){
-	idx_member_s="1";
+String cp_s=request.getParameter("cp");
+if(cp_s==null||cp_s.equals("")){
+	cp_s="1";
 }
-int idx_member=Integer.parseInt(idx_member_s);
+int cp=Integer.parseInt(cp_s);
 
 int totalPage=totalCnt/listSize+1;
 if(totalCnt%listSize==0)totalPage--;
 
-int userGroup=idx_member/pageSize;
-if(idx_member%pageSize==0)userGroup--;
+int userGroup=cp/pageSize;
+if(cp%pageSize==0)userGroup--;
 
 %>
 <body>
@@ -64,7 +63,7 @@ if(idx_member%pageSize==0)userGroup--;
 		</thead>
 		<tbody>
 		<%
-		ArrayList<NoimgDTO> dto2=mdao.getList(0, 3, 5, 1);
+		ArrayList<NoimgDTO> dto2=mdao.getList(0, 3, listSize, cp);
 		if(dto2==null||dto2.size()==0){
 			%>
 			<tr>
@@ -97,18 +96,18 @@ if(idx_member%pageSize==0)userGroup--;
 			<td colspan="4" align="center">
 			<%
 			if(userGroup!=0){
-				%><a href="moimChat.jsp?idx_member=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+				%><a href="moimChat.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
 			}
 			%>
 			<%
 			for(int i=userGroup*pageSize+1;i<userGroup*pageSize+pageSize;i++){
-				%>&nbsp;&nbsp;<a href="moimChat.jsp?idx_member=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+				%>&nbsp;&nbsp;<a href="moimChat.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
 				if(i==totalPage)break;
 			}
 			%>	
 			<%
 			if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
-				%><a href="moimChat.jsp?idx_member=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+				%><a href="moimChat.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
 			}
 			%>
 		</tr>
@@ -117,12 +116,17 @@ if(idx_member%pageSize==0)userGroup--;
 		<form name="writeChat" action="writeChat.jsp">
 		<input type="submit" value="글작성">
 		</form>
-		<select>
-		<option>작성자</option>
-		<option>제목</option>
+		<form name="search" action="moimChat.jsp">
+		<div>
+		<select name="cul">
+		<option value="전체" selected>전체</option>
+		<option value="writer">작성자</option>
+		<option value="subject">제목</option>
 		</select>
-		<input type="text" value="">
-		<input type="button" value="검색">
+		<input type="text" name="keyword">
+		<input type="submit" value="검색">
+		</div>
+		</form>
 </article>
 </section>
 <%@include file="/footer.jsp" %>
