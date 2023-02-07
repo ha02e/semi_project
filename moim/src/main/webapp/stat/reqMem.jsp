@@ -1,5 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%--
+<%@ page import="com.moim.stat.*" %>
+<%
+//로그인 체크
+String id=(String)session.getAttribute("id");
+if(id==null){
+	%>
+	<script>
+		window.alert('로그인 후 이용 가능합니다.');
+		window.self.close();
+	</script>
+	<%
+	return;
+}
+%>
+ --%> 
+
+<jsp:useBean id="mdto" class="com.moim.stat.StatDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="mdto"/>
+<jsp:useBean id="mdao" class="com.moim.stat.StatDAO"></jsp:useBean>
+
 <!DOCTYPE html>
 <html>
 <head>
