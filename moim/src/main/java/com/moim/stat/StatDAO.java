@@ -234,6 +234,7 @@ public class StatDAO {
 		}
 	}
 	
+	
 	/**모임 신청하기용 사용자관련 메서드*/
 	public StatDTO getUserStat(int idx_member) {
 		try {
