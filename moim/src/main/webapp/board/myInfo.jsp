@@ -3,7 +3,7 @@
 <%@ page import="com.moim.member.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.net.*" %>
-<jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.member.MemberDAO" ></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,10 +42,9 @@ function pwd_check(){
 </script>
 </head>
 <%
-int idx=21;
-if(session.getAttribute("idx")!=null&&!session.getAttribute("idx").equals("")){
-	String idx_s=(String)session.getAttribute("idx");
-	idx=Integer.parseInt(idx_s);
+Integer idx=(Integer)session.getAttribute("idx");
+if(idx==null){
+	idx=0;
 }
 MemberDTO dto=mdao.getMem(idx);
 %>
