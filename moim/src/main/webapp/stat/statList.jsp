@@ -25,7 +25,7 @@ HashMap<Integer, String> hash = sdao.getName();
 <%
 String idx_info_s = request.getParameter("idx_info");
 if (idx_info_s == null || idx_info_s.equals("")) {
-	idx_info_s = "0";
+	idx_info_s = "2";
 }
 int idx_info = Integer.parseInt(idx_info_s);
 
@@ -75,7 +75,7 @@ if (cp % pageSize == 0)
 				</tr>
 				<tr>
 					<%
-					ArrayList<StatDTO> arr = sdao.getNewPerStatList(idx_info, stat, ls, cp);
+					ArrayList<StatDTO> arr = sdao.getNewPerStatList(idx_info, 1, ls, cp);
 					if (arr == null || arr.size() == 0) {
 					%>
 				
