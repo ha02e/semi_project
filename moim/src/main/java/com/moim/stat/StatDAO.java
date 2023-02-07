@@ -234,14 +234,44 @@ public class StatDAO {
 		}
 	}
 	
+	/**모임 신청하기용 사용자관련 메서드*/
+	public StatDTO getUserStat(int idx_member) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select * from moim_stat where idx_member=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx_member);
+			rs=ps.executeQuery();
+			rs.next();
+			int idx=rs.getInt("idx");
+			int idx_info=rs.getInt("idx_info");
+			int stat=rs.getInt("stat");
+			java.sql.Date joindate=rs.getDate("joindate");
+			String content=rs.getString("content");
+
+			StatDTO dto=new StatDTO(idx, idx_member, idx_info, stat, joindate, content);
+			return dto;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch (Exception e2) {}
+		}
+	}
+	
+	
 	/**모임 신청하기 관련 메서드*/
-	public int reqMem(int idx_member, String content) {
+	public int reqMem(int idx_member, int idx_info, String content) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			String sql="insert into moim_stat values(moim_stat_idx.nextval,?,?,?,sysdate,?)";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx_member);
-			ps.setInt(2, 0); //**idx_info 넘겨받기**
+			ps.setInt(2, idx_info); //**idx_info 넘겨받기**
 			ps.setInt(3, 2);
 			ps.setString(4, content);
 			

@@ -19,7 +19,7 @@ int idx = Integer.parseInt((mr.getParameter("idx")));
 //기존에 저장된 사진 이름
 String bimg = mdao.getAdrImg(idx);
 String imgname=bimg;
-System.out.println("기존 사진명 : " + imgname);
+//System.out.println("기존 사진명 : " + imgname);
 
 String beforeImg=imgname;
 
@@ -30,14 +30,13 @@ File delImg=new File(delImgName);
 //기존 사진 경로에서 삭제
 if(delImg.exists() && delImg.isFile()){
 	delImg.delete();
-	System.out.println("삭제된 기존 사진 : "+beforeImg);
+	//System.out.println("삭제된 기존 사진 : "+beforeImg);
 }
 
 
-//idx = Integer.parseInt((mr.getParameter("idx")));
 mdto.setIdx(idx);
 
-System.out.println("idx : " + idx);
+//System.out.println("idx : " + idx);
 
 mdto.setHobby(mr.getParameter("hobby"));
 mdto.setMoimname(mr.getParameter("moimname"));

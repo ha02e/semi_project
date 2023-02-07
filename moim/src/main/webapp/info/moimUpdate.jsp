@@ -155,7 +155,7 @@ String img=request.getParameter("img");
 				<tr>
 					<th>모임이름</th>
 					<td>
-						<input type="text" name="moimname" size="52" placeholder="<%=dto.getMoimname()%>">
+						<input type="text" name="moimname" size="52" value="<%=dto.getMoimname()%>">
 					</td>
 				</tr>
 				<tr>
@@ -212,29 +212,7 @@ String img=request.getParameter("img");
 				</tr>
 			</table>
 		</div>
-		<!--  	
-			<script>
-			function preview(input){
-				if(input.files && input.files[0]){
-					var reader=new FileReader();
-					reader.onload=function(e){
-						document.getElementById('viewimg').src=e.target.result;
-					}
-					reader.readAsDataURL(input.files[0]);
-				}else{
-					documemt.getElementById('viewimg').src="";
-				}
-			}
-			</script> 
-	 
-		<div class="contents imgupload">
-			<div class="img"><img id="viewimg"></div>
-			<form name="imgUpload" method="post" enctype="multipart/form-data">
-			<input type="file" name="upload" value="이미지 올리기" accept="image/*" onchange="preview(this);">
-			</form>
-			</div>
-		</div>
-		-->
+
 		<div class="button">
 			<input type="button" value="취소하기" onclick="pageBack();">
 			<input type="hidden" name="idx" value="<%=dto.getIdx()%>">
