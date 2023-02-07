@@ -257,8 +257,35 @@ public class StatDAO {
 				if(conn!=null)conn.close();
 			} catch (Exception e2) {}
 		}
-	}
+	}	   
+	   /**모임 신청하기용 사용자관련 메서드*/
+	   public StatDTO getUserStat(int idx_member) {
+	      try {
+	         conn=com.moim.db.MoimDB.getConn();
+	         String sql="select * from moim_stat where idx_member=?";
+	         ps=conn.prepareStatement(sql);
+	         ps.setInt(1, idx_member);
+	         rs=ps.executeQuery();
+	         rs.next();
+	         int idx=rs.getInt("idx");
+	         int idx_info=rs.getInt("idx_info");
+	         int stat=rs.getInt("stat");
+	         java.sql.Date joindate=rs.getDate("joindate");
+	         String content=rs.getString("content");
 
+	         StatDTO dto=new StatDTO(idx, idx_member, idx_info, stat, joindate, content);
+	         return dto;
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	         return null;
+	      }finally {
+	         try {
+	            if(rs!=null)rs.close();
+	            if(ps!=null)ps.close();
+	            if(conn!=null)conn.close();
+	         }catch (Exception e2) {}
+	      }
+	   }
 	
 }
 
