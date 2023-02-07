@@ -6,7 +6,7 @@
 
 <jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO" scope="session"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
-<jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO"></jsp:useBean>
 
 <jsp:useBean id="mdto2" class="com.moim.info.InfoDTO" scope="session"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
@@ -270,6 +270,13 @@ function moimApply(){
 	 
 	window.open('/moim/stat/reqMem.jsp', 'reqMem', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
+function moimOut(){
+	var msg=confirm("모임에서 탈퇴하시겠습니까?");
+	if(msg){
+		window.open('/moim/stat/delMem.jsp', 'delMem', 'width=400px, height=300px')
+	}else{
+	}
+}
 function qnaWrite(){
 	var w=320;
 	var h=340;
@@ -292,12 +299,9 @@ function qnaUpdate(){
 </script>
 </head>
 <%
-/**
-String idx_s=request.getParameter("idx");
-if(idx_s==null || idx_s.equals("")){
-	idx_s="0";
-}
-*/
+
+
+
 int idx=15;  //int idx=Integer.parseInt(idx_s);
 InfoDTO dto=mdao2.getInfo(idx);
 %>
@@ -332,7 +336,7 @@ if(cp%pageSize==0)userGroup--;
 				<td><span class="con-icon1"></span>&nbsp;지역 : <%=dto.getLocal()%></td>
             </tr>
             <tr class="moimtext">
-				<td><span class="con-icon2"></span>&nbsp;인원 : 1/<%=dto.getMaxmem() %></td>
+				<td><span class="con-icon2"></span>&nbsp;인원 : <%=dto.getNowmem() %>/<%=dto.getMaxmem() %></td>
             </tr>
             <tr class="moimtext">
 				<td>
@@ -347,7 +351,7 @@ if(cp%pageSize==0)userGroup--;
       <div class="button">
          <div><a href="">채팅하러 가기</a></div>
          <div><a href="javascript:moimApply()">참여하기</a></div>
-         <div><a href="">탈퇴하기</a></div>
+         <div><a href="javascript:moimOut()">탈퇴하기</a></div>
       </div>
       </div>
 </article>
