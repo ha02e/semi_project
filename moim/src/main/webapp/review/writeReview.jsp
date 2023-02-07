@@ -74,11 +74,11 @@ detail= request.getParameter("detail");
 							<tr>
 								<th>모임이름</th>
 								<td><input type="text" name="moimname" size="52"
-									value="<%=moimname%>" readonly></td>
+									value="<%=moimname%>" > <!-- readonly --></td>
 							</tr>
 							<tr>
 								<th>지역</th>
-								<td><input type="text" name="local" value="<%=local%> " readonly></td>
+								<td><input type="text" name="local" value="<%=local%>"> <!-- readonly --></td>
 							</tr>
 							<tr>
 								<th>내용</th>

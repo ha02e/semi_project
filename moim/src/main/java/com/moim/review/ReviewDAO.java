@@ -250,14 +250,15 @@ public class ReviewDAO {
 		try {
 //			dbConnect();
 			conn = com.moim.db.MoimDB.getConn();
-			String sql = "update moim_review set content=? , img=? where idx=?";
+			String sql = "update moim_review set subject=?, content=? , img=? where idx=?";
 			ps = conn.prepareStatement(sql);
 			
 			String img = mr.getFilesystemName("upload");
 			
-			ps.setString(1, dto.getContent());
-			ps.setString(2, img);
-			ps.setInt(3, dto.getIdx());
+			ps.setString(1, dto.getSubject());
+			ps.setString(2, dto.getContent());
+			ps.setString(3, img);
+			ps.setInt(4, dto.getIdx());
 			int count = ps.executeUpdate();
 			return count;
 

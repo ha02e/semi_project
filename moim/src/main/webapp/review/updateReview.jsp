@@ -133,7 +133,7 @@ section .img {
 						<table>
 							<tr>
 								<th>제목</th>
-								<td><%=dto.getSubject()%>
+								<td><input type="text" name ="subject" value="<%=dto.getSubject()%>"></td>
 							</tr>
 							<tr>
 								<th>모임이름</th>
@@ -178,7 +178,7 @@ section .img {
 						<table>
 							<tr>
 								<th>제목</th>
-								<td><%=dto.getSubject()%>
+								<td><input type="text" name ="subject" value="<%=dto.getSubject()%>"></td>
 							</tr>
 							<tr>
 								<th>모임이름</th>
