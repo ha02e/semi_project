@@ -4,13 +4,13 @@
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.info.*" %>
 
-<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO" scope="session"></jsp:useBean>
+<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO" ></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
-<jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO" ></jsp:useBean>
 
-<jsp:useBean id="mdto2" class="com.moim.info.InfoDTO" scope="session"></jsp:useBean>
+<jsp:useBean id="mdto2" class="com.moim.info.InfoDTO" ></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
-<jsp:useBean id="mdao2" class="com.moim.info.InfoDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="mdao2" class="com.moim.info.InfoDAO"></jsp:useBean>
 
 
 <!DOCTYPE html>
