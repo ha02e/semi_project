@@ -187,7 +187,7 @@ public class NoimgDAO {
    } 
    
    /**QnA 글 수정하기 관련 메서드*/
-   public int updateQna(NoimgDTO dto) {
+   public int updateNoimg(NoimgDTO dto) {
 	   try {
 	          conn=com.moim.db.MoimDB.getConn();
 	          String sql="update moim_noimg set subject=?, content=? where idx=?";
@@ -211,7 +211,7 @@ public class NoimgDAO {
    } 
    
    /**QnA 글 삭제 관련 메서드*/
-   public int delQna(int idx) {
+   public int delNoimg(int idx) {
       try {
          conn=com.moim.db.MoimDB.getConn();
          String sql="delete from moim_noimg where idx=?";

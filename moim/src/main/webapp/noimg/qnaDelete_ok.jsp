@@ -9,7 +9,7 @@
 <%
 int idx=mdto.getIdx();
 
-int result=mdao.delQna(idx);
+int result=mdao.delNoimg(idx);
 String msg=result>0?"삭제가 완료되었습니다.":"삭제 실패하였습니다..";
 %>
 
