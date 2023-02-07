@@ -28,14 +28,14 @@ ul{
 </head>
 <%
 //이름 수정
-String name=(String)session.getAttribute("name");
+String name2 =(String)session.getAttribute("name");
 %>
 <body>
 <section>
 <div class="mymenu">
 	<img src="" alt="제목이미지">
 	<ul>
-	<li><%=name %>님</li>
+	<li><%=name2%>님</li>
 	<li><a href="myInfo.jsp" class="item"><h3>내 정보 변경</h3></a></li>
 	<li><a href="myWriting.jsp" class="item"><h3>내가 쓴 글</h3></a></li>
 	<li><a href="myMoim.jsp" class="item"><h3>참여중인 모임</h3></a></li>

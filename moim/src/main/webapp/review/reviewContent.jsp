@@ -59,8 +59,8 @@ table {
 				}else{
 					%>
 					<tr>
-						<td clsapn = "3"><img alt="이미지" src="img/<%=dto.getImg()%>" width=200
-							height=200></td>
+						<td clsapn = "3"><img alt="이미지" src="img/<%=dto.getImg()%>" width=400
+							height=400></td>
 					</tr>
 					<%} %>
 				</article>
