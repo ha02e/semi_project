@@ -58,12 +58,11 @@ int cp=Integer.parseInt(scp);
 	margin:0px auto;
 	display:flex;
 	justify-content:space-around;
-	height:200px;
+	height:300px;
 }
 
 .notice{
 	height:300px;
-	border: 1px solid gray;
 } 
 
 .notice h2{
@@ -101,9 +100,32 @@ int cp=Integer.parseInt(scp);
 	width: 10%;
 }
 
-.notice #moreInfo{
-	float:right;
-	margin-top:10px;
+
+
+.info Img{
+	width: 200px;
+	height:200px;
+	object-fit:cover;
+}
+
+.button{
+	text-align: right;
+	padding:0 10px 20px 0;
+}
+.button input{
+	border:0;
+	outline:none;
+	width:90px;
+	height:30px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+
+
+.button input:hover{
+	background: #00cdac;
+	transition: 0.3s;
 }
 
 </style>
@@ -116,6 +138,7 @@ int cp=Integer.parseInt(scp);
 
 <section class="current_moim">
 <h2>현재 모집 중인 소모임</h2>
+<div class="button"><input type="button" value="전체보기 > " onclick="javascript:location.href='/moim/info/infoSearch.jsp'"></div>
 <div class="current_moim_box1">
 <%
 		ArrayList<InfoDTO> needarr=idao.getList("total");
@@ -126,7 +149,7 @@ int cp=Integer.parseInt(scp);
 		for(int i=0;i<needarr.size()&&i<6;i++){ %>
 			<div id="current_moim_box2">
 			<div class="info">
-				<img alt="needimg<%=i%>" src="<%=needarr.get(i).getImg()%>">
+				<img alt="needimg<%=i%>" src="/moim/userimg/<%=needarr.get(i).getImg()%>">
 			</div>
 			<div class="info">
 				<a href="infoContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a>
@@ -142,6 +165,7 @@ int cp=Integer.parseInt(scp);
 </div>
 </section>
 
+<hr>
 <section class="notice">
 <h2>공지사항</h2>
 <div id="notice_tb"> 
@@ -169,8 +193,8 @@ int cp=Integer.parseInt(scp);
 				}%>
 	</tbody>
 </table>
-<div id="moreInfo"><a href="/moim/noimg/notiList.jsp?idx_info=<%=session.getAttribute("idx_info")%>">더보기 > </a></div>
 </div>
+<div class="button"><input type="button" value="더보기 >" onclick="javascript:'/moim/noimg/notiList.jsp?idx_info=<%=session.getAttribute("idx_info")%>'"></div>
 </section>
 <%@include file="footer.jsp" %>
 </body>
