@@ -11,7 +11,7 @@ if (idx_member==null) {
 %>
 <script>
 	window.alert('로그인 후 이용가능합니다');
-	window.self.close();
+	location.href='/moim/info/infoList.jsp';
 </script>
 <%
 return;
@@ -443,17 +443,9 @@ if(cp%pageSize==0)userGroup--;
 								onclick="javascript:window.open('/moim/noimg/qnaUpdate.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&content=<%=arr.get(i).getContent() %>', 
 								'qnaUpdate', 'width=500px, height=340px')">
 								
-						<form name="qnaDelete">
-						<script>
-							function qnaDel(){
-								var msg=confirm("문의글을 정말 삭제하시겠습니까??");
-								if(msg){
-									window.open('/moim/noimg/qnaDelete_ok.jsp?idx=<%=arr.get(i).getIdx()%>', 'qnaDel', 'width=500px, height=340px')
-								}else{
-								}
-							}
-						</script>
-							<input type="button" value="삭제" onclick="javascript:qnaDel()">
+						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
+							<input type="hidden" name="idx_info" value="<%=idx_info %>">
+							<input type="submit" value="삭제">
 						</form>
 					</div>
 					<%
@@ -462,7 +454,7 @@ if(cp%pageSize==0)userGroup--;
 						<div class="rewrite">
 							<fieldset>
 							<legend>답변작성</legend>
-							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?subject=<%=arr.get(i).getSubject()%>&ref=<%=arr.get(i).getRef() %>">
+							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&ref=<%=arr.get(i).getRef() %>">
 							<table>
 								<tr> 
 									<td>
@@ -470,7 +462,8 @@ if(cp%pageSize==0)userGroup--;
 									</td>
 								</tr>
 								<tr>
-									<td>		
+									<td>	
+										<input type="hidden" name="idx_info" value="<%=idx_info %>">
 										<input type="submit" value="작성">
 									</td>
 								</tr>
@@ -494,7 +487,7 @@ if(cp%pageSize==0)userGroup--;
       <%
       if(userGroup!=0){
 		%>
-		<a href="moimContent.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a>
+		<a href="moimContent.jsp?idx=<%=idx_info %>&cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a>
 		<%
       }
       %>
@@ -502,7 +495,7 @@ if(cp%pageSize==0)userGroup--;
       for(int i=userGroup*pageSize+1;
 			i<=userGroup*pageSize+pageSize;i++){
 		%>
-		&nbsp;&nbsp;<a href="moimContent.jsp?cp=<%=i %>"><%=i %></a>&nbsp;&nbsp;
+		&nbsp;&nbsp;<a href="moimContent.jsp?idx=<%=idx_info %>&cp=<%=i %>"><%=i %></a>&nbsp;&nbsp;
 		<%
 		if(i==totalPage)break;
       }
@@ -510,7 +503,7 @@ if(cp%pageSize==0)userGroup--;
       <%
       if(userGroup!=((totalPage/pageSize)-(totalPage%pageSize==0?1:0))){
 		%>
-		<a href="moimContent.jsp?cp=<%=(userGroup+1)*pageSize+1 %>">&gt;&gt;</a>
+		<a href="moimContent.jsp?idx=<%=idx_info %>&cp=<%=(userGroup+1)*pageSize+1 %>">&gt;&gt;</a>
 		<%
       }
       %>
