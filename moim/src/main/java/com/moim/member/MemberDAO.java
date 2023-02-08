@@ -435,13 +435,13 @@ public class MemberDAO {
 				
 			}else if(cul.equals("작성자")) {
 				keyword = "%" + keyword.replace(" ", "%") + "%";
-				ps=conn.prepareStatement(sql);
 				sql=sql+"writer like ? ";
+				ps=conn.prepareStatement(sql);
 				ps.setString(1, keyword);
 			}else if(cul.equals("제목")) {
 				keyword = "%" + keyword.replace(" ", "%") + "%";
-				ps=conn.prepareStatement(sql);
 				sql=sql+"subject like ?";
+				ps=conn.prepareStatement(sql);
 				ps.setString(1, keyword);
 			}
 			rs=ps.executeQuery();
@@ -471,7 +471,7 @@ public class MemberDAO {
 //			String sql="select * from moim_noimg where idx_info=? and category=?";
 			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where ";
 			if(cul.equals("전체")) {
-			sql=sql+" idx_info=? and category=?order by idx desc)a)b where rnum>=? and rnum<=? ";
+			sql=sql+" idx_info=? and category=?order by ref desc,sunbun asc)a)b where rnum>=? and rnum<=? ";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx_info);
 			ps.setInt(2, category);
@@ -479,14 +479,14 @@ public class MemberDAO {
 			ps.setInt(4, end);
 			}else if(cul.equals("작성자")) {
 			keyword = "%" + keyword.replace(" ", "%") + "%";
-			sql=sql+" writer like ?)a)b where rnum>=? and rnum<=? order by idx desc";
+			sql=sql+" writer like ? order by ref desc,sunbun asc)a)b where rnum>=? and rnum<=? order by idx desc";
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, keyword);
 			ps.setInt(2, start);
 			ps.setInt(3, end);
 			}else if(cul.equals("제목")){
 			keyword = "%" + keyword.replace(" ", "%") + "%";
-			sql=sql+" subject like ?)a)b where rnum>=? and rnum<=? order by idx desc";
+			sql=sql+" subject like ? order by ref desc,sunbun asc)a)b where rnum>=? and rnum<=? order by idx desc";
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, keyword);
 			ps.setInt(2, start);
@@ -549,7 +549,7 @@ public class MemberDAO {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			int maxref=getMaxRef();
-			String sql="insert into moim_noimg values(idx.nextval,?,?,3,?,?,?,sysdate,?,0,0)";
+			String sql="insert into moim_noimg values(idx.nextval,?,?,3,?,?,?,sysdate,?,?,?)";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, dto.getIdx_member());
 			ps.setInt(2, dto.getIdx_info());
@@ -557,6 +557,8 @@ public class MemberDAO {
 			ps.setString(4, dto.getSubject());
 			ps.setString(5, dto.getContent());
 			ps.setInt(6, maxref+1);
+			ps.setInt(7, dto.getLev());
+			ps.setInt(8, dto.getSunbun());
 			int count=ps.executeUpdate();
 			return count;
 		}catch(Exception e) {
@@ -583,8 +585,8 @@ public class MemberDAO {
 			ps.setString(4, dto.getSubject());
 			ps.setString(5, dto.getContent());
 			ps.setInt(6, dto.getRef());
-			ps.setInt(7, dto.getLev());
-			ps.setInt(8, dto.getSunbun());
+			ps.setInt(7, dto.getLev()+1);
+			ps.setInt(8, dto.getSunbun()+1);
 			int count=ps.executeUpdate();
 			return count;
 		}catch(Exception e) {
@@ -601,7 +603,7 @@ public class MemberDAO {
 	/**순서 변경 관련 메서드*/
 	public void setUpdateSun(int ref,int sunbun) {
 		try {
-			String sql="update moin_noimg set sunbun=sunbun+1 where ref=? and sunbun>=?";
+			String sql="update moim_noimg set sunbun=sunbun+1 where ref=? and sunbun>=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, ref);
 			ps.setInt(2, sunbun);

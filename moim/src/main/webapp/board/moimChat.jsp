@@ -41,7 +41,7 @@ MemberDTO dto=mdao.getMem(idx);
 
 
 
-int listSize=3;
+int listSize=10;
 int pageSize=5;
 
 String cp_s=request.getParameter("cp");
@@ -106,18 +106,18 @@ if(cp%pageSize==0)userGroup--;
 			<td colspan="4" align="center">
 			<%
 			if(userGroup!=0){
-				%><a href="moimChat.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+				%><a href="moimChat.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&cul=<%=cul%>&keyword=<%=keyword%>">&lt;&lt;</a><%
 			}
 			%>
 			<%
 			for(int i=userGroup*pageSize+1;i<userGroup*pageSize+pageSize;i++){
-				%>&nbsp;&nbsp;<a href="moimChat.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+				%>&nbsp;&nbsp;<a href="moimChat.jsp?cp=<%=i%>&cul=<%=cul%>&keyword=<%=keyword%>"><%=i %></a>&nbsp;&nbsp;<%
 				if(i==totalPage)break;
 			}
 			%>	
 			<%
 			if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
-				%><a href="moimChat.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+				%><a href="moimChat.jsp?cp=<%=(userGroup+1)*pageSize+1%>&cul=<%=cul%>&keyword=<%=keyword%>">&gt;&gt;</a><%
 			}
 			%>
 		</tr>

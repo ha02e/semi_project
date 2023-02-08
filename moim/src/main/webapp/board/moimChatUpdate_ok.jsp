@@ -6,7 +6,6 @@
 <%
 int result=mdao.updateNoimg(ndto);
 String msg=result>0?"글 수정 완료!":"수정 실패..";
-System.out.println(result);
 %>
 <script>
 window.alert('<%=msg%>');
