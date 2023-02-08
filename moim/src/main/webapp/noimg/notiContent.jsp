@@ -135,7 +135,7 @@ function write_button(){
 					</tr>
 				<tbody>
 					<tr>
-					<td colspan="2" id="content"><%=dto.getContent() %></td>
+					<td colspan="2" id="content"><%=dto.getContent().replaceAll("\n", "<br>") %></td>
 			
 				</tbody>
 				<tfoot>
@@ -145,7 +145,7 @@ function write_button(){
 					<form name="update1" action="notiUpdate.jsp">
 						<input type="hidden" name="idx" value="<%=dto.getIdx() %>">
 						<input type="hidden" name="subject" value="<%=dto.getSubject() %>">
-						<input type="hidden" name="content" value="<%=dto.getContent().replaceAll("\n", "<br>")%>">
+						<input type="hidden" name="content" value="<%=dto.getContent()%>">
 						<input type="submit" value="수정" id="a">
 						<input type="button" value="삭제" id="b" 
 						onclick="javascript:location.href='notiDel.jsp?idx=<%=dto.getIdx()%>'">
