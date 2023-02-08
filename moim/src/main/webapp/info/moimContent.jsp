@@ -304,7 +304,7 @@ function moimOut(){
 	
 	var msg=confirm("모임에서 탈퇴하시겠습니까?");
 	if(msg){
-		window.open('/moim/stat/delMem.jsp', 'delMem', 'width=400px, height=300px')
+		window.open('/moim/stat/delMemCon_ok.jsp?idx_info=<%=idx_info%>', 'delMemCon', 'width=500px, height=340px')
 	}else{
 	}
 }
