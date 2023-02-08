@@ -16,7 +16,7 @@ int idx = Integer.parseInt(idx_s);
 
 --%>  
 <%
-int idx=15;
+int idx=14;
 InfoDTO dto = mdao.getMoimCon(idx);  
 %> 
     
@@ -38,20 +38,7 @@ section p{
 	margin:10px 0 20px 0;
 	color:#666666;
 }
-/*
-section .moimcontent{
-	display:flex;
-	margin:0 auto;
-	width:800px;
-	height:260px;
-	padding:10px 0 30px 0;
-}
-*/
-/*
-section .write{
-	width:500px;
-}
-*/
+
 section .write table{
 	width:800px;
 	border-top:3px solid #333333;
@@ -123,7 +110,7 @@ System.out.println(idx);
 String hobby=request.getParameter("hobby");
 String moimname=request.getParameter("moimname");
 String content=request.getParameter("content");
-String local=request.getParameter("");
+String local=request.getParameter("local");
 String img=request.getParameter("img");
 
 %>
@@ -192,7 +179,6 @@ String img=request.getParameter("img");
 					<th>정원</th>
 					<td>
 						<select name="maxmem">
-							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>

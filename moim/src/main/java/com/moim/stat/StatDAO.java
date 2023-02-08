@@ -106,11 +106,14 @@ public class StatDAO {
 	public boolean checkMem(int idx_info) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select nowmem,maxmem from moim_info";
+			String sql="select nowmem,maxmem from moim_info where idx=?";
 			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx_info);
 			rs=ps.executeQuery();
 			rs.next();
-			if(rs.getInt(1)<rs.getInt(2))return true;
+			int nowmem=rs.getInt(1);
+			int maxmem=rs.getInt(2);
+			if(nowmem<maxmem)return true;
 			else return false;
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -124,15 +127,19 @@ public class StatDAO {
 		}
 	}
 	/**멤버 수락하는 메서드*/
-	public int inMem(int idx) {
+	public int inMem(int idx,int idx_info) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
+			int nowmem=getMemNum(idx_info);
 			String sql="update moim_stat set stat=1 where idx=?";
-			/////
 			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx);
 			int count=ps.executeUpdate();
-			/**moim_info에서 멤버 추가
-			 * nownum을 +1*/
+			sql="update moim_info set nowmem=? where idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, nowmem+1);
+			ps.setInt(2, idx_info);
+			ps.executeUpdate();
 			return count;
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -236,13 +243,13 @@ public class StatDAO {
 	}
 	
 	/**모임 신청하기 관련 메서드*/
-	public int reqMem(int idx_member, String content) {
+	public int reqMem(int idx_member, int idx_info, String content) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			String sql="insert into moim_stat values(moim_stat_idx.nextval,?,?,?,sysdate,?)";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx_member);
-			ps.setInt(2, 0); //**idx_info 넘겨받기**
+			ps.setInt(2, idx_info);
 			ps.setInt(3, 2);
 			ps.setString(4, content);
 			
@@ -259,16 +266,16 @@ public class StatDAO {
 		}
 	}	   
 	   /**모임 신청하기용 사용자관련 메서드*/
-	   public StatDTO getUserStat(int idx_member) {
+	   public StatDTO getUserStat(int idx_member, int idx_info) {
 	      try {
 	         conn=com.moim.db.MoimDB.getConn();
-	         String sql="select * from moim_stat where idx_member=?";
+	         String sql="select * from moim_stat where idx_member=? and idx_info=?";
 	         ps=conn.prepareStatement(sql);
 	         ps.setInt(1, idx_member);
+	         ps.setInt(2, idx_info);
 	         rs=ps.executeQuery();
 	         rs.next();
 	         int idx=rs.getInt("idx");
-	         int idx_info=rs.getInt("idx_info");
 	         int stat=rs.getInt("stat");
 	         java.sql.Date joindate=rs.getDate("joindate");
 	         String content=rs.getString("content");
@@ -285,6 +292,32 @@ public class StatDAO {
 	            if(conn!=null)conn.close();
 	         }catch (Exception e2) {}
 	      }
+	   }
+	   /**아이디와 나이 가져오는 메서드*/
+	   public ArrayList<Object> getStatInfo(int idx){
+		   try {
+			   conn=com.moim.db.MoimDB.getConn();
+			   ArrayList<Object> arr=new ArrayList<Object>();
+			   String sql="select b.name,b.age,a.content,a.idx_info from (moim_stat)a,(moim_member)b where b.idx=a.idx_member and a.idx=?";
+			   ps=conn.prepareStatement(sql);
+			   ps.setInt(1, idx);
+			   rs=ps.executeQuery();
+			   rs.next();
+			   arr.add(rs.getString("name"));
+			   arr.add(rs.getInt("age"));
+			   arr.add(rs.getString("content"));
+			   arr.add(rs.getInt("idx_info"));
+			   return arr;
+		   }catch (Exception e){
+			   e.printStackTrace();
+			   return null;
+		   }finally {
+			   try {
+				   if(rs!=null)rs.close();
+				   if(ps!=null)ps.close();
+				   if(conn!=null)conn.close();
+			   }catch(Exception e2) {}
+		   }
 	   }
 	
 }

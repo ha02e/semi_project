@@ -3,8 +3,29 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.info.*" %>
+<%@ page import="com.moim.stat.*" %>
 
-<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO" scope="session"></jsp:useBean>
+<%
+Integer idx_member = (Integer) session.getAttribute("idx");
+if (idx_member==null) {
+%>
+<script>
+	window.alert('로그인 후 이용가능합니다');
+	window.self.close();
+	
+	var w='500';
+	var h='300';
+
+	var l=Math.ceil((window.screen.width-w)/2);
+	var t=Math.ceil((window.screen.height-h)/2);
+	window.open('/moim/member/login.jsp','loginPopup', 'width='+w+',height='+h+',left='+l+',top='+t);
+</script>
+<%
+return;
+}
+%> 
+
+<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO"></jsp:useBean>
 
@@ -12,7 +33,9 @@
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao2" class="com.moim.info.InfoDAO" scope="session"></jsp:useBean>
 
-
+<jsp:useBean id="mdto3" class="com.moim.stat.StatDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="mdto3"/>
+<jsp:useBean id="mdao3" class="com.moim.stat.StatDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -104,6 +127,11 @@ section .button div{
     font-size:14px;
 }
 
+.nolist{
+	text-align:center;
+	padding:10px 20px;
+	border:1px solid #e8e8e8;
+}
 .qnabbs-title{
 	list-style: none;
 	width:800px;
@@ -256,9 +284,11 @@ input[id*="click"]:checked + label + div{
 }
 </style>
 <%
-//int idx=mdto.getIdx();
-%>
-		
+	String idx_s=request.getParameter("idx");
+	int idx=Integer.parseInt(idx_s);
+	InfoDTO dto=mdao2.getInfo(idx);
+	int idx_info=idx;
+%>	
 <script>
 function moimApply(){
 	var w=500;
@@ -268,25 +298,25 @@ function moimApply(){
 	var left=Math.ceil((window.screen.width-w)/2);
 	var top=Math.ceil((window.screen.height-h)/2); 
 	 
-	window.open('/moim/stat/reqMem.jsp', 'reqMem', 'width='+w+', height='+h+', left='+left+', top='+top);
+	window.open('/moim/stat/reqMem.jsp?idx_info=<%=idx_info%>', 'reqMem', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
 function moimOut(){
 	
 	var msg=confirm("모임에서 탈퇴하시겠습니까?");
 	if(msg){
-		window.open('/moim/stat/delMem.jsp', 'delMem', 'width=400px, height=300px')
+		window.open('/moim/stat/delMemCon_ok.jsp?idx_info=<%=idx_info%>', 'delMemCon', 'width=500px, height=340px')
 	}else{
 	}
 }
 function qnaWrite(){
-	var w=50;
+	var w=500;
 	var h=340;
 	 
 	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
 	var left=Math.ceil((window.screen.width-w)/2);
 	var top=Math.ceil((window.screen.height-h)/2);  
 	 
-	window.open('/moim/noimg/qnaWrite.jsp', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
+	window.open('/moim/noimg/qnaWrite.jsp?idx_info=<%=idx_info%>', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
 
 function qnaUpdate(){
@@ -295,22 +325,16 @@ function qnaUpdate(){
 	 
 	var left=Math.ceil((window.screen.width-w)/2);
 	var top=Math.ceil((window.screen.height-h)/2);  
-	window.open('/moim/noimg/qnaUpdate.jsp', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
+	window.open('/moim/noimg/qnaUpdate.jsp?idx_info=<%=idx_info%>', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
+
 </script>
 </head>
-<%
 
-
-
-int idx=15;  //int idx=Integer.parseInt(idx_s);
-InfoDTO dto=mdao2.getInfo(idx);
-%>
 <%
 int listSize=5;
 int pageSize=5;
 
-int idx_info=0;
 int totalCnt=mdao.getQnaTotalCnt(idx_info);
 int totalPage=(totalCnt/listSize)+1;
 if(totalCnt%listSize==0)totalPage--;
@@ -350,9 +374,26 @@ if(cp%pageSize==0)userGroup--;
             </tr>
          </table>
       <div class="button">
-         <div><a href="/moim/board/myMoim.jsp" class="moim-btn">채팅하러 가기</a></div>
-         <div><a href="javascript:moimApply()" class="moim-btn">참여하기</a></div>
-         <div><a href="javascript:moimOut()" class="moim-btn">탈퇴하기</a></div>
+      <%
+      StatDTO dto_s=mdao3.getUserStat(idx_member,idx_info);
+
+    	if(dto_s==null){  //모임에 신청or참여되어 있지 않은 상태
+    		%>
+    		<div id="apply-btn"><a href="javascript:moimApply()" class="moim-btn">참여하기</a></div>
+    		<%
+    	}else{ 
+    		if(dto_s.getStat()==0||dto_s.getStat()==1){
+    			%>
+    			<div id="chat-btn"><a href="/moim/board/myMoim.jsp" class="moim-btn">채팅하러 가기</a></div>
+    			<div id="out-btn"><a href="javascript:moimOut()" class="moim-btn">탈퇴하기</a></div>
+    			<%
+    		}else{
+        		%>
+        		<div id="apply-btn"><a href="javascript:moimApply()" class="moim-btn">참여하기</a></div>
+        		<%
+    		}	
+    	}
+      %>
       </div>
       </div>
 </article>
@@ -374,7 +415,7 @@ if(cp%pageSize==0)userGroup--;
 		ArrayList<NoimgDTO> arr=mdao.getQnaList(idx_info,listSize,cp);
 		if(arr==null || arr.size()==0){
 			%>
-			<span>모임에 대해 궁금한 내용을 남겨주세요.</span>
+			<div class="nolist">모임에 대해 궁금한 내용을 남겨주세요 :)</div>
 			<%
 		}else{
 			for(int i=0;i<arr.size();i++){
@@ -419,6 +460,7 @@ if(cp%pageSize==0)userGroup--;
 							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
 							<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
 							<input type="hidden" name="content" value="<%=arr.get(i).getContent() %>">
+							<input type="hidden" name="idx_info" value="<%=idx_info%>">
 							<input type="submit" value="수정">
 						</form>
 						

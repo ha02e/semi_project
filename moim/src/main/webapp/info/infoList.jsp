@@ -9,6 +9,10 @@
 <meta charset="UTF-8">
 <title>모임게시판</title>
 <style>
+section{
+	width: 1280px;
+	padding: 20px;
+}
 div table{
 	margin: 0px 100px;
 }
@@ -76,7 +80,16 @@ input[type="checkbox"] {
 /*세부사항 토글관련*/
 label.detail{
 	border: 1px groove black;
-	background-color: #f4f4f4;
+	background:#999999;
+	color:white;
+	display:inline-block; 
+	width:100px;
+	line-height: 30px;
+	vertical-align: center;
+}
+label:hover, label:active, input:hover+label, input:active+label {
+    background:#00cdac;
+	transition: 0.3s;
 }
 input#detail{
 	display:none;
@@ -86,6 +99,24 @@ div#detaildiv{
 }
 input#detail:checked + div#detaildiv{
 	display: block;
+}
+.button{
+	border:0;
+	outline:none;
+	width:100px;
+	height:30px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+
+.button:hover{
+	background: #00cdac;
+	transition: 0.3s;
+}
+input[type="text"]{
+	width:200px;
+	height:30px;
 }
 </style>
 </head>
@@ -104,9 +135,9 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 <section>
 	<article>
 		<form name="infoSearch" action="infoSearch.jsp">
-			<input type="submit" value="검색">
+			<input type="submit" value="검색" class="button">
 			<input type="text" name="keyword" placeholder="검색어를 입력하세요">
-			<label class="detail" for="detail">세부검색</label>
+			<label class="detail" for="detail">&nbsp;&nbsp;&nbsp;세부검색</label>
 			<input type="checkbox" id="detail">
 				<div id="detaildiv">
 				<fieldset>
@@ -216,7 +247,7 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		</div>
 		<hr>
 		<div id="buttondiv">
-		<input type="button" value="모임만들기" onclick="javascript:location.href='moimWrite.jsp'">
+		<input type="button" value="모임만들기" class="button"onclick="javascript:location.href='moimWrite.jsp'">
 		</div>
 	</article>
 </section>
