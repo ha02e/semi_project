@@ -30,7 +30,7 @@ String keyword = "";
 if (request.getParameter("keyword") != null) {
 	keyword = request.getParameter("keyword");
 }
-String cul="cul";
+String cul="전체";
 if(request.getParameter("cul")!=null){
 	cul=request.getParameter("cul");
 }
@@ -40,7 +40,6 @@ int idx=21;
 MemberDTO dto=mdao.getMem(idx);
 
 
-int totalCnt=mdao.getTotal("moim_noimg", 0, 5);
 
 int listSize=3;
 int pageSize=5;
@@ -50,6 +49,7 @@ if(cp_s==null||cp_s.equals("")){
 	cp_s="1";
 }
 int cp=Integer.parseInt(cp_s);
+int totalCnt=mdao.searchTotal(0, 3, listSize, cp, cul, keyword);
 
 int totalPage=totalCnt/listSize+1;
 if(totalCnt%listSize==0)totalPage--;

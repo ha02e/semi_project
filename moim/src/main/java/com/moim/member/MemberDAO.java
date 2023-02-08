@@ -411,7 +411,6 @@ public class MemberDAO {
 			rs=ps.executeQuery();
 			rs.next();
 			count=rs.getInt(1);
-			System.out.println(count);
 			return count==0?1:count;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -425,21 +424,21 @@ public class MemberDAO {
 		}
 	}
 	/**검색 총 수 가져오기*/
-	public int searchTotal(int idx_member,int idx_info,int category,int ls,int cp,String cul,String keyword) {
+	public int searchTotal(int idx_info,int category,int ls,int cp,String cul,String keyword) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			String sql="select count(*) from moim_noimg where ";
 			
-			if(cul=="전체") {
-				sql=sql+"idx_member=? and category=3";
+			if(cul.equals("전체")) {
+				sql=sql+"category=3";
 				ps=conn.prepareStatement(sql);
-				ps.setInt(1, idx_member);
-			}else if(cul=="작성자") {
+				
+			}else if(cul.equals("작성자")) {
 				keyword = "%" + keyword.replace(" ", "%") + "%";
 				ps=conn.prepareStatement(sql);
 				sql=sql+"writer like ? ";
 				ps.setString(1, keyword);
-			}else if(cul=="제목") {
+			}else if(cul.equals("제목")) {
 				keyword = "%" + keyword.replace(" ", "%") + "%";
 				ps=conn.prepareStatement(sql);
 				sql=sql+"subject like ?";
@@ -471,21 +470,21 @@ public class MemberDAO {
 			int end=(cp*ls);
 //			String sql="select * from moim_noimg where idx_info=? and category=?";
 			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where ";
-			if(cul=="전체") {
+			if(cul.equals("전체")) {
 			sql=sql+" idx_info=? and category=?order by idx desc)a)b where rnum>=? and rnum<=? ";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx_info);
 			ps.setInt(2, category);
 			ps.setInt(3, start);
 			ps.setInt(4, end);
-			}else if(cul=="작성자") {
+			}else if(cul.equals("작성자")) {
 			keyword = "%" + keyword.replace(" ", "%") + "%";
 			sql=sql+" writer like ?)a)b where rnum>=? and rnum<=? order by idx desc";
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, keyword);
 			ps.setInt(2, start);
 			ps.setInt(3, end);
-			}else if(cul=="제목"){
+			}else if(cul.equals("제목")){
 			keyword = "%" + keyword.replace(" ", "%") + "%";
 			sql=sql+" subject like ?)a)b where rnum>=? and rnum<=? order by idx desc";
 			ps=conn.prepareStatement(sql);
