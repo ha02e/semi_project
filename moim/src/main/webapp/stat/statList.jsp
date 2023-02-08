@@ -8,13 +8,56 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>모임 관리</title>
 </head>
 <style>
-table {
-   text-align: center;
-   margin: 0px auto;
-   border-pacing: 70px;
+table{
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	border-collapse:collapse;
+}
+
+table th{
+	height:30px;
+	border-top:1px solid #f0f0f0;
+	border-bottom:1px solid #f0f0f0;
+	background-color:#f8f8f8;
+	text-align:center;
+	vertical-align:inherit;
+}
+
+table td{
+	border-bottom:1px solid #f0f0f0;
+	padding: 10px;
+}
+
+table #idx{
+	width:30%;
+}
+
+table #subject{
+	width:30%;
+}
+
+table #writedate{
+	width:15%;
+}
+
+.button{
+	border:0;
+	outline:none;
+	width:100px;
+	height:30px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+
+.button:hover{
+	background: #00cdac;
+	transition: 0.3s;
 }
 </style>
 <%
@@ -55,18 +98,16 @@ if (totalCnt2 % listSize == 0)totalPage2--;
 int userGroup2 = cp2 / pageSize;
 if (cp2 % pageSize == 0)userGroup2--;
 %>
-
-
 <body>
    <%@include file="/header.jsp"%>
    <%@include file="/board/sideBoard.jsp"%>
  <section>
  	<article>
- 		<label>참여자</label>
+ 		<h3>&nbsp;&nbsp;&nbsp;참여자</h3>
  		<table>
  			<thead>
  				<tr>
- 					<th>참여자</th>
+ 					<th>이름</th>
  					<th>가입일자</th>
  					<th></th>
  				</tr>
@@ -74,9 +115,9 @@ if (cp2 % pageSize == 0)userGroup2--;
  			<tbody>
  			<%for(int i=0;i<inarr.size();i++){ %>
  				<tr>
- 					<td><%=hm.get(inarr.get(i).getIdx_member()) %></td>
- 					<td><%=inarr.get(i).getJoindate() %></td>
- 					<td><input type="button" value="내보내기" onclick="javascript:location.href='delMem_ok.jsp?idx=<%=inarr.get(i).getIdx()%>&idx_info=<%=idx_info%>'"></td>
+ 					<td id="idx"><%=hm.get(inarr.get(i).getIdx_member()) %></td>
+ 					<td id="subject"><%=inarr.get(i).getJoindate() %></td>
+ 					<td id="joindate"><input type="button" class="button" value="내보내기" onclick="javascript:location.href='delMem_ok.jsp?idx=<%=inarr.get(i).getIdx()%>&idx_info=<%=idx_info%>'"></td>
  				</tr>
  			<%} %>
  			</tbody>
@@ -105,11 +146,11 @@ if (cp2 % pageSize == 0)userGroup2--;
  		</table>
  	</article>
  	<article>
- 	<label>대기자</label>
+ 	<h3>&nbsp;&nbsp;&nbsp;대기자</h3>
  	<table>
  			<thead>
  				<tr>
- 					<th>참여자</th>
+ 					<th>이름</th>
  					<th>가입일자</th>
  					<th></th>
  				</tr>
@@ -117,10 +158,11 @@ if (cp2 % pageSize == 0)userGroup2--;
  			<tbody>
  			<%for(int i=0;i<newarr.size();i++){ %>
  				<tr>
- 					<td><%=hm.get(newarr.get(i).getIdx_member()) %></td>
- 					<td><%=newarr.get(i).getJoindate() %></td>
- 					<td><input type="button" value="내용보기"></td>
+ 					<td id="idx"><%=hm.get(newarr.get(i).getIdx_member()) %></td>
+ 					<td id="subject"><%=newarr.get(i).getJoindate() %></td>
+ 					<td id="joindate"><input type="button" class="button" value="내용보기" onclick="javascript:window.open('statContent.jsp?idx=<%=newarr.get(i).getIdx()%>','statcontet','width=550,height=250')"></td>
  				</tr>
+ 				
  			<%} %>
  			</tbody>
  			<tfoot>
