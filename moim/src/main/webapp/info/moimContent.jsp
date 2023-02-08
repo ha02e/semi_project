@@ -319,6 +319,7 @@ function qnaWrite(){
 	window.open('/moim/noimg/qnaWrite.jsp?idx_info=<%=idx_info%>', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
 
+<%--
 function qnaUpdate(){
 	var w=500;
 	var h=340;
@@ -327,6 +328,8 @@ function qnaUpdate(){
 	var top=Math.ceil((window.screen.height-h)/2);  
 	window.open('/moim/noimg/qnaUpdate.jsp?idx_info=<%=idx_info%>', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
+--%>
+
 
 </script>
 </head>
@@ -479,7 +482,7 @@ if(cp%pageSize==0)userGroup--;
 							<table>
 								<tr> 
 									<td>
-										<textarea name="content" rows="3" cols="94"></textarea>
+										<textarea name="content" rows="3" cols="94" style="resize:none"></textarea>
 									</td>
 								</tr>
 								<tr>

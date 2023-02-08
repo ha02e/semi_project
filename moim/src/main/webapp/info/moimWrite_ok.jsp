@@ -9,14 +9,17 @@
 <%
 String savepath=request.getRealPath("/userimg");
 
+Integer idx_m = (Integer) session.getAttribute("idx");
+int idx_member=idx_m;
+
 MultipartRequest mr=
 	new MultipartRequest(request,savepath,2097152,"UTF-8");
 
-int result=mdao.setInfo(mr,mdto);
+int result=mdao.setInfo(mr, mdto);
 String msg=result>0?"모임이 등록되었습니다.":"모임 등록에 실패하였습니다.";
 
 %>
 <script>
 window.alert('<%=msg%>');
-location.href='/moim/info/infoList.jsp'; //(임시)모임리스트 게시판으로 이동
+location.href='/moim/info/infoList.jsp';
 </script>

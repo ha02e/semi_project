@@ -228,7 +228,7 @@ String content=request.getParameter("content");
 		</tr>
 		<tr>
 			<td>
-				<textarea name="content" rows="6" cols="108"><%=mdto.getContent()%></textarea>
+				<textarea name="content" rows="6" cols="108" style="resize:none"><%=mdto.getContent()%></textarea>
 			</td>
 		</tr>
 	</table>
