@@ -168,17 +168,11 @@ function pageBack(){
 </script>
 </head>
 <%
-/**
-String idx_s=request.getParameter("idx");
-if(idx_s==null || idx_s.equals("")){
-	idx_s="0";
-}*/
-int idx_i=15;
-//int idx_i=Integer.parseInt(idx_s);
-InfoDTO dto=mdao2.getInfo(idx_i);
+	String idx_s=request.getParameter("idx");
+	int idx_info=Integer.parseInt(idx_s);
+	InfoDTO dto=mdao2.getInfo(idx);
 %>
 <%
-//String idx=request.getParameter("idx");
 String subject=request.getParameter("subject");
 String content=request.getParameter("content");
 %>
