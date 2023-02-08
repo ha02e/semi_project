@@ -459,13 +459,21 @@ if(cp%pageSize==0)userGroup--;
 					</div>
 					<p><%=arr.get(i).getContent()%></p>
 					<div class="qnabutton">
+						<!-- 
 						<form name="qnaUpdate" action="/moim/noimg/qnaUpdate.jsp">
+
 							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
 							<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
 							<input type="hidden" name="content" value="<%=arr.get(i).getContent() %>">
 							<input type="hidden" name="idx_info" value="<%=idx_info%>">
-							<input type="submit" value="수정">
-						</form>
+							 -->
+							<input type="button" value="수정" 
+								onclick="javascript:window.open('/moim/noimg/qnaUpdate.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&content=<%=arr.get(i).getContent() %>', 
+								'qnaUpdate', 'width=500px, height=340px')">
+						<!-- 
+						</form>	
+						-->
+
 						
 						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
 							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
