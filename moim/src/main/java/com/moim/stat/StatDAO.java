@@ -259,16 +259,16 @@ public class StatDAO {
 		}
 	}	   
 	   /**모임 신청하기용 사용자관련 메서드*/
-	   public StatDTO getUserStat(int idx_member) {
+	   public StatDTO getUserStat(int idx_member, int idx_info) {
 	      try {
 	         conn=com.moim.db.MoimDB.getConn();
-	         String sql="select * from moim_stat where idx_member=?";
+	         String sql="select * from moim_stat where idx_member=? and idx_info=?";
 	         ps=conn.prepareStatement(sql);
 	         ps.setInt(1, idx_member);
+	         ps.setInt(2, idx_info);
 	         rs=ps.executeQuery();
 	         rs.next();
 	         int idx=rs.getInt("idx");
-	         int idx_info=rs.getInt("idx_info");
 	         int stat=rs.getInt("stat");
 	         java.sql.Date joindate=rs.getDate("joindate");
 	         String content=rs.getString("content");
