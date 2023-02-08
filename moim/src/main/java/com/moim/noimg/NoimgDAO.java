@@ -37,7 +37,7 @@ public class NoimgDAO {
    }
    
    /**QnA 글 작성 관련 메서드*/
-   public int setNoimg(int idx_member, int idx_info, String subject, String content) {
+   public int setNoimg(int idx_member, int idx_info, String writer, String subject, String content) {
       try {
          conn=com.moim.db.MoimDB.getConn();
          
@@ -47,7 +47,7 @@ public class NoimgDAO {
          ps=conn.prepareStatement(sql);
          ps.setInt(1, idx_member);
          ps.setInt(2, idx_info);
-         ps.setString(3, "하니");
+         ps.setString(3, writer);
          ps.setString(4, subject);
          ps.setString(5, content);
          ps.setInt(6, maxref+1);

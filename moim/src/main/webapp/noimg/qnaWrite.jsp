@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.moim.info.*" %>
+<jsp:useBean id="mdto" class="com.moim.info.InfoDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="mdto"/>
+<jsp:useBean id="mdao" class="com.moim.info.InfoDAO"></jsp:useBean>
 <%
 Integer idx = (Integer) session.getAttribute("idx");
 if (idx==null) {
@@ -12,7 +16,10 @@ if (idx==null) {
 return;
 }
 %>    
-    
+<%
+String idx_s=request.getParameter("idx_info");
+int idx_info=Integer.parseInt(idx_s);
+%>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,6 +76,7 @@ function popupclose(){
 </table>
 <div>
 	<input type="button" value="취소하기" onclick="popupclose()">
+	<input type="hidden" name="idx_info" value="<%=idx_info%>">
 	<input type="submit" value="작성하기" class="abutton">
 </div>
 </form>

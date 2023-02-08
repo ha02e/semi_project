@@ -236,13 +236,13 @@ public class StatDAO {
 	}
 	
 	/**모임 신청하기 관련 메서드*/
-	public int reqMem(int idx_member, String content) {
+	public int reqMem(int idx_member, int idx_info, String content) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			String sql="insert into moim_stat values(moim_stat_idx.nextval,?,?,?,sysdate,?)";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx_member);
-			ps.setInt(2, 0); //**idx_info 넘겨받기**
+			ps.setInt(2, idx_info);
 			ps.setInt(3, 2);
 			ps.setString(4, content);
 			

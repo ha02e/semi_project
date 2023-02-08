@@ -167,7 +167,6 @@ function pageBack(){
 					<th>정원</th>
 					<td>
 						<select name="maxmem">
-							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
