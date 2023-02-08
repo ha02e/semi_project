@@ -444,6 +444,7 @@ if(cp%pageSize==0)userGroup--;
 								'qnaUpdate', 'width=500px, height=340px')">
 								
 						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
+							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
 							<input type="hidden" name="idx_info" value="<%=idx_info %>">
 							<input type="submit" value="삭제">
 						</form>
