@@ -7,23 +7,25 @@
 <jsp:useBean id="mdao" class="com.moim.stat.StatDAO"></jsp:useBean>
 
 
-
 <%
 Integer idx = (Integer) session.getAttribute("idx");
 int idx_member=idx;  //session에서 받아오기
 
+String idx_info_s=request.getParameter("idx_info");
+int idx_info=Integer.parseInt(idx_info_s);
 
-//String idx_info_s=request.getParameter("idx");
-int idx_info=0;//int idx_info=Integer.parseInt(idx_info_s);
+
 
 String content=request.getParameter("contentApply");
 
 int result=mdao.reqMem(idx_member, idx_info, content);
 String msg=result>0?"가입 신청이 완료되었습니다.":"가입 신청을 실패하였습니다. 다시 시도해주세요.";
 %>
-
 <script>
-window.alert('<%=msg%>');
-opener.location.reload();
-window.self.close();
+	window.alert('<%=msg%>');
+	opener.location.reload();
+	window.self.close();
 </script>
+
+
+
