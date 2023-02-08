@@ -58,11 +58,6 @@ table div{
 	display:inline;
 }
 
-/* #a,#b{
-	text-align:left;
-	margin: 10px;
-} */
-
 .button{
 	text-align: center;
 	padding:20px 0 40px 0;
@@ -140,7 +135,7 @@ function write_button(){
 					</tr>
 				<tbody>
 					<tr>
-					<td colspan="2" id="content"><%=dto.getContent() %></td>
+					<td colspan="2" id="content"><%=dto.getContent().replaceAll("\n", "<br>") %></td>
 			
 				</tbody>
 				<tfoot>

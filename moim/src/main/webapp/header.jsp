@@ -25,14 +25,12 @@ body{
 	border-bottom: 2px solid gray;
 	display:flex;
 	align-items:center;
-	/*padding:5px 12px;*/
 }
 
 
 .navbar_ul{
 	display:flex;
 	align-items:center;
-	/*text-align:center;*/
 }
 
 .navbar_ul li { 
@@ -42,7 +40,6 @@ body{
 	display: inline;
 	font-weight:bold;
 	padding:2px 8px;
-	/*margin-left:10px;*/
 }
 
 .navbar_ul Img{
@@ -68,8 +65,8 @@ a:hover{
 
 //로그인 팝업창
 function login_popup(){
-	var w='500';
-	var h='300';
+	var w='450';
+	var h='350';
 
 	var l=Math.ceil((window.screen.width-w)/2);
 	var t=Math.ceil((window.screen.height-h)/2);
