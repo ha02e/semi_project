@@ -26,13 +26,23 @@ form{
 </style>
 </head>
 <%
+String keyword = "";
+if (request.getParameter("keyword") != null) {
+	keyword = request.getParameter("keyword");
+}
+String cul="cul";
+if(request.getParameter("cul")!=null){
+	cul=request.getParameter("cul");
+}
+
 
 int idx=21;
 MemberDTO dto=mdao.getMem(idx);
 
+
 int totalCnt=mdao.getTotal("moim_noimg", 0, 5);
 
-int listSize=10;
+int listSize=3;
 int pageSize=5;
 
 String cp_s=request.getParameter("cp");
@@ -63,7 +73,7 @@ if(cp%pageSize==0)userGroup--;
 		</thead>
 		<tbody>
 		<%
-		ArrayList<NoimgDTO> dto2=mdao.getList(0, 3, listSize, cp);
+		ArrayList<NoimgDTO> dto2=mdao.getList(0, 3, listSize, cp,cul,keyword);
 		if(dto2==null||dto2.size()==0){
 			%>
 			<tr>
@@ -120,8 +130,8 @@ if(cp%pageSize==0)userGroup--;
 		<div>
 		<select name="cul">
 		<option value="전체" selected>전체</option>
-		<option value="writer">작성자</option>
-		<option value="subject">제목</option>
+		<option value="작성자">작성자</option>
+		<option value="제목">제목</option>
 		</select>
 		<input type="text" name="keyword">
 		<input type="submit" value="검색">

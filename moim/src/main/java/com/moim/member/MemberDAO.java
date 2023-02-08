@@ -380,10 +380,10 @@ public class MemberDAO {
 	
 	/**총 작성 수 관련 메서드*/
 	/**cul 
-	 * 1.idx_member=1
-	 * 2.and category=2
-	 * 3.and stat in(1,0)
-	 * 4.and stat=0*/
+	 * 1.내가 쓴 후기 총 수
+	 * 2.내가 쓴 댓글QnA 총 수
+	 * 3.참여중인 모임 총 수
+	 * 4.내가 만든 모임 총 수*/
 	public int getTotal(String table,int idx_member,int cul) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
@@ -399,9 +399,11 @@ public class MemberDAO {
 			}else if(table.equals("moim_stat")&&cul==4){
 				sql=sql+"and stat=0";
 				ps=conn.prepareStatement(sql);
-			}else if(table.equals("moim_noimg")&&cul==5) {
-				sql=sql+"and category=3";
 			}
+//			else if(table.equals("moim_noimg")&&cul==5) {
+//				sql=sql+"and category=3";
+//				ps=conn.prepareStatement(sql);
+//			}
 			ps=conn.prepareStatement(sql);
 			int count=0;
 
@@ -422,21 +424,77 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
-	/**모임게시판 조회 메서드 원본*/
-	public ArrayList<NoimgDTO> getList(int idx_info,int category,int ls,int cp){
+	/**검색 총 수 가져오기*/
+	public int searchTotal(int idx_member,int idx_info,int category,int ls,int cp,String cul,String keyword) {
 		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select count(*) from moim_noimg where ";
+			
+			if(cul=="전체") {
+				sql=sql+"idx_member=? and category=3";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, idx_member);
+			}else if(cul=="작성자") {
+				keyword = "%" + keyword.replace(" ", "%") + "%";
+				ps=conn.prepareStatement(sql);
+				sql=sql+"writer like ? ";
+				ps.setString(1, keyword);
+			}else if(cul=="제목") {
+				keyword = "%" + keyword.replace(" ", "%") + "%";
+				ps=conn.prepareStatement(sql);
+				sql=sql+"subject like ?";
+				ps.setString(1, keyword);
+			}
+			rs=ps.executeQuery();
+			rs.next();
+			
+			int count=rs.getInt(1);
+			return count==0?1:count;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	/**모임게시판 조회 메서드 원본*/
+	public ArrayList<NoimgDTO> getList(int idx_info,int category,int ls,int cp,String cul,String keyword){
+		try {
+			keyword = "%" + keyword.replace(" ", "%") + "%";
 			conn=com.moim.db.MoimDB.getConn();
 			int start=(cp-1)*ls+1;
 			int end=(cp*ls);
 //			String sql="select * from moim_noimg where idx_info=? and category=?";
-			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where idx_info=? and category=?)a)b where rnum>=? and rnum<=?";
+			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where ";
+			if(cul=="전체") {
+			sql=sql+" idx_info=? and category=?order by idx desc)a)b where rnum>=? and rnum<=? ";
 			ps=conn.prepareStatement(sql);
-			ArrayList<NoimgDTO> arr=new ArrayList<NoimgDTO>();
 			ps.setInt(1, idx_info);
 			ps.setInt(2, category);
 			ps.setInt(3, start);
 			ps.setInt(4, end);
+			}else if(cul=="작성자") {
+			keyword = "%" + keyword.replace(" ", "%") + "%";
+			sql=sql+" writer like ?)a)b where rnum>=? and rnum<=? order by idx desc";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, keyword);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			}else if(cul=="제목"){
+			keyword = "%" + keyword.replace(" ", "%") + "%";
+			sql=sql+" subject like ?)a)b where rnum>=? and rnum<=? order by idx desc";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, keyword);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			}
 			rs=ps.executeQuery();
+			ArrayList<NoimgDTO> arr=new ArrayList<NoimgDTO>();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
 				int idx_member=rs.getInt("idx_member");
@@ -563,7 +621,7 @@ public class MemberDAO {
 	public NoimgDTO getContent(int idx, int category) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_noimg where idx=? and category=? order by idx desc";
+			String sql="select * from moim_noimg where idx=? and category=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			ps.setInt(2, category);
@@ -635,7 +693,59 @@ public class MemberDAO {
 		}
 	}
 
-
+	/**모임게시글 수정 메서드*/
+	public int updateNoimg(NoimgDTO dto) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="update moim_noimg set subject=?,content=? where idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, dto.getSubject());
+			ps.setString(2, dto.getContent());
+			ps.setInt(3, dto.getIdx());
+			int count=ps.executeUpdate();
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -2;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	/**모임게시글 수정용 조회 메서드*/
+	public NoimgDTO updateNoimgForm(int idx) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select * from moim_noimg where idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			rs=ps.executeQuery();
+			NoimgDTO dto=null;
+			if(rs.next()) {
+				int idx_member=rs.getInt("idx_member");
+				int idx_info=rs.getInt("idx_info");
+				int category=rs.getInt("category");
+				String writer=rs.getString("writer");
+				String subject=rs.getString("subject");
+				String content=rs.getString("content");
+				java.sql.Date writedate=rs.getDate("writedate");
+				int ref=rs.getInt("ref");
+				int lev=rs.getInt("lev");
+				int sunbun=rs.getInt("sunbun");
+				dto=new NoimgDTO(idx, idx_member, idx_info, category, writer, subject, content, writedate, ref, lev, sunbun);
+			}
+			return dto;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				
+			}catch(Exception e2) {}
+		}
+	}
 	
 
 //	/**모임게시판 조회 메서드 원본*/

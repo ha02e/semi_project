@@ -57,7 +57,7 @@ if(dto==null){
 			</tr>
 			<tr>
 				<td colspan="4" align="center">
-				<a href="moimChat.jsp">목록</a> | <a href="writeReChat.jsp?subject=<%=dto.getSubject()%>&ref=<%=dto.getRef()%>&lev=<%=dto.getLev()%>&sunbun=<%=dto.getSunbun()%>">답변</a>
+				<a href="moimChatUpdate.jsp?idx=<%=dto.getIdx() %>&writer=<%=dto.getWriter()%>&subject=<%=dto.getSubject()%>&content=<%=dto.getContent()%>">수정</a> | <a href="moimChat.jsp">목록</a> | <a href="writeReChat.jsp?subject=<%=dto.getSubject()%>&ref=<%=dto.getRef()%>&lev=<%=dto.getLev()%>&sunbun=<%=dto.getSunbun()%>">답변</a>
 				</td>
 			</tr>
 		</table>
