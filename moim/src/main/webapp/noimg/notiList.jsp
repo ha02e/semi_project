@@ -119,10 +119,6 @@ table #writedate{
 	transition: 0.3s;
 }
 
-/* #b{
-	margin:10px 0px 10px 1100px;
-} */
-
 </style>
 
 <script>

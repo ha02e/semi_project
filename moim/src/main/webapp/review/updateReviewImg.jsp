@@ -37,7 +37,6 @@ idx = Integer.parseInt((mr.getParameter("idx")));
 rdto.setIdx(idx);
 int result2 = rdao.updateReview(rdto, mr);
 String msg2 = result2 > 0 ? "이미지 수정 성공" : "이미지 수정 실패";
-System.out.println(msg2);
 %>
 
 <script>
