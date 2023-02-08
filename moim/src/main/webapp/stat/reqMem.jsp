@@ -14,7 +14,7 @@ if(idx==null){
 	<%
 	return;
 }
-System.out.println(idx);
+
 %>
 
 <jsp:useBean id="mdto" class="com.moim.stat.StatDTO"></jsp:useBean>
@@ -67,7 +67,17 @@ function popupclose(){
 String idx_s=request.getParameter("idx_info");
 int idx_info=Integer.parseInt(idx_s);
 
-
+StatDTO dto_s=mdao.getUserStat(idx,idx_info);
+if(dto_s==null){ //신청하지 않은 상태
+	
+}else if(dto_s.getStat()==2){ //신청한 상태
+	%>
+	<script>
+		window.alert('이미 신청하셨습니다. 관리자가 수락하면 가입 완료됩니다.');
+		window.self.close();
+	</script>
+	<%
+}
 %>
 
 <body>

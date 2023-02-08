@@ -6,12 +6,15 @@
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao" class="com.moim.stat.StatDAO"></jsp:useBean>
 
+
 <%
 Integer idx = (Integer) session.getAttribute("idx");
 int idx_member=idx;  //session에서 받아오기
 
 String idx_info_s=request.getParameter("idx_info");
 int idx_info=Integer.parseInt(idx_info_s);
+
+
 
 String content=request.getParameter("contentApply");
 
