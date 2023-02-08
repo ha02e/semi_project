@@ -26,8 +26,45 @@ body{
 	width:1280px;
 }
 
+
+section{
+	width:800px;
+	margin:0 auto;
+}
+
+section h2{
+	margin:40px 0 0 0;
+}
+
+.update_table{
+	text-align:center;
+
+}
+
 table{
 	border:1px solid gray;
+}
+
+.button{
+	text-align: center;
+	padding:20px 0 40px 0;
+}
+.button input{
+	border:0;
+	outline:none;
+	width:160px;
+	height:40px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+
+.button input[type="submit"]{
+	background:#333333;
+}
+.button input:hover{
+	background: #00cdac;
+	transition: 0.3s;
 }
 </style>
 
@@ -35,11 +72,13 @@ table{
 </head>
 <body>
 <%@include file="/header.jsp" %>
-
+<section>
+<h2>공지사항</h2>
+<form name="update2" action="notiUpdate_ok.jsp" >
+<div class="update_table">
 <table>
 <tr>
 <th>제목</th>
-<form name="update2" action="notiUpdate_ok.jsp" >
 <input type="hidden" name="idx" value="<%=idx %>">
 <td><input type="text" name="subject" value="<%=subject%>"></td>
 </tr>
@@ -48,8 +87,11 @@ table{
 
 </tr>
 </table>
-<div><input type="submit" name="update" value="등록"></div>
+<div class="button"><input type="submit" name="update" value="등록"></div>
 </form>
+</div>
+</section>
+
 <%@include file="/footer.jsp" %>
 </body>
 </html>

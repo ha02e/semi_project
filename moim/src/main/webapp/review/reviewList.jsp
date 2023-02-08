@@ -50,26 +50,37 @@ table #writedate {
 	text-align: center;
 	margin: 10px;
 }
-.button{
-   text-align: center;
-   padding:20px 0 40px 0;
+
+.button {
+	text-align: right;
+	padding: 20px 0 40px 0;
 }
+
 .button input{
-   border:0;
-   outline:none;
-   width:160px;
-   height:40px;
-   cursor: pointer;
-   background:#999999;
-   color:white;
+	border: 0;
+	outline: none;
+	width: 160px;
+	height: 40px;
+	cursor: pointer;
+	background: #999999;
+	color: white;
 }
-.button input[type="submit"]{
-   background:#333333;
+
+.button input[type="submit"] {
+	background: #333333;
 }
-.button input:hover{
-   background: #00cdac;
-   transition: 0.3s;
+
+.button input:hover {
+	background: #00cdac;
+	transition: 0.3s;
 }
+.search2{
+	textt-align :center;
+	margin :10px auto;
+	float : center;
+	cursor : pointer;
+}
+
 </style>
 </head>
 <%
@@ -116,7 +127,7 @@ if (cp % pageSize == 0)
 		<article>
 			<%@include file="/header.jsp"%>
 			<form name="search" action="reviewList.jsp">
-				<div>
+				<div class ="search2">
 					<select name="hobby">
 						<option value="전체" selected>전체</option>
 						<option value="운동">운동</option>
@@ -135,9 +146,8 @@ if (cp % pageSize == 0)
 
 				<tfoot>
 					<tr>
-						<td></td>
 
-						<td>
+						<td colspan="2" align="right">
 							<%
 							if (userGroup != 0) {
 							%><a
@@ -160,8 +170,12 @@ if (cp % pageSize == 0)
 							}
 							%>
 						</td>
-						<td></td>
-
+						<td>
+							<div class="button">
+								<input type="button" onclick="location.href='writeReview.jsp'"
+									value="후기쓰러가기">
+							</div>
+						</td>
 					</tr>
 				</tfoot>
 
@@ -189,26 +203,18 @@ if (cp % pageSize == 0)
 					<tr>
 						<td><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getHobby()%></a>
 						</td>
-						<td><%=arr.get(i).getMoimname()%></td>
-						<td><%=arr.get(i).getSubject()%></td>
+						<td><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname()%></a></td>
+						<td><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject()%></a></td>
 					</tr>
 
 					<%
 					}
 					}
 					%>
-					<tr>
-						<td></td>
-						<td></td>
-
-					</tr>
 				</tbody>
 
-				<div >
-					<input type="button" id ="b" onclick="location.href='writeReview.jsp'"
-						value="후기쓰러가기">
-				</div>
 			</table>
+
 		</article>
 	</section>
 	<%@include file="/footer.jsp"%>

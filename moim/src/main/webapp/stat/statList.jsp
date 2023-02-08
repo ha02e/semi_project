@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.*"%>
 <%@page import="com.moim.stat.*"%>
@@ -12,155 +12,161 @@
 </head>
 <style>
 table {
-	text-align: center;
-	margin: 0px auto;
-	border-pacing: 70px;
+   text-align: center;
+   margin: 0px auto;
+   border-pacing: 70px;
 }
 </style>
 <%
-HashMap<Integer, String> hash = sdao.getName();
+HashMap<Integer, String> hm = sdao.getName();
 %>
 
 
 <%
-String idx_info_s = request.getParameter("idx_info");
-if (idx_info_s == null || idx_info_s.equals("")) {
-	idx_info_s = "2";
+int idx_info=19;
+if(request.getParameter("idx_info")!=null&&!request.getParameter("idx_info").equals("")){
+	idx_info=Integer.parseInt(request.getParameter("idx_info"));
 }
-int idx_info = Integer.parseInt(idx_info_s);
-
-String stat_s = request.getParameter("stat");
-if (stat_s == null || stat_s.equals("")) {
-	stat_s = "0";
+int cp=1;
+if(request.getParameter("cp")!=null&&!request.getParameter("cp").equals("")){
+	cp=Integer.parseInt(request.getParameter("cp"));
 }
-int stat = Integer.parseInt(stat_s);
-
-int totalCnt = sdao.getTotalCnt(idx_info, stat);
-
+if(cp==0)cp=1;
+int cp2=1;
+if(request.getParameter("cp2")!=null&&!request.getParameter("cp2").equals("")){
+	cp2=Integer.parseInt(request.getParameter("cp2"));
+}
+if(cp2==0)cp2=1;
 int listSize = 5;
 int pageSize = 5;
-String cp_s = request.getParameter("cp");
-if (cp_s == null || cp_s.equals("")) {
-	cp_s = "1";
-}
-
-int cp = Integer.parseInt(cp_s);
-
-String ls_s = request.getParameter("ls");
-if (ls_s == null || ls_s.equals("")) {
-	ls_s = "1";
-}
-int ls = Integer.parseInt(ls_s);
+int totalCnt = sdao.getTotalCnt(idx_info, 1);
+ArrayList<StatDTO> inarr=sdao.getNewPerStatList(idx_info, 1, listSize, cp);
 
 int totalPage = totalCnt / listSize + 1;
-if (totalCnt % listSize == 0)
-	totalPage--;
-
+if (totalCnt % listSize == 0)totalPage--;
 int userGroup = cp / pageSize;
-if (cp % pageSize == 0)
-	userGroup--;
+if (cp % pageSize == 0)userGroup--;
+
+int totalCnt2 = sdao.getTotalCnt(idx_info, 2);
+ArrayList<StatDTO> newarr=sdao.getNewPerStatList(idx_info, 2, listSize, cp);
+
+int totalPage2 = totalCnt2 / listSize + 1;
+if (totalCnt2 % listSize == 0)totalPage2--;
+int userGroup2 = cp2 / pageSize;
+if (cp2 % pageSize == 0)userGroup2--;
 %>
 
 
 <body>
-	<%@include file="/board/sideBoard.jsp"%>
-	<%@include file="/header.jsp"%>
-	<section>
-		<table>
-			<article>
-				<tr>
-					<th>참여자</th>
-					<th>가입일자</th>
-					<th>관리</th>
-				</tr>
-				<tr>
-					<%
-					ArrayList<StatDTO> arr = sdao.getNewPerStatList(idx_info, 1, ls, cp);
-					if (arr == null || arr.size() == 0) {
-					%>
-				
-				<tr>
-					<td colspan="3">등록된 글이 없습니다</td>
-				</tr>
-				<%
-				} else {
-				for (int i = 0; i < arr.size(); i++) {
-				%>
-
-				<tr>
-					
-					<td><%=hash.get(idx_info)%></td>
-					<td><%=arr.get(i).getJoindate()%></td>
-					<td><input type="button" value="탈퇴"></td>
-				</tr>
-
-				<%
-				}
-				}
-				%>
-				</tr>
-				<tr>
-					<td colspan="3">
-						<%
-						if (userGroup != 0) {
-						%><a
-						href="statList.jsp?cp=<%=(userGroup - 1) * pageSize + pageSize%>">&lt;
-							&lt;</a> <%
- }
- %> <%
- for (int i = userGroup * pageSize + 1; i <= userGroup * pageSize + pageSize; i++) {
- %>&nbsp;&nbsp;<a href="statList.jsp?cp=<%=i%>"><%=i%></a>&nbsp;&nbsp;<%
- if (i == totalPage)
- 	break;
- }
- %> <%
- // 오른쪽 화살표
- if (userGroup != (totalPage / pageSize - (totalPage % pageSize == 0 ? 1 : 0))) {
- %><a href="statList.jsp?cp=<%=(userGroup + 1) * pageSize + 1%>">&gt;&gt;</a>
-						<%
-						}
+   <%@include file="/header.jsp"%>
+   <%@include file="/board/sideBoard.jsp"%>
+ <section>
+ 	<article>
+ 		<label>참여자</label>
+ 		<table>
+ 			<thead>
+ 				<tr>
+ 					<th>참여자</th>
+ 					<th>가입일자</th>
+ 					<th></th>
+ 				</tr>
+ 			</thead>
+ 			<tbody>
+ 			<%for(int i=0;i<inarr.size();i++){ %>
+ 				<tr>
+ 					<td><%=hm.get(inarr.get(i).getIdx_member()) %></td>
+ 					<td><%=inarr.get(i).getJoindate() %></td>
+ 					<td><input type="button" value="내보내기" onclick="javascript:location.href='delMem_ok.jsp?idx=<%=inarr.get(i).getIdx()%>&idx_info=<%=idx_info%>'"></td>
+ 				</tr>
+ 			<%} %>
+ 			</tbody>
+ 			<tfoot>
+ 				<tr>
+ 					<td colspan="3" align="center">
+ 					<%
+							if(userGroup!=0){
+								%><a href="statList.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&cp2=<%=cp2%>&idx_info=<%=idx_info%>">&lt;&lt;</a><%
+							}
+							%>
+							<%
+							for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
+								%>&nbsp;&nbsp;<a href="statList.jsp?cp=<%=i%>&cp2=<%=cp2%>&idx_info=<%=idx_info%>"><%=i%></a>&nbsp;&nbsp;<%
+								if(i==totalPage)break;
+							}
+							%>
+							<%
+							if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
+								%><a href="statList.jsp?cp=<%=(userGroup+1)*pageSize+1%>&cp2=<%=cp2%>&idx_info=<%=idx_info%>">&gt;&gt;</a><%
+							}
 						%>
-					</td>
-				</tr>
-			</article>
-			<article>
-				<tr>
-					<th>신청자</th>
-					<th>가입일자</th>
-					<th>관리</th>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td><input type="button" value="내용보기" onclick="show()"></td>
-				</tr>
-				<tr>
-					<td colspan="3">
-						<%
-						if (userGroup != 0) {
-						%><a
-						href="statList.jsp?cp=<%=(userGroup - 1) * pageSize + pageSize%>">&lt;
-							&lt;</a> <%
- }
- %> <%
- for (int i = userGroup * pageSize + 1; i <= userGroup * pageSize + pageSize; i++) {
- %>&nbsp;&nbsp;<a href="statList.jsp?cp=<%=i%>"><%=i%></a>&nbsp;&nbsp;<%
- if (i == totalPage)
- 	break;
- }
- %> <%
- // 오른쪽 화살표
- if (userGroup != (totalPage / pageSize - (totalPage % pageSize == 0 ? 1 : 0))) {
- %><a href="statList.jsp?cp=<%=(userGroup + 1) * pageSize + 1%>">&gt;&gt;</a>
-						<%
-						}
+ 					</td>
+ 				</tr>
+ 			</tfoot>
+ 		</table>
+ 	</article>
+ 	<article>
+ 	<label>대기자</label>
+ 	<table>
+ 			<thead>
+ 				<tr>
+ 					<th>참여자</th>
+ 					<th>가입일자</th>
+ 					<th></th>
+ 				</tr>
+ 			</thead>
+ 			<tbody>
+ 			<%for(int i=0;i<newarr.size();i++){ %>
+ 				<tr>
+ 					<td><%=hm.get(newarr.get(i).getIdx_member()) %></td>
+ 					<td><%=newarr.get(i).getJoindate() %></td>
+ 					<td><input type="button" value="내용보기"></td>
+ 				</tr>
+ 			<%} %>
+ 			</tbody>
+ 			<tfoot>
+ 				<tr>
+ 					<td colspan="3" align="center">
+ 					<%
+							if(userGroup2!=0){
+								%><a href="statList.jsp?cp2=<%=(userGroup2-1)*pageSize+pageSize%>&cp=<%=cp%>&idx_info=<%=idx_info%>">&lt;&lt;</a><%
+							}
+							%>
+							<%
+							for(int i=userGroup2*pageSize+1;i<=userGroup2*pageSize+pageSize;i++){
+								%>&nbsp;&nbsp;<a href="statList.jsp?cp2=<%=i%>&cp=<%=cp%>&idx_info=<%=idx_info%>"><%=i%></a>&nbsp;&nbsp;<%
+								if(i==totalPage2)break;
+							}
+							%>
+							<%
+							if(userGroup2!=(totalPage2/pageSize-(totalPage2%pageSize==0?1:0))){
+								%><a href="statList.jsp?cp2=<%=(userGroup2+1)*pageSize+1%>&cp=<%=cp%>&idx_info=<%=idx_info%>">&gt;&gt;</a><%
+							}
 						%>
-					</td>
-				</tr>
-			</article>
-		</table>
-	</section>
-
-	<%@include file="/footer.jsp"%>
+ 					</td>
+ 				</tr>
+ 			</tfoot>
+ 		</table>
+ 	</article>
+ </section>
+   <%@include file="/footer.jsp"%>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

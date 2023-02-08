@@ -123,7 +123,9 @@ public class MemberDAO {
 				String local=rs.getString("local");
 				int age=rs.getInt("age");
 				String hobby=rs.getString("hobby");
-				dto=new MemberDTO(idx, name, id, pwd, email, local, age, hobby, null, age);
+				java.sql.Date joindate=rs.getDate("joindate");
+				int manager=rs.getInt("manager");
+				dto=new MemberDTO(idx, name, id, pwd, email, local, age, hobby, joindate, manager);
 			}
 			return dto;
 		}catch(Exception e) {
@@ -164,19 +166,21 @@ public class MemberDAO {
 		}
 	}
 	/**댓글 조회 메서드*/
-	public ArrayList<NoimgDTO> getMyQna(int category,int idx_member){
+	public ArrayList<NoimgDTO> getMyQna(int category,int idx_member,int ls,int cp){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			int start=(idx_member-1)*category+1;
-			int end=(idx_member*category);
+			int start=(cp-1)*ls+1;
+			int end=(cp*ls);
 //			String sql="select * from moim_noimg where category=? and idx_member=?";
 			String sql="select * from"
 					+ "(select rownum as rnum,a.*from "
-					+ "(select * from moim_noimg order by ref desc,sunbun asc)a)b "
+					+ "(select * from moim_noimg where category=? and idx_member=? order by ref desc,sunbun asc)a)b "
 					+ "where rnum>=? and rnum<=?" ;
 			ps=conn.prepareStatement(sql);
-			ps.setInt(1, start);
-			ps.setInt(2, end);
+			ps.setInt(1, category);
+			ps.setInt(2, idx_member);
+			ps.setInt(3, start);
+			ps.setInt(4, end);
 //			ps.setInt(1, category);
 //			ps.setInt(2, idx_member);
 			rs=ps.executeQuery();
@@ -208,13 +212,19 @@ public class MemberDAO {
 		}
 	}
 	/**후기 조회 메서드*/
-	public ArrayList<ReviewDTO> getMyReview(int idx_member){
+	public ArrayList<ReviewDTO> getMyReview(int idx_member,int ls,int cp){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_review where idx_member=?";
+			int start=(cp-1)*ls+1;
+			int end=(cp*ls);
+//			String sql="select * from moim_review where idx_member=?";
+			String sql="select * from(select rownum as rnum,a.*from(select * from moim_review where idx_member=? order by idx_member)a)b where rnum>=? and rnum<=?";
 			ps=conn.prepareStatement(sql);
-			ArrayList<ReviewDTO> arr=new ArrayList<ReviewDTO>();
 			ps.setInt(1, idx_member);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			ArrayList<ReviewDTO> arr=new ArrayList<ReviewDTO>();
+//			ps.setInt(1, idx_member);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
@@ -226,6 +236,7 @@ public class MemberDAO {
 				String content=rs.getString("content");
 				String img=rs.getString("img");
 				java.sql.Date writedate=rs.getDate("writedate");
+				
 				
 				ReviewDTO dto=new ReviewDTO(idx, idx_member, moimname, writer, local, hobby, subject, content, img, writedate);
 				arr.add(dto);
@@ -331,13 +342,19 @@ public class MemberDAO {
 	}
 	
 	/**참여중인 모임 조회 메서드*/
-	public ArrayList<StatDTO> getMyStat(int idx_member){
+	public ArrayList<StatDTO> getMyStat(int idx_member,int ls,int cp){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_stat where idx_member=?";
+			int start=(cp-1)*ls+1;
+			int end=(cp*ls);
+//			String sql="select * from moim_stat where idx_member=?";
+			String sql="select * from(select rownum as rnum,a.*from(select * from moim_stat where idx_member=?)a)b where rnum>=? and rnum<=?";
 			ps=conn.prepareStatement(sql);
-			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
 			ps.setInt(1, idx_member);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
+//			ps.setInt(1, idx_member);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
@@ -405,15 +422,20 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
-	/**모임 게시판 조회*/
+	/**모임게시판 조회 메서드 원본*/
 	public ArrayList<NoimgDTO> getList(int idx_info,int category,int ls,int cp){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_noimg where idx_info=? and category=?";
+			int start=(cp-1)*ls+1;
+			int end=(cp*ls);
+//			String sql="select * from moim_noimg where idx_info=? and category=?";
+			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where idx_info=? and category=?)a)b where rnum>=? and rnum<=?";
 			ps=conn.prepareStatement(sql);
 			ArrayList<NoimgDTO> arr=new ArrayList<NoimgDTO>();
 			ps.setInt(1, idx_info);
 			ps.setInt(2, category);
+			ps.setInt(3, start);
+			ps.setInt(4, end);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
@@ -441,6 +463,8 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
+
+	
 	/**마지막 ref 구하기 관련 메서드*/
 	public int getMaxRef() {
 		try {
@@ -534,8 +558,9 @@ public class MemberDAO {
 		}
 	}
 	
-	/**모임게시판 글 보기 메서드*/
-	public NoimgDTO moimChatContent(int idx, int category) {
+	/**모임게시판 글 보기 메서드*/ 
+	//메서드명 수정 moimCHatContent -> getContent
+	public NoimgDTO getContent(int idx, int category) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			String sql="select * from moim_noimg where idx=? and category=? order by idx desc";
@@ -610,4 +635,52 @@ public class MemberDAO {
 		}
 	}
 
+
+	
+
+//	/**모임게시판 조회 메서드 원본*/
+//	public ArrayList<NoimgDTO> getList(int idx_info,int category,int ls,int cp){
+//		try {
+//			conn=com.moim.db.MoimDB.getConn();
+//			int start=(cp-1)*ls+1;
+//			int end=(cp*ls);
+////			String sql="select * from moim_noimg where idx_info=? and category=?";
+//			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where idx_info=? and category=?)a)b where rnum>=? and rnum<=?";
+//			ps=conn.prepareStatement(sql);
+//			ArrayList<NoimgDTO> arr=new ArrayList<NoimgDTO>();
+//			ps.setInt(1, idx_info);
+//			ps.setInt(2, category);
+//			ps.setInt(3, start);
+//			ps.setInt(4, end);
+//			rs=ps.executeQuery();
+//			while(rs.next()) {
+//				int idx=rs.getInt("idx");
+//				int idx_member=rs.getInt("idx_member");
+//				String writer=rs.getString("writer");
+//				String subject=rs.getString("subject");
+//				String content=rs.getString("content");
+//				java.sql.Date writedate=rs.getDate("writedate");
+//				int ref=rs.getInt("ref");
+//				int lev=rs.getInt("lev");
+//				int sunbun=rs.getInt("sunbun");
+//				
+//				NoimgDTO dto=new NoimgDTO(idx, idx_member, idx_info, category, writer, subject, content, writedate, ref, lev, sunbun);
+//				arr.add(dto);	
+//			}
+//			return arr;
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}finally {
+//			try {
+//				if(rs!=null)rs.close();
+//				if(ps!=null)ps.close();
+//				if(conn!=null)conn.close();
+//			}catch(Exception e2) {}
+//		}
+//	}
+	/**집에서 할 것
+	 * 1.총 수에 제목,작성자 검색커리 추가
+	 * 2.총 게시글 리스트에도 추가*/
+	
 }

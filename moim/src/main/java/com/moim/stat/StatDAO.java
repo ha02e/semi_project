@@ -51,7 +51,6 @@ public class StatDAO {
 			rs=ps.executeQuery();
 			rs.next();
 			int count=rs.getInt(1);
-			System.out.println(count);
 			return count>1?count:1;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -78,7 +77,7 @@ public class StatDAO {
 			ps.setInt(1, idx_info);
 			ps.setInt(2, stat);
 			ps.setInt(3, start);
-			ps.setInt(4, end); 		
+			ps.setInt(4, end);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
@@ -192,12 +191,12 @@ public class StatDAO {
 			String sql="delete from moim_stat where idx=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx);
-			ps.executeUpdate();
+			int count=ps.executeUpdate();
 			sql="update moim_info set nowmem=? where idx=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, nowmem-1);
 			ps.setInt(2, idx_info);
-			int count=ps.executeUpdate();
+			ps.executeUpdate();
 			return count;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -258,8 +257,35 @@ public class StatDAO {
 				if(conn!=null)conn.close();
 			} catch (Exception e2) {}
 		}
-	}
+	}	   
+	   /**모임 신청하기용 사용자관련 메서드*/
+	   public StatDTO getUserStat(int idx_member) {
+	      try {
+	         conn=com.moim.db.MoimDB.getConn();
+	         String sql="select * from moim_stat where idx_member=?";
+	         ps=conn.prepareStatement(sql);
+	         ps.setInt(1, idx_member);
+	         rs=ps.executeQuery();
+	         rs.next();
+	         int idx=rs.getInt("idx");
+	         int idx_info=rs.getInt("idx_info");
+	         int stat=rs.getInt("stat");
+	         java.sql.Date joindate=rs.getDate("joindate");
+	         String content=rs.getString("content");
 
+	         StatDTO dto=new StatDTO(idx, idx_member, idx_info, stat, joindate, content);
+	         return dto;
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	         return null;
+	      }finally {
+	         try {
+	            if(rs!=null)rs.close();
+	            if(ps!=null)ps.close();
+	            if(conn!=null)conn.close();
+	         }catch (Exception e2) {}
+	      }
+	   }
 	
 }
 
