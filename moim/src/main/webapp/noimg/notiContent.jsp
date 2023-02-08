@@ -58,11 +58,6 @@ table div{
 	display:inline;
 }
 
-/* #a,#b{
-	text-align:left;
-	margin: 10px;
-} */
-
 .button{
 	text-align: center;
 	padding:20px 0 40px 0;
@@ -150,7 +145,7 @@ function write_button(){
 					<form name="update1" action="notiUpdate.jsp">
 						<input type="hidden" name="idx" value="<%=dto.getIdx() %>">
 						<input type="hidden" name="subject" value="<%=dto.getSubject() %>">
-						<input type="hidden" name="content" value="<%=dto.getContent()%>">
+						<input type="hidden" name="content" value="<%=dto.getContent().replaceAll("\n", "<br>")%>">
 						<input type="submit" value="수정" id="a">
 						<input type="button" value="삭제" id="b" 
 						onclick="javascript:location.href='notiDel.jsp?idx=<%=dto.getIdx()%>'">

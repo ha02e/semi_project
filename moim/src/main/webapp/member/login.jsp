@@ -7,31 +7,44 @@
 <title>login</title>
 <style>
 
-.login_form{
-	border: 1px solid gray;
-	justify-content:center;
-	align-items:center;
-	text-align:center;
+
+.main{
+	width:380px;
+	height:300px;
 	display:flex;
-	margin:0px auto;
-	
+	justify-content: center;
+	align-items:center;
+	flex-direction: column;
+	border: 1px solid gray;
+	border-radius:5px;
+}
+
+.logo Img{
+	width:81px;
+	height:62px;
+	object-fit:cover;
+	margin: 0 0 10px 0;
 
 }
-/* 
-td{
-	padding:5px;
-} */
+
+.account{
+	display:block;
+	margin-top:3px;
+	padding:3px;
+	border: 1px solid gray;
+	border-radius:5px;
+}
 
 .button{
 	text-align: center;
-	padding:20px 0 40px 0;
+	padding:10px 0 30px 0;
 }
 
 .button input{
 	border:0;
 	outline:none;
-	width:60px;
-	height:60px;
+	width:100%;
+	height:10px;
 	cursor: pointer;
 	background:#999999;
 	color:white;
@@ -58,26 +71,19 @@ if(cks!=null){
 	}
 }
 %>
-<div class="login_form">
-<form name="login" action="login_ok.jsp" method="post" enctype="UTF-8">
-<table>
-	<tr>
-	<td><input type="text" name="id" placeholder="아이디" maxlength="45" value="<%=saveid%>"></td>
-	<td class="button" rowspan="2"><input type="submit" value="로그인" class="button"></td>
-	</tr>
-	<tr>
-	<td><input type="password" name="pwd" placeholder="비밀번호" maxlength="45">
-	</td>
-	</tr>
-</table>
-</br>
-<div>
-<input type="checkbox"  name="saveid" value="on" <%=saveid.equals("")?(""):"checked"%>>아이디 저장
-</div>
-</div>
-</form>
 
 
+<div class="main">
+	<div class="logo"><img src="/moim/img/logo.png"></div> 
+	<div class="container">
+	<form name="login" action="login_ok.jsp" method="post" enctype="UTF-8">
+	<input type="text" name="id" placeholder="아이디" maxlength="45" value="<%=saveid%>" class="account">
+	<input type="password" name="pwd" placeholder="비밀번호" maxlength="45" class="account">
+	<div class="button">
+	<input type="submit" value="로그인" class="button"></div>
+	<input type="checkbox" name="saveid" value="on" <%=saveid.equals("")?"":"checked" %> >아이디 저장하기
+</div>
+</div>
 
 </body>
 </html>
