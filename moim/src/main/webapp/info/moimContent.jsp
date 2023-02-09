@@ -12,13 +12,6 @@ if (idx_member==null) {
 <script>
 	window.alert('로그인 후 이용가능합니다');
 	window.self.close();
-	
-	var w='500';
-	var h='300';
-
-	var l=Math.ceil((window.screen.width-w)/2);
-	var t=Math.ceil((window.screen.height-h)/2);
-	window.open('/moim/member/login.jsp','loginPopup', 'width='+w+',height='+h+',left='+l+',top='+t);
 </script>
 <%
 return;
@@ -318,16 +311,6 @@ function qnaWrite(){
 	 
 	window.open('/moim/noimg/qnaWrite.jsp?idx_info=<%=idx_info%>', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
-
-function qnaUpdate(){
-	var w=500;
-	var h=340;
-	 
-	var left=Math.ceil((window.screen.width-w)/2);
-	var top=Math.ceil((window.screen.height-h)/2);  
-	window.open('/moim/noimg/qnaUpdate.jsp?idx_info=<%=idx_info%>', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
-}
-
 </script>
 </head>
 
@@ -456,17 +439,21 @@ if(cp%pageSize==0)userGroup--;
 					</div>
 					<p><%=arr.get(i).getContent()%></p>
 					<div class="qnabutton">
-						<form name="qnaUpdate" action="/moim/noimg/qnaUpdate.jsp">
-							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-							<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
-							<input type="hidden" name="content" value="<%=arr.get(i).getContent() %>">
-							<input type="hidden" name="idx_info" value="<%=idx_info%>">
-							<input type="submit" value="수정">
-						</form>
-						
-						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
-							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-							<input type="submit" value="삭제">
+						<input type="button" value="수정" 
+								onclick="javascript:window.open('/moim/noimg/qnaUpdate.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&content=<%=arr.get(i).getContent() %>', 
+								'qnaUpdate', 'width=500px, height=340px')">
+								
+						<form name="qnaDelete">
+						<script>
+							function qnaDel(){
+								var msg=confirm("문의글을 정말 삭제하시겠습니까??");
+								if(msg){
+									window.open('/moim/noimg/qnaDelete_ok.jsp?idx=<%=arr.get(i).getIdx()%>', 'qnaDel', 'width=500px, height=340px')
+								}else{
+								}
+							}
+						</script>
+							<input type="button" value="삭제" onclick="javascript:qnaDel()">
 						</form>
 					</div>
 					<%
@@ -479,7 +466,7 @@ if(cp%pageSize==0)userGroup--;
 							<table>
 								<tr> 
 									<td>
-										<textarea name="content" rows="3" cols="94"></textarea>
+										<textarea name="content" rows="3" cols="94" style="resize:none"></textarea>
 									</td>
 								</tr>
 								<tr>

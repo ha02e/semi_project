@@ -90,7 +90,7 @@ if(dto_s==null){ //신청하지 않은 상태
 	</tr>
 	<tr>
 		<td>
-		<textarea name="contentApply" rows="3" cols="36" maxlength="50">50자 이내로 입력해주세요.</textarea>
+		<textarea name="contentApply" rows="3" cols="36" maxlength="50" placeholder="50자 이내로 입력해주세요."></textarea>
 		</td>
 	</tr>
 </table>

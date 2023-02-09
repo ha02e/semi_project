@@ -21,13 +21,13 @@ return;
 
 <%
 int idx_d=mdto.getIdx();
-
+System.out.println(idx_d);
 int result=mdao.delNoimg(idx_d);
 String msg=result>0?"삭제가 완료되었습니다.":"삭제 실패하였습니다..";
 %>
 
 <script>
 window.alert('<%=msg %>');
-location.href='/moim/info/moimContent.jsp';
 opener.location.reload();
+window.self.close();
 </script>
