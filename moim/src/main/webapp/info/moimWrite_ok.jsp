@@ -16,6 +16,7 @@ MultipartRequest mr=
 	new MultipartRequest(request,savepath,2097152,"UTF-8");
 
 int result=mdao.setInfo(mr, mdto);
+int stat_m=mdao.setManager(idx_member);
 String msg=result>0?"모임이 등록되었습니다.":"모임 등록에 실패하였습니다.";
 
 %>

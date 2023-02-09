@@ -48,6 +48,27 @@ public class InfoDAO {
 		}
 	}
 	
+	/**모임글 작성후 Stat에 관리자 추가하는 메서드*/
+	public int setManager(int idx_member) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="insert into moim_stat values(moim_stat_idx.nextval,?,moim_info_idx.currval,0,sysdate,'')";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx_member);
+			
+			int count=ps.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			} catch (Exception e2) {}
+		}
+	}
+	
 	/**모임글 콘텐츠 보여주기 관련 메서드*/
 	public InfoDTO getInfo(int idx) {
 		try {
