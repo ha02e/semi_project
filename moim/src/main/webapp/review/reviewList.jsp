@@ -11,8 +11,39 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+section{
+	width:1280px;
+	margin:0 auto;
+	border:1px solid red;
+}
+
+.review_top{
+	width: 85%;
+	display:flex;
+	align-items:baseline;
+	margin:0 auto;
+}
+h2{
+	width:50%;
+}
+
+form{
+	width: 50%;
+	text-align: right;
+}
+form input[type="text"] {
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	padding:8px;
+}
+form input[type="submit"] {
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	padding:8px;
+}
+
 table {
-	width: 80%;
+	width: 85%;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
@@ -121,27 +152,31 @@ int userGroup = cp / pageSize;
 if (cp % pageSize == 0)
 	userGroup--;
 %>
-<body>
-			<%@include file="/header.jsp"%>
-	<h2>후기 게시판</h2>
+<body>		
+<%@include file="/header.jsp"%>
 	<section>
 		<article>
-			<form name="search" action="reviewList.jsp">
-				<div class ="search2">
-					<select name="hobby">
-						<option value="전체" selected>전체</option>
-						<option value="운동">운동</option>
-						<option value="게임">게임</option>
-						<option value="여행">여행</option>
-						<option value="공연">공연</option>
-						<option value="요리">요리</option>
-						<option value="음악">음악</option>
-						<option value="봉사활동">봉사활동</option>
-						<option value="댄스">댄스</option>
-					</select> <input type="text" name="keyword"> <input type="submit"
-						value="검색">
-				</div>
-			</form>
+			<div class="review_top">
+				<h2>후기 게시판</h2>
+	
+				<form name="search" action="reviewList.jsp">
+					<div class ="search2">
+						<select name="hobby">
+							<option value="전체" selected>전체</option>
+							<option value="운동">운동</option>
+							<option value="게임">게임</option>
+							<option value="여행">여행</option>
+							<option value="공연">공연</option>
+							<option value="요리">요리</option>
+							<option value="음악">음악</option>
+							<option value="봉사활동">봉사활동</option>
+							<option value="댄스">댄스</option>
+						</select> <input type="text" name="keyword"> <input type="submit"
+							value="검색">
+					</div>
+				</form>
+			</div>
+	
 			<table>
 
 				<tfoot>
