@@ -193,6 +193,9 @@ input[id*="click"]:checked+label+div {
 }
 </style>
 <body>
+	<%
+	if (dto.getImg() == null || dto.getImg().equals("")) {
+	%>
 	<%@include file="/header.jsp"%>
 
 	<h2>
@@ -204,58 +207,67 @@ input[id*="click"]:checked+label+div {
 			<h2>
 				모임이름 :
 				<%=dto.getMoimname()%></h2>
-			<%
-			if (dto.getImg() == null || dto.getImg().equals("")) {
-			%>
+
 			<div class="moiminfo">
 				<div class="moimContent moimimg">
 					<div class="img">
-						<img alt="이미지" src="img/noimage2.png%>">
+						<img alt="이미지" src="/moim/img/noimg.png">
 					</div>
 				</div>
 				<%
 				} else {
 				%>
-				<div class="moiminfo">
-					<div class="moimContent moimimg">
-						<div class="img">
-							<img alt="이미지" src="img/<%=dto.getImg()%>">
-						</div>
-					</div>
-					<%
-					}
-					%>
-					<table class="moimContent">
-						<tr class="moimtext">
-							<td><span class="con-icon1"></span>모임명 : <%=dto.getMoimname()%></td>
-						</tr>
-						<tr class="moimtext">
-							<td><span class="con-icon2"></span>지역 : <%=dto.getLocal()%></td>
-						</tr>
-						<tr class="moimtext">
-							<td>
-								<div class="moim-content">
-									<span class="con-icon3"></span>&nbsp;&nbsp;&nbsp;내용 :<br>
-									<%=dto.getContent().replaceAll("\n", "<br>")%>
+				<%@include file="/header.jsp"%>
+
+				<h2>
+					제목 :
+					<%=dto.getSubject()%></h2>
+				<input type="hidden" name="idx" value="<%=idx%>">
+				<section>
+					<article>
+						<h2>
+							모임이름 :
+							<%=dto.getMoimname()%></h2>
+						<div class="moiminfo">
+							<div class="moimContent moimimg">
+								<div class="img">
+									<img alt="이미지" src="img/<%=dto.getImg()%>">
 								</div>
-							</td>
-						</tr>
-					</table>
-					<div class="button">
-						<div>
-							<a href="reviewList.jsp">목록</a>
+							</div>
+							<%
+							}
+							%>
+							<table class="moimContent">
+								<tr class="moimtext">
+									<td><span class="con-icon1"></span>모임명 : <%=dto.getMoimname()%></td>
+								</tr>
+								<tr class="moimtext">
+									<td><span class="con-icon2"></span>지역 : <%=dto.getLocal()%></td>
+								</tr>
+								<tr class="moimtext">
+									<td>
+										<div class="moim-content">
+											<span class="con-icon3"></span>&nbsp;&nbsp;&nbsp;내용 :<br>
+											<%=dto.getContent().replaceAll("\n", "<br>")%>
+										</div>
+									</td>
+								</tr>
+							</table>
+							<div class="button">
+								<div>
+									<a href="reviewList.jsp">목록</a>
+								</div>
+								<div>
+									<a
+										href="javascript:location.href='updateReview.jsp?idx=<%=idx%>'">수정</a>
+								</div>
+								<div>
+									<a href="javascript:location.href='reviewDel.jsp?idx=<%=idx%>'">삭제</a>
+								</div>
+							</div>
 						</div>
-						<div>
-							<a
-								href="javascript:location.href='updateReview.jsp?idx=<%=idx%>'">수정</a>
-						</div>
-						<div>
-							<a href="javascript:location.href='reviewDel.jsp?idx=<%=idx%>'">삭제</a>
-						</div>
-					</div>
-				</div>
-		</article>
-	</section>
-	<%@include file="/footer.jsp"%>
+					</article>
+				</section>
+				<%@include file="/footer.jsp"%>
 </body>
 </html>

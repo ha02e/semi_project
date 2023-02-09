@@ -122,10 +122,10 @@ if (cp % pageSize == 0)
 	userGroup--;
 %>
 <body>
+			<%@include file="/header.jsp"%>
 	<h2>후기 게시판</h2>
 	<section>
 		<article>
-			<%@include file="/header.jsp"%>
 			<form name="search" action="reviewList.jsp">
 				<div class ="search2">
 					<select name="hobby">

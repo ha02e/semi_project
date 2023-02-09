@@ -151,7 +151,7 @@ textarea{
 							<tr>
 								<th>내용</th>
 								<td><textarea name="content" rows="10" cols="50"
-										<%=dto.getContent()%>></textarea></td>
+										><%=dto.getContent()%></textarea></td>
 							</tr>
 							<tr>
 								<th>이미지</th>
