@@ -10,20 +10,39 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-fieldset{
+table{
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	border-collapse:collapse;
+}
+
+table th{
+	height:30px;
+	border-top:1px solid gray;
+	border-bottom:1px solid gray;
 	background-color:gray;
-	margin-right:300px;
-	margin-bottom:300px;
-	margin-left:300px;
+	text-align:center;
+	vertical-align:inherit;
 }
-select{
-	font-size: 25px;
+
+table td{
+	border-bottom:1px solid gray;
+	padding: 10px;
 }
-input{
-	font-size: 25px;
+
+table #idx{
+	width:5%;
 }
-div.input{
-	float:left;
+
+table #subject{
+	width:70%;
+	text-align:left;
+}
+
+table #writedate{
+	width:15%;
 }
 </style>
 <script>
