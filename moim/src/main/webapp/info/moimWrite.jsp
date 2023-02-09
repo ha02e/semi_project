@@ -100,6 +100,15 @@ textarea{
 function pageBack(){
 	location.href='infoList.jsp';
 }
+
+function validate(){
+	var content=document.getElementById("content");
+	if(content.value==""){
+		window.alert('내용을 입력해주세요.');
+		content.focus();
+		return false;
+	}
+}
 </script>
 </head>
 <body>
@@ -110,7 +119,7 @@ function pageBack(){
 	<p>모임의 기본 정보를 입력해주세요 :)</p>
 	<div class="moimcontent">
 		<div class="contents write">
-		<form name="moimWrite" action="moimWrite_ok.jsp" method="post" enctype="multipart/form-data">
+		<form name="moimWrite" action="moimWrite_ok.jsp" method="post" enctype="multipart/form-data" onsubmit="return validate()">
 			<table>
 				<tr>
 					<th>카테고리</th>
@@ -136,7 +145,7 @@ function pageBack(){
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea name="content" rows="10" cols="80" placeholder="내용을 입력해주세요."></textarea>
+						<textarea name="content" id="content" rows="10" cols="80" placeholder="내용을 입력해주세요."></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -181,7 +190,7 @@ function pageBack(){
 				</tr>
 				<tr>
 					<th>이미지</th>
-					<td><input type="file" name="upload" value="이미지 올리기" accept="image/*"></td>
+					<td><input type="file" name="upload" value="이미지 올리기" accept="image/*">*최대 업로드 파일 크기:2 MB</td>
 				</tr>
 			</table>
 		</div>

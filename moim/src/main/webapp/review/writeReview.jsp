@@ -93,6 +93,16 @@ textarea{
 	transition: 0.3s;
 }
 </style>
+<script>
+function validate(){
+	var content=document.getElementById("content");
+	if(content.value==""){
+		window.alert('내용을 입력해주세요.');
+		content.focus();
+		return false;
+	}
+}
+</script>
 </head>
 <%
 String idx_member_s = request.getParameter("idx_member");
@@ -120,7 +130,7 @@ detail= request.getParameter("detail");
 	<%@include file="/header.jsp"%>
 	<form name="imgUpload" method="post" action="reviewImgUp_ok.jsp"
 	
-		enctype="multipart/form-data">
+		enctype="multipart/form-data" onsubmit="return validate()">
 		<section>
 			<article>
 				<h2>후기 게시판 작성</h2>
@@ -143,12 +153,12 @@ detail= request.getParameter("detail");
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><textarea name="content" rows="10" cols="50"
+								<td><textarea name="content" id="content" rows="10" cols="50"
 										placeholder="내용을 입력해주세요"></textarea></td>
 							</tr>
 							<tr>
 								<th>이미지</th>
-								 <td><input type="file" name="upload"></td>
+								 <td><input type="file" name="upload">*최대 업로드 파일 크기:2 MB </td>
 							</tr>
 							<tr>
 								<td><input type="hidden" name="idx_memeber"
