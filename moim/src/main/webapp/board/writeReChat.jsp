@@ -12,10 +12,9 @@
 <title>Insert title here</title>
 </head>
 <%
-int idx=21;
-if(session.getAttribute("idx")!=null&&!session.getAttribute("idx").equals("")){
-	String idx_s=(String)session.getAttribute("idx");
-	idx=Integer.parseInt(idx_s);
+Integer idx=(Integer)session.getAttribute("idx");
+if(idx==null){
+	idx=0;
 }
 String subject=request.getParameter("subject");
 String ref=request.getParameter("ref");

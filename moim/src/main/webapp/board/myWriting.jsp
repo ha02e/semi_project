@@ -13,11 +13,41 @@
 <title>Insert title here</title>
 <style>
 table{
-	width:1000px;
-	text-align: center;
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	border-collapse:collapse;
 }
-th{
-	background-color: gray;
+
+table th{
+	height:30px;
+	border-top:1px solid gray;
+	border-bottom:1px solid gray;
+	background-color:gray;
+	text-align:center;
+	vertical-align:inherit;
+}
+
+table td{
+	border-bottom:1px solid gray;
+	padding: 10px;
+}
+
+table #hobby{
+	width:20%;
+}
+
+table #subject{
+	width:40%;
+	text-align:center;
+}
+
+table #writedate{
+	width:20%;
+}
+table #update{
+	width:20%;
 }
 </style>
 </head>
@@ -70,7 +100,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 			ArrayList<ReviewDTO> dto1=mdao.getMyReview(21,listSize,cp);
 			if(dto1==null||dto1.size()==0){
 				%>
-				<tr>
+				<tr id="id">
 					<td colspan="5" align="center">
 					등록된 후기가 없습니다.
 					</td>
@@ -80,10 +110,10 @@ if(totalCnt2%listSize==0)totalPage2--;
 				for(int i=0;i<dto1.size();i++){
 					%>
 					<tr>
-						<td><%=dto1.get(i).getHobby() %></td>
-						<td><a href=""><%=dto1.get(i).getSubject() %></a></td>
-						<td><%=dto1.get(i).getWritedate() %></td>
-						<td>
+						<td id="hobby"><%=dto1.get(i).getHobby() %></td>
+						<td id="subject"><a href=""><%=dto1.get(i).getSubject() %></a></td>
+						<td id="writedate"><%=dto1.get(i).getWritedate() %></td>
+						<td id="update">
 						<input type="button" value="수정" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						<input type="button" value="삭제" onclick="javascript:location.href='myWritingDelReview_ok.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						</td>
@@ -146,8 +176,8 @@ if(totalCnt2%listSize==0)totalPage2--;
 						<tr>
 							<td><%=map1.get(dto2.get(i).getIdx_info())%></td>
 							<td><%=dto2.get(i).getSubject() %></td>
-							<td><%=dto2.get(i).getWritedate() %></td>
-							<td><input type="submit" value="삭제" onclick="javascript:location.href='myWritingDelQna_ok.jsp?idx=<%=dto2.get(i).getIdx()%>'"></td>
+							<td ><%=dto2.get(i).getWritedate() %></td>
+							<td id="update"><input type="submit" value="삭제" onclick="javascript:location.href='myWritingDelQna_ok.jsp?idx=<%=dto2.get(i).getIdx()%>'"></td>
 						</tr>
 						<%
 					}
