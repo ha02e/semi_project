@@ -11,14 +11,7 @@ if (idx_member==null) {
 %>
 <script>
 	window.alert('로그인 후 이용가능합니다');
-	window.self.close();
-	
-	var w='500';
-	var h='300';
-
-	var l=Math.ceil((window.screen.width-w)/2);
-	var t=Math.ceil((window.screen.height-h)/2);
-	window.open('/moim/member/login.jsp','loginPopup', 'width='+w+',height='+h+',left='+l+',top='+t);
+	location.href='/moim/info/infoList.jsp';
 </script>
 <%
 return;
@@ -318,16 +311,6 @@ function qnaWrite(){
 	 
 	window.open('/moim/noimg/qnaWrite.jsp?idx_info=<%=idx_info%>', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
-
-function qnaUpdate(){
-	var w=500;
-	var h=340;
-	 
-	var left=Math.ceil((window.screen.width-w)/2);
-	var top=Math.ceil((window.screen.height-h)/2);  
-	window.open('/moim/noimg/qnaUpdate.jsp?idx_info=<%=idx_info%>', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
-}
-
 </script>
 </head>
 
@@ -456,16 +439,13 @@ if(cp%pageSize==0)userGroup--;
 					</div>
 					<p><%=arr.get(i).getContent()%></p>
 					<div class="qnabutton">
-						<form name="qnaUpdate" action="/moim/noimg/qnaUpdate.jsp">
-							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-							<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
-							<input type="hidden" name="content" value="<%=arr.get(i).getContent() %>">
-							<input type="hidden" name="idx_info" value="<%=idx_info%>">
-							<input type="submit" value="수정">
-						</form>
-						
+						<input type="button" value="수정" 
+								onclick="javascript:window.open('/moim/noimg/qnaUpdate.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&content=<%=arr.get(i).getContent() %>', 
+								'qnaUpdate', 'width=500px, height=340px')">
+								
 						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
 							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
+							<input type="hidden" name="idx_info" value="<%=idx_info %>">
 							<input type="submit" value="삭제">
 						</form>
 					</div>
@@ -475,15 +455,16 @@ if(cp%pageSize==0)userGroup--;
 						<div class="rewrite">
 							<fieldset>
 							<legend>답변작성</legend>
-							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?subject=<%=arr.get(i).getSubject()%>&ref=<%=arr.get(i).getRef() %>">
+							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&ref=<%=arr.get(i).getRef() %>">
 							<table>
 								<tr> 
 									<td>
-										<textarea name="content" rows="3" cols="94"></textarea>
+										<textarea name="content" rows="3" cols="94" style="resize:none"></textarea>
 									</td>
 								</tr>
 								<tr>
-									<td>		
+									<td>	
+										<input type="hidden" name="idx_info" value="<%=idx_info %>">
 										<input type="submit" value="작성">
 									</td>
 								</tr>
@@ -507,7 +488,7 @@ if(cp%pageSize==0)userGroup--;
       <%
       if(userGroup!=0){
 		%>
-		<a href="moimContent.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a>
+		<a href="moimContent.jsp?idx=<%=idx_info %>&cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a>
 		<%
       }
       %>
@@ -515,7 +496,7 @@ if(cp%pageSize==0)userGroup--;
       for(int i=userGroup*pageSize+1;
 			i<=userGroup*pageSize+pageSize;i++){
 		%>
-		&nbsp;&nbsp;<a href="moimContent.jsp?cp=<%=i %>"><%=i %></a>&nbsp;&nbsp;
+		&nbsp;&nbsp;<a href="moimContent.jsp?idx=<%=idx_info %>&cp=<%=i %>"><%=i %></a>&nbsp;&nbsp;
 		<%
 		if(i==totalPage)break;
       }
@@ -523,7 +504,7 @@ if(cp%pageSize==0)userGroup--;
       <%
       if(userGroup!=((totalPage/pageSize)-(totalPage%pageSize==0?1:0))){
 		%>
-		<a href="moimContent.jsp?cp=<%=(userGroup+1)*pageSize+1 %>">&gt;&gt;</a>
+		<a href="moimContent.jsp?idx=<%=idx_info %>&cp=<%=(userGroup+1)*pageSize+1 %>">&gt;&gt;</a>
 		<%
       }
       %>

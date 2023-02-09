@@ -136,7 +136,7 @@ function pageBack(){
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea name="content" rows="10" cols="80" placeholder="내용을 입력해주세요."></textarea>
+						<textarea name="content" rows="10" cols="80" placeholder="내용을 입력해주세요." style="resize:none" ></textarea>
 					</td>
 				</tr>
 				<tr>

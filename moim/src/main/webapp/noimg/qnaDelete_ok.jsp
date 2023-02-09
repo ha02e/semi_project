@@ -20,6 +20,8 @@ return;
 
 
 <%
+String idx_info=request.getParameter("idx_info");
+
 int idx_d=mdto.getIdx();
 
 int result=mdao.delNoimg(idx_d);
@@ -28,6 +30,5 @@ String msg=result>0?"삭제가 완료되었습니다.":"삭제 실패하였습�
 
 <script>
 window.alert('<%=msg %>');
-location.href='/moim/info/moimContent.jsp';
-opener.location.reload();
+location.href='/moim/info/moimContent.jsp?idx=<%=idx_info%>';
 </script>
