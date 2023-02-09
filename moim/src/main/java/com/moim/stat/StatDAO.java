@@ -319,6 +319,25 @@ public class StatDAO {
 			   }catch(Exception e2) {}
 		   }
 	   }
+	   /**관리자 권한을 주는 메서드*/
+		public int giveMan(int idx) {
+			try {
+				conn=com.moim.db.MoimDB.getConn();
+				String sql="update moim_stat set stat=0 where idx=?";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, idx);
+				int count=ps.executeUpdate();
+				return count;
+			}catch(Exception e) {
+				e.printStackTrace();
+				return -1;
+			}finally {
+				try {
+					if(ps!=null)ps.close();
+					if(conn!=null)conn.close();
+				}catch(Exception e2) {}
+			}
+		}
 	
 }
 

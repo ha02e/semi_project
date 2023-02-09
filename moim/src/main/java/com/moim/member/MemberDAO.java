@@ -347,14 +347,12 @@ public class MemberDAO {
 			conn=com.moim.db.MoimDB.getConn();
 			int start=(cp-1)*ls+1;
 			int end=(cp*ls);
-//			String sql="select * from moim_stat where idx_member=?";
 			String sql="select * from(select rownum as rnum,a.*from(select * from moim_stat where idx_member=?)a)b where rnum>=? and rnum<=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx_member);
 			ps.setInt(2, start);
 			ps.setInt(3, end);
 			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
-//			ps.setInt(1, idx_member);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
@@ -743,51 +741,86 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
+	/**멤버 탈퇴 관련 메서드*/
+	public int dropMem(int idx) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="delete from moim_member where idx=?";
+			ps=conn.prepareStatement(sql);
+			int count=ps.executeUpdate();
+			return count;
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
 	
-
-//	/**모임게시판 조회 메서드 원본*/
-//	public ArrayList<NoimgDTO> getList(int idx_info,int category,int ls,int cp){
-//		try {
-//			conn=com.moim.db.MoimDB.getConn();
-//			int start=(cp-1)*ls+1;
-//			int end=(cp*ls);
-////			String sql="select * from moim_noimg where idx_info=? and category=?";
-//			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where idx_info=? and category=?)a)b where rnum>=? and rnum<=?";
-//			ps=conn.prepareStatement(sql);
-//			ArrayList<NoimgDTO> arr=new ArrayList<NoimgDTO>();
-//			ps.setInt(1, idx_info);
-//			ps.setInt(2, category);
-//			ps.setInt(3, start);
-//			ps.setInt(4, end);
-//			rs=ps.executeQuery();
-//			while(rs.next()) {
-//				int idx=rs.getInt("idx");
-//				int idx_member=rs.getInt("idx_member");
-//				String writer=rs.getString("writer");
-//				String subject=rs.getString("subject");
-//				String content=rs.getString("content");
-//				java.sql.Date writedate=rs.getDate("writedate");
-//				int ref=rs.getInt("ref");
-//				int lev=rs.getInt("lev");
-//				int sunbun=rs.getInt("sunbun");
-//				
-//				NoimgDTO dto=new NoimgDTO(idx, idx_member, idx_info, category, writer, subject, content, writedate, ref, lev, sunbun);
-//				arr.add(dto);	
-//			}
-//			return arr;
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}finally {
-//			try {
-//				if(rs!=null)rs.close();
-//				if(ps!=null)ps.close();
-//				if(conn!=null)conn.close();
-//			}catch(Exception e2) {}
-//		}
-//	}
-	/**집에서 할 것
-	 * 1.총 수에 제목,작성자 검색커리 추가
-	 * 2.총 게시글 리스트에도 추가*/
-	
+	/**가입중인 모임 가져오는 매서드*/
+	public ArrayList<StatDTO> getInMoim(int idx_member){
+		try {
+			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select * from moim_stat where idx_member=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx_member);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				int idx_info=rs.getInt("idx_info");
+				int stat=rs.getInt("stat");
+				int idx=rs.getInt("idx");
+				StatDTO dto=new StatDTO(idx, idx_member, idx_info, stat, null, null);
+				arr.add(dto);
+			}
+			return arr;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	/**내가 가입한 모임에서 관리자가 1명이고 내가 관리자인 모임을 가져오는 매서드*/
+	public ArrayList<Integer> getManStat(int idx){
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select moim_stat.idx_info from moim_stat,(select idx_info,stat from moim_stat group by stat,idx_info having count(*)>1)a where moim_stat.idx_info=a.idx_info and idx_member=? and moim_stat.stat=2";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
+			}catch(Exception e2) {}
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
