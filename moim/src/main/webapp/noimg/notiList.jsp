@@ -15,8 +15,8 @@ int idx_info=Integer.parseInt(sidx_info);
 
 //ndao.getList 매개변수 2)category 
 String scategory=request.getParameter("category");
-if(scategory==null||scategory==""){
-	scategory="1";
+if(scategory==null||scategory.equals("")){
+	scategory="0";
 }
 int category=Integer.parseInt(scategory);
 
@@ -175,13 +175,15 @@ function write_button(){
 				</tfoot>	
 				<tbody>
 				<%ArrayList<NoimgDTO> arr=ndao.getList(idx_info,category,listsize, cp);
-						for(int i=0;i<arr.size();i++){	
+						
 							if(arr==null||arr.size()==0){
 					%>
-					<tr id="td">
+					<tr>
 					<td colspan="3">등록된 게시글이 없습니다</td>
-					<%}else{ %>
-					
+					</tr>
+					<%}else{ 
+					for(int i=0;i<arr.size();i++){	%>
+					<tr>
 						<td id="idx"><%=arr.get(i).getIdx()%></td>
 						<td id="subject"><a href="notiContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject() %></a></td>
 						<td id="writedate"><%=arr.get(i).getWritedate() %></td>
