@@ -5,7 +5,7 @@
 <%@ page import="java.net.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.review.*" %>
-<jsp:useBean id="mdao" class="com.moim.member.MemberDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
 <jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
