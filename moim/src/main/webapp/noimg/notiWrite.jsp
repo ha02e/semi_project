@@ -54,6 +54,16 @@ table{
 	transition: 0.3s;
 }
 </style>
+<script>
+function validate(){
+	var content=document.getElementById("content");
+	if(content.value==""){
+		window.alert('내용을 입력해주세요.');
+		content.focus();
+		return false;
+	}
+}
+</script>
 </head>
 <body>
 <%@include file="/header.jsp" %>
@@ -61,7 +71,7 @@ table{
 <article>
 <h2>공지사항 작성</h2>
 <p>공지사항을 입력해주세요</p>
-<form name="writenoti" action="notiWrite_ok.jsp" method="post">
+<form name="writenoti" action="notiWrite_ok.jsp" method="post" onsubmit="return validate()">
 
 <div class="write_table">
 <table>
@@ -70,7 +80,7 @@ table{
 <td><input type="text" name="subject" size=" 100" placeholder="제목을 입력해주세요"></td>
 </tr>
 <tr>
-<td colspan="2"><textarea name="content" rows="15" cols="100" placeholder="내용을 입력해주세요"></textarea></td>
+<td colspan="2"><textarea name="content" id="content" rows="15" cols="100" placeholder="내용을 입력해주세요"></textarea></td>
 </tr>
 </table>
 </div>
