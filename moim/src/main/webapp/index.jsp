@@ -13,18 +13,15 @@ if(sidx_info==null||sidx_info==""){
 	sidx_info="0";
 }
 int idx_info=Integer.parseInt(sidx_info);
-
 //ndao.getList 매개변수 2)category 
 String scategory=request.getParameter("category");
 if(scategory==null||scategory==""){
 	scategory="1";
 }
 int category=Integer.parseInt(scategory);
-
 //1)2) 값 추후 활용을 위해 세션에 저장
 session.setAttribute("idx_info", idx_info);
 session.setAttribute("category", category);
-
 //ndao.getList 매개변수 3)ls
 int totalContent=ndao.getNotiTotalCnt(idx_info);
 int listsize=5;
@@ -36,7 +33,6 @@ if(scp==null||scp.equals("")){
 	scp="1";
 }
 int cp=Integer.parseInt(scp);
-
 %>
 
 <!DOCTYPE html>
@@ -52,7 +48,6 @@ int cp=Integer.parseInt(scp);
 .current_moim h2{
 	text-align:center;
 }
-
 .current_moim_box1{
 	align-content: center;
 	margin:0px auto;
@@ -60,15 +55,12 @@ int cp=Integer.parseInt(scp);
 	justify-content:space-around;
 	height:300px;
 }
-
 .notice{
 	height:300px;
 } 
-
 .notice h2{
 	text-align:center;
 }
-
 .notice #notice_tb{
 	justify-content:center;
 	align-items:center;
@@ -78,16 +70,12 @@ int cp=Integer.parseInt(scp);
 	margin: 0 auto;
 	padding: 10px 29px 10px 29px;
 }
-
 .notice #notice_tb td, th{
 	border-bottom:1px solid gray;
-
 }
-
 .notice table #idx{
 	width: 5%;
 }
-
 .notice table #subject{
 	width: 40%;
 	text-align: left;
@@ -95,19 +83,14 @@ int cp=Integer.parseInt(scp);
 	font-weight:bold;
 	
 }
-
 .notice table #writedate{
 	width: 10%;
 }
-
-
-
 .info Img{
 	width: 200px;
 	height:200px;
 	object-fit:cover;
 }
-
 .button{
 	text-align: right;
 	padding:0 10px 20px 0;
@@ -121,13 +104,10 @@ int cp=Integer.parseInt(scp);
 	background:#999999;
 	color:white;
 }
-
-
 .button input:hover{
 	background: #00cdac;
 	transition: 0.3s;
 }
-
 </style>
 </head>
 <body>
