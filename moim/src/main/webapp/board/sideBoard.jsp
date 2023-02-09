@@ -23,6 +23,11 @@
 ul{
 	list-style: none;
 }
+div img{
+	width:150px;
+	margin: auto;
+    display: block;
+}
 </style>
 </head>
 <%
@@ -32,7 +37,7 @@ String name2=(String)session.getAttribute("name");
 <body>
 <section>
 <div class="mymenu">
-	<img src="" alt="제목이미지">
+	<img src="/moim/img/myinfo.png" alt="마이페이지">
 	<ul>
 	<li><%=name2 %>님</li>
 	<li><a href="myInfo.jsp" class="item"><h3>내 정보 변경</h3></a></li>

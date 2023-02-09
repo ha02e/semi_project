@@ -6,6 +6,7 @@
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.review.*" %>
 <jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
+<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +38,9 @@ table td{
 table #hobby{
 	width:20%;
 }
+table #moimname{
+	width:20%;
+}
 
 table #subject{
 	width:40%;
@@ -56,9 +60,13 @@ Integer idx=(Integer)session.getAttribute("idx");
 if(idx==null){
 	idx=0;
 }
+Integer idx_member=(Integer)session.getAttribute("idx_member");
+if(idx_member==null){
+	idx_member=0;
+}
 
-int totalCnt=mdao.getTotal("moim_review", 21, 1);
-int listSize=2;
+int totalCnt=mdao.getTotal("moim_review", idx, 1);
+int listSize=5;
 int pageSize=5;
 
 String cp_s=request.getParameter("cp");
@@ -73,7 +81,7 @@ if(totalCnt%listSize==0)totalPage--;
 int userGroup=cp/pageSize;
 if(cp%pageSize==0)userGroup--;
 
-int totalCnt2=mdao.getTotal("moim_noimg", 21, 2);
+int totalCnt2=mdao.getTotal("moim_noimg", idx, 2);
 
 int totalPage2=totalCnt2/listSize+1;
 if(totalCnt2%listSize==0)totalPage2--;
@@ -97,7 +105,8 @@ if(totalCnt2%listSize==0)totalPage2--;
 			</thead>
 			<tbody>
 			<%
-			ArrayList<ReviewDTO> dto1=mdao.getMyReview(21,listSize,cp);
+			ReviewDTO dto = rdao.getContent(idx);
+			ArrayList<ReviewDTO> dto1=mdao.getMyReview(idx,listSize,cp);
 			if(dto1==null||dto1.size()==0){
 				%>
 				<tr id="id">
@@ -111,10 +120,10 @@ if(totalCnt2%listSize==0)totalPage2--;
 					%>
 					<tr>
 						<td id="hobby"><%=dto1.get(i).getHobby() %></td>
-						<td id="subject"><a href=""><%=dto1.get(i).getSubject() %></a></td>
+						<td id="subject"><a href="/moim/review/reviewContent.jsp?idx=<%=dto1.get(i).getIdx()%>"><%=dto1.get(i).getSubject() %></a></td>
 						<td id="writedate"><%=dto1.get(i).getWritedate() %></td>
 						<td id="update">
-						<input type="button" value="수정" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+						<input type="button" value="수정" onclick="javascript:location.href='/moim/review/updateReview.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						<input type="button" value="삭제" onclick="javascript:location.href='myWritingDelReview_ok.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						</td>
 					</tr>
@@ -161,7 +170,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 				<tbody>
 				<%
 				HashMap<Integer,String> map1=mdao.moimName();
-				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, 21,1,cp);
+				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, idx_member,listSize,cp);
 				if(dto2==null||dto2.size()==0){
 					%>
 					<tr>
@@ -174,9 +183,9 @@ if(totalCnt2%listSize==0)totalPage2--;
 					for(int i=0;i<dto2.size();i++){
 						%>
 						<tr>
-							<td><%=map1.get(dto2.get(i).getIdx_info())%></td>
-							<td><%=dto2.get(i).getSubject() %></td>
-							<td ><%=dto2.get(i).getWritedate() %></td>
+							<td id="moimname"><%=map1.get(dto2.get(i).getIdx_info())%></td>
+							<td id="subject"><%=dto2.get(i).getSubject() %></td>
+							<td id="writedate"><%=dto2.get(i).getWritedate() %></td>
 							<td id="update"><input type="submit" value="삭제" onclick="javascript:location.href='myWritingDelQna_ok.jsp?idx=<%=dto2.get(i).getIdx()%>'"></td>
 						</tr>
 						<%
@@ -194,7 +203,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 				%>
 				<%
 				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=21%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=idx%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
 					if(i==totalPage2)break;
 				}
 				%>
