@@ -83,7 +83,7 @@ public class NoimgDAO {
    }
    
    /**QnA 답변 작성 관련 메서드*/
-   public int setReNoimg(NoimgDTO dto) {
+   public int setReNoimg(NoimgDTO dto, String writer) {
       try {
          conn=com.moim.db.MoimDB.getConn();
          
@@ -93,7 +93,7 @@ public class NoimgDAO {
          ps=conn.prepareStatement(sql);
          ps.setInt(1, dto.getIdx_member());
          ps.setInt(2, dto.getIdx_info());
-         ps.setString(3, "루피"); //ps.setString(3, dto.getWriter());
+         ps.setString(3, writer);
          ps.setString(4, dto.getSubject());
          ps.setString(5, dto.getContent());
          ps.setInt(6, dto.getRef());
