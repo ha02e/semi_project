@@ -87,7 +87,7 @@ if(cp%pageSize==0)userGroup--;
 					<td>
 					<input type="submit" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 					<!-- idx,지역,모임이름 -->
-					<input type="submit" value="후기쓰기" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<input type="submit" value="후기쓰기" onclick="javascript:location.href='/review/writeReview.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 					</td>
 					</tr>
 					<%

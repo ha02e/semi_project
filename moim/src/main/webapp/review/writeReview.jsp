@@ -105,18 +105,9 @@ String moimname = request.getParameter("moimname");
 String local= request.getParameter("local");
 String hobby = request.getParameter("hobby");
 String writer= request.getParameter("writer");
-/* String subect= request.getParameter("subject"); */
-/* String content= request.getParameter("content"); */
 String img = request.getParameter("img");
 %>
 <body>
-<%-- <% 
-String detail="";
-if(request.getParameter("detail")!=null){
-detail= request.getParameter("detail");
-%> --%>
-
-
 	<%@include file="/header.jsp"%>
 	<form name="imgUpload" method="post" action="reviewImgUp_ok.jsp"
 	

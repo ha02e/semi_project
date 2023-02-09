@@ -114,7 +114,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 						<td id="subject"><a href=""><%=dto1.get(i).getSubject() %></a></td>
 						<td id="writedate"><%=dto1.get(i).getWritedate() %></td>
 						<td id="update">
-						<input type="button" value="수정" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+						<input type="button" value="수정" onclick="javascript:location.href='/review/updateReview.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						<input type="button" value="삭제" onclick="javascript:location.href='myWritingDelReview_ok.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						</td>
 					</tr>
