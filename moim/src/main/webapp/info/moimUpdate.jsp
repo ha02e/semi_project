@@ -148,7 +148,7 @@ String img=request.getParameter("img");
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea name="content" rows="10" cols="80"><%=dto.getContent() %></textarea>
+						<textarea name="content" rows="10" cols="80" style="resize:none" ><%=dto.getContent() %></textarea>
 					</td>
 				</tr>
 				<tr>

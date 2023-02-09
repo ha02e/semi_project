@@ -71,7 +71,7 @@ function popupclose(){
 	</tr>
 	<tr>
 		<td>
-			<textarea name="content" rows="3" cols="38"></textarea>
+			<textarea name="content" rows="3" cols="38" style="resize:none"></textarea>
 		</td>
 	</tr>
 </table>
