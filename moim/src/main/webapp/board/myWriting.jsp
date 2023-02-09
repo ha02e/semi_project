@@ -37,6 +37,9 @@ table td{
 table #hobby{
 	width:20%;
 }
+table #moimname{
+	width:20%;
+}
 
 table #subject{
 	width:40%;
@@ -114,7 +117,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 						<td id="subject"><a href=""><%=dto1.get(i).getSubject() %></a></td>
 						<td id="writedate"><%=dto1.get(i).getWritedate() %></td>
 						<td id="update">
-						<input type="button" value="수정" onclick="javascript:location.href='/review/review.jsp.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+						<input type="button" value="수정" onclick="javascript:location.href='updateReview.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						<input type="button" value="삭제" onclick="javascript:location.href='myWritingDelReview_ok.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						</td>
 					</tr>
@@ -174,9 +177,9 @@ if(totalCnt2%listSize==0)totalPage2--;
 					for(int i=0;i<dto2.size();i++){
 						%>
 						<tr>
-							<td><%=map1.get(dto2.get(i).getIdx_info())%></td>
-							<td><%=dto2.get(i).getSubject() %></td>
-							<td ><%=dto2.get(i).getWritedate() %></td>
+							<td id="moimname"><%=map1.get(dto2.get(i).getIdx_info())%></td>
+							<td id="subject"><%=dto2.get(i).getSubject() %></td>
+							<td id="writedate"><%=dto2.get(i).getWritedate() %></td>
 							<td id="update"><input type="submit" value="삭제" onclick="javascript:location.href='myWritingDelQna_ok.jsp?idx=<%=dto2.get(i).getIdx()%>'"></td>
 						</tr>
 						<%

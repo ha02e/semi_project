@@ -23,14 +23,22 @@ th{
 </style>
 </head>
 <%
+Integer idx_member=(Integer)session.getAttribute("idx_member");
+if(idx_member==null){
+	idx_member=0;
+}
+Integer idx=(Integer)session.getAttribute("idx");
+if(idx==null){
+	idx=0;
+}
 String cp_s=request.getParameter("cp");
 if(cp_s==null||cp_s.equals("")){
 	cp_s="1";
 }
 int cp=Integer.parseInt(cp_s);
 
-int totalCnt3=mdao.getTotal("moim_stat", 21, 3);
-int totalCnt4=mdao.getTotal("moim_stat", 21, 4);
+int totalCnt3=mdao.getTotal("moim_stat", idx_member, 3);
+int totalCnt4=mdao.getTotal("moim_stat", idx_member, 4);
 
 int listSize=5;
 int pageSize=5;
@@ -63,12 +71,12 @@ if(cp%pageSize==0)userGroup--;
 			</thead>
 			<tbody>
 			<%
-			ArrayList<StatDTO> dto3=mdao.getMyStat(21,listSize,cp);
-			ArrayList<InfoDTO> dto4=mdao.getNowMem(21);
+			ArrayList<StatDTO> dto3=mdao.getMyStat(idx_member,listSize,cp);
+			ArrayList<InfoDTO> dto4=mdao.getNowMem(idx);
 			HashMap<Integer,String> map2=mdao.moimCategory();
 			HashMap<Integer,String> map1=mdao.moimName();
-			ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, 21,listSize,cp);
-			ArrayList<StatDTO> dto1=mdao.getMyStat(21,listSize,cp);
+			ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, idx_member,listSize,cp);
+			ArrayList<StatDTO> dto1=mdao.getMyStat(idx_member,listSize,cp);
 			if(dto1==null||dto1.size()==0){
 				%>
 				<tr>
@@ -87,7 +95,7 @@ if(cp%pageSize==0)userGroup--;
 					<td>
 					<input type="submit" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 					<!-- idx,지역,모임이름 -->
-					<input type="submit" value="후기쓰기" onclick="javascript:location.href='/review/writeReview.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<input type="submit" value="후기쓰기" onclick="javascript:location.href='writeReview.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 					</td>
 					</tr>
 					<%
