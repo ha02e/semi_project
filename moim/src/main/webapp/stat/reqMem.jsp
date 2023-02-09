@@ -14,34 +14,14 @@ if(idx==null){
 	<%
 	return;
 }
-System.out.println(idx);
+
 %>
 
 <jsp:useBean id="mdto" class="com.moim.stat.StatDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao" class="com.moim.stat.StatDAO"></jsp:useBean>
 
-<%
-//참여하기 유효성검사(!!수정중!!)
-int idx_member=idx;
-StatDTO dto=mdao.getUserStat(idx_member);
-System.out.println(dto.getStat());
-if(dto.getStat()==0 || dto.getStat()==1){
-	%>
-	<script>
-	window.alert('이미 참여중인 모임입니다.');
-	window.self.close();
-	</script>
-	<%
-}else{
-	%>
-	<script>
-	window.alert('이미 신청하셨습니다. 관리자가 수락하면 가입 완료됩니다.');
-	window.self.close();
-	</script>
-	<%
-}
-%>
+
 
 <!DOCTYPE html>
 <html>
@@ -83,6 +63,22 @@ function popupclose(){
 }
 </script>
 </head>
+<%
+String idx_s=request.getParameter("idx_info");
+int idx_info=Integer.parseInt(idx_s);
+
+StatDTO dto_s=mdao.getUserStat(idx,idx_info);
+if(dto_s==null){ //신청하지 않은 상태
+	
+}else if(dto_s.getStat()==2){ //신청한 상태
+	%>
+	<script>
+		window.alert('이미 신청하셨습니다. 관리자가 수락하면 가입 완료됩니다.');
+		window.self.close();
+	</script>
+	<%
+}
+%>
 
 <body>
 <h2>모임 가입하기</h2>
@@ -94,12 +90,13 @@ function popupclose(){
 	</tr>
 	<tr>
 		<td>
-		<textarea name="contentApply" rows="3" cols="36" maxlength="50">50자 이내로 입력해주세요.</textarea>
+		<textarea name="contentApply" rows="3" cols="36" maxlength="50" placeholder="50자 이내로 입력해주세요."></textarea>
 		</td>
 	</tr>
 </table>
 <div>
 	<input type="button" value="취소하기" onclick="popupclose()">
+	<input type="hidden" name="idx_info" value="<%=idx_info%>">
 		<input type="submit" value="신청하기" class="abutton">
 </div>
 </form>

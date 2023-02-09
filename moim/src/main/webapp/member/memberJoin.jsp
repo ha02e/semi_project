@@ -6,41 +6,79 @@
 <meta charset="UTF-8">
 <title>memberJoin</title>
 <style>
-h4 {
-	text-align: center;
+
+section{
+	width:800px;
+	margin:0 auto;
+}
+section h2{
+	margin:40px 0 20px 0;
 }
 
-fieldset{
-	width:550px;
-	margin:0px auto;
+section .memJoinWrite table{
+	width:800px;
+	border-top:3px solid #333333;
+	border-bottom:3px solid #333333;
+	padding:10px 20px 20px 20px;
+	background:#f6f6f6;
 }
- 
-fieldset label{
-	width: 150px;
-	float:left;
+section .memJoinWrite table th{
+	text-align:left;
+	font-size:18px;
+	padding:14px 10px 14px 0;
 }
-
-fieldset ul{
-	/*text-align:center;*/
-	/*margin:0;*/
-	/*padding:0;*/
-}
-
-fieldset li{
-	list-style-type:none;	
+section .memJoinWrite table td{
+	padding:4px 0;
 }
 
-fieldset span{
+.memJoinWrite table tr{
+	margin:30px 0;
+	border-top:1px solid #999999;
+}
+
+select{
+	width: 100px; 
+	padding: 6px 18px; 
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	font-size: 14px;
+}
+
+input[type="text"] {
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	padding:8px;
+}
+
+input[type="password"] {
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	padding:8px;
+}
+
+span{
 	font-size:12px;
 }
 
-fieldset div{
-	text-align:center;
-}
-
 .button{
-	width:300px;
-	
+	text-align: center;
+	padding:20px 0 40px 0;
+}
+.button input{
+	border:0;
+	outline:none;
+	width:160px;
+	height:40px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+.button input[type="submit"]{
+	background:#333333;
+}
+.button input:hover{
+	background: #00cdac;
+	transition: 0.3s;
 }
 </style>
 
@@ -53,29 +91,78 @@ fieldset div{
 		var t=Math.ceil((window.screen.height-h)/2);
 		window.open('idCheck.jsp', 'idcheck', 'width='+w+',height='+h+',left='+l+',top='+t);
 	}
-	function pwd_check(){
-		var pwd1=document.getElementById('pwd').value;
-		var pwd2=document.getElementById('pwd_confirm').value;
-		var msg=document.getElementById('pwd_error');
-		
-		if(pwd1!=pwd2){
-			msg.innerHTML="비밀번호 불일치";
-			pwd_error.style.color="red";
-		}else{
-			msg.innerHTML="일치";
-			pwd_error.style.color="green";}
+
+	/**비밀번호*/
+	function pwdCheck(){
+	var pwd1=document.getElementById("pwd1");
+		var pwd2=document.getElementById("pwd2");
+	var pwd_error=document.getElementById("pwd_error");
+	if(pwd1.value!=pwd2.value){
+		pwd_error.innerHTML="비밀번호 불일치";
+		pwd_error.style.color="red";
+		pwd2.focus();
+		return false;
+	}else{
+		pwd_error.innerHTML="일치";
+		pwd_error.style.color="green";
+	}
 	}
 	
-	/* function name_check(){
-		var name=document.getElementById('name').value;
-		var msg=document.getElementById('name_error');
-		const regex=/[a-zA-Z가-힣]/;
+	
+	/**아이디, 이름, 이메일, 나이 유효성 검사*/
+	function validate(){
+		var id=document.getElementById("id");
+		var name=document.getElementById("name");
+		var email=document.getElementById("email");
+		var age=document.getElementById("age");
 		
-		if(name!=regex){
-			msg.innerHTML="한글과 영문 대/소문자를 사용하세요.(특수기호, 공백 사용 불가)";
+		var id_error=document.getElementById("id_error");
+		var name_error=document.getElementById("name_error");
+		var email_error=document.getElementById("email_error");
+		var age_error=document.getElementById("age_error");
+	
+		
+		/**아이디*/
+		if(id.value==""){
+			id_error.innerHTML="아이디 중복검사를 해주세요";
+			id_error.style.color="red";
+			id.focus();
+			return false;
 		}
+		
+		/**이름*/
+		if(name.value==""){
+			name_error.innerHTML="이름을 입력해주세요";
+			name_error.style.color="red";
+			name.focus();
+			return false;
+		}else{
+			name_error.innerHTML="";
+		}
+		
+		/**이메일*/
+		if(email.value==""){
+			email_error.innerHTML="이메일을 입력해주세요";
+			email_error.style.color="red";
+			email.focus();
+			return false;
+		}else{
+			email_error.innerHTML="";
+		}
+		
+		
+		/**나이*/
+		if(!(1<=age.value&&age.value<=100)){
+			age_error.innerHTML="숫자만 입력 가능합니다";
+			age_error.style.color="red";
+			age.focus();
+			age.value='';
+			return false;
+		}else{
+			age_error.innerHTML='';
+		}
+		
 	}
- */
 	
 </script>
 </head>
@@ -83,36 +170,52 @@ fieldset div{
 <%@include file="/header.jsp"%>
 	<section>
 		<article>
-				<h4>회원가입</h4>
-				<fieldset>
-				<ul>
-					<form name="memJoin" action="memberJoin_ok.jsp" method="post">
-						<li><label>아이디</label></br>
-							<input type="text" name="id" readonly>
-							<input type="button" onclick="idcheck();" value="ID 중복 검사"></li>
-							<span id="id_error">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span>
-							
-						<li><label>비밀번호</label></br> 
-							<input type="password" name="pwd" id="pwd" ></li>
-							<span>8~16자 영문 대/소문자, 특수문자를 사용하세요</span>
+				<h2>회원가입</h2>
+				<div class="memJoinForm">
+					<div class="memJoinWrite">
+					<form name="memJoin" action="memberJoin_ok.jsp" method="post" onsubmit="return validate()">
+					<table>
+						<tr>
+							<th>아이디</th>
+							<td><input type="text" name="id"  id="id" readonly>
+							<input type="button" onclick="idcheck();" value="ID 중복 검사"></br>
+							<span id="id_error">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span></td>
+						</tr>
 						
+						<tr>
+							<th>비밀번호</th>
+							<td><input type="password" name="pwd" id="pwd1" ></br>
+							<span>8~16자 영문 대/소문자, 특수문자만 사용 가능합니다</span></td>
+						</tr>
 						
-						<li><label>비밀번호 재확인</label></br> 
-							<input type="password" name="pwd_confirm" id="pwd_confirm" onchange="pwd_check()"></li>
-							<span id="pwd_error"></span>
+						<tr>
+							<th>비밀번호 재확인</th>
+							<td><input type="password" name="pwd2" id="pwd2" onchange="pwdCheck()" ></br>
+							<span id="pwd_error"></span></td>
+						</tr>
 						
-							
-						<li><label>이름</label></br> 
-							<input type="text" name="name" "></li>
-							
-						<li><label>본인 확인 이메일</label></br> 
-							<input type="text" name="email"></li>
+						<tr>
+							<th>이름</th>
+							<td><input type="text" name="name" id="name" ></br>
+							<span id="name_error"></span></td>
+						</tr>
 						
-						<li><label>나이</label></br>	
-						<input type="text" name="age"></li>
+						<tr>
+							<th>본인 확인 이메일</th>
+							<td><input type="text" name="email" id="email" ></br>
+							<span id="email_error"></span>
+							</td>
+						</tr>
 						
+						<tr>
+							<th>나이</th>
+							<td><input type="text" name="age" id="age" ></br>
+							<span id="age_error"></span></td>
+						</tr>
 						
-						<li><label>지역</label></br> 
+						<tr>
+							<th>지역</th>
+							<td>
 							<select name="local">
 								<option value="서울" selected>서울</option>
 								<option value="경기">경기</option>
@@ -131,9 +234,13 @@ fieldset div{
 								<option value="울산">울산</option>
 								<option value="부산">부산</option>
 								<option value="제주">제주</option>
-						</select></li>
-						
-						<li><label>관심사</label></br> 
+							</select>
+							</td>
+						</tr>
+							
+						<tr>
+							<th>관심사</th>
+							<td>
 							<select name="hobby">
 								<option value="운동" selected>운동</option>
 								<option value="게임">게임</option>
@@ -143,14 +250,16 @@ fieldset div{
 								<option value="음악">음악</option>
 								<option value="봉사">봉사</option>
 								<option value="댄스">댄스</option>
-						</select></li>
-							
-						<div>
-							<input type="submit" value="회원가입" class="button">
-						</div>
-					</form>
-				</ul>
-				</fieldset>
+							</select>
+							</td>
+						</tr>	
+					</table>	
+				<div class="button">
+					<input type="submit" value="회원가입">
+				</div>
+				</form>
+				</div>
+			</div>
 		</article>
 	</section>
 <%@include file="/footer.jsp"%>

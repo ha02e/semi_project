@@ -5,6 +5,7 @@
 <%
 String id=request.getParameter("id");
 boolean result=mdao.checkId(id);
+
 if(result){
 %>
 <script>

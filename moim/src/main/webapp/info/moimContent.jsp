@@ -3,8 +3,22 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.info.*" %>
+<%@ page import="com.moim.stat.*" %>
 
-<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO" scope="session"></jsp:useBean>
+<%
+Integer idx_member = (Integer) session.getAttribute("idx");
+if (idx_member==null) {
+%>
+<script>
+	window.alert('로그인 후 이용가능합니다');
+	window.self.close();
+</script>
+<%
+return;
+}
+%> 
+
+<jsp:useBean id="mdto" class="com.moim.noimg.NoimgDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao" class="com.moim.noimg.NoimgDAO"></jsp:useBean>
 
@@ -12,7 +26,9 @@
 <jsp:setProperty property="*" name="mdto"/>
 <jsp:useBean id="mdao2" class="com.moim.info.InfoDAO" scope="session"></jsp:useBean>
 
-
+<jsp:useBean id="mdto3" class="com.moim.stat.StatDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="mdto3"/>
+<jsp:useBean id="mdao3" class="com.moim.stat.StatDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -104,6 +120,11 @@ section .button div{
     font-size:14px;
 }
 
+.nolist{
+	text-align:center;
+	padding:10px 20px;
+	border:1px solid #e8e8e8;
+}
 .qnabbs-title{
 	list-style: none;
 	width:800px;
@@ -256,9 +277,11 @@ input[id*="click"]:checked + label + div{
 }
 </style>
 <%
-//int idx=mdto.getIdx();
-%>
-		
+	String idx_s=request.getParameter("idx");
+	int idx=Integer.parseInt(idx_s);
+	InfoDTO dto=mdao2.getInfo(idx);
+	int idx_info=idx;
+%>	
 <script>
 function moimApply(){
 	var w=500;
@@ -268,49 +291,33 @@ function moimApply(){
 	var left=Math.ceil((window.screen.width-w)/2);
 	var top=Math.ceil((window.screen.height-h)/2); 
 	 
-	window.open('/moim/stat/reqMem.jsp', 'reqMem', 'width='+w+', height='+h+', left='+left+', top='+top);
+	window.open('/moim/stat/reqMem.jsp?idx_info=<%=idx_info%>', 'reqMem', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
 function moimOut(){
 	
 	var msg=confirm("모임에서 탈퇴하시겠습니까?");
 	if(msg){
-		window.open('/moim/stat/delMem.jsp', 'delMem', 'width=400px, height=300px')
+		window.open('/moim/stat/delMemCon_ok.jsp?idx_info=<%=idx_info%>', 'delMemCon', 'width=500px, height=340px')
 	}else{
 	}
 }
 function qnaWrite(){
-	var w=50;
+	var w=500;
 	var h=340;
 	 
 	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
 	var left=Math.ceil((window.screen.width-w)/2);
 	var top=Math.ceil((window.screen.height-h)/2);  
 	 
-	window.open('/moim/noimg/qnaWrite.jsp', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
-}
-
-function qnaUpdate(){
-	var w=500;
-	var h=340;
-	 
-	var left=Math.ceil((window.screen.width-w)/2);
-	var top=Math.ceil((window.screen.height-h)/2);  
-	window.open('/moim/noimg/qnaUpdate.jsp', 'qnaUpdate', 'width='+w+', height='+h+', left='+left+', top='+top);
+	window.open('/moim/noimg/qnaWrite.jsp?idx_info=<%=idx_info%>', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
 </script>
 </head>
-<%
 
-
-
-int idx=15;  //int idx=Integer.parseInt(idx_s);
-InfoDTO dto=mdao2.getInfo(idx);
-%>
 <%
 int listSize=5;
 int pageSize=5;
 
-int idx_info=0;
 int totalCnt=mdao.getQnaTotalCnt(idx_info);
 int totalPage=(totalCnt/listSize)+1;
 if(totalCnt%listSize==0)totalPage--;
@@ -350,9 +357,26 @@ if(cp%pageSize==0)userGroup--;
             </tr>
          </table>
       <div class="button">
-         <div><a href="/moim/board/myMoim.jsp" class="moim-btn">채팅하러 가기</a></div>
-         <div><a href="javascript:moimApply()" class="moim-btn">참여하기</a></div>
-         <div><a href="javascript:moimOut()" class="moim-btn">탈퇴하기</a></div>
+      <%
+      StatDTO dto_s=mdao3.getUserStat(idx_member,idx_info);
+
+    	if(dto_s==null){  //모임에 신청or참여되어 있지 않은 상태
+    		%>
+    		<div id="apply-btn"><a href="javascript:moimApply()" class="moim-btn">참여하기</a></div>
+    		<%
+    	}else{ 
+    		if(dto_s.getStat()==0||dto_s.getStat()==1){
+    			%>
+    			<div id="chat-btn"><a href="/moim/board/myMoim.jsp" class="moim-btn">채팅하러 가기</a></div>
+    			<div id="out-btn"><a href="javascript:moimOut()" class="moim-btn">탈퇴하기</a></div>
+    			<%
+    		}else{
+        		%>
+        		<div id="apply-btn"><a href="javascript:moimApply()" class="moim-btn">참여하기</a></div>
+        		<%
+    		}	
+    	}
+      %>
       </div>
       </div>
 </article>
@@ -374,7 +398,7 @@ if(cp%pageSize==0)userGroup--;
 		ArrayList<NoimgDTO> arr=mdao.getQnaList(idx_info,listSize,cp);
 		if(arr==null || arr.size()==0){
 			%>
-			<span>모임에 대해 궁금한 내용을 남겨주세요.</span>
+			<div class="nolist">모임에 대해 궁금한 내용을 남겨주세요 :)</div>
 			<%
 		}else{
 			for(int i=0;i<arr.size();i++){
@@ -415,16 +439,21 @@ if(cp%pageSize==0)userGroup--;
 					</div>
 					<p><%=arr.get(i).getContent()%></p>
 					<div class="qnabutton">
-						<form name="qnaUpdate" action="/moim/noimg/qnaUpdate.jsp">
-							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-							<input type="hidden" name="subject" value="<%=arr.get(i).getSubject() %>">
-							<input type="hidden" name="content" value="<%=arr.get(i).getContent() %>">
-							<input type="submit" value="수정">
-						</form>
-						
-						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
-							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-							<input type="submit" value="삭제">
+						<input type="button" value="수정" 
+								onclick="javascript:window.open('/moim/noimg/qnaUpdate.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&content=<%=arr.get(i).getContent() %>', 
+								'qnaUpdate', 'width=500px, height=340px')">
+								
+						<form name="qnaDelete">
+						<script>
+							function qnaDel(){
+								var msg=confirm("문의글을 정말 삭제하시겠습니까??");
+								if(msg){
+									window.open('/moim/noimg/qnaDelete_ok.jsp?idx=<%=arr.get(i).getIdx()%>', 'qnaDel', 'width=500px, height=340px')
+								}else{
+								}
+							}
+						</script>
+							<input type="button" value="삭제" onclick="javascript:qnaDel()">
 						</form>
 					</div>
 					<%
@@ -437,7 +466,7 @@ if(cp%pageSize==0)userGroup--;
 							<table>
 								<tr> 
 									<td>
-										<textarea name="content" rows="3" cols="94"></textarea>
+										<textarea name="content" rows="3" cols="94" style="resize:none"></textarea>
 									</td>
 								</tr>
 								<tr>

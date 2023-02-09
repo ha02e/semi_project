@@ -7,17 +7,17 @@
 <title>Insert title here</title>
 <style>
 .mymenu {
-	position:sticky;
+	position:flex;
     display: block;
     width: 200px;
-    height: 350px;
+    height: 500px;
     background-color: gray;
     color: black;
     border-radius: 20px;
     padding: 10px;
     box-sizing: 500px;
 	float:left;
-	margin:left;
+	margin:40px 30px 0 30px;
 	
 }
 ul{

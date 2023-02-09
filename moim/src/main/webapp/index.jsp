@@ -194,7 +194,7 @@ int cp=Integer.parseInt(scp);
 	</tbody>
 </table>
 </div>
-<div class="button"><input type="button" value="더보기 >" onclick="javascript:'/moim/noimg/notiList.jsp?idx_info=<%=session.getAttribute("idx_info")%>'"></div>
+<div class="button"><input type="button" value="더보기 >" onclick="javascript:location.href='/moim/noimg/notiList.jsp?idx_info=<%=session.getAttribute("idx_info")%>'"></div>
 </section>
 <%@include file="footer.jsp" %>
 </body>
