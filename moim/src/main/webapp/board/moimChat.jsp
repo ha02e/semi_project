@@ -26,11 +26,20 @@ form{
 </style>
 </head>
 <%
+String keyword = "";
+if (request.getParameter("keyword") != null) {
+	keyword = request.getParameter("keyword");
+}
+String cul="전체";
+if(request.getParameter("cul")!=null){
+	cul=request.getParameter("cul");
+}
+
 
 int idx=21;
 MemberDTO dto=mdao.getMem(idx);
 
-int totalCnt=mdao.getTotal("moim_noimg", 0, 5);
+
 
 int listSize=10;
 int pageSize=5;
@@ -40,6 +49,7 @@ if(cp_s==null||cp_s.equals("")){
 	cp_s="1";
 }
 int cp=Integer.parseInt(cp_s);
+int totalCnt=mdao.searchTotal(0, 3, listSize, cp, cul, keyword);
 
 int totalPage=totalCnt/listSize+1;
 if(totalCnt%listSize==0)totalPage--;
@@ -63,7 +73,7 @@ if(cp%pageSize==0)userGroup--;
 		</thead>
 		<tbody>
 		<%
-		ArrayList<NoimgDTO> dto2=mdao.getList(0, 3, listSize, cp);
+		ArrayList<NoimgDTO> dto2=mdao.getList(0, 3, listSize, cp,cul,keyword);
 		if(dto2==null||dto2.size()==0){
 			%>
 			<tr>
@@ -96,18 +106,18 @@ if(cp%pageSize==0)userGroup--;
 			<td colspan="4" align="center">
 			<%
 			if(userGroup!=0){
-				%><a href="moimChat.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+				%><a href="moimChat.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&cul=<%=cul%>&keyword=<%=keyword%>">&lt;&lt;</a><%
 			}
 			%>
 			<%
 			for(int i=userGroup*pageSize+1;i<userGroup*pageSize+pageSize;i++){
-				%>&nbsp;&nbsp;<a href="moimChat.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+				%>&nbsp;&nbsp;<a href="moimChat.jsp?cp=<%=i%>&cul=<%=cul%>&keyword=<%=keyword%>"><%=i %></a>&nbsp;&nbsp;<%
 				if(i==totalPage)break;
 			}
 			%>	
 			<%
 			if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
-				%><a href="moimChat.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+				%><a href="moimChat.jsp?cp=<%=(userGroup+1)*pageSize+1%>&cul=<%=cul%>&keyword=<%=keyword%>">&gt;&gt;</a><%
 			}
 			%>
 		</tr>
@@ -120,8 +130,8 @@ if(cp%pageSize==0)userGroup--;
 		<div>
 		<select name="cul">
 		<option value="전체" selected>전체</option>
-		<option value="writer">작성자</option>
-		<option value="subject">제목</option>
+		<option value="작성자">작성자</option>
+		<option value="제목">제목</option>
 		</select>
 		<input type="text" name="keyword">
 		<input type="submit" value="검색">
