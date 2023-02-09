@@ -9,54 +9,93 @@
 <style>
 
 body{
-	width:1280px;
-	margin:0px auto;
+	margin:0;
+	padding:0;
 }
-
+section{
+	width:1280;
+	margin:0 auto;
+}
+.id_bg{
+	background: #F2F2F2;
+	width:100vw;
+	height:30px;
+	padding:8px 0 1px;
+}
 .id{
+	width:960px;
+	margin:0px auto;
 	text-align:right;
-	font-weight:bold;
-	margin:20px 30px;
+	font-size:14px;
+}
+.id a{
+	color:#1E1C26;
+	text-decoration:none;
+}
+.id a:hover{
+	color:#1E1C26;
+	font-weight: 600;
 }
 
 .navbar{
-	height: 80px;
-	border-top: 2px solid gray;
-	border-bottom: 2px solid gray;
-	display:flex;
-	align-items:center;
+	width:100vw;
+	border-bottom: 1px solid #A6A6A6;
 }
 
-
 .navbar_ul{
+	width:1280px;
+	margin:0 auto;
 	display:flex;
+	justify-content: space-around;
 	align-items:center;
+	height: 70px;
 }
 
 .navbar_ul li { 
 	list-style-type:none;
-	width: 240px;
+	width: 192px;
 	text-align:center;
-	display: inline;
-	font-weight:bold;
-	padding:2px 8px;
+	display:inline-block;
+	font-weight:600;
+	color:#0D0D0D;
+	font-size: 17px;
 }
 
+.navbar_ul .logo{
+	height:74px;
+}
 .navbar_ul Img{
-	width:81px;
-	height:62px;
-	float:left;
-	margin-left:20px;
+	width:106px;
+	height:70px;
+	padding-top:8px;
 }
 
-a{	
+.navbar_ul a{	
 	color:inherit;
 	text-decoration:none;
+	position:relative;
+	padding: 4px;
 }
-
-a:hover{
-	color:gray;
-	text-decoration:underline;
+.navbar_ul a:hover{
+	color:#30BF97;
+}
+.navbar_ul a::after{
+	content:"";
+	position:absolute;
+	bottom:0;
+	left:50%;
+	transform:translateX(-50%);
+	width: 0%;
+	height:3px;	
+	background:#8BD9CA;
+	transition:all 0.3s ease-out;
+}
+.navbar_ul a:hover::after{
+	width: 100%;
+	color:#30BF97;
+}
+.logo a:hover::after{
+	width: 0%;
 }
 </style>
 
@@ -82,6 +121,7 @@ function login_popup(){
 
 
 <body>
+<div class="id_bg">
 <%
 String name=(String)session.getAttribute("name");
 if(name!=null){
@@ -90,13 +130,14 @@ if(name!=null){
 <a href="/moim/board/myInfo.jsp">마이페이지&nbsp;&nbsp;&nbsp;&nbsp;</a>
 <a href="/moim/member/logout.jsp">로그아웃</a></div>
 <%}else{ %>
-<div class="id"><a href="javascript:login_popup()">로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="id"><a href="javascript:login_popup()">로그인</a>&nbsp;&nbsp;
 <a href="/moim/member/memberJoin.jsp">회원가입</a></div>
 <%} %>
+</div>
 
 <nav class="navbar">
 <ul class="navbar_ul">
-<li><a href="/moim/index.jsp"><img src="/moim/img/logo.png" alt="로고"></a></li>
+<li class="logo"><a href="/moim/index.jsp"><img src="/moim/img/logo.png" alt="로고"></a></li>
 <li><a href="/moim/company.jsp">회사소개</a></li>
 <li><a href="/moim/info/infoList.jsp">모임하기</a></li>
 <li><a href="/moim/review/reviewList.jsp">후기보기</a></li>
