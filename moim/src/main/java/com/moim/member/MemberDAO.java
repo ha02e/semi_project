@@ -462,7 +462,6 @@ public class MemberDAO {
 			conn=com.moim.db.MoimDB.getConn();
 			int start=(cp-1)*ls+1;
 			int end=(cp*ls);
-//			String sql="select * from moim_noimg where idx_info=? and category=?";
 			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where ";
 			if(cul.equals("전체")) {
 			sql=sql+" idx_info=? and category=?order by ref desc,sunbun asc)a)b where rnum>=? and rnum<=? ";
@@ -760,50 +759,8 @@ public class MemberDAO {
 		}
 	}
 	
-	/**가입중인 모임 가져오는 매서드*/
-	public ArrayList<StatDTO> getInMoim(int idx_member){
-		try {
-			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
-			conn=com.moim.db.MoimDB.getConn();
-			String sql="select * from moim_stat where idx_member=?";
-			ps=conn.prepareStatement(sql);
-			ps.setInt(1, idx_member);
-			rs=ps.executeQuery();
-			while(rs.next()) {
-				int idx_info=rs.getInt("idx_info");
-				int stat=rs.getInt("stat");
-				int idx=rs.getInt("idx");
-				StatDTO dto=new StatDTO(idx, idx_member, idx_info, stat, null, null);
-				arr.add(dto);
-			}
-			return arr;
-		}catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}finally {
-			try {
-				if(rs!=null)rs.close();
-				if(ps!=null)ps.close();
-				if(conn!=null)conn.close();
-			}catch(Exception e2) {}
-		}
-	}
-	/**내가 가입한 모임에서 관리자가 1명이고 내가 관리자인 모임을 가져오는 매서드*/
-	public ArrayList<Integer> getManStat(int idx){
-		try {
-			conn=com.moim.db.MoimDB.getConn();
-			String sql="select moim_stat.idx_info from moim_stat,(select idx_info,stat from moim_stat group by stat,idx_info having count(*)>1)a where moim_stat.idx_info=a.idx_info and idx_member=? and moim_stat.stat=2";
-			ps=conn.prepareStatement(sql);
-			ps.setInt(1, idx);
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				
-			}catch(Exception e2) {}
-		}
-	}
+	
+	
 }
 
 
