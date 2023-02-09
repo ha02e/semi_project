@@ -133,7 +133,7 @@ int cp=Integer.parseInt(scp);
 <body>
 <%@include file="header.jsp" %>
 <section class="mainImg">
-<a href="/moim/noimg/notiList.jsp"><img src="/moim/img/banner_main.jpg" alt="매인 배너"></a>
+<a href="/moim/review/reviewList.jsp"><img src="/moim/img/banner_main.jpg" alt="매인 배너"></a>
 </section>
 
 <section class="current_moim">
@@ -146,16 +146,16 @@ int cp=Integer.parseInt(scp);
 			%><h2>현재 모집중인 모임이 없습니다</h2>
 		<%
 		}else{
-		for(int i=0;i<needarr.size()&&i<6;i++){ %>
+		for(int i=0;i<needarr.size()&&i<4;i++){ %>
 			<div id="current_moim_box2">
 			<div class="info">
 				<img alt="needimg<%=i%>" src="/moim/userimg/<%=needarr.get(i).getImg()%>">
 			</div>
 			<div class="info">
-				<a href="infoContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a>
+				<a href="/moim/info/moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a>
 			</div>
 			<div class="info">
-			<%=needarr.get(i).getLocal() %>	
+			<%=needarr.get(i).getLocal() %>
 			</div>
 			<div class="info">
 			<%=needarr.get(i).getHobby() %>
