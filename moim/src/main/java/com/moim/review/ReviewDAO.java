@@ -306,25 +306,17 @@ public class ReviewDAO {
 
 	/** 이미지 관련 등록 관련 메서드 */
 
-	public int addImage(MultipartRequest mr/* , String id */) {
+	public int addImage(MultipartRequest mr, int idx_member) {
 		try {
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
 			ps = conn.prepareStatement(sql);
-			/*
-			 * int idx_member = 0;
-			 * 
-			 * if (mr.getParameter("idx_member") != null &&
-			 * !(mr.getParameter("idx_member").equals(""))) { idx_member =
-			 * Integer.parseInt(mr.getParameter("idx_member")); }
-			 */
 
 			String idx_member_s = mr.getParameter("idx_member");
 			if (idx_member_s == null || idx_member_s.equals("")) {
 				idx_member_s = "0";
 			}
-			int idx_member = Integer.parseInt(idx_member_s);
-
+		
 			String moimname = mr.getParameter("moimname");
 			String local = mr.getParameter("local");
 			String hobby = mr.getParameter("hobby");
