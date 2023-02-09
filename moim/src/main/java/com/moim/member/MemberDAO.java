@@ -400,10 +400,6 @@ public class MemberDAO {
 				sql=sql+"and stat=0";
 				ps=conn.prepareStatement(sql);
 			}
-//			else if(table.equals("moim_noimg")&&cul==5) {
-//				sql=sql+"and category=3";
-//				ps=conn.prepareStatement(sql);
-//			}
 			ps=conn.prepareStatement(sql);
 			int count=0;
 
