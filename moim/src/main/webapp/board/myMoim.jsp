@@ -6,7 +6,7 @@
 <%@ page import="com.moim.stat.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.info.*" %>
-<jsp:useBean id="mdao" class="com.moim.member.MemberDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
