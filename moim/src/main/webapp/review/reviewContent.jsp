@@ -198,15 +198,12 @@ input[id*="click"]:checked+label+div {
 	%>
 	<%@include file="/header.jsp"%>
 
-	<h2>
-		제목 :
-		<%=dto.getSubject()%></h2>
 	<input type="hidden" name="idx" value="<%=idx%>">
 	<section>
 		<article>
 			<h2>
-				모임이름 :
-				<%=dto.getMoimname()%></h2>
+				제목 :
+				<%=dto.getSubject()%></h2>
 
 			<div class="moiminfo">
 				<div class="moimContent moimimg">

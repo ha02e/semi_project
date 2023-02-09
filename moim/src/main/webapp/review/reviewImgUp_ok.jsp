@@ -19,15 +19,17 @@ String content = mr.getParameter("content");
 String subject = mr.getParameter("subject");
 
 boolean boo = true;
-
 String msg = "작성 성공?";
+
+Integer idx_member = (Integer)session.getAttribute("idx");
+
 
 if (moimname == null || moimname.equals("null") || local == null || local.equals("null") || writer == null
 		|| writer.equals("") || content == null || content.equals("") || subject == null || subject.equals("")) {
 	boo = false;
 }
 if (boo == true) {
-	int result = rdao.addImage(mr);
+	int result = rdao.addImage(mr, idx_member);
 	msg = result > 0 ? "글 작성 성공" : "글 작성 실패";
 } else {
 	msg = "다시 작성하세요";
