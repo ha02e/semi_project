@@ -5,7 +5,8 @@
 <%@ page import="java.net.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.review.*" %>
-<jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.member.MemberDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,9 +60,13 @@ Integer idx=(Integer)session.getAttribute("idx");
 if(idx==null){
 	idx=0;
 }
+Integer idx_member=(Integer)session.getAttribute("idx_member");
+if(idx_member==null){
+	idx_member=0;
+}
 
 int totalCnt=mdao.getTotal("moim_review", idx, 1);
-int listSize=2;
+int listSize=5;
 int pageSize=5;
 
 String cp_s=request.getParameter("cp");
@@ -100,6 +105,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 			</thead>
 			<tbody>
 			<%
+			ReviewDTO dto = rdao.getContent(idx);
 			ArrayList<ReviewDTO> dto1=mdao.getMyReview(idx,listSize,cp);
 			if(dto1==null||dto1.size()==0){
 				%>
@@ -114,10 +120,10 @@ if(totalCnt2%listSize==0)totalPage2--;
 					%>
 					<tr>
 						<td id="hobby"><%=dto1.get(i).getHobby() %></td>
-						<td id="subject"><a href=""><%=dto1.get(i).getSubject() %></a></td>
+						<td id="subject"><a href="/moim/review/reviewContent.jsp?idx=<%=dto1.get(i).getIdx()%>"><%=dto1.get(i).getSubject() %></a></td>
 						<td id="writedate"><%=dto1.get(i).getWritedate() %></td>
 						<td id="update">
-						<input type="button" value="수정" onclick="javascript:location.href='updateReview.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+						<input type="button" value="수정" onclick="javascript:location.href='/moim/review/updateReview.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						<input type="button" value="삭제" onclick="javascript:location.href='myWritingDelReview_ok.jsp?idx=<%=dto1.get(i).getIdx()%>'">
 						</td>
 					</tr>
@@ -164,7 +170,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 				<tbody>
 				<%
 				HashMap<Integer,String> map1=mdao.moimName();
-				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, 21,1,cp);
+				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, idx_member,listSize,cp);
 				if(dto2==null||dto2.size()==0){
 					%>
 					<tr>
@@ -197,7 +203,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 				%>
 				<%
 				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=21%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=idx%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
 					if(i==totalPage2)break;
 				}
 				%>

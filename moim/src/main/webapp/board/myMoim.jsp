@@ -6,7 +6,7 @@
 <%@ page import="com.moim.stat.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.info.*" %>
-<jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.member.MemberDAO" scope="session"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +89,7 @@ if(cp%pageSize==0)userGroup--;
 				for(int i=0;i<dto1.size();i++){
 					%>
 					<tr>
-					<td><%=map2.get(dto1.get(i).getIdx_info())%></td>
+					<td><%=map2.get(dto1.get(i).getIdx())%></td>
 					<td><%=map1.get(dto2.get(i).getIdx_info())%></td>
 					<td><%=dto4.get(i).getNowmem()%>/<%=dto4.get(i).getMaxmem() %></td>
 					<td>

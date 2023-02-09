@@ -4,8 +4,8 @@
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.net.*" %>
-<jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
-<jsp:useBean id="ndto" class="com.moim.noimg.NoimgDTO"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.member.MemberDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="ndto" class="com.moim.noimg.NoimgDTO" scope="session"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>

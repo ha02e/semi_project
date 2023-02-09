@@ -3,7 +3,7 @@
 <%@ page import="com.moim.member.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.net.*" %>
-<jsp:useBean id="mdao" class="com.moim.member.MemberDAO" ></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.member.MemberDAO" scope="session"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
