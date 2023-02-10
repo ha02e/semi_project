@@ -762,22 +762,3 @@ public class MemberDAO {
 	
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
