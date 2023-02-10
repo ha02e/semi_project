@@ -455,7 +455,7 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
-	/**모임게시판 조회 메서드 원본*/
+	/**모임게시판 조회 메서드*/
 	public ArrayList<NoimgDTO> getList(int idx_info,int category,int ls,int cp,String cul,String keyword){
 		try {
 			keyword = "%" + keyword.replace(" ", "%") + "%";
@@ -760,8 +760,7 @@ public class MemberDAO {
 		}
 	}
 	
-	
-	
+
 }
 
 

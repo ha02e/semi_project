@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ page import="com.moim.member.*" %>
+	<%@ page import="com.moim.info.*" %>
 <jsp:useBean id="rdto" class="com.moim.review.ReviewDTO" scope="page"></jsp:useBean>
+<jsp:useBean id="idto" class="com.moim.info.InfoDTO" scope="page"></jsp:useBean>
 
 <!DOCTYPE html>
 <html>
@@ -8,8 +11,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%
-Integer idx = (Integer) session.getAttribute("idx");
-if (idx==null) {
+Integer idx_member = (Integer) session.getAttribute("idx");
+if (idx_member==null) {
 %>
 <script>
 	window.alert('로그인 후 이용가능합니다');
@@ -19,6 +22,8 @@ if (idx==null) {
 return;
 }
 %>
+
+
 
 <style>
 section{
@@ -93,34 +98,30 @@ textarea{
 	transition: 0.3s;
 }
 </style>
+<script>
+function validate(){
+	var content=document.getElementById("content");
+	if(content.value==""){
+		window.alert('내용을 입력해주세요.');
+		content.focus();
+		return false;
+	}
+}
+</script>
 </head>
 <%
-String idx_member_s = request.getParameter("idx_member");
- if (idx_member_s == null || idx_member_s.equals("")) {
-	idx_member_s = "0";
-}
-int idx_member= Integer.parseInt(idx_member_s); 
 
-String moimname = request.getParameter("moimname");
-String local= request.getParameter("local");
-String hobby = request.getParameter("hobby");
-String writer= request.getParameter("writer");
-/* String subect= request.getParameter("subject"); */
-/* String content= request.getParameter("content"); */
+String moimname=(String)session.getAttribute("moimname");
+String local=(String)session.getAttribute("local");
+String hobby=(String)session.getAttribute("hobby");
+String writer=(String)session.getAttribute("name");
 String img = request.getParameter("img");
 %>
 <body>
-<%-- <% 
-String detail="";
-if(request.getParameter("detail")!=null){
-detail= request.getParameter("detail");
-%> --%>
-
-
 	<%@include file="/header.jsp"%>
 	<form name="imgUpload" method="post" action="reviewImgUp_ok.jsp"
 	
-		enctype="multipart/form-data">
+		enctype="multipart/form-data" onsubmit="return validate()">
 		<section>
 			<article>
 				<h2>후기 게시판 작성</h2>
@@ -135,24 +136,23 @@ detail= request.getParameter("detail");
 							<tr>
 								<th>모임이름</th>
 								<td><input type="text" name="moimname" size="52"
-									value="<%=moimname%>" > <!-- readonly --></td>
+									 value = "<%=moimname%>"> <!-- readonly --></td>
 							</tr>
 							<tr>
 								<th>지역</th>
-								<td><input type="text" name="local" value="<%=local%>"> <!-- readonly --></td>
+								<td><input type="text" name="local" value="<%=local%>>"> <!-- readonly --></td>
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><textarea name="content" rows="10" cols="50"
+								<td><textarea name="content" id="content" rows="10" cols="50"
 										placeholder="내용을 입력해주세요"></textarea></td>
 							</tr>
 							<tr>
 								<th>이미지</th>
-								 <td><input type="file" name="upload"></td>
+								 <td><input type="file" name="upload">*최대 업로드 파일 크기:2 MB </td>
 							</tr>
 							<tr>
-								<td><input type="hidden" name="idx_memeber"
-									value="<%=idx_member%>"> <input type="hidden"
+								<td><input type="hidden"
 									name="hobby" value="<%=hobby%>"> <input type="hidden"
 									name="writer" value="<%=writer%>"></td>
 							</tr>

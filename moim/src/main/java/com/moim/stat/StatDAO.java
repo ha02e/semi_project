@@ -223,12 +223,14 @@ public class StatDAO {
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			rs=ps.executeQuery();
-			rs.next();
+			StatDTO dto=null;
+			if(rs.next()) {
 			int idx_member=rs.getInt("idx_member");
 			int idx_info=rs.getInt("idx_info");
 			java.sql.Date joindate=rs.getDate("joindate");
 			String content=rs.getString("content");
-			StatDTO dto=new StatDTO(idx, idx_member, idx_info, 2, joindate, content);
+			dto=new StatDTO(idx, idx_member, idx_info, 2, joindate, content);
+			}
 			return dto;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -274,13 +276,15 @@ public class StatDAO {
 	         ps.setInt(1, idx_member);
 	         ps.setInt(2, idx_info);
 	         rs=ps.executeQuery();
-	         rs.next();
+	         StatDTO dto=null;
+	         if(rs.next()){
 	         int idx=rs.getInt("idx");
 	         int stat=rs.getInt("stat");
 	         java.sql.Date joindate=rs.getDate("joindate");
 	         String content=rs.getString("content");
 
-	         StatDTO dto=new StatDTO(idx, idx_member, idx_info, stat, joindate, content);
+	         dto=new StatDTO(idx, idx_member, idx_info, stat, joindate, content);
+	         }
 	         return dto;
 	      }catch(Exception e) {
 	         e.printStackTrace();
@@ -450,26 +454,3 @@ public class StatDAO {
 		}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
