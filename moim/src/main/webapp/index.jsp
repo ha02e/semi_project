@@ -23,7 +23,7 @@ int category=Integer.parseInt(scategory);
 session.setAttribute("idx_info", idx_info);
 session.setAttribute("category", category);
 //ndao.getList 매개변수 3)ls
-int totalContent=ndao.getNotiTotalCnt(idx_info);
+int totalContent=ndao.getNotiTotalCnt("");
 int listsize=5;
 int pageSize=5;
 	
