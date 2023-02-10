@@ -20,13 +20,18 @@ if(scategory==null||scategory.equals("")){
 }
 int category=Integer.parseInt(scategory);
 
+String keyword = "";
+if (request.getParameter("keyword") != null) {
+	keyword = request.getParameter("keyword");
+}
+
 //1)2) 값 추후 활용을 위해 세션에 저장
 session.setAttribute("idx_info", idx_info);
 session.setAttribute("category", category);
 
 //ndao.getList 매개변수 3)ls
-int totalContent=ndao.getNotiTotalCnt(idx_info);
-int listsize=10;
+int totalContent=ndao.getNotiTotalCnt( keyword);
+int listsize=3;
 int pageSize=5;
 	
 //ndao.getList 매개변수 4)cp
@@ -54,6 +59,7 @@ if(manager==null){
 	manager=-1;
 }
 
+
 %>
 <!DOCTYPE html>
 <html>
@@ -62,61 +68,161 @@ if(manager==null){
 <title>notiList</title>
 
 <style>
-table{
-	width:80%;
-	margin-left:auto;
-	margin-right:auto;
-	text-align:center;
-	border-collapse:collapse;
+section{
+	width:1280px;
+	margin:0px auto;
+	padding:50px 0;
 }
 
-table th{
-	height:30px;
-	border-top:1px solid gray;
-	border-bottom:1px solid gray;
-	background-color:gray;
-	text-align:center;
-	vertical-align:inherit;
+h2{
+	font-size:32px;
+	width: 85%;
+	margin:0 auto;
+	padding-bottom:20px;
+	border-bottom:1px solid #A6A6A6;
 }
 
-table td{
-	border-bottom:1px solid gray;
-	padding: 10px;
+/* 검색창 */
+form{
+	width: 85%;
+	margin:40px auto 16px auto;
+	text-align: right;
 }
-
-table #idx{
-	width:5%;
+form select{
+	border: 2px solid #00cdac; 
+	border-radius: 0px; 
+	padding:7px;
 }
-
-table #subject{
-	width:70%;
-	text-align:left;
+form input[type="text"] {
+	border: 2px solid #00cdac; 
+	border-radius: 0px; 
+	padding:8px;
 }
-
-table #writedate{
-	width:15%;
-}
-
-.button{
-	text-align: center;
-	margin-left: 1000px;
-	padding:20px 0 40px 0;
-}
-.button input{
-	border:0;
-	outline:none;
-	width:160px;
+form input[type="submit"] {
+	border:0; 
+	background-color:transparent;
+	background-image:url("/moim/img/search.png");
+	background-position:center;
+	background-repeat:no-repeat;
+	width:30px;
 	height:40px;
 	cursor: pointer;
-	background:#999999;
-	color:white;
+	margin:-16px 0;
 }
-.button input[type="submit"]{
-	background:#333333;
+
+/* 게시판 리스트 */
+table {
+	width: 85%;
+	margin:0 auto 0px auto;
+	text-align: center;
+	border-collapse: collapse;
 }
-.button input:hover{
+
+table a:link, table a:visited{
+	text-decoration: none;
+	color:#333333;
+}
+.subject_r a:hover{
+	font-weight: 800;
+	color:black;
+}
+
+.category_r{
+	width:15%;
+}
+.moimname_r{
+	width:30%;
+}
+.subject_r{
+	width:55%;
+}
+td.subject_r{
+	text-align: left;
+	margin-left:20px;
+}
+table th {
+	height: 46px;
+	border-top: 2px solid #4C7C77; 
+	border-bottom: 1px solid #4C7C77;
+	text-align: center;
+	vertical-align: inherit;
+}
+
+table td {
+	border-bottom: 1px solid #e5e5e5;
+	height: 46px;	
+}
+
+table #idx {
+	width: 5%;
+}
+
+table #subject {
+	width: 70%;
+	text-align: left;
+}
+
+table #writedate {
+	width: 15%;
+}
+
+#b {
+	text-align: center;
+	margin: 10px;
+}
+
+.bottom{
+	width:1280px;
+}
+
+.button {
+	width:85%;
+	margin:0 auto;
+	text-align: right;
+	padding: 0px 0 40px 0;
+}
+
+.button input{
+	border: 0;
+	outline: none;
+	width: 160px;
+	height: 40px;
+	cursor: pointer;
+	background: #999999;
+	color: white;
+}
+
+.button input[type="submit"] {
+	background: #333333;
+}
+
+.button input:hover {
 	background: #00cdac;
 	transition: 0.3s;
+}
+
+/* 페이징 */
+.paging{
+	width: 85%;
+	margin: 20px auto;
+	text-align: center;
+}
+.paging a{
+	display: inline-block;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	transition:0.2s;
+}
+.paging a:link,a:visited{
+	text-decoration: none;
+	color:#333333;
+}
+.paging a:hover{	
+	font-weight: 800;
+	color:#ffffff;
+	background:#00cdac;
+	border-radius: 100%;
 }
 
 </style>
@@ -140,6 +246,13 @@ function write_button(){
 	<section >
 		<article>
 		<h3>공지사항</h3>
+		<form name="search" action="notiList.jsp">
+		<div class ="search2">
+		<input type="text" name="keyword"> <input type="submit"
+							value="">
+							</div>
+							</form>
+							
 			<table>
 				<thead>
 					<tr>
@@ -148,33 +261,8 @@ function write_button(){
 						<th>작성일</th>
 					</tr>
 				</thead>
-				<tfoot>
-				<tr>
-				<td colspan="4" align="center">
-				<%if(userGroup!=0){
-				%>
-					<a href="notiList.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>"> &lt;&lt;</a>
-				<%
-				}
-				%>
-				<%
-				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-				%>
-				&nbsp;&nbsp;
-				<a href="notiList.jsp?cp=<%=i%>"><%=i%></a>&nbsp;&nbsp;
-				<%
-					if(i==totalPage) break;
-				}%>
-				<%
-				if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
-				%>
-					<a href="notiList.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a>
-				<%
-				}
-				%>
-				</tfoot>	
 				<tbody>
-				<%ArrayList<NoimgDTO> arr=ndao.getList(idx_info,category,listsize, cp);
+				<%ArrayList<NoimgDTO> arr=ndao.getList2(listsize, cp, keyword);
 						
 							if(arr==null||arr.size()==0){
 					%>
@@ -192,11 +280,34 @@ function write_button(){
 					}%>
 				</tbody>
 			</table>
-	
+		<div class ="bottom">
+		<div class ="paging">
+				<%if(userGroup!=0){
+				%>
+					<a href="notiList.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&keyword=<%=keyword%>"> &lt;&lt;</a>
+				<%
+				}
+				%>
+				<%
+				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
+				%>
+				&nbsp;&nbsp;
+				<a href="notiList.jsp?cp=<%=i%>&keyword=<%=keyword%>"><%=i%></a>&nbsp;&nbsp;
+				<%
+					if(i==totalPage) break;
+				}%>
+				<%
+				if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
+				%>
+					<a href="notiList.jsp?cp=<%=(userGroup+1)*pageSize+1%>&keyword=<%=keyword%>">&gt;&gt;</a>
+				<%
+				}
+				%>
+				</div>	
 			<div class="button">
 					<input type="button" value="글쓰기" id="b" onclick="javascript:location.href='notiWrite.jsp'">
 			</div>
-	
+			</div>
 		</article>
 	</section>
 <%@include file="/footer.jsp" %>

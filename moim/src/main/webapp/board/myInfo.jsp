@@ -14,14 +14,12 @@
 	display:flex;
 	width:800px;
 }
-
 section{
 	margin:0 auto;
 }
 section h2{
 	margin:40px 0 20px 0;
 }
-
 section .myinfoForm table{
 	width:800px;
 	border-top:3px solid #333333;
@@ -37,12 +35,10 @@ section .myinfoUp table th{
 section .myinfoUp  table td{
 	padding:4px 0;
 }
-
 ..myinfoUp  table tr{
 	margin:30px 0;
 	border-top:1px solid #999999;
 }
-
 select{
 	width: 100px; 
 	padding: 6px 18px; 
@@ -50,17 +46,14 @@ select{
 	border-radius: 0px; 
 	font-size: 14px;
 }
-
 input[type="text"] {
 	border: 1px solid #999999; 
 	border-radius: 0px; 
 	padding:8px;
 }
-
 span{
 	font-size:12px;
 }
-
 .button{
 	text-align: center;
 	padding:20px 0 2px 0;
@@ -87,12 +80,10 @@ span{
 	function idcheck() {
 		var w='500';
 		var h='300';
-
 		var l=Math.ceil((window.screen.width-w)/2);
 		var t=Math.ceil((window.screen.height-h)/2);
 		window.open('idCheck.jsp', 'idcheck', 'width='+w+',height='+h+',left='+l+',top='+t);
 	}
-
 	/**비밀번호*/
 	function pwdCheck(){
 	var pwd1=document.getElementById("pwd1");
@@ -120,7 +111,6 @@ span{
 		var email_error=document.getElementById("email_error");
 		var age_error=document.getElementById("age_error");
 	
-
 		/**이름*/
 		if(name.value==""){
 			name_error.innerHTML="이름을 입력해주세요";
@@ -181,7 +171,7 @@ MemberDTO dto=mdao.getMem(idx);
 	<table>
 	<tr>
 		<th>이름</th>
-		<td><input type="text" name="name" id="name" value="<%=dto.getName()%>"></br>
+		<td><input type="text" name="name" id="name" value="<%=dto.getName()%>"><br/>
 		<span id="name_error"></span></td>
 	</tr>
 	
@@ -191,25 +181,25 @@ MemberDTO dto=mdao.getMem(idx);
 	</tr>
 	<tr>
 		<th>비밀번호</th>
-		<td><input type="password" name="pwd" id="pwd1" value="<%=dto.getPwd()%>"><br>
+		<td><input type="password" name="pwd" id="pwd1" value="<%=dto.getPwd()%>"><br/>
 		<span>8~16자 영문 대/소문자, 특수문자만 사용 가능합니다</span></td>
 	</tr>
 	<tr>
 		<th>비밀번호 재확인</th>
-		<td><input type="password" name="pwd2" id="pwd2" onchange="pwdCheck()" ><br>
+		<td><input type="password" name="pwd2" id="pwd2" onchange="pwdCheck()" ><br/>
 		<span id="pwd_error"></span></td>
 	</tr>
 
 	<tr>
 		<th>본인 확인 이메일</th>
-		<td><input type="text" name="email" id="email" value="<%=dto.getEmail()%>" ><br>
+		<td><input type="text" name="email" id="email" value="<%=dto.getEmail()%>" ><br/>
 		<span id="email_error"></span>
 		</td>
 	</tr>		
 	
 	<tr>
 		<th>나이</th>
-		<td><input type="text" name="age" id="age" value="<%=dto.getAge() %>" ><br>
+		<td><input type="text" name="age" id="age" value="<%=dto.getAge() %>" ><br/>
 		<span id="age_error"></span></td>
 	</tr>	
 	<tr>
@@ -255,8 +245,9 @@ MemberDTO dto=mdao.getMem(idx);
 		</form>
 		</div>
 	<div class="button">
-	<form name="myInfoDelete" action="myInfoDelete_ok.jsp">	
+	<form name="delMember" action="delMember_ok.jsp">	
 		<input type="submit" value="탈퇴하기">
+		<input type="hidden" name="idx" value="<%=dto.getIdx()%>">
 	</form>
 	</div>
 	</div>

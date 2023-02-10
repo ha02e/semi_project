@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.moim.member.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.net.*" %>
 <%@ page import="com.moim.stat.*" %>
-<%@ page import="com.moim.noimg.*" %>
-<%@ page import="com.moim.info.*" %>
 <jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
@@ -23,10 +19,6 @@ th{
 </style>
 </head>
 <%
-Integer idx_member=(Integer)session.getAttribute("idx_member");
-if(idx_member==null){
-	idx_member=0;
-}
 Integer idx=(Integer)session.getAttribute("idx");
 if(idx==null){
 	idx=0;
@@ -36,22 +28,30 @@ if(cp_s==null||cp_s.equals("")){
 	cp_s="1";
 }
 int cp=Integer.parseInt(cp_s);
+String cp2_s=request.getParameter("cp2");
+if(cp2_s==null||cp2_s.equals("")){
+	cp2_s="1";
+}
+int cp2=Integer.parseInt(cp2_s);
 
-int totalCnt3=mdao.getTotal("moim_stat", idx_member, 3);
-int totalCnt4=mdao.getTotal("moim_stat", idx_member, 4);
+int alltotalCnt=mdao.getMemTotalCnt(1,idx);
+int mantotalCnt=mdao.getMemTotalCnt(0,idx);
 
 int listSize=5;
 int pageSize=5;
 
 
-int totalPage3=totalCnt3/listSize+1;
-if(totalCnt3%listSize==0)totalPage3--;
+int alltotalPage=alltotalCnt/listSize+1;
+if(alltotalPage%listSize==0)alltotalPage--;
 
-int totalPage4=totalCnt4/listSize+1;
-if(totalCnt4%listSize==0)totalPage4--;
+int mantotalPage=mantotalCnt/listSize+1;
+if(mantotalCnt%listSize==0)mantotalPage--;
 
-int userGroup=cp/pageSize;
-if(cp%pageSize==0)userGroup--;
+int alluserGroup=cp/pageSize;
+if(cp%pageSize==0)alluserGroup--;
+
+int manuserGroup=cp/pageSize;
+if(cp2%pageSize==0)manuserGroup--;
 %>
 <body>
 <%@include file="/header.jsp" %>
@@ -66,18 +66,17 @@ if(cp%pageSize==0)userGroup--;
 				<th>카테고리</th>
 				<th>모임 이름</th>
 				<th>모임인원</th>
-				<th>모임게시판,후기쓰기</th>
+				<th>모임게시판 후기쓰기</th>
 				</tr>
 			</thead>
 			<tbody>
 			<%
-			ArrayList<StatDTO> dto3=mdao.getMyStat(idx_member,listSize,cp);
-			ArrayList<InfoDTO> dto4=mdao.getNowMem(idx);
-			HashMap<Integer,String> map2=mdao.moimCategory();
-			HashMap<Integer,String> map1=mdao.moimName();
-			ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, idx_member,listSize,cp);
-			ArrayList<StatDTO> dto1=mdao.getMyStat(idx_member,listSize,cp);
-			if(dto1==null||dto1.size()==0){
+			HashMap<Integer,String> namemap=mdao.moimName();
+			HashMap<Integer,String> hobbymap=mdao.moimCategory();
+			HashMap<Integer,String> memmap=mdao.getNowMem();
+			ArrayList<StatDTO> alldto=mdao.getMyStat(idx,listSize,cp,1);
+			ArrayList<StatDTO> mandto=mdao.getMyStat(idx,listSize,cp,0);
+			if(alldto==null||alldto.size()==0){
 				%>
 				<tr>
 				<td>
@@ -86,16 +85,15 @@ if(cp%pageSize==0)userGroup--;
 				</tr>
 				<%
 			}else{
-				for(int i=0;i<dto1.size();i++){
+				for(int i=0;i<alldto.size();i++){
 					%>
 					<tr>
-					<td><%=map2.get(dto1.get(i).getIdx())%></td>
-					<td><%=map1.get(dto2.get(i).getIdx_info())%></td>
-					<td><%=dto4.get(i).getNowmem()%>/<%=dto4.get(i).getMaxmem() %></td>
+					<td><%=hobbymap.get(alldto.get(i).getIdx_info())%></td>
+					<td><%=namemap.get(alldto.get(i).getIdx_info())%></td>
+					<td><%=memmap.get(alldto.get(i).getIdx_info()) %></td>
 					<td>
-					<input type="submit" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=dto1.get(i).getIdx()%>'">
-					<!-- idx,지역,모임이름 -->
-					<input type="submit" value="후기쓰기" onclick="javascript:location.href='writeReview.jsp?idx=<%=dto1.get(i).getIdx()%>'">
+					<input type="button" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=alldto.get(i).getIdx_info()%>'">
+					<input type="button" value="후기쓰기" onclick="javascript:location.href='/moim/review/writeReview.jsp?idx_info=<%=alldto.get(i).getIdx_info()%>'">
 					</td>
 					</tr>
 					<%
@@ -107,19 +105,19 @@ if(cp%pageSize==0)userGroup--;
 				<tr>
 					<td colspan="4" align="center">
 					<%
-					if(userGroup!=0){
-						%><a href="myMoim.jsp?=cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+					if(alluserGroup!=0){
+						%><a href="myMoim.jsp?cp=<%=(alluserGroup-1)*pageSize+pageSize%>&cp2=<%=cp2%>">&lt;&lt;</a><%
 					}
 					%>
 					<%
-					for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-						%>&nbsp;&nbsp;<a href="myMoim.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
-						if(i==totalPage3)break;
+					for(int i=alluserGroup*pageSize+1;i<=alluserGroup*pageSize+pageSize;i++){
+						%>&nbsp;&nbsp;<a href="myMoim.jsp?cp=<%=i%>&cp2=<%=cp2%>"><%=i %></a>&nbsp;&nbsp;<%
+						if(i==alltotalPage)break;
 					}
 					%>
 					<%
-					if(userGroup!=(totalPage3/pageSize-(totalPage3%pageSize==0?1:0))){
-						%><a href="myMoim.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+					if(alluserGroup!=(alltotalPage/pageSize-(alltotalPage%pageSize==0?1:0))){
+						%><a href="myMoim.jsp?cp=<%=(alluserGroup+1)*pageSize+1%>&cp2=<%=cp2%>">&gt;&gt;</a><%
 					}
 					%>
 					</td>
@@ -135,12 +133,12 @@ if(cp%pageSize==0)userGroup--;
 				<th>카테고리</th>
 				<th>모임 이름</th>
 				<th>모임 인원</th>
-				<th>모임게시판,관리,삭제</th>
+				<th>관리 삭제</th>
 				</tr>
 			</thead>
 			<tbody>
 			<%
-			if(dto3==null||dto3.size()==0){
+			if(mandto==null||mandto.size()==0){
 				%>
 				<tr>
 					<td colspan="5" align="center">
@@ -149,17 +147,15 @@ if(cp%pageSize==0)userGroup--;
 				</tr>
 				<%
 			}else{
-				for(int i=0;i<dto3.size();i++){
+				for(int i=0;i<mandto.size();i++){
 					%>
 					<tr>
-					<td><%=map2.get(dto1.get(i).getIdx_info()) %></td>
-					<td><%=map1.get(dto2.get(i).getIdx_info()) %></td>
-					<td><%=dto4.get(i).getNowmem()%>/<%=dto4.get(i).getMaxmem() %></td>
+					<td><%=hobbymap.get(mandto.get(i).getIdx_info()) %></td>
+					<td><%=namemap.get(mandto.get(i).getIdx_info()) %></td>
+					<td><%=memmap.get(mandto.get(i).getIdx_info())%></td>
 					<td>
-					<input type="submit" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=dto1.get(i).getIdx()%>'">
-					<!-- info_idx -->
-					<input type="submit" value="모임관리" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">
-					<input type="submit" value="모임삭제" onclick="javascript:location.href='보낼이름.jsp?idx=<%=dto1.get(i).getIdx()%>'">					
+					<input type="button" value="모임관리" onclick="javascript:location.href='/moim/stat/statList.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">
+					<input type="button" value="모임삭제" onclick="javascript:location.href='보낼이름.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">					
 					</td>
 					</tr>
 					<%
@@ -171,19 +167,19 @@ if(cp%pageSize==0)userGroup--;
 				<tr>
 					<td colspan="4" align="center">
 					<%
-					if(userGroup!=0){
-						%><a href="myMoim.jsp?=cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+					if(manuserGroup!=0){
+						%><a href="myMoim.jsp?cp2=<%=(manuserGroup-1)*pageSize+pageSize%>&cp=<%=cp%>">&lt;&lt;</a><%
 					}
 					%>
 					<%
-					for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-						%>&nbsp;&nbsp;<a href="myMoim.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
-						if(i==totalPage4)break;
+					for(int i=manuserGroup*pageSize+1;i<=manuserGroup*pageSize+pageSize;i++){
+						%>&nbsp;&nbsp;<a href="myMoim.jsp?cp2=<%=i%>&cp=<%=cp%>"><%=i %></a>&nbsp;&nbsp;<%
+						if(i==mantotalPage)break;
 					}
 					%>
 					<%
-					if(userGroup!=(totalPage4/pageSize-(totalPage4%pageSize==0?1:0))){
-						%><a href="myMoim.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+					if(manuserGroup!=(mantotalPage/pageSize-(mantotalPage%pageSize==0?1:0))){
+						%><a href="myMoim.jsp?cp2=<%=(manuserGroup+1)*pageSize+1%>&cp=<%=cp%>">&gt;&gt;</a><%
 					}
 					%>
 					</td>

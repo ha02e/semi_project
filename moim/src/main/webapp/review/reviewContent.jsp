@@ -193,12 +193,11 @@ input[id*="click"]:checked+label+div {
 }
 </style>
 <body>
+	<%@include file="/header.jsp"%>
+	<input type="hidden" name="idx" value="<%=idx%>">
 	<%
 	if (dto.getImg() == null || dto.getImg().equals("")) {
 	%>
-	<%@include file="/header.jsp"%>
-
-	<input type="hidden" name="idx" value="<%=idx%>">
 	<section>
 		<article>
 			<h2>
@@ -214,17 +213,12 @@ input[id*="click"]:checked+label+div {
 				<%
 				} else {
 				%>
-				<%@include file="/header.jsp"%>
 
-				<h2>
-					제목 :
-					<%=dto.getSubject()%></h2>
-				<input type="hidden" name="idx" value="<%=idx%>">
 				<section>
 					<article>
 						<h2>
-							모임이름 :
-							<%=dto.getMoimname()%></h2>
+							제목 :
+							<%=dto.getSubject()%></h2>
 						<div class="moiminfo">
 							<div class="moimContent moimimg">
 								<div class="img">

@@ -2,13 +2,12 @@
 	pageEncoding="UTF-8"%>
 	
 <%@ page import="com.oreilly.servlet.*"%>
-<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
 <%
 request.setCharacterEncoding("utf-8");
-/* 로그인 관련 */
-/* String sid= (String)session.getAttribute("sid"); */
 
-// request.getRealPath = 경로
+Integer idx_member = (Integer)session.getAttribute("idx");
+
 String savepath = request.getRealPath("/review/img");
 MultipartRequest mr = new MultipartRequest(request, savepath, 2097152, "utf-8");
 
@@ -21,7 +20,6 @@ String subject = mr.getParameter("subject");
 boolean boo = true;
 String msg = "작성 성공?";
 
-Integer idx_member = (Integer)session.getAttribute("idx");
 
 
 if (moimname == null || moimname.equals("null") || local == null || local.equals("null") || writer == null
@@ -29,7 +27,7 @@ if (moimname == null || moimname.equals("null") || local == null || local.equals
 	boo = false;
 }
 if (boo == true) {
-	int result = rdao.addImage(mr, idx_member);
+	int result = rdao.addImage(mr,idx_member);
 	msg = result > 0 ? "글 작성 성공" : "글 작성 실패";
 } else {
 	msg = "다시 작성하세요";

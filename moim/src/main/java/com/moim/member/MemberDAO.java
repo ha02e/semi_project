@@ -280,27 +280,21 @@ public class MemberDAO {
 	}
 	
 	/**모임 인원 가져오기 메서드*/
-	public ArrayList<InfoDTO> getNowMem(int idx){
+	public HashMap<Integer,String> getNowMem(){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select nowmem,maxmem from moim_info where idx=?";
+			String sql="select idx,nowmem,maxmem from moim_info";
 			ps=conn.prepareStatement(sql);
-			ArrayList<InfoDTO> arr=new ArrayList<InfoDTO>();
-			ps.setInt(1, idx);
+			HashMap<Integer,String> hm=new HashMap<Integer,String>();
 			rs=ps.executeQuery();
 			while(rs.next()) {
-				String hobby=rs.getString("hobby");
-				String moimname=rs.getString("moimname");
-				String content=rs.getString("content");
-				String local=rs.getString("local");
-				int nowmem=rs.getInt("nowmem");
-				int maxmem=rs.getInt("maxmem");
-				String imt=rs.getString("img");
-				
-				InfoDTO dto=new InfoDTO(idx, hobby, moimname, content, local, nowmem, maxmem, imt);
-				arr.add(dto);
+				int idx=rs.getInt("idx");
+				String nowmem=Integer.toString(rs.getInt("nowmem"));
+				String maxmem=Integer.toString(rs.getInt("maxmem"));
+				String mem=nowmem+"/"+maxmem;
+				hm.put(idx, mem);
 			}
-			return arr;
+			return hm;
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -341,24 +335,26 @@ public class MemberDAO {
 	}
 	
 	/**참여중인 모임 조회 메서드*/
-	public ArrayList<StatDTO> getMyStat(int idx_member,int ls,int cp){
+	public ArrayList<StatDTO> getMyStat(int idx_member,int ls,int cp,int stat){
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			int start=(cp-1)*ls+1;
 			int end=(cp*ls);
-//			String sql="select * from moim_stat where idx_member=?";
-			String sql="select * from(select rownum as rnum,a.*from(select * from moim_stat where idx_member=?)a)b where rnum>=? and rnum<=?";
+			String sql="select * from(select rownum as rnum,a.*from(select * from moim_stat where idx_member=? and ";
+			if(stat==1) {
+				sql=sql+"stat in(1,0))a)b where rnum>=? and rnum<=?";
+			}else{
+				sql=sql+"stat=0)a)b where rnum>=? and rnum<=?";				
+			}
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx_member);
 			ps.setInt(2, start);
 			ps.setInt(3, end);
 			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
-//			ps.setInt(1, idx_member);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
 				int idx_info=rs.getInt("idx_info");
-				int stat=rs.getInt("stat");
 				java.sql.Date joindate=rs.getDate("joindate");
 				String content=rs.getString("content");
 				StatDTO dto=new StatDTO(idx, idx_member, idx_info, stat, joindate, content);
@@ -418,6 +414,35 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
+	/**참여중인 모임 총 수 가져오는 메서드*/
+	public int getMemTotalCnt(int stat,int idx_member) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="select count(*) from moim_stat where idx_member=? and stat ";
+			if(stat==1) {
+				sql=sql+"in(1,0)";
+			}else{
+				sql=sql+"=0";
+			}
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx_member);
+			rs=ps.executeQuery();
+			int count=1;
+			if(rs.next()) {
+				count=rs.getInt(1);
+			}
+			return count>0?count:1;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 1;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
 	/**검색 총 수 가져오기*/
 	public int searchTotal(int idx_info,int category,int ls,int cp,String cul,String keyword) {
 		try {
@@ -463,7 +488,6 @@ public class MemberDAO {
 			conn=com.moim.db.MoimDB.getConn();
 			int start=(cp-1)*ls+1;
 			int end=(cp*ls);
-//			String sql="select * from moim_noimg where idx_info=? and category=?";
 			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where ";
 			if(cul.equals("전체")) {
 			sql=sql+" idx_info=? and category=?order by ref desc,sunbun asc)a)b where rnum>=? and rnum<=? ";
@@ -544,7 +568,7 @@ public class MemberDAO {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
 			int maxref=getMaxRef();
-			String sql="insert into moim_noimg values(idx.nextval,?,?,3,?,?,?,sysdate,?,?,?)";
+			String sql="insert into moim_noimg values(moim_noimg_idx.nextval,?,?,3,?,?,?,sysdate,?,?,?)";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, dto.getIdx_member());
 			ps.setInt(2, dto.getIdx_info());
@@ -613,7 +637,6 @@ public class MemberDAO {
 	}
 	
 	/**모임게시판 글 보기 메서드*/ 
-	//메서드명 수정 moimCHatContent -> getContent
 	public NoimgDTO getContent(int idx, int category) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
@@ -742,5 +765,25 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
+	/**멤버 탈퇴 관련 메서드*/
+	public int dropMem(int idx) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="delete from moim_member where idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			int count=ps.executeUpdate();
+			return count;
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
 	
+
 }

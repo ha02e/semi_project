@@ -1,8 +1,11 @@
 package com.moim.review;
 
+
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
+
+import com.moim.info.*;
 import com.oreilly.servlet.MultipartRequest;
 
 public class ReviewDAO {
@@ -46,7 +49,7 @@ public class ReviewDAO {
 			} else {
 				ps = conn.prepareStatement(sql);
 			}
-
+    
 			rs = ps.executeQuery();
 			rs.next();
 			
@@ -202,7 +205,6 @@ public class ReviewDAO {
 	/** 수정용 조회 관련 메소드 */
 	public ReviewDTO updateReviewForm(int idx) {
 		try {
-//			dbConnect();
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "select * from moim_review where idx=?";
 			ps = conn.prepareStatement(sql);
@@ -246,9 +248,8 @@ public class ReviewDAO {
 	}
 
 	/** 수정 관련 메소드 */
-	public int updateReview(ReviewDTO dto, MultipartRequest mr ) {
+	public int updateReview(ReviewDTO dto, MultipartRequest mr) {
 		try {
-//			dbConnect();
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "update moim_review set subject=?, content=? , img=? where idx=?";
 			ps = conn.prepareStatement(sql);
@@ -280,7 +281,6 @@ public class ReviewDAO {
 	/** 삭제 관련 메서드 */
 	public int delReview(ReviewDTO dto) {
 		try {
-
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "delete from moim_review where idx=?";
 			ps = conn.prepareStatement(sql);
@@ -311,11 +311,6 @@ public class ReviewDAO {
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
 			ps = conn.prepareStatement(sql);
-
-			String idx_member_s = mr.getParameter("idx_member");
-			if (idx_member_s == null || idx_member_s.equals("")) {
-				idx_member_s = "0";
-			}
 		
 			String moimname = mr.getParameter("moimname");
 			String local = mr.getParameter("local");
@@ -355,16 +350,15 @@ public class ReviewDAO {
 	/** 이미지 가져오기 메서드 */
 	public String getAdrImg(int idx) {
 		try {
-
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "select img from moim_review where idx =?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			
 			rs=ps.executeQuery();
-			
-			rs.next();
-			String str = rs.getString("img");
+			String str="";
+			if(rs.next())
+			str = rs.getString("img");
 			
 			return str ;
 		} catch (Exception e) {
@@ -382,5 +376,42 @@ public class ReviewDAO {
 			}
 		}
 	}
+	/** 수정용 조회 관련 메소드 */
+	public InfoDTO getInfo(int idx) {
+		try {
+			conn = com.moim.db.MoimDB.getConn();
+			String sql = "select hobby, local, moimname from moim_info where idx = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			rs = ps.executeQuery();
+			InfoDTO dto = null;
+			if (rs.next()) {
+				String hobby= rs.getString("hobby");
+				String moimname= rs.getString("moimname");
+				String local = rs.getString("local");
+				dto = new  InfoDTO(0, hobby, moimname, null, local, 0, 0, null) ;
+			}
+
+			return dto;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (ps != null)
+					conn.close();
+			} catch (Exception e2) {
+
+			}
+		}
+	}
+	
+	
 	
 }
