@@ -122,8 +122,9 @@ public class NoimgDAO {
          ps=conn.prepareStatement(sql);
          ps.setInt(1, idx_info);
          rs=ps.executeQuery();
-         rs.next();
-         int count=rs.getInt(1);
+         int count=1;
+         if(rs.next())
+         count=rs.getInt(1);
          return count==0?1:count;
       } catch (Exception e) {
          e.printStackTrace();

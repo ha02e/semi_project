@@ -250,7 +250,6 @@ public class ReviewDAO {
 	/** 수정 관련 메소드 */
 	public int updateReview(ReviewDTO dto, MultipartRequest mr) {
 		try {
-//			dbConnect();
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "update moim_review set subject=?, content=? , img=? where idx=?";
 			ps = conn.prepareStatement(sql);
@@ -282,7 +281,6 @@ public class ReviewDAO {
 	/** 삭제 관련 메서드 */
 	public int delReview(ReviewDTO dto) {
 		try {
-
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "delete from moim_review where idx=?";
 			ps = conn.prepareStatement(sql);
@@ -313,11 +311,6 @@ public class ReviewDAO {
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
 			ps = conn.prepareStatement(sql);
-
-			String idx_member_s = mr.getParameter("idx_member");
-			if (idx_member_s == null || idx_member_s.equals("")) {
-				idx_member_s = "0";
-			}
 		
 			String moimname = mr.getParameter("moimname");
 			String local = mr.getParameter("local");
@@ -357,16 +350,15 @@ public class ReviewDAO {
 	/** 이미지 가져오기 메서드 */
 	public String getAdrImg(int idx) {
 		try {
-
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "select img from moim_review where idx =?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			
 			rs=ps.executeQuery();
-			
-			rs.next();
-			String str = rs.getString("img");
+			String str="";
+			if(rs.next())
+			str = rs.getString("img");
 			
 			return str ;
 		} catch (Exception e) {

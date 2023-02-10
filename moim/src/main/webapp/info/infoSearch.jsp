@@ -49,7 +49,8 @@ label.detail{
 	color:white;
 	display:inline-block; 
 	width:100px;
-	line-height: 30px
+	line-height: 30px;
+	cursor: pointer;
 }
 label:hover, label:active, input:hover+label, input:active+label {
     background:#00cdac;
@@ -200,7 +201,11 @@ if(cp%pageSize==0)userGroup--;
 				for(int i=0;i<arr.size();i++){
 		%>
 			<tr>
+			<%if(arr.get(i).getImg()!=null&&!arr.get(i).getImg().equals("")){ %>
 				<td class="intab"><img alt="img<%=i %>" src="/moim/userimg/<%=arr.get(i).getImg()%>"></td>
+			<%}else{ %>	
+				<td class="intab"><img alt="img<%=i %>" src="/moim/img/noimg.png"></td>
+			<%} %>
 				<td class="intab"><a href="moimContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname() %></a></td>
 				<td class="intab"><%=arr.get(i).getLocal() %></td>
 				<td class="intab"><%=arr.get(i).getHobby() %></td>

@@ -6,7 +6,7 @@ request.setCharacterEncoding("utf-8");
 %>
 <jsp:useBean id="ndto" class="com.moim.noimg.NoimgDTO" scope="page"></jsp:useBean>
 <jsp:setProperty property="*" name="ndto"/>
-<jsp:useBean id="mdao" class="com.moim.member.MemberDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
 <jsp:useBean id="ndao" class="com.moim.noimg.NoimgDAO"></jsp:useBean>
 <%
 int result=mdao.writeChat(ndto);
