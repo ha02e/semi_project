@@ -323,5 +323,134 @@ public class StatDAO {
 			   }catch(Exception e2) {}
 		   }
 	   }
+	   /**관리자 권한을 주는 메서드*/
+		public int giveMan(int idx) {
+			try {
+				conn=com.moim.db.MoimDB.getConn();
+				String sql="update moim_stat set stat=0 where idx=?";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, idx);
+				int count=ps.executeUpdate();
+				return count;
+			}catch(Exception e) {
+				e.printStackTrace();
+				return -1;
+			}finally {
+				try {
+					if(ps!=null)ps.close();
+					if(conn!=null)conn.close();
+				}catch(Exception e2) {}
+			}
+		}
+		
+		/**가입중인 모임을 가져오는 매서드*/
+		public ArrayList<Integer> getInMoim(int idx) {
+			try {
+				conn=com.moim.db.MoimDB.getConn();
+				ArrayList<Integer> arr=new ArrayList<Integer>();
+				String sql="select idx_info from moim_stat where idx_member=?";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, idx);
+				rs=ps.executeQuery();
+				while(rs.next()) {
+					int idx_info=rs.getInt(1);
+					arr.add(idx_info);
+				}
+				return arr;
+			}catch(Exception e) {
+				e.printStackTrace();
+				return null;
+			}finally {
+				try {
+					if(rs!=null)rs.close();
+					if(ps!=null)ps.close();
+					if(conn!=null)conn.close();
+				}catch(Exception e2) {}
+			}
+		}
+		/**스탯 삭제하는 메서드*/
+		public int delStat(int idx) {
+			try {
+				conn=com.moim.db.MoimDB.getConn();
+				String sql="delete from moim_stat where idx_member=?";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, idx);
+				int count=ps.executeUpdate();
+				return count;
+			}catch(Exception e) {
+				e.printStackTrace();
+				return -1;
+			}finally {
+				try {
+					if(ps!=null)ps.close();
+					if(conn!=null)conn.close();
+				}catch(Exception e2) {}
+			}
+		}
+		/**관리자가 없는 모임을찾아서 관리자를 만드는 매서드*/
+		public int makeMan(ArrayList<Integer> arr) {
+			try {
+				conn=com.moim.db.MoimDB.getConn();
+				String sql="";
+				int count=1;
+				for(int i=0;i<arr.size();i++) {
+					sql="select count(stat) from moim_stat where idx_info=? and stat=0";
+					ps=conn.prepareStatement(sql);
+					ps.setInt(1, arr.get(i));
+					rs=ps.executeQuery();
+					if(rs.next()) {
+						if(rs.getInt(1)==0) {
+						sql="update moim_stat set stat=0 where joindate=(select min(joindate) from moim_stat where idx_info=?) and idx_info=?";
+						ps=conn.prepareStatement(sql);
+						ps.setInt(1, arr.get(i));
+						ps.setInt(2, arr.get(i));
+						count=count+ps.executeUpdate();
+						}
+					}
+				}
+				return count;
+			}catch(Exception e) {
+				e.printStackTrace();
+				return -1;
+			}finally {
+				try {
+					if(rs!=null)rs.close();
+					if(ps!=null)ps.close();
+					if(conn!=null)conn.close();
+				}catch(Exception e2) {}
+			}
+		}
+		/**모임 인원수 빼주는 메서드*/
+		public int minusMem(ArrayList<Integer> arr) {
+			try {
+				conn=com.moim.db.MoimDB.getConn();
+				String sql="";
+				int count=1;
+				for(int i=0;i<arr.size();i++) {
+					int nowmem=getMemNum(arr.get(i));
+					if((nowmem-1)==0) {
+						sql="delete from moim_info where idx=?";
+						ps=conn.prepareStatement(sql);
+						ps.setInt(1, arr.get(i));
+						count=count+ps.executeUpdate();
+					}else {
+						sql="update moim_info set nowmem=?	where idx=?";
+						ps=conn.prepareStatement(sql);
+						ps.setInt(1, nowmem-1);
+						ps.setInt(2, arr.get(i));
+						count=count+ps.executeUpdate();
+					}
+				}
+				return count;
+			}catch(Exception e) {
+				e.printStackTrace();
+				return -1;
+			}finally {
+				try {
+					if(ps!=null)ps.close();
+					if(conn!=null)conn.close();
+				}catch(Exception e2) {}
+			}
+		}
 	
 }

@@ -28,27 +28,6 @@ section table .intab{
 	border-bottom: 1px solid black;
 	height: 200px;
 }
-
-/* 검색창 */
-.search-bar{
-	vertical-align: middle;
-}
-.search-bar input[type="text"]{
-	border: 2px solid #00cdac; 
-	border-radius: 0px; 
-}
-.search-bar input[type="submit"]{
-	border:0; 
-	background-color:transparent;
-	background-image:url("/moim/img/search.png");
-	background-position:center;
-	background-repeat:no-repeat;
-	width:30px;
-	height:40px;
-	cursor: pointer;
-	margin:-10px 20px -14px 2px;
-}
-
 /*세부검색 내 관심사*/
 input[type="checkbox"] {
     width: 10px;
@@ -65,13 +44,13 @@ input[type="checkbox"] {
   }
   /*세부사항 토글관련*/
 label.detail{
-	background: #00cdac;
+	border: 1px groove black;
+	background:#999999;
 	color:white;
 	display:inline-block; 
 	width:100px;
 	line-height: 30px;
-	padding:2px 0;
-	cursor:pointer;
+	cursor: pointer;
 }
 label:hover, label:active, input:hover+label, input:active+label {
     background:#00cdac;
@@ -163,10 +142,9 @@ if(cp%pageSize==0)userGroup--;
 <%@include file="/header.jsp" %>
 <section>
 	<article>
-<form name="infoSearch" action="infoSearch.jsp">
-			<div class="search-bar">
-				<input type="text" name="keyword" placeholder="검색어를 입력하세요">
-				<input type="submit" value="">
+		<form name="infoSearch" action="infoSearch.jsp">
+			<input type="submit" value="검색" class="button">
+			<input type="text" name="keyword" placeholder="검색어를 입력하세요">
 			<label class="detail" for="detail">&nbsp;&nbsp;&nbsp;세부검색</label>
 			<input type="checkbox" id="detail">
 				<div id="detaildiv">
@@ -194,7 +172,7 @@ if(cp%pageSize==0)userGroup--;
 							<option value="경기">경기</option>
 							<option value="인천">인천</option>
 							<option value="강원">강원</option>
-							<option value="충북">충북</option>
+							<option value="충북도">충북</option>
 							<option value="충남">충남</option>
 							<option value="대전">대전</option>
 							<option value="세종">세종</option>
@@ -213,8 +191,7 @@ if(cp%pageSize==0)userGroup--;
 				</table>
 				</fieldset>
 				</div>
-				</div>
-		</form>		
+		</form>
 	</article>
 	<article>
 		<table>
@@ -224,7 +201,11 @@ if(cp%pageSize==0)userGroup--;
 				for(int i=0;i<arr.size();i++){
 		%>
 			<tr>
+			<%if(arr.get(i).getImg()!=null&&!arr.get(i).getImg().equals("")){ %>
 				<td class="intab"><img alt="img<%=i %>" src="/moim/userimg/<%=arr.get(i).getImg()%>"></td>
+			<%}else{ %>	
+				<td class="intab"><img alt="img<%=i %>" src="/moim/img/noimg.png"></td>
+			<%} %>
 				<td class="intab"><a href="moimContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname() %></a></td>
 				<td class="intab"><%=arr.get(i).getLocal() %></td>
 				<td class="intab"><%=arr.get(i).getHobby() %></td>

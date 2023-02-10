@@ -26,7 +26,7 @@ session.setAttribute("idx_info", idx_info);
 session.setAttribute("category", category);
 
 //ndao.getList 매개변수 3)ls
-int totalContent=ndao.getNotiTotalCnt(idx_info);
+int totalContent=ndao.getNotiTotalCnt("");
 int listsize=5;
 int pageSize=5;
 	
@@ -211,12 +211,13 @@ section{
 	</thead>
 	<tbody>
 			<%ArrayList<NoimgDTO> arr=ndao.getList(idx_info,category,listsize, cp);
-					for(int i=0;i<arr.size();i++){	
 						if(arr==null||arr.size()==0){
 				%>
 				<tr id="td">
-				<td colspan="3"></td>
-				<%}else{ %>
+				<td colspan="3">등록된 게시글이 없습니다.</td>
+				<%}else{ 
+					for(int i=0;i<arr.size();i++){	
+				%>
 					<td id="idx"><%=arr.get(i).getIdx()%></td>
 					<td id="subject"><a href="/moim/noimg/notiContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject() %></a></td>
 					<td id="writedate"><%=arr.get(i).getWritedate() %></td>

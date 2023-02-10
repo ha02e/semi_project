@@ -4,7 +4,7 @@
 <%@ page import="com.oreilly.servlet.*"%>
 <%@ page import="java.io.*"%>
 <jsp:useBean id="rdto" class="com.moim.review.ReviewDTO" scope="page"></jsp:useBean>
-<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" ></jsp:useBean>
 
 
 <%
@@ -31,7 +31,6 @@ if (delimg.exists() && delimg.isFile()) {
 }
 
 rdto.setSubject(mr.getParameter("subject"));
-
 rdto.setContent(mr.getParameter("content"));
 idx = Integer.parseInt((mr.getParameter("idx")));
 rdto.setIdx(idx);
