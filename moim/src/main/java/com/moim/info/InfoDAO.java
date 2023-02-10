@@ -436,5 +436,43 @@ public class InfoDAO {
 				} catch (Exception e2) {}
 			}
 		}
-	    
+		/**모임 삭제하는 매서드*/
+		public int delInfo(int idx_info) {
+			try {
+				conn=com.moim.db.MoimDB.getConn();
+				String sql="delete from moim_info where idx=?";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, idx_info);
+				int count=ps.executeUpdate();
+				return count;
+			}catch(Exception e) {
+				e.printStackTrace();
+				return -1;
+			}finally {
+				try {
+					if(ps!=null)ps.close();
+					if(conn!=null)conn.close();
+				}catch(Exception e2) {}
+			}
+		}
+		/**모임 삭제 이후에 stat에서 데이터 지우는 매서드*/
+		public int delStat(int idx_info) {
+			try {
+				conn=com.moim.db.MoimDB.getConn();
+				String sql="delete from moim_stat where idx_info=?";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, idx_info);
+				int count=ps.executeUpdate();
+				return count;
+			}catch(Exception e) {
+				e.printStackTrace();
+				return -1;
+			}finally {
+				try {
+					if(ps!=null)ps.close();
+					if(conn!=null)conn.close();
+				}catch(Exception e2) {}
+			}
+		}	
+		
 }

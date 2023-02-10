@@ -167,7 +167,7 @@ table #writedate {
 
 #b {
 	text-align: center;
-	margin: 10px;
+	
 }
 
 .bottom{

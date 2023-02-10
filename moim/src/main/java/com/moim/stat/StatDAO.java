@@ -194,15 +194,10 @@ public class StatDAO {
 	public int delMem(int idx,int idx_info) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			int nowmem=getMemNum(idx_info);
 			String sql="delete from moim_stat where idx=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			int count=ps.executeUpdate();
-			sql="update moim_info set nowmem=? where idx=?";
-			ps=conn.prepareStatement(sql);
-			ps.setInt(1, nowmem-1);
-			ps.setInt(2, idx_info);
 			ps.executeUpdate();
 			return count;
 		}catch(Exception e) {

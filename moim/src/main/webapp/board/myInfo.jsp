@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내 정보 변경</title>
 <style>
 .container{
 	display:flex;
@@ -243,8 +243,6 @@ MemberDTO dto=mdao.getMem(idx);
 		<div class="button">
 		<input type="submit" value="수정하기">
 		</form>
-		</div>
-	<div class="button">
 	<form name="delMember" action="delMember_ok.jsp">	
 		<input type="submit" value="탈퇴하기">
 		<input type="hidden" name="idx" value="<%=dto.getIdx()%>">
@@ -255,7 +253,7 @@ MemberDTO dto=mdao.getMem(idx);
 </article>
 </section>
 </div>
-</div>
+
 <%@include file="/footer.jsp" %>
 </body>
 </html>
