@@ -46,79 +46,28 @@ int cp=Integer.parseInt(scp);
 <title>Insert title here</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-}
 section{
 	width: 1280px;
 	margin:0 auto;
 }
-
-/*배너 슬라이드*/
-.slide_radio input[id*="slide"]{  /*radio 버튼*/
-	display:none;
-}
-.slide_box{
+.banner01{
 	width: 1280px;
 	height:360px;
 	margin:0 auto;
 	overflow:hidden;
-}
-.slide_list{
-	white-space: nowrap;
-}
-.slide_list li{
-	display: inline-block;
-	vertical-align: middle;
-	width: 100%;
-	transition:all 0.6s;
 	position: relative;
 }
-.slide_list li a img{
-	width: 100%;
-}
-.slide_list label{
-	position: absolute;
-	z-index: 10;
+.banner01 img{
+	width:100%;
+	position:absolute;
 	top:50%;
-	transform:translateY(-50%);
-	padding:50px;
-	cursor:pointer;
-	transition:0.3s;
-
-}
-.slide_list .left{
-	left:4px;
-	background-image:url('/moim/img/left_w.png');
-	background-position: center center;
-	background-repeat: no-repeat;
-	opacity: 0.2;
-}
-.slide_list .right{
-	right:4px;
-	background-image:url('/moim/img/right_w.png');
-	background-position: center center;
-	background-repeat: no-repeat;
-	opacity: 0.2;
-}
-.slide_list .left:hover, .slide_list .right:hover{
-	opacity: 1;
-}
-.slide_radio [id="slide01"]:checked ~ .slide_box .slide_list>li{
-	transform:translateX(0%);
-}
-.slide_radio [id="slide02"]:checked ~ .slide_box .slide_list>li{
-	transform:translateX(-100%);
-}
-.slide_radio [id="slide03"]:checked ~ .slide_box .slide_list>li{
-	transform:translateX(-200%);
+	left:50%;
+	transform: translate(-50%,-50%);
 }
 
-/*현재 모집 중인 소모임*/
 .current_moim{
 	width:100vw;
-	background: #F2F2F2;
+	background: #f9f9f9;
 }
 .c_moim{
 	width: 1280px;
@@ -139,7 +88,6 @@ section{
 	height:300px;
 }
 
-/*공지사항*/
 .notice{
 	height:300px;
 } 
@@ -214,43 +162,9 @@ section{
 <body>
 <%@include file="header.jsp" %>
 <section class="mainImg">
-	<div class="slide_radio">
-		<input type="radio" name="slide" id="slide01" checked>
-		<input type="radio" name="slide" id="slide02">
-		<input type="radio" name="slide" id="slide03">
-	
-	<div class="slide_box">
-	<ul class="slide_list">
-		<li>
-			<div>
-				<label for="slide03" class="left"></label>
-				<a href="/moim/member/memberJoin.jsp">
-				<img src="/moim/img/banner_main1.jpg" alt="매인 배너">
-				</a>
-				<label for="slide02" class="right"></label>
-			</div>
-		</li>
-		<li>
-			<div>
-				<label for="slide01" class="left"></label>
-				<a href="/moim/noimg/notiList.jsp">
-				<img src="/moim/img/banner_main.jpg" alt="매인 배너">
-				</a>
-				<label for="slide03" class="right"></label>
-			</div>
-		</li>
-		<li>
-			<div>
-				<label for="slide02" class="left"></label>
-				<a href="/moim/info/infoList.jsp">
-				<img src="/moim/img/banner_main2.jpg" alt="매인 배너">
-				</a>
-				<label for="slide01" class="right"></label>
-			</div>
-		</li>
-	</ul>
-	</div>
-	</div>
+<div class="banner01">
+<a href="/moim/noimg/notiList.jsp"><img src="/moim/img/banner_main.jpg" alt="매인 배너"></a>
+</div>
 </section>
 
 <section class="current_moim">

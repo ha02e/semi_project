@@ -13,55 +13,87 @@
 <style>
 section{
 	width:1280px;
-	margin:0 auto;
-	border:1px solid red;
+	margin:0px auto;
+	padding:50px 0;
 }
 
-.review_top{
-	width: 85%;
-	display:flex;
-	align-items:baseline;
-	margin:0 auto;
-}
 h2{
-	width:50%;
+	font-size:32px;
+	width: 85%;
+	margin:0 auto;
+	padding-bottom:20px;
+	border-bottom:1px solid #A6A6A6;
 }
 
+/* 검색창 */
 form{
-	width: 50%;
+	width: 85%;
+	margin:40px auto 16px auto;
 	text-align: right;
 }
+form select{
+	border: 2px solid #00cdac; 
+	border-radius: 0px; 
+	padding:7px;
+}
 form input[type="text"] {
-	border: 1px solid #999999; 
+	border: 2px solid #00cdac; 
 	border-radius: 0px; 
 	padding:8px;
 }
 form input[type="submit"] {
-	border: 1px solid #999999; 
-	border-radius: 0px; 
-	padding:8px;
+	border:0; 
+	background-color:transparent;
+	background-image:url("/moim/img/search.png");
+	background-position:center;
+	background-repeat:no-repeat;
+	width:30px;
+	height:40px;
+	cursor: pointer;
+	margin:-16px 0;
 }
 
+/* 게시판 리스트 */
 table {
 	width: 85%;
-	margin-left: auto;
-	margin-right: auto;
+	margin:0 auto 0px auto;
 	text-align: center;
 	border-collapse: collapse;
 }
 
+table a:link, table a:visited{
+	text-decoration: none;
+	color:#333333;
+}
+.subject_r a:hover{
+	font-weight: 800;
+	color:black;
+}
+
+.category_r{
+	width:15%;
+}
+.moimname_r{
+	width:30%;
+}
+.subject_r{
+	width:55%;
+}
+td.subject_r{
+	text-align: left;
+	margin-left:20px;
+}
 table th {
-	height: 30px;
-	border-top: 1px solid gray;
-	border-bottom: 1px solid gray;
-	background-color: gray;
+	height: 46px;
+	border-top: 2px solid #4C7C77; 
+	border-bottom: 1px solid #4C7C77;
 	text-align: center;
 	vertical-align: inherit;
 }
 
 table td {
-	border-bottom: 1px solid gray;
-	padding: 10px;
+	border-bottom: 1px solid #e5e5e5;
+	height: 46px;	
 }
 
 table #idx {
@@ -82,9 +114,15 @@ table #writedate {
 	margin: 10px;
 }
 
+.bottom{
+	width:1280px;
+}
+
 .button {
+	width:85%;
+	margin:0 auto;
 	text-align: right;
-	padding: 20px 0 40px 0;
+	padding: 0px 0 40px 0;
 }
 
 .button input{
@@ -105,11 +143,29 @@ table #writedate {
 	background: #00cdac;
 	transition: 0.3s;
 }
-.search2{
-	textt-align :center;
-	margin :10px auto;
-	float : center;
-	cursor : pointer;
+
+/* 페이징 */
+.paging{
+	width: 85%;
+	margin: 20px auto;
+	text-align: center;
+}
+.paging a{
+	display: inline-block;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	transition:0.2s;
+}
+.paging a:link,a:visited{
+	text-decoration: none;
+	color:#333333;
+}
+.paging a:hover{	
+	font-weight: 800;
+	color:#ffffff;
+	background:#00cdac;
+	border-radius: 100%;
 }
 
 </style>
@@ -156,7 +212,6 @@ if (cp % pageSize == 0)
 <%@include file="/header.jsp"%>
 	<section>
 		<article>
-			<div class="review_top">
 				<h2>후기 게시판</h2>
 	
 				<form name="search" action="reviewList.jsp">
@@ -172,18 +227,50 @@ if (cp % pageSize == 0)
 							<option value="봉사활동">봉사활동</option>
 							<option value="댄스">댄스</option>
 						</select> <input type="text" name="keyword"> <input type="submit"
-							value="검색">
+							value="">
 					</div>
 				</form>
-			</div>
 	
 			<table>
 
-				<tfoot>
+				<thead>
 					<tr>
 
-						<td colspan="2" align="right">
-							<%
+						<th class="category_r">카테고리</th>
+						<th class="moimname_r">모임이름</th>
+						<th class="subject_r">제목</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+					if (arr == null || arr.size() == 0) {
+					%>
+
+					<tr>
+						<td colspan="3">등록된 글이 없습니다</td>
+					</tr>
+					<%
+					} else {
+					for (int i = 0; i < arr.size(); i++) {
+					%>
+
+					<tr>
+						<td class="category_r"><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getHobby()%></a>
+						</td>
+						<td class="moimname_r"><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname()%></a></td>
+						<td class="subject_r"><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject()%></a></td>
+					</tr>
+
+					<%
+					}
+					}
+					%>
+				</tbody>
+
+			</table>
+			<div class="bottom">
+			<div class="paging">
+			<%
 							if (userGroup != 0) {
 							%><a
 							href="reviewList.jsp?cp=<%=(userGroup - 1) * pageSize + pageSize%>&hobby=<%=userhobby%>&keyword=<%=keyword%>">&lt;
@@ -204,52 +291,12 @@ if (cp % pageSize == 0)
 							<%
 							}
 							%>
-						</td>
-						<td>
-							<div class="button">
-								<input type="button" onclick="location.href='writeReview.jsp'"
-									value="후기쓰러가기">
-							</div>
-						</td>
-					</tr>
-				</tfoot>
-
-				<thead>
-					<tr>
-
-						<th>카테고리</th>
-						<th>모임이름</th>
-						<th>제목</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-					if (arr == null || arr.size() == 0) {
-					%>
-
-					<tr>
-						<td colspan="3">등록된 글이 없습니다</td>
-					</tr>
-					<%
-					} else {
-					for (int i = 0; i < arr.size(); i++) {
-					%>
-
-					<tr>
-						<td><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getHobby()%></a>
-						</td>
-						<td><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname()%></a></td>
-						<td><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject()%></a></td>
-					</tr>
-
-					<%
-					}
-					}
-					%>
-				</tbody>
-
-			</table>
-
+			</div>
+			<div class="button">
+				<input type="button" onclick="location.href='writeReview.jsp'"
+						value="후기쓰러가기">
+			</div>
+			</div>
 		</article>
 	</section>
 	<%@include file="/footer.jsp"%>
