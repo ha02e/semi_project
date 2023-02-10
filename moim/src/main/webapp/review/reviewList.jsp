@@ -293,7 +293,7 @@ if (cp % pageSize == 0)
 							%>
 			</div>
 			<div class="button">
-				<input type="button" onclick="location.href='writeReview.jsp'"
+				<input type="button" onclick="location.href='/moim/board/myMoim.jsp'"
 						value="후기쓰러가기">
 			</div>
 			</div>

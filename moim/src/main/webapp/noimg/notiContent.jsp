@@ -8,8 +8,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%
+String sidx=request.getParameter("idx");
+if(sidx==null||sidx==""){
+	sidx="-1";
+}
+int idx=Integer.parseInt(sidx);
+
+//member 테이블의 manager 값 가져오기(0:사용자/1:관리자)
+Integer manager=(Integer)session.getAttribute("manager");
+//로그인 안한 경우, manager값 -1로 지정
+if(manager==null){
+	manager=-1;
+}
+
+NoimgDTO dto=ndao.getContent(idx);
+if(dto==null){
+%>
+<script>
+window.alert('잘못된 접근입니다\n다시 시도해주세요');
+location.href='/listNoti.jsp';
+</script>
+<%
+return;}
+%>
 <meta charset="UTF-8">
-<title>notiContent</title>
+<title><%=dto.getSubject() %></title>
 
 <style>
 table{
@@ -80,30 +104,7 @@ table div{
 }
 </style>
 
-<%
-String sidx=request.getParameter("idx");
-if(sidx==null||sidx==""){
-	sidx="-1";
-}
-int idx=Integer.parseInt(sidx);
 
-//member 테이블의 manager 값 가져오기(0:사용자/1:관리자)
-Integer manager=(Integer)session.getAttribute("manager");
-//로그인 안한 경우, manager값 -1로 지정
-if(manager==null){
-	manager=-1;
-}
-
-NoimgDTO dto=ndao.getContent(idx);
-if(dto==null){
-%>
-<script>
-window.alert('잘못된 접근입니다\n다시 시도해주세요');
-location.href='/listNoti.jsp';
-</script>
-<%
-return;}
-%>
 
 <script>
 /*manager 값이 1이면 버튼(#a:수정, #b:삭제) 노출 <-> 0일 경우, 숨기기*/

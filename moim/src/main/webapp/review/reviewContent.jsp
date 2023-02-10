@@ -25,7 +25,7 @@ return;
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title><%=dto.getSubject() %></title>
 </head>
 <style>
 section {
