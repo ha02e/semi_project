@@ -7,8 +7,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>참여중인 모임</title>
 <style>
+.container{
+	display:flex;
+	width:800px;
+}
 section{
 	width:1280px;
 	margin:0px auto;
@@ -205,8 +209,8 @@ if(cp2%pageSize==0)manuserGroup--;
 %>
 <body>
 <%@include file="/header.jsp" %>
-
 <%@include file="sideBoard.jsp" %>
+<div class="container">
 <section>
 	<article>
 		<h3>참여중인 모임</h3>
@@ -333,6 +337,8 @@ if(cp2%pageSize==0)manuserGroup--;
 					</div>
 	</article>
 </section>
+</div>
+
 <%@include file="/footer.jsp" %>
 </body>
 </html>

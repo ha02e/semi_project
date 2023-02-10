@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내 정보 변경</title>
 <style>
 .container{
 	display:flex;
@@ -253,7 +253,7 @@ MemberDTO dto=mdao.getMem(idx);
 </article>
 </section>
 </div>
-</div>
+
 <%@include file="/footer.jsp" %>
 </body>
 </html>

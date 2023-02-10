@@ -13,6 +13,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+.container{
+	display:flex;
+	width:800px;
+}
 section{
 	width:1280px;
 	margin:0px auto;
@@ -207,6 +211,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 <body>
 <%@include file="/header.jsp" %>
 <%@include file = "sideBoard.jsp" %>
+<div class="container">
 <section>
 	<article>
 		<h3>내가 쓴 후기</h3>
@@ -334,6 +339,7 @@ if(totalCnt2%listSize==0)totalPage2--;
 				</div>
 				</article>
 </section>
+</div>
 <%@include file="/footer.jsp" %>
 </body>
 </html>
