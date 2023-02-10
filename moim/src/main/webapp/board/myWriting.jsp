@@ -13,45 +13,165 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-table{
-	width:80%;
-	margin-left:auto;
-	margin-right:auto;
-	text-align:center;
-	border-collapse:collapse;
+.container{
+	display:flex;
+	width:800px;
+}
+section{
+	width:1280px;
+	margin:0px auto;
+	padding:50px 0;
 }
 
-table th{
-	height:30px;
-	border-top:1px solid gray;
-	border-bottom:1px solid gray;
-	background-color:gray;
-	text-align:center;
-	vertical-align:inherit;
+h2{
+	font-size:32px;
+	width: 85%;
+	margin:0 auto;
+	padding-bottom:20px;
+	border-bottom:1px solid #A6A6A6;
 }
 
-table td{
-	border-bottom:1px solid gray;
-	padding: 10px;
+/* 검색창 */
+form{
+	width: 85%;
+	margin:40px auto 16px auto;
+	text-align: right;
+}
+form select{
+	border: 2px solid #00cdac; 
+	border-radius: 0px; 
+	padding:7px;
+}
+form input[type="text"] {
+	border: 2px solid #00cdac; 
+	border-radius: 0px; 
+	padding:8px;
+}
+form input[type="submit"] {
+	border:0; 
+	background-color:transparent;
+	background-image:url("/moim/img/search.png");
+	background-position:center;
+	background-repeat:no-repeat;
+	width:30px;
+	height:40px;
+	cursor: pointer;
+	margin:-16px 0;
 }
 
-table #hobby{
-	width:20%;
-}
-table #moimname{
-	width:20%;
-}
-
-table #subject{
-	width:40%;
-	text-align:center;
+/* 게시판 리스트 */
+table {
+	width: 85%;
+	margin:0 auto 0px auto;
+	text-align: center;
+	border-collapse: collapse;
 }
 
-table #writedate{
-	width:20%;
+table a:link, table a:visited{
+	text-decoration: none;
+	color:#333333;
 }
-table #update{
-	width:20%;
+.subject_r a:hover{
+	font-weight: 800;
+	color:black;
+}
+
+.category_r{
+	width:15%;
+}
+.moimname_r{
+	width:30%;
+}
+.subject_r{
+	width:55%;
+}
+td.subject_r{
+	text-align: left;
+	margin-left:20px;
+}
+table th {
+	height: 46px;
+	border-top: 2px solid #4C7C77; 
+	border-bottom: 1px solid #4C7C77;
+	text-align: center;
+	vertical-align: inherit;
+}
+
+table td {
+	border-bottom: 1px solid #e5e5e5;
+	height: 46px;	
+}
+
+table #idx {
+	width: 5%;
+}
+
+table #subject {
+	width: 70%;
+	text-align: left;
+}
+
+table #writedate {
+	width: 15%;
+}
+
+#b {
+	text-align: center;
+	margin: 10px;
+}
+
+.bottom{
+	width:1280px;
+}
+
+.button {
+	width:85%;
+	margin:0 auto;
+	text-align: right;
+	padding: 0px 0 40px 0;
+}
+
+.button input{
+	border: 0;
+	outline: none;
+	width: 160px;
+	height: 40px;
+	cursor: pointer;
+	background: #999999;
+	color: white;
+}
+
+.button input[type="submit"] {
+	background: #333333;
+}
+
+.button input:hover {
+	background: #00cdac;
+	transition: 0.3s;
+}
+
+/* 페이징 */
+.paging{
+	width: 85%;
+	margin: 20px auto;
+	text-align: center;
+}
+.paging a{
+	display: inline-block;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	transition:0.2s;
+}
+.paging a:link,a:visited{
+	text-decoration: none;
+	color:#333333;
+}
+.paging a:hover{	
+	font-weight: 800;
+	color:#ffffff;
+	background:#00cdac;
+	border-radius: 100%;
 }
 </style>
 </head>
@@ -91,16 +211,17 @@ if(totalCnt2%listSize==0)totalPage2--;
 <body>
 <%@include file="/header.jsp" %>
 <%@include file = "sideBoard.jsp" %>
+<div class="container">
 <section>
 	<article>
 		<h3>내가 쓴 후기</h3>
-		<table border="1">
+		<table >
 			<thead>
 				<tr>
 				<th>카테고리</th>
 				<th>제목</th>
 				<th>등록일자</th>
-				<th>수정,삭제</th>
+				<th>수정 &nbsp; 삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -132,9 +253,9 @@ if(totalCnt2%listSize==0)totalPage2--;
 			}
 			%>
 			</tbody>
-			<tfoot>
-			<tr>
-				<td colspan="4" align="center">
+		</table>
+			<div class = "bottom">
+			<div class = "paging">
 				<%
 				if(userGroup!=0){
 					%><a href="myWriting.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
@@ -151,14 +272,13 @@ if(totalCnt2%listSize==0)totalPage2--;
 					%><a href="myWriting.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
 				}
 				%>
-				</td>
-			</tr>
-			</tfoot>
-			
-		</table>
-		<br>
+			</div>
+			</div>
+			</article>
+			<article>
+	
 		<h3>내가 쓴 댓글(QnA)</h3>
-			<table border="1">
+			<table>
 				<thead>
 					<tr>
 					<th>모임이름</th>
@@ -193,9 +313,11 @@ if(totalCnt2%listSize==0)totalPage2--;
 				}
 				%>
 				</tbody>
-				<tfoot>
-				<tr>
-				<td colspan="4" align="center">
+				
+			</table>
+			
+				<div class = "bottom">
+				<div class = "paging">
 				<%
 				if(userGroup!=0){
 					%><a href="myWriting.jsp?=idx_member=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
@@ -213,12 +335,11 @@ if(totalCnt2%listSize==0)totalPage2--;
 				}
 				
 				%>
-				</td>
-			</tr>
-				</tfoot>
-			</table>
-</article>
+				</div>
+				</div>
+				</article>
 </section>
+</div>
 <%@include file="/footer.jsp" %>
 </body>
 </html>
