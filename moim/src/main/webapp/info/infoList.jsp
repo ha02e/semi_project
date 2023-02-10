@@ -12,45 +12,15 @@
 section{
 	width: 1280px;
 	padding: 20px;
+	margin:0 auto;
 }
-div table{
-	margin: 0px 100px;
+section article{
+	width: 85%;
+	margin:0 auto;
 }
-.infotab{
-	width:200px;
-	height:200px;
-	float: left;
-}
-section ul{
-	list-style: none;
-	float:left;
-}
-section hr{
-	clear: both;
-}
-table ul{
-	float:left;
-}
-#infoh3{
-	float:left;
-	width: 550px;
-}
-#infoh32{
-	float: right;
-}
-#infodiv2{
-	clear:both;
-	margin-top: 20px;
-}
-#infotab{
-	margin-right: 5px;
 
-}
-.infotable{
-	width:200px;
-	height:200px;
-	float: left;
-}
+
+
 #buttondiv{
 	text-align: right;
 
@@ -59,6 +29,28 @@ table ul{
 	height:100px;
 	margin-top:20px;
 }
+
+/* 검색창 */
+.search-bar{
+	vertical-align: middle;
+	margin: 30px 0;
+}
+.search-bar input[type="text"]{
+	border: 2px solid #00cdac; 
+	border-radius: 0px; 
+}
+.search-bar input[type="submit"]{
+	border:0; 
+	background-color:transparent;
+	background-image:url("/moim/img/search.png");
+	background-position:center;
+	background-repeat:no-repeat;
+	width:30px;
+	height:40px;
+	cursor: pointer;
+	margin:-10px 20px -14px 2px;
+}
+
 /*세부사항 내 관심사*/
 input[type="checkbox"] {
     width: 10px;
@@ -73,19 +65,16 @@ input[type="checkbox"] {
     background: black;
     border: none;
   }
-  section img{
-  width: 200px;
-  height: 200px;
-  }
+  
 /*세부사항 토글관련*/
 label.detail{
-	border: 1px groove black;
-	background:#999999;
+	background: #00cdac;
 	color:white;
 	display:inline-block; 
 	width:100px;
 	line-height: 30px;
-	cursor: pointer;
+	padding:2px 0;
+	cursor:pointer;
 }
 label:hover, label:active, input:hover+label, input:active+label {
     background:#00cdac;
@@ -118,6 +107,142 @@ input[type="text"]{
 	width:200px;
 	height:30px;
 }
+
+.infodiv1{
+	display: flex;
+	justify-content: flex-start;
+	padding:0 0 40px 0;
+	border-bottom:1px solid #A6A6A6;
+}
+.moim-info{
+	display: flex;
+	align-items: center
+	border:1px solid red;
+	padding:20px 20px 10px 0px;
+}
+.moim-info div{
+}
+.moim-con ul{
+	list-style: none;
+}
+.thumb1{
+	width: 260px;
+	height: 160px;
+	overflow: hidden;
+	position: relative;	
+	border-radius: 12px;
+	margin-bottom: 10px;
+}
+.thumb1 img{
+	position:absolute;
+	height:100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(1.1);
+	transition:all 0.5s;
+}
+.thumb1 img:hover{
+	transform: translate(-50%, -50%) scale(1.2);
+}
+
+.infoh3{
+	list-style: none;
+	width:100%;
+	padding:0;
+}
+.infoh3 li{
+	display: inline-block;
+	width:49%;
+}
+.li2{
+	text-align: right;
+}
+.more-btn{
+	display: inline-block;
+	width:100px;
+	height:30px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+	text-align: center;
+}
+.more-btn a{
+	text-decoration:none;
+	line-height: 30px;
+}
+.more-btn a:link, .more-btn a:visited{
+	color:white;
+}
+.infodiv2{
+	display:flex;
+	justify-content: space-between;
+	margin-bottom:20px;
+}
+.infotable a{
+	text-decoration: none;
+}
+.infotable a:link, .infotable a:visited{
+	color: #333333;
+}
+.info_top{
+	font-size: 14px;
+	color:#666666;
+	margin:4px 0;
+}
+.thumb2{
+	width: 240px;
+	height: 240px;
+	overflow: hidden;
+	position: relative;	
+	border-radius: 12px;
+	margin-bottom: 10px;
+}
+.thumb2 img{
+	position:absolute;
+	height:100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	transition:all 0.5s;
+}
+.thumb2 img:hover{
+	transform: translate(-50%, -50%) scale(1.1);
+}
+.title{
+	font-size: 20px;
+	font-weight: 600;
+	margin:4px 0;
+	/*말줄임표*/
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.title:hover{
+	color: #00cdac;
+}
+.mem{
+	margin:4px 0;
+}
+
+
+
+.button{
+	border: 0;
+	outline: none;
+	width: 160px;
+	height: 40px;
+	cursor: pointer;
+	background: #999999;
+	color: white;
+	margin-bottom:30px;
+}
+
+
+
+.button:hover {
+	background: #00cdac;
+	transition: 0.3s;
+}
 </style>
 </head>
 <%
@@ -135,8 +260,9 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 <section>
 	<article>
 		<form name="infoSearch" action="infoSearch.jsp">
-			<input type="submit" value="검색" class="button">
-			<input type="text" name="keyword" placeholder="검색어를 입력하세요">
+			<div class="search-bar">
+				<input type="text" name="keyword" placeholder="검색어를 입력하세요">
+				<input type="submit" value="">
 			<label class="detail" for="detail">&nbsp;&nbsp;&nbsp;세부검색</label>
 			<input type="checkbox" id="detail">
 				<div id="detaildiv">
@@ -183,31 +309,34 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 				</table>
 				</fieldset>
 				</div>
-		</form>
+				</div>
+		</form>				
 	</article>
 	<hr>
+	
 	<article>
 	<h3>맞춤 추천</h3>
-		<div>
+		<div class="infodiv1">
 		<%
 		ArrayList<InfoDTO> fitarr=idao.getList(hobby);
 		if(fitarr!=null){
 		for(int i=0;i<fitarr.size()&&i<=1;i++){ %>
-			<table class="infotab">
-				<tr>
-				<%if(fitarr.get(i).getImg()!=null&&!fitarr.get(i).getImg().equals("")){ %>
-					<td><img alt="fitimg<%=i%> %>" src="/moim/userimg/<%=fitarr.get(i).getImg()%>"></td>
-				<%}else{ %>
-					<td><img alt="fitimg<%=i%> %>" src="/moim/img/noimg.png"></td>
-				<%} %>
-				</tr>
-			</table>
-			<ul>
-				<li><a href="moimContent.jsp?idx=<%=fitarr.get(i).getIdx()%>"><%=fitarr.get(i).getMoimname() %></a></li>
-				<li><%=fitarr.get(i).getLocal() %></li>
-				<li><%=fitarr.get(i).getHobby() %></li>
-				<li><%=fitarr.get(i).getNowmem() %>/<%=fitarr.get(i).getMaxmem() %></li>
-			</ul>
+
+			<a href="moimContent.jsp?idx=<%=fitarr.get(i).getIdx()%>">
+			<div class="moim-info">
+			<div class="thumb1">
+				<img alt="fitimg<%=i%> %>" src="/moim/userimg/<%=fitarr.get(i).getImg()%>">
+			</div>
+			<div class="moim-con">
+				<ul>
+					<li class="info_top"><%=fitarr.get(i).getHobby() %>&nbsp;/&nbsp;<%=fitarr.get(i).getLocal() %></li>
+					<li class="title"><%=fitarr.get(i).getMoimname() %></li>
+					<li class="mem"><%=fitarr.get(i).getNowmem() %>/<%=fitarr.get(i).getMaxmem() %></li>
+				</ul>
+			</div>
+			</div>
+			</a>
+
 			<%
 		}
 		}else{%>
@@ -215,47 +344,34 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		<%} %>
 		</div>
 	</article>
-	<hr>
+	
+	
 	<article>
-		<h3 id="infoh3">현재 모집중인 소모임</h3>
-		<h3 id="infoh32"><a href="infoSearch.jsp">더보기</a></h3>
-		<div id="infodiv2">
-		<%
-		ArrayList<InfoDTO> needarr=idao.getList("total");
-		if(needarr==null||needarr.size()==0){
-			%><h2>현재 모집중인 모임이 없습니다</h2><%
-		}else{
-		for(int i=0;i<needarr.size()&&i<4;i++){ %>
-			<table class="infotab" id="infotab">
-				<tr>
-				<%if(needarr.get(i).getImg()!=null&&!needarr.get(i).getImg().equals("")){ %>
-					<td><img alt="needimg<%=i %>" src="/moim/userimg/<%=needarr.get(i).getImg()%>"></td>
-				<%}else{ %>
-				<td><img alt="needimg<%=i %>" src="/moim/img/noimg.png"></td>
-				<%} %>
-				</tr>
-			</table>
-		<%} %>
-		</div>
-		<div id="infodiv2">
-		<%for (int i=0;i<needarr.size()&&i<4;i++){ %>
-		<table class="infotable" id="infotab">
-				<tr>
-					<td>
-					<ul>
-						<li><a href="moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a></li>
-						<li><%=needarr.get(i).getLocal() %></li>
-						<li><%=needarr.get(i).getHobby() %></li>
-						<li><%=needarr.get(i).getNowmem() %>/<%=needarr.get(i).getMaxmem() %></li>
-					</ul>
-					</td>
-				</tr>
-			</table>
-		<%}} %>
-		</div>
-		<hr>
+		<ul class="infoh3">
+			<li><h3>현재 모집중인 소모임</h3></li>
+			<li class="li2"><div class="more-btn"><a href="infoSearch.jsp">더보기+</a></div></li>
+		</ul>
+			<div class="infodiv2">
+			<%
+			ArrayList<InfoDTO> needarr=idao.getList("total");
+			if(needarr==null||needarr.size()==0){
+				%><h2>현재 모집중인 모임이 없습니다</h2><%
+			}else{
+				for (int i=0;i<needarr.size()&&i<4;i++){ %>
+				<div class="infotable" id="infotab">
+				<a href="moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>">
+					<div class="thumb2"><img alt="needimg<%=i %>" src="/moim/userimg/<%=needarr.get(i).getImg()%>"></div>
+					<div class="info_top"><%=needarr.get(i).getHobby() %>&nbsp;/&nbsp;<%=needarr.get(i).getLocal() %></div>
+					<div class="title"><%=needarr.get(i).getMoimname() %></div>
+					<div class="mem"><%=needarr.get(i).getNowmem() %>/<%=needarr.get(i).getMaxmem() %></div>
+				</a>
+				</div>
+			<%}} %>
+			
+			</div>
+	
 		<div id="buttondiv">
-		<input type="button" value="모임만들기" class="button"onclick="javascript:location.href='moimWrite.jsp'">
+		<input type="button" value="모임만들기" class="button" onclick="javascript:location.href='moimWrite.jsp'">
 		</div>
 	</article>
 </section>
