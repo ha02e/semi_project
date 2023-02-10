@@ -55,7 +55,7 @@ public class InfoDAO {
 			String sql="insert into moim_stat values(moim_stat_idx.nextval,?,moim_info_idx.currval,0,sysdate,'')";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx_member);
-			
+
 			int count=ps.executeUpdate();
 			return count;
 		} catch (Exception e) {
