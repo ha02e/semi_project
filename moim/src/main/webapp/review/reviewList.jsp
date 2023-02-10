@@ -4,7 +4,7 @@
 <%@page import="java.sql.*"%>
 <%@page import="com.moim.review.*"%>
 
-<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>

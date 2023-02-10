@@ -29,17 +29,14 @@ if (idx_member_s == null || idx_member_s.equals(""))
 	idx_member_s = "0";
 
 int idx_meber = Integer.parseInt(idx_member_s);
+
 String moimname = request.getParameter("moimname");
 String local = request.getParameter("local");
 String hobby = request.getParameter("hobby");
 String writer = request.getParameter("writer");
 String subect = request.getParameter("subject");
-/* String content= request.getParameter("content"); */
 String img = request.getParameter("img");
 %>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -157,18 +154,18 @@ textarea{
 								<th>이미지</th>
 								<td><input type="file" name="upload"></td>
 							</tr>
-
-							<input type="hidden" name="idx_memeber"
-								value="<%=dto.getIdx_member()%>">
-							<input type="hidden" name="hobby" value="<%=hobby%>">
-							<input type="hidden" name="writer" value="<%=writer%>">
+<tr>							<td>
+									<input type="hidden" name="hobby" value="<%=hobby%>">
+									<input type="hidden" name="writer" value="<%=writer%>">
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
 				<div class="button">
-					<input type="hidden" name="idx" value="<%=idx%>"> <input
-						type="submit" value="수정하기"> <input type="button"
-						onclick="location.href='reviewList.jsp'" value="취소">
+					<input type="hidden" name="idx" value="<%=idx%>"> 
+					<input type="submit" value="수정하기"> 
+					<input type="button" onclick="location.href='reviewList.jsp'" value="취소">
 				</div>
 			</form>
 		</article>
@@ -208,11 +205,12 @@ textarea{
 								<th>이미지</th>
 								<td><input type="file" name="upload"></td><td></td>
 							</tr>
-
-							<input type="hidden" name="idx_memeber"
-								value="<%=dto.getIdx_member()%>">
-							<input type="hidden" name="hobby" value="<%=hobby%>">
-							<input type="hidden" name="writer" value="<%=writer%>">
+							<tr>
+								<td>
+									<input type="hidden" name="hobby" value="<%=hobby%>">
+									<input type="hidden" name="writer" value="<%=writer%>">
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>

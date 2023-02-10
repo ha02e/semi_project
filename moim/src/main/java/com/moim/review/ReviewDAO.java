@@ -1,8 +1,11 @@
 package com.moim.review;
 
+
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
+
+import com.moim.info.*;
 import com.oreilly.servlet.MultipartRequest;
 
 public class ReviewDAO {
@@ -202,7 +205,6 @@ public class ReviewDAO {
 	/** 수정용 조회 관련 메소드 */
 	public ReviewDTO updateReviewForm(int idx) {
 		try {
-//			dbConnect();
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "select * from moim_review where idx=?";
 			ps = conn.prepareStatement(sql);
@@ -246,7 +248,7 @@ public class ReviewDAO {
 	}
 
 	/** 수정 관련 메소드 */
-	public int updateReview(ReviewDTO dto, MultipartRequest mr ) {
+	public int updateReview(ReviewDTO dto, MultipartRequest mr) {
 		try {
 //			dbConnect();
 			conn = com.moim.db.MoimDB.getConn();
@@ -382,5 +384,43 @@ public class ReviewDAO {
 			}
 		}
 	}
+	/** 수정용 조회 관련 메소드 */
+	public InfoDTO getInfo(int idx) {
+		try {
+			conn = com.moim.db.MoimDB.getConn();
+			String sql = "select hobby, local, moimname from moim_info where = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			rs = ps.executeQuery();
+			
+			InfoDTO dto = null;
+			if (rs.next()) {
+				String hobby= rs.getString("hobby");
+				String moimname= rs.getString("moimname");
+				String local = rs.getString("local");
+				dto = new  InfoDTO(0, hobby, moimname, null, local, 0, 0, null) ;
+			}
+
+			return dto;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (ps != null)
+					conn.close();
+			} catch (Exception e2) {
+
+			}
+		}
+	}
+	
+	
 	
 }
