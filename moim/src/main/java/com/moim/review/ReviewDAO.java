@@ -49,7 +49,7 @@ public class ReviewDAO {
 			} else {
 				ps = conn.prepareStatement(sql);
 			}
-
+    
 			rs = ps.executeQuery();
 			rs.next();
 			
@@ -388,11 +388,10 @@ public class ReviewDAO {
 	public InfoDTO getInfo(int idx) {
 		try {
 			conn = com.moim.db.MoimDB.getConn();
-			String sql = "select hobby, local, moimname from moim_info where = ?";
+			String sql = "select hobby, local, moimname from moim_info where idx = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, idx);
 			rs = ps.executeQuery();
-			
 			InfoDTO dto = null;
 			if (rs.next()) {
 				String hobby= rs.getString("hobby");

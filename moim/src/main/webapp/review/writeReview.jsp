@@ -125,12 +125,14 @@ textarea {
 int idx_info = 0;
 String idx_info_s = request.getParameter("idx_info"); // 얘가 idx_info 테이블에서 검색할것
 if (idx_info_s == null || idx_info_s.equals("")) {
-
+		idx_info_s = "21";
 }
+
 idx_info = Integer.parseInt(idx_info_s);
 
 String writer = (String) session.getAttribute("name");
 String img = request.getParameter("img");
+
 
 InfoDTO info = rdao.getInfo(idx_info);
 %>

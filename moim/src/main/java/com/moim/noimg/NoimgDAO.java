@@ -255,16 +255,28 @@ public class NoimgDAO {
 			}
 		}
 	}
-	/**(공지사항)총 게시글 수 검색*/
-	public int getNotiTotalCnt(int idx_info) {
+	
+	
+	
+	/**(공지사항)총 게시글 수 검색 기능 추가*/
+	public int getNotiTotalCnt( String keyword) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="select count(*) from moim_noimg where idx_info=?";
-			ps=conn.prepareStatement(sql);
-			ps.setInt(1, idx_info);
+			String sql="select count(*) from moim_noimg where  category = 1 ";
+			
+			if (!keyword.equals("")) {
+				keyword = "%" + keyword.replace(" ", "%") + "%";
+				sql = sql + " and subject like ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, keyword);
+				
+			} else {
+				ps = conn.prepareStatement(sql);
+			}
 			rs=ps.executeQuery();
-			rs.next();
-			int count=rs.getInt(1);
+			int count = 1;
+			if(rs.next());
+			count=rs.getInt(1);
 			return count==0?1:count;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -278,8 +290,6 @@ public class NoimgDAO {
 				}
 			}
 		}
-	
-	
 	/**(모임, 공지사항)게시판 조회*/
 	public ArrayList<NoimgDTO> getList(int idx_info, int category, int ls, int cp){
 		try {
@@ -306,6 +316,61 @@ public class NoimgDAO {
 				int lev=rs.getInt("lev");
 				int sunbun=rs.getInt("sunbun");
 				NoimgDTO dto=new NoimgDTO(idx,idx_member,idx_info,category,writer,subject,content, writedate, ref, lev, sunbun);
+				arr.add(dto);
+				}while(rs.next());
+			}return arr;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+		
+	}
+	
+	/**(모임, 공지사항)게시판 조회 기능 추가*/
+	public ArrayList<NoimgDTO> getList2( int ls, int cp, String keyword){
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			int start=(cp-1)*ls+1;
+			int end=cp*ls;
+			String sql="select * from(select rownum as rnum, a.* from (select * from moim_noimg where  ";
+					
+			
+			if (!keyword.equals("")) {
+				keyword = "%" + keyword.replace(" ", "%") + "%";
+				sql = sql + "  category=1 and subject like ? order by idx desc, ref desc, sunbun asc)a)b where rnum>=? and rnum<=? ";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, keyword);
+				ps.setInt(2, start);
+				ps.setInt(3, end);
+				
+			} else {
+				sql = sql + " category=1 order by idx desc)a)b where rnum>=? and rnum<=? ";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, start);
+				ps.setInt(2, end);
+			}
+			rs=ps.executeQuery();
+			ArrayList<NoimgDTO> arr=new ArrayList<NoimgDTO>();
+			if(rs.next()) {
+				do {
+				int idx=rs.getInt("idx");
+				int idx_member=rs.getInt("idx_member");
+				String writer=rs.getString("writer");
+				String subject=rs.getString("subject");
+				String content=rs.getString("content");
+				java.sql.Date writedate=rs.getDate("writedate");
+				int ref=rs.getInt("ref");
+				int lev=rs.getInt("lev");
+				int sunbun=rs.getInt("sunbun");
+				NoimgDTO dto=new NoimgDTO(idx, idx_member, 0, 1, writer, subject, content, writedate, ref, lev, sunbun);
 				arr.add(dto);
 				}while(rs.next());
 			}return arr;
