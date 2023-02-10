@@ -32,8 +32,14 @@ return;
 <!DOCTYPE html>
 <html>
 <head>
+<%
+	String idx_s=request.getParameter("idx");
+	int idx=Integer.parseInt(idx_s);
+	InfoDTO dto=mdao2.getInfo(idx);
+	int idx_info=idx;
+%>	
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>모임</title>
 <style>
 section{
 	width:800px;
@@ -276,12 +282,7 @@ input[id*="click"]:checked + label + div{
 	transition: 0.3s;
 }
 </style>
-<%
-	String idx_s=request.getParameter("idx");
-	int idx=Integer.parseInt(idx_s);
-	InfoDTO dto=mdao2.getInfo(idx);
-	int idx_info=idx;
-%>	
+
 <script>
 function moimApply(){
 	var w=500;
