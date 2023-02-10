@@ -78,14 +78,13 @@ h2{
 	font-size:32px;
 	width: 85%;
 	margin:0 auto;
-	padding-bottom:20px;
-	border-bottom:1px solid #A6A6A6;
 }
+
 
 /* 검색창 */
 form{
 	width: 85%;
-	margin:40px auto 16px auto;
+	margin:10px auto 20px auto;
 	text-align: right;
 }
 form select{
@@ -232,7 +231,7 @@ table #writedate {
 function write_button(){
 	var manager=<%=manager%>;
 	if(manager==1){
-		document.getElementById("b").style.display="block";
+		document.getElementById("b").style.display="inline-block";
 	}else{
 		document.getElementById("b").style.display="none";
 	}
@@ -245,7 +244,7 @@ function write_button(){
 <%@include file="/header.jsp"%>
 	<section >
 		<article>
-		<h3>공지사항</h3>
+		<h2>공지사항</h2>
 		<form name="search" action="notiList.jsp">
 		<div class ="search2">
 		<input type="text" name="keyword"> <input type="submit"

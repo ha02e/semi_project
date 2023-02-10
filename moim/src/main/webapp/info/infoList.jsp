@@ -18,7 +18,10 @@ section article{
 	width: 85%;
 	margin:0 auto;
 }
-
+article h3{
+	font-size: 24px;
+	margin:30px 0 0 0;
+}
 
 
 #buttondiv{
@@ -120,7 +123,7 @@ input[type="text"]{
 	border:1px solid red;
 	padding:20px 20px 10px 0px;
 }
-.moim-info div{
+.moim-info a{
 }
 .moim-con ul{
 	list-style: none;
@@ -178,10 +181,10 @@ input[type="text"]{
 	justify-content: space-between;
 	margin-bottom:20px;
 }
-.infotable a{
+.infodiv1 a, .infodiv2 a{
 	text-decoration: none;
 }
-.infotable a:link, .infotable a:visited{
+.infodiv1 a:link, .infodiv2 a:visited, .infodiv1 a:link, .infodiv2 a:visited{
 	color: #333333;
 }
 .info_top{
@@ -236,8 +239,6 @@ input[type="text"]{
 	color: white;
 	margin-bottom:30px;
 }
-
-
 
 .button:hover {
 	background: #00cdac;

@@ -12,6 +12,19 @@
 <title>notiContent</title>
 
 <style>
+section{
+	width:1280px;
+	margin:0px auto;
+	padding:50px 0;
+}
+h2{
+	font-size:28px;
+	width: 85%;
+	margin:0 auto;
+	padding-bottom:20px;
+	border-bottom:1px solid #A6A6A6;
+}
+
 table{
 	width:80%;
 	margin-left:auto;
