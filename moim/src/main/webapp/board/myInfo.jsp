@@ -191,25 +191,25 @@ MemberDTO dto=mdao.getMem(idx);
 	</tr>
 	<tr>
 		<th>비밀번호</th>
-		<td><input type="password" name="pwd" id="pwd1" value="<%=dto.getPwd()%>"></br>
+		<td><input type="password" name="pwd" id="pwd1" value="<%=dto.getPwd()%>"><br>
 		<span>8~16자 영문 대/소문자, 특수문자만 사용 가능합니다</span></td>
 	</tr>
 	<tr>
 		<th>비밀번호 재확인</th>
-		<td><input type="password" name="pwd2" id="pwd2" onchange="pwdCheck()" ></br>
+		<td><input type="password" name="pwd2" id="pwd2" onchange="pwdCheck()" ><br>
 		<span id="pwd_error"></span></td>
 	</tr>
 
 	<tr>
 		<th>본인 확인 이메일</th>
-		<td><input type="text" name="email" id="email" value="<%=dto.getEmail()%>" ></br>
+		<td><input type="text" name="email" id="email" value="<%=dto.getEmail()%>" ><br>
 		<span id="email_error"></span>
 		</td>
 	</tr>		
 	
 	<tr>
 		<th>나이</th>
-		<td><input type="text" name="age" id="age" value="<%=dto.getAge() %>" ></br>
+		<td><input type="text" name="age" id="age" value="<%=dto.getAge() %>" ><br>
 		<span id="age_error"></span></td>
 	</tr>	
 	<tr>

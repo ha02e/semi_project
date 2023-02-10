@@ -20,7 +20,7 @@ public class MemberDAO {
 	public int joinMem(MemberDTO dto) {
 		try {
 			conn=com.moim.db.MoimDB.getConn();
-			String sql="insert into moim_member values(moim_member_idx.nextval,?,?,?,?,?,?,?,sysdate,?)";
+			String sql="insert into moim_member values(moim_member_idx.nextval,?,?,?,?,?,?,?,sysdate,0)";
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, dto.getName());
 			ps.setString(2, dto.getId());
@@ -29,7 +29,6 @@ public class MemberDAO {
 			ps.setString(5, dto.getLocal());
 			ps.setInt(6,dto.getAge());
 			ps.setString(7, dto.getHobby());
-			ps.setInt(8, dto.getManager());
 			int count=ps.executeUpdate();
 			return count;
 		}catch(Exception e) {

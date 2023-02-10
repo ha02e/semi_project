@@ -48,13 +48,70 @@ int cp=Integer.parseInt(scp);
 .current_moim h2{
 	text-align:center;
 }
-.current_moim_box1{
+/*.current_moim_box1{
 	align-content: center;
 	margin:0px auto;
 	display:flex;
 	justify-content:space-around;
 	height:300px;
+} */
+
+
+li{
+	list-style:none;
 }
+
+#slide_wrapper{
+	position:relative;
+	width:960px;
+	margin:0 auto;
+	height:300px;
+	overflow:hidden;
+}
+
+#slides{
+	position:absolute;
+	left:0; top:0;
+	transition:left 0.5s ease-out;
+	magin:0;
+	padding:0; 
+	width: 1950px; 
+}
+
+#slides .info{
+	width: 300px;
+	height: 300px;
+	
+} 
+
+#slides li{
+	display:flex;
+}
+
+#slides li:not(:last-child){
+	float:left;
+	margin-right:30px;
+}
+
+.info Img{
+	width: 200px;
+	height:200px;
+	object-fit:cover;
+}
+
+.controls{
+	text-align:right;
+	margin-top:5px;
+}
+
+.controls span{
+	background:#333;
+	color:#999999;
+	padding:5px 10px;
+	margin: 0 10px;
+	cursor: pointer;
+}
+
 .notice{
 	height:300px;
 } 
@@ -86,11 +143,7 @@ int cp=Integer.parseInt(scp);
 .notice table #writedate{
 	width: 10%;
 }
-.info Img{
-	width: 200px;
-	height:200px;
-	object-fit:cover;
-}
+
 .button{
 	text-align: right;
 	padding:0 10px 20px 0;
@@ -109,6 +162,8 @@ int cp=Integer.parseInt(scp);
 	transition: 0.3s;
 }
 </style>
+
+
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -119,30 +174,60 @@ int cp=Integer.parseInt(scp);
 <section class="current_moim">
 <h2>현재 모집 중인 소모임</h2>
 <div class="button"><input type="button" value="전체보기 > " onclick="javascript:location.href='/moim/info/infoSearch.jsp'"></div>
-<div class="current_moim_box1">
+<p class="controls">
+<span class="prev" onclick="prevBtn()"> << </span>
+<span class="next" onclick="nextBtn()"> >> </span>
+</p>
+<div id="slide_wrapper">
+<ul id="slides">
 <%
 		ArrayList<InfoDTO> needarr=idao.getList("total");
 		if(needarr==null||needarr.size()==0){
 			%><h2>현재 모집중인 모임이 없습니다</h2>
 		<%
 		}else{
-		for(int i=0;i<needarr.size()&&i<4;i++){ %>
-			<div id="current_moim_box2">
-			<div class="info">
-				<img alt="needimg<%=i%>" src="/moim/userimg/<%=needarr.get(i).getImg()%>">
-			</div>
-			<div class="info">
-				<a href="/moim/info/moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a>
-			</div>
-			<div class="info">
-			<%=needarr.get(i).getLocal() %>
-			</div>
-			<div class="info">
-			<%=needarr.get(i).getHobby() %>
-			</div>
+		for(int i=0;i<needarr.size()&&i<6;i++){ %>
+
+<li>
+<div class="info">
+<div><img alt="needimg<%=i%>" src="/moim/userimg/<%=needarr.get(i).getImg()%>"></div>
+<div><a href="/moim/info/moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a></div>
+<div><%=needarr.get(i).getLocal() %></div>
+<div><%=needarr.get(i).getHobby() %></div>
 </div>
-	<%}} %>
+</li>
+<%}} %>
+</ul>
+
 </div>
+
+<script>
+var slides=document.getElementById('slides');
+var slide=document.getElementById('slides li');
+var currentId=0;
+var slideCount=6;
+
+function moveSlide(num){
+	slides.style.left=(-num*330)+'px';
+	currentId=num;
+}
+
+function prevBtn(){
+	if(currentId > 0){
+		moveSlide(currentId-1);	
+	}else{
+		moveSlide(slideCount-3);
+	}
+}
+
+function nextBtn(){
+	if(currentId<(slideCount-3)){
+		moveSlide(currentId+1);	
+	}else{
+		moveSlide(0);
+	}
+}
+</script>
 </section>
 
 <hr>
