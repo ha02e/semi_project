@@ -239,8 +239,8 @@ if(cp2%pageSize==0)manuserGroup--;
 					%>
 					<tr>
 					<td><%=hobbymap.get(alldto.get(i).getIdx_info())%></td>
-					<td><%=namemap.get(alldto.get(i).getIdx_info())%></td>
-					<td><%=memmap.get(alldto.get(i).getIdx_info()) %></td>
+					<td><a href="/moim/info/moimContent.jsp?idx=<%=alldto.get(i).getIdx_info()%>"><%=namemap.get(alldto.get(i).getIdx_info())%></a></td>
+					<td><%=memmap.get(alldto.get(i).getIdx_info())%></td>
 					<td>
 					<input type="button" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=alldto.get(i).getIdx_info()%>'">
 					<input type="button" value="후기쓰기" onclick="javascript:location.href='/moim/review/writeReview.jsp?idx_info=<%=alldto.get(i).getIdx_info()%>'">
@@ -298,7 +298,7 @@ if(cp2%pageSize==0)manuserGroup--;
 					%>
 					<tr>
 					<td><%=hobbymap.get(mandto.get(i).getIdx_info()) %></td>
-					<td><%=namemap.get(mandto.get(i).getIdx_info()) %></td>
+					<td><a href="/moim/info/moimContent.jsp?idx=<%=mandto.get(i).getIdx_info()%>"><%=namemap.get(mandto.get(i).getIdx_info()) %></a></td>
 					<td><%=memmap.get(mandto.get(i).getIdx_info())%></td>
 					<td>
 					<input type="button" value="모임관리" onclick="javascript:location.href='/moim/stat/statList.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">

@@ -243,8 +243,6 @@ MemberDTO dto=mdao.getMem(idx);
 		<div class="button">
 		<input type="submit" value="수정하기">
 		</form>
-		</div>
-	<div class="button">
 	<form name="delMember" action="delMember_ok.jsp">	
 		<input type="submit" value="탈퇴하기">
 		<input type="hidden" name="idx" value="<%=dto.getIdx()%>">
