@@ -155,7 +155,7 @@ if(cp2%pageSize==0)manuserGroup--;
 					<td><%=memmap.get(mandto.get(i).getIdx_info())%></td>
 					<td>
 					<input type="button" value="모임관리" onclick="javascript:location.href='/moim/stat/statList.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">
-					<input type="button" value="모임삭제" onclick="javascript:location.href='보낼이름.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">					
+					<input type="button" value="모임삭제" onclick="javascript:location.href='/moim/info/moimDel_ok.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">					
 					</td>
 					</tr>
 					<%
