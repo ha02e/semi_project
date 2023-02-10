@@ -168,7 +168,7 @@ table #writedate {
 
 #b {
 	text-align: center;
-	margin: 10px;
+	
 }
 
 .bottom{
@@ -232,7 +232,7 @@ table #writedate {
 function write_button(){
 	var manager=<%=manager%>;
 	if(manager==1){
-		document.getElementById("b").style.display="block";
+		document.getElementById("b").style.display="inline-block";
 	}else{
 		document.getElementById("b").style.display="none";
 	}

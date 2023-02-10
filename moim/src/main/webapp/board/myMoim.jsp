@@ -7,15 +7,169 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>참여중인 모임</title>
 <style>
-table{
-	width:1000px;
+.container{
+	display:flex;
+	width:800px;
+}
+section{
+	width:1280px;
+	margin:0px auto;
+	padding:50px 0;
+}
+
+h2{
+	font-size:32px;
+	width: 85%;
+	margin:0 auto;
+	padding-bottom:20px;
+	border-bottom:1px solid #A6A6A6;
+}
+
+/* 검색창 */
+form{
+	width: 85%;
+	margin:40px auto 16px auto;
+	text-align: right;
+}
+form select{
+	border: 2px solid #00cdac; 
+	border-radius: 0px; 
+	padding:7px;
+}
+form input[type="text"] {
+	border: 2px solid #00cdac; 
+	border-radius: 0px; 
+	padding:8px;
+}
+form input[type="submit"] {
+	border:0; 
+	background-color:transparent;
+	background-image:url("/moim/img/search.png");
+	background-position:center;
+	background-repeat:no-repeat;
+	width:30px;
+	height:40px;
+	cursor: pointer;
+	margin:-16px 0;
+}
+
+/* 게시판 리스트 */
+table {
+	width: 85%;
+	margin:0 auto 0px auto;
+	text-align: center;
+	border-collapse: collapse;
+}
+
+table a:link, table a:visited{
+	text-decoration: none;
+	color:#333333;
+}
+.subject_r a:hover{
+	font-weight: 800;
+	color:black;
+}
+
+.category_r{
+	width:15%;
+}
+.moimname_r{
+	width:30%;
+}
+.subject_r{
+	width:55%;
+}
+td.subject_r{
+	text-align: left;
+	margin-left:20px;
+}
+table th {
+	height: 46px;
+	border-top: 2px solid #4C7C77; 
+	border-bottom: 1px solid #4C7C77;
+	text-align: center;
+	vertical-align: inherit;
+}
+
+table td {
+	border-bottom: 1px solid #e5e5e5;
+	height: 46px;	
+}
+
+table #idx {
+	width: 5%;
+}
+
+table #subject {
+	width: 70%;
+	text-align: left;
+}
+
+table #writedate {
+	width: 15%;
+}
+
+#b {
+	text-align: center;
+	margin: 10px;
+}
+
+.bottom{
+	width:1280px;
+}
+
+.button {
+	width:85%;
+	margin:0 auto;
+	text-align: right;
+	padding: 0px 0 40px 0;
+}
+
+.button input{
+	border: 0;
+	outline: none;
+	width: 160px;
+	height: 40px;
+	cursor: pointer;
+	background: #999999;
+	color: white;
+}
+
+.button input[type="submit"] {
+	background: #333333;
+}
+
+.button input:hover {
+	background: #00cdac;
+	transition: 0.3s;
+}
+
+/* 페이징 */
+.paging{
+	width: 85%;
+	margin: 20px auto;
 	text-align: center;
 }
-th{
-	background-color: gray;
+.paging a{
+	display: inline-block;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	transition:0.2s;
 }
+.paging a:link,a:visited{
+	text-decoration: none;
+	color:#333333;
+}
+.paging a:hover{	
+	font-weight: 800;
+	color:#ffffff;
+	background:#00cdac;
+	border-radius: 100%;
+}
+
 </style>
 </head>
 <%
@@ -55,12 +209,12 @@ if(cp2%pageSize==0)manuserGroup--;
 %>
 <body>
 <%@include file="/header.jsp" %>
-
 <%@include file="sideBoard.jsp" %>
+<div class="container">
 <section>
 	<article>
 		<h3>참여중인 모임</h3>
-		<table border="1">
+		<table>
 			<thead>
 				<tr>
 				<th>카테고리</th>
@@ -89,8 +243,8 @@ if(cp2%pageSize==0)manuserGroup--;
 					%>
 					<tr>
 					<td><%=hobbymap.get(alldto.get(i).getIdx_info())%></td>
-					<td><%=namemap.get(alldto.get(i).getIdx_info())%></td>
-					<td><%=memmap.get(alldto.get(i).getIdx_info()) %></td>
+					<td><a href="/moim/info/moimContent.jsp?idx=<%=alldto.get(i).getIdx_info()%>"><%=namemap.get(alldto.get(i).getIdx_info())%></a></td>
+					<td><%=memmap.get(alldto.get(i).getIdx_info())%></td>
 					<td>
 					<input type="button" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=alldto.get(i).getIdx_info()%>'">
 					<input type="button" value="후기쓰기" onclick="javascript:location.href='/moim/review/writeReview.jsp?idx_info=<%=alldto.get(i).getIdx_info()%>'">
@@ -101,9 +255,9 @@ if(cp2%pageSize==0)manuserGroup--;
 			}
 			%>
 			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="4" align="center">
+		</table>
+		<div class="bottom">
+			<div class="paging">
 					<%
 					if(alluserGroup!=0){
 						%><a href="myMoim.jsp?cp=<%=(alluserGroup-1)*pageSize+pageSize%>&cp2=<%=cp2%>">&lt;&lt;</a><%
@@ -120,14 +274,11 @@ if(cp2%pageSize==0)manuserGroup--;
 						%><a href="myMoim.jsp?cp=<%=(alluserGroup+1)*pageSize+1%>&cp2=<%=cp2%>">&gt;&gt;</a><%
 					}
 					%>
-					</td>
-				</tr>
-			</tfoot>
-		</table>
-		
-		<br>
+					</div>
+					</div>
+					
 		<h3>내가 만든 모임</h3>
-		<table border="1">
+		<table>
 			<thead>
 				<tr>
 				<th>카테고리</th>
@@ -151,11 +302,11 @@ if(cp2%pageSize==0)manuserGroup--;
 					%>
 					<tr>
 					<td><%=hobbymap.get(mandto.get(i).getIdx_info()) %></td>
-					<td><%=namemap.get(mandto.get(i).getIdx_info()) %></td>
+					<td><a href="/moim/info/moimContent.jsp?idx=<%=mandto.get(i).getIdx_info()%>"><%=namemap.get(mandto.get(i).getIdx_info()) %></a></td>
 					<td><%=memmap.get(mandto.get(i).getIdx_info())%></td>
 					<td>
 					<input type="button" value="모임관리" onclick="javascript:location.href='/moim/stat/statList.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">
-					<input type="button" value="모임삭제" onclick="javascript:location.href='보낼이름.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">					
+					<input type="button" value="모임삭제" onclick="javascript:location.href='/moim/info/moimDel_ok.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">					
 					</td>
 					</tr>
 					<%
@@ -163,9 +314,9 @@ if(cp2%pageSize==0)manuserGroup--;
 			}
 			%>
 			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="4" align="center">
+		</table>
+		<div class="bottom">
+			<div class="paging">
 					<%
 					if(manuserGroup!=0){
 						%><a href="myMoim.jsp?cp2=<%=(manuserGroup-1)*pageSize+pageSize%>&cp=<%=cp%>">&lt;&lt;</a><%
@@ -182,12 +333,12 @@ if(cp2%pageSize==0)manuserGroup--;
 						%><a href="myMoim.jsp?cp2=<%=(manuserGroup+1)*pageSize+1%>&cp=<%=cp%>">&gt;&gt;</a><%
 					}
 					%>
-					</td>
-				</tr>
-			</tfoot>
-		</table>
+					</div>
+					</div>
 	</article>
 </section>
+</div>
+
 <%@include file="/footer.jsp" %>
 </body>
 </html>
