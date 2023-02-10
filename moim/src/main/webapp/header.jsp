@@ -23,7 +23,7 @@ section{
 	padding:8px 0 1px;
 }
 .id{
-	width:960px;
+	width:1220px;
 	margin:0px auto;
 	text-align:right;
 	font-size:14px;

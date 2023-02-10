@@ -13,15 +13,18 @@ if(sidx_info==null||sidx_info==""){
 	sidx_info="0";
 }
 int idx_info=Integer.parseInt(sidx_info);
+
 //ndao.getList 매개변수 2)category 
 String scategory=request.getParameter("category");
 if(scategory==null||scategory==""){
 	scategory="1";
 }
 int category=Integer.parseInt(scategory);
+
 //1)2) 값 추후 활용을 위해 세션에 저장
 session.setAttribute("idx_info", idx_info);
 session.setAttribute("category", category);
+
 //ndao.getList 매개변수 3)ls
 int totalContent=ndao.getNotiTotalCnt("");
 int listsize=5;
@@ -33,6 +36,7 @@ if(scp==null||scp.equals("")){
 	scp="1";
 }
 int cp=Integer.parseInt(scp);
+
 %>
 
 <!DOCTYPE html>
@@ -42,82 +46,58 @@ int cp=Integer.parseInt(scp);
 <title>Insert title here</title>
 
 <style>
-.mainImg Img{
+section{
 	width: 1280px;
+	margin:0 auto;
+}
+.banner01{
+	width: 1280px;
+	height:360px;
+	margin:0 auto;
+	overflow:hidden;
+	position: relative;
+}
+.banner01 img{
+	width:100%;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+}
+
+.current_moim{
+	width:100vw;
+	background: #f9f9f9;
+}
+.c_moim{
+	width: 1280px;
+	margin:0 auto;
+	padding-bottom:50px;
 }
 .current_moim h2{
 	text-align:center;
+	margin:0;
+	padding-top:50px;
 }
-/*.current_moim_box1{
+
+.current_moim_box1{
 	align-content: center;
 	margin:0px auto;
 	display:flex;
 	justify-content:space-around;
 	height:300px;
-} */
-
-
-li{
-	list-style:none;
-}
-
-#slide_wrapper{
-	position:relative;
-	width:960px;
-	margin:0 auto;
-	height:300px;
-	overflow:hidden;
-}
-
-#slides{
-	position:absolute;
-	left:0; top:0;
-	transition:left 0.5s ease-out;
-	magin:0;
-	padding:0; 
-	width: 1950px; 
-}
-
-#slides .info{
-	width: 300px;
-	height: 300px;
-	
-} 
-
-#slides li{
-	display:flex;
-}
-
-#slides li:not(:last-child){
-	float:left;
-	margin-right:30px;
-}
-
-.info Img{
-	width: 200px;
-	height:200px;
-	object-fit:cover;
-}
-
-.controls{
-	text-align:right;
-	margin-top:5px;
-}
-
-.controls span{
-	background:#333;
-	color:#999999;
-	padding:5px 10px;
-	margin: 0 10px;
-	cursor: pointer;
 }
 
 .notice{
 	height:300px;
 } 
+
 .notice h2{
 	text-align:center;
+	margin:0;
+	padding-top:50px;
 }
+
 .notice #notice_tb{
 	justify-content:center;
 	align-items:center;
@@ -127,12 +107,16 @@ li{
 	margin: 0 auto;
 	padding: 10px 29px 10px 29px;
 }
+
 .notice #notice_tb td, th{
 	border-bottom:1px solid gray;
+
 }
+
 .notice table #idx{
 	width: 5%;
 }
+
 .notice table #subject{
 	width: 40%;
 	text-align: left;
@@ -140,8 +124,17 @@ li{
 	font-weight:bold;
 	
 }
+
 .notice table #writedate{
 	width: 10%;
+}
+
+
+
+.info Img{
+	width: 200px;
+	height:200px;
+	object-fit:cover;
 }
 
 .button{
@@ -157,29 +150,28 @@ li{
 	background:#999999;
 	color:white;
 }
+
+
 .button input:hover{
 	background: #00cdac;
 	transition: 0.3s;
 }
+
 </style>
-
-
 </head>
 <body>
 <%@include file="header.jsp" %>
 <section class="mainImg">
-<a href="/moim/review/reviewList.jsp"><img src="/moim/img/banner_main.jpg" alt="매인 배너"></a>
+<div class="banner01">
+<a href="/moim/noimg/notiList.jsp"><img src="/moim/img/banner_main.jpg" alt="매인 배너"></a>
+</div>
 </section>
 
 <section class="current_moim">
+<div class="c_moim">
 <h2>현재 모집 중인 소모임</h2>
 <div class="button"><input type="button" value="전체보기 > " onclick="javascript:location.href='/moim/info/infoSearch.jsp'"></div>
-<p class="controls">
-<span class="prev" onclick="prevBtn()"> << </span>
-<span class="next" onclick="nextBtn()"> >> </span>
-</p>
-<div id="slide_wrapper">
-<ul id="slides">
+<div class="current_moim_box1">
 <%
 		ArrayList<InfoDTO> needarr=idao.getList("total");
 		if(needarr==null||needarr.size()==0){
@@ -187,50 +179,25 @@ li{
 		<%
 		}else{
 		for(int i=0;i<needarr.size()&&i<6;i++){ %>
-
-<li>
-<div class="info">
-<div><img alt="needimg<%=i%>" src="/moim/userimg/<%=needarr.get(i).getImg()%>"></div>
-<div><a href="/moim/info/moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a></div>
-<div><%=needarr.get(i).getLocal() %></div>
-<div><%=needarr.get(i).getHobby() %></div>
+			<div id="current_moim_box2">
+			<div class="info">
+				<img alt="needimg<%=i%>" src="/moim/userimg/<%=needarr.get(i).getImg()%>">
+			</div>
+			<div class="info">
+				<a href="infoContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a>
+			</div>
+			<div class="info">
+			<%=needarr.get(i).getLocal() %>	
+			</div>
+			<div class="info">
+			<%=needarr.get(i).getHobby() %>
+			</div>
 </div>
-</li>
-<%}} %>
-</ul>
-
+	<%}} %>
 </div>
-
-<script>
-var slides=document.getElementById('slides');
-var slide=document.getElementById('slides li');
-var currentId=0;
-var slideCount=6;
-
-function moveSlide(num){
-	slides.style.left=(-num*330)+'px';
-	currentId=num;
-}
-
-function prevBtn(){
-	if(currentId > 0){
-		moveSlide(currentId-1);	
-	}else{
-		moveSlide(slideCount-3);
-	}
-}
-
-function nextBtn(){
-	if(currentId<(slideCount-3)){
-		moveSlide(currentId+1);	
-	}else{
-		moveSlide(0);
-	}
-}
-</script>
+</div>
 </section>
 
-<hr>
 <section class="notice">
 <h2>공지사항</h2>
 <div id="notice_tb"> 

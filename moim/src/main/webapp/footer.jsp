@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">
 <style>
 body{
 	margin:0;
@@ -13,10 +17,10 @@ body{
 #footer{
 	width:100vw;
 	background-color:#33363C;
-	padding-top:40px;
+	padding:40px 0;
 }
 .footer_con {
-	width:1280px;
+	width:1160px;
 	height:180px;
 	margin:0 auto;
 	display:flex;
@@ -32,17 +36,43 @@ body{
 	display:flex;
 	justify-content: space-between;
 }
-.insta, .fb{
-	width:45px;
-	height:45px;
-	background:white;
+
+.insta{
+	position: relative;
+	width: 48px;
+	height: 48px;
+}
+.insta img{
+	position:absolute;
+	width: 112%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	opacity: 0.5;
+	
+}
+.youtube{
+	position: relative;
+	width:48px;
+	height:48px;
+}
+.youtube img{
+	position:absolute;
+	width: 98%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	opacity: 0.5;
+	
 }
 h1{
 	color:white;
-	opacity: 0.3;
+	opacity: 0.5;
 	margin:0;
 	margin-bottom:10px;
-	font-size: 36px;
+	font-size: 50px;
+	font-family: 'Nerko One', cursive;
+	letter-spacing :4px;
 }
 
 #footer #menu ul {
@@ -80,8 +110,8 @@ h1{
 <div id="brand">
 <h1>MOIM</h1>
 <div class="sns">
-	<div class="insta"><a href=""></a></div>
-	<div class="fb"><a href=""></a></div>
+	<div class="insta"><a href=""><img src="/moim/img/insta.png"></a></div>
+	<div class="youtube"><a href=""><img src="/moim/img/youtube.png"></a></div>
 </div>
 </div>
 <div id="menu">
