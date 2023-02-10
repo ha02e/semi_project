@@ -128,8 +128,9 @@ MemberDTO dto=mdao.getMem(idx);
 		</div>
 	</fieldset>
 	</form>
-	<form name="myInfoDelete" action="myInfoDelete_ok.jsp">	
+	<form name="Delete" action="delMember_ok.jsp">	
 		<input type="submit" value="탈퇴하기">
+		<input type="hidden" value="<%=dto.getIdx() %>" name="idx">
 	</form>
 </article>
 </section>

@@ -5,13 +5,17 @@
 <jsp:useBean id="sdao" class="com.moim.stat.StatDAO"></jsp:useBean>
 
 <%
-Integer idx=(Integer)request.getAttribute("idx");
+int idx=0;
+if(request.getParameter("idx")!=null&&!request.getParameter("idx").equals("")){
+	idx=Integer.parseInt(request.getParameter("idx"));
+}
 int result=mdao.dropMem(idx);
 
 ArrayList<Integer> statarr=sdao.getInMoim(idx);
 int result1=0;
 int result2=0;
 int result3=0;
+
 if(result>0){
 	result1=sdao.delStat(idx);
 }
@@ -21,6 +25,7 @@ if(result>0){
 if(result>0){
 	result3=sdao.minusMem(statarr);
 }
+System.out.println(result1+" "+result2+" "+result3);
 String msg=result>0?"탈퇴 완료":"탈퇴 실패";
 session.invalidate();
 %>

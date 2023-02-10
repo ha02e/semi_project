@@ -746,6 +746,7 @@ public class MemberDAO {
 			conn=com.moim.db.MoimDB.getConn();
 			String sql="delete from moim_member where idx=?";
 			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx);
 			int count=ps.executeUpdate();
 			return count;
 		}catch(Exception e){
