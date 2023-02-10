@@ -347,14 +347,12 @@ public class MemberDAO {
 			conn=com.moim.db.MoimDB.getConn();
 			int start=(cp-1)*ls+1;
 			int end=(cp*ls);
-//			String sql="select * from moim_stat where idx_member=?";
 			String sql="select * from(select rownum as rnum,a.*from(select * from moim_stat where idx_member=?)a)b where rnum>=? and rnum<=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, idx_member);
 			ps.setInt(2, start);
 			ps.setInt(3, end);
 			ArrayList<StatDTO> arr=new ArrayList<StatDTO>();
-//			ps.setInt(1, idx_member);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int idx=rs.getInt("idx");
@@ -464,7 +462,6 @@ public class MemberDAO {
 			conn=com.moim.db.MoimDB.getConn();
 			int start=(cp-1)*ls+1;
 			int end=(cp*ls);
-//			String sql="select * from moim_noimg where idx_info=? and category=?";
 			String sql="select * from(select rownum as rnum,a.*from(select * from moim_noimg where ";
 			if(cul.equals("전체")) {
 			sql=sql+" idx_info=? and category=?order by ref desc,sunbun asc)a)b where rnum>=? and rnum<=? ";
@@ -743,5 +740,25 @@ public class MemberDAO {
 			}catch(Exception e2) {}
 		}
 	}
+	/**멤버 탈퇴 관련 메서드*/
+	public int dropMem(int idx) {
+		try {
+			conn=com.moim.db.MoimDB.getConn();
+			String sql="delete from moim_member where idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			int count=ps.executeUpdate();
+			return count;
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
 	
+
 }

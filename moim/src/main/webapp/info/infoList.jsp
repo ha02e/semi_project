@@ -85,7 +85,7 @@ label.detail{
 	display:inline-block; 
 	width:100px;
 	line-height: 30px;
-	vertical-align: center;
+	cursor: pointer;
 }
 label:hover, label:active, input:hover+label, input:active+label {
     background:#00cdac;
@@ -195,7 +195,11 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		for(int i=0;i<fitarr.size()&&i<=1;i++){ %>
 			<table class="infotab">
 				<tr>
+				<%if(fitarr.get(i).getImg()!=null&&!fitarr.get(i).getImg().equals("")){ %>
 					<td><img alt="fitimg<%=i%> %>" src="/moim/userimg/<%=fitarr.get(i).getImg()%>"></td>
+				<%}else{ %>
+					<td><img alt="fitimg<%=i%> %>" src="/moim/img/noimg.png"></td>
+				<%} %>
 				</tr>
 			</table>
 			<ul>
@@ -224,7 +228,11 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 		for(int i=0;i<needarr.size()&&i<4;i++){ %>
 			<table class="infotab" id="infotab">
 				<tr>
+				<%if(needarr.get(i).getImg()!=null&&!needarr.get(i).getImg().equals("")){ %>
 					<td><img alt="needimg<%=i %>" src="/moim/userimg/<%=needarr.get(i).getImg()%>"></td>
+				<%}else{ %>
+				<td><img alt="needimg<%=i %>" src="/moim/img/noimg.png"></td>
+				<%} %>
 				</tr>
 			</table>
 		<%} %>

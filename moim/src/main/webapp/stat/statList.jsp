@@ -117,7 +117,10 @@ if (cp2 % pageSize == 0)userGroup2--;
  				<tr>
  					<td id="idx"><%=hm.get(inarr.get(i).getIdx_member()) %></td>
  					<td id="subject"><%=inarr.get(i).getJoindate() %></td>
- 					<td id="joindate"><input type="button" class="button" value="내보내기" onclick="javascript:location.href='delMem_ok.jsp?idx=<%=inarr.get(i).getIdx()%>&idx_info=<%=idx_info%>'"></td>
+ 					<td id="joindate">
+ 					<input type="button" class="button" value="내보내기" onclick="javascript:location.href='delMem_ok.jsp?idx=<%=inarr.get(i).getIdx()%>&idx_info=<%=idx_info%>'">
+ 					<input type="button" class="button" value="관리자 임명하기" onclick="javascript:location.href='giveMan_ok.jsp?idx=<%=inarr.get(i).getIdx()%>'">
+ 					</td>
  				</tr>
  			<%} %>
  			</tbody>
