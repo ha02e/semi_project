@@ -31,7 +31,7 @@ session.setAttribute("category", category);
 
 //ndao.getList 매개변수 3)ls
 int totalContent=ndao.getNotiTotalCnt( keyword);
-int listsize=3;
+int listsize=10;
 int pageSize=5;
 	
 //ndao.getList 매개변수 4)cp
@@ -65,7 +65,7 @@ if(manager==null){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>notiList</title>
+<title>공지사항</title>
 
 <style>
 section{

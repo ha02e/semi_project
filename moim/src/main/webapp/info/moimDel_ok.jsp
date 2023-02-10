@@ -4,8 +4,8 @@
 <%
 
 int idx_info=0;
-if(request.getParameter("idx_info")!=null&&!request.getParameter("idx_info").equals("")){
-	idx_info=Integer.parseInt(request.getParameter("idx_info"));
+if(request.getParameter("idx")!=null&&!request.getParameter("idx").equals("")){
+	idx_info=Integer.parseInt(request.getParameter("idx"));
 }
 
 int result=idao.delInfo(idx_info);
