@@ -94,6 +94,7 @@ table th {
 	border-bottom: 1px solid #4C7C77;
 	text-align: center;
 	vertical-align: inherit;
+	background: #f3f3f3;
 }
 
 table td {
