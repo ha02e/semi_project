@@ -45,6 +45,10 @@ int cp=Integer.parseInt(scp);
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
 *{
 margin:0;
@@ -53,6 +57,14 @@ padding:0;
 section{
    width: 1280px;
    margin:0 auto;
+}
+h3{
+	font-size: 32px;
+	padding:60px 0 30px 0;
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	color: #333333;
+	text-align: center;
 }
 
 /*배너 슬라이드*/
@@ -116,6 +128,10 @@ section{
 }
 
 /*현재 모집 중인 소모임*/
+
+.slide-view{
+	display:flex;
+}
 .current_moim{
    width:100vw;
    background: #F2F2F2;
@@ -147,7 +163,7 @@ li{
 	position:relative;
 	width:960px;
 	margin:0 auto;
-	height:300px;
+	height:340px;
 	overflow:hidden;
 }
 
@@ -162,8 +178,6 @@ li{
 
 #slides .info{
 	width: 300px;
-	height: 300px;
-	
 } 
 
 #slides li{
@@ -175,23 +189,65 @@ li{
 	margin-right:30px;
 }
 
-.info Img{
-	width: 200px;
-	height:200px;
-	object-fit:cover;
+.info a{
+	text-decoration: none;
+	color: #333333;
 }
-
+.info a:link, .info a:visited{
+	color: #333333;
+}
+.thumb{
+	width: 260px;
+	height: 260px;
+	overflow: hidden;
+	position: relative;	
+	border-radius: 12px;
+	margin-bottom: 10px;
+}
+.thumb img{
+	position:absolute;
+	height:100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	transition:all 0.5s;
+}
+.thumb img:hover{
+	transform: translate(-50%, -50%) scale(1.1);
+}
+.title{
+	font-size: 20px;
+	font-weight: 600;
+	margin:4px 0 4px 6px;
+	/*말줄임표*/
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.title:hover{
+	color: #00cdac;
+}
+.moim_info{
+	font-size: 16px;
+	color:#666666;
+	margin:4px 0 4px 6px;
+}
 .controls{
-	text-align:right;
-	margin-top:5px;
+	width:102px;
 }
-
 .controls span{
-	background:#333;
-	color:#999999;
-	padding:5px 10px;
-	margin: 0 10px;
+	display:inline-block;
+	width:40px;
+	height:40px;
+	margin:0 4px;
 	cursor: pointer;
+}
+.controls span img{
+	width: 100%;
+}
+.mbutton{
+	display: flex;
+	flex-direction: column;
 }
 
 /*공지사항*/
@@ -199,10 +255,8 @@ li{
    height:300px;
 } 
 
-.notice h2{
-   text-align:center;
-   margin:0;
-   padding-top:50px;
+.notice h3{
+   padding-bottom:0px;
 }
 
 .notice #notice_tb{
@@ -214,12 +268,31 @@ li{
    margin: 0 auto;
    padding: 10px 29px 10px 29px;
 }
-
-.notice #notice_tb td, th{
-   border-bottom:1px solid gray;
-
+#notice_tb table{
+	border-collapse: collapse;
+	border-radius:20px;
+	width:100%;
 }
-
+tr{
+	display:inline-block;
+	width:100%;
+	padding:10px;
+	border-radius: 20px;
+	background:white;
+	transition:0.4s;
+	border:2px solid #ebedee;
+}
+tr:hover{
+	border:2px solid #00cdac;
+}
+tr a{
+	color:#333333;
+	text-decoration: none;
+}
+tr a:visited, tr a:link{
+	color:#333333;
+	text-decoration: none;
+}
 .notice table #idx{
    width: 5%;
 }
@@ -228,20 +301,31 @@ li{
    width: 40%;
    text-align: left;
    padding-left: 40px;
+}
+#subject:hover{
    font-weight:bold;
-   
 }
 
 .notice table #writedate{
    width: 10%;
 }
 
-
-
-.info Img{
-   width: 200px;
-   height:200px;
-   object-fit:cover;
+.more-btn{
+	display: inline-block;
+	width:100px;
+	height:30px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+	text-align: center;
+	font-size: 14px;
+}
+.more-btn a{
+	text-decoration:none;
+	line-height: 30px;
+}
+.more-btn a:link, .more-btn a:visited{
+	color:white;
 }
 
 .button{
@@ -263,7 +347,26 @@ li{
    background: #00cdac;
    transition: 0.3s;
 }
-
+.sbutton{
+   	text-align: right;
+   	padding:0 10px 20px 0;
+}
+.sbutton input[type="button"]{
+	border:0;
+	outline:none;
+	display: inline-block;
+	width:100px;
+	height:30px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+	text-align: center;
+	font-size: 14px;
+}
+.sbutton input[type="button"]:hover{
+	background: #00cdac;
+	transition:0.3s;
+}
 </style>
 </head>
 <body>
@@ -310,12 +413,9 @@ li{
 
 <section class="current_moim">
 <div class="c_moim">
-<h2>현재 모집 중인 소모임</h2>
-<div class="button"><input type="button" value="전체보기 > " onclick="javascript:location.href='/moim/info/infoSearch.jsp'"></div>
-<p class="controls">
-<span class="prev" onclick="prevBtn()"> << </span>
-<span class="next" onclick="nextBtn()"> >> </span>
-</p>
+<h3>현재 모집 중인 소모임</h3>
+
+<div class="slide-view">
 <div id="slide_wrapper">
 <ul id="slides">
 <%
@@ -328,16 +428,23 @@ li{
 
 <li>
 <div class="info">
-<div><img alt="needimg<%=i%>" src="/moim/userimg/<%=needarr.get(i).getImg()%>"></div>
-<div><a href="/moim/info/moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>"><%=needarr.get(i).getMoimname() %></a></div>
-<div><%=needarr.get(i).getLocal() %></div>
-<div><%=needarr.get(i).getHobby() %></div>
+<a href="/moim/info/moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>">
+	<div class="thumb"><img alt="needimg<%=i%>" src="/moim/userimg/<%=needarr.get(i).getImg()%>"></div>
+	<div class="title"><%=needarr.get(i).getMoimname() %></div>
+	<div class="moim_info"><%=needarr.get(i).getHobby() %>&nbsp;/&nbsp;<%=needarr.get(i).getLocal() %></div>
+</a>
 </div>
 </li>
 <%}} %>
 </ul>
 </div>
-
+<div class="mbutton">
+<div class="sbutton"><input type="button" value="전체보기 > " onclick="javascript:location.href='/moim/info/infoSearch.jsp'"></div>
+<p class="controls">
+<span class="prev" onclick="prevBtn()"><img src="/moim/img/previous.png"></span>
+<span class="next" onclick="nextBtn()"><img src="/moim/img/next.png"></span>
+</p>
+</div>
 <script>
 var slides=document.getElementById('slides');
 var slide=document.getElementById('slides li');
@@ -365,25 +472,20 @@ function nextBtn(){
 	}
 }
 </script>
+</div>
 </section>
 
 
 <section class="notice">
-<h2>공지사항</h2>
+<h3>공지사항</h3>
 <div id="notice_tb"> 
 <table>
-   <thead>
-      <tr>
-         <th>번호</th>
-         <th>제목</th>
-         <th>작성일</th>
-      </tr>
-   </thead>
    <tbody>
          <%ArrayList<NoimgDTO> arr=ndao.getList(idx_info,category,listsize, cp);
                   if(arr==null||arr.size()==0){
             %>
             <tr id="td">
+            <div class="noti-list">
             <td colspan="3">등록된 게시글이 없습니다.</td>
             <%}else{ 
                for(int i=0;i<arr.size();i++){   
@@ -391,13 +493,14 @@ function nextBtn(){
                <td id="idx"><%=arr.get(i).getIdx()%></td>
                <td id="subject"><a href="/moim/noimg/notiContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject() %></a></td>
                <td id="writedate"><%=arr.get(i).getWritedate() %></td>
+            </div>
             </tr>
             <%}
             }%>
    </tbody>
 </table>
 </div>
-<div class="button"><input type="button" value="더보기 >" onclick="javascript:location.href='/moim/noimg/notiList.jsp?idx_info=<%=session.getAttribute("idx_info")%>'"></div>
+<div class="sbutton"><input type="button" value="더보기 >" onclick="javascript:location.href='/moim/noimg/notiList.jsp?idx_info=<%=session.getAttribute("idx_info")%>'"></div>
 </section>
 <%@include file="footer.jsp" %>
 </body>
