@@ -42,19 +42,29 @@ String img = request.getParameter("img");
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
 section{
 	width:800px;
 	margin:0 auto;
+	padding:50px 0;
 }
 section h2{
-	margin:40px 0 0 0;
+	font-size:45px;
+	width: 85%;
+	margin:0 auto;	
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	text-align: center;
 }
 section p{
-	font-size: 14px;
-	margin:10px 0 20px 0;
+	font-size: 15px;
+	margin:4px 0 20px 0;
 	color:#666666;
+	text-align: center;
 }
 
 section .write table{
@@ -121,21 +131,23 @@ textarea{
 		document.getElementByld("imgchange").src = "";
 	}
 </script>
+</head>
 <body>
 	<%@include file="/header.jsp"%>
 	<section>
 		<%
 		if (dto.getImg() == null || dto.getImg().equals("")) {
 		%>
-		<article>
+		<article>				
+			<h2>후기 수정하기</h2>
+			<p>수정할 내용을 작성해주세요.</p>
 			<form name="reviewupdate" action="updateReviewImg.jsp" method="post">
-				<h2>후기 게시판 수정</h2>
 				<div class="moimcontent">
 					<div class="contents write">
 						<table>
 							<tr>
 								<th>제목</th>
-								<td><input type="text" name ="subject" value="<%=dto.getSubject()%>"></td>
+								<td><input type="text" name ="subject" value="<%=dto.getSubject()%>" size="52"></td>
 							</tr>
 							<tr>
 								<th>모임이름</th>
@@ -147,8 +159,8 @@ textarea{
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><textarea name="content" rows="10" cols="50"
-										><%=dto.getContent()%></textarea></td>
+								<td><textarea name="content" rows="10" cols="80" style="resize:none">
+								<%=dto.getContent()%></textarea></td>
 							</tr>
 							<tr>
 								<th>이미지</th>
