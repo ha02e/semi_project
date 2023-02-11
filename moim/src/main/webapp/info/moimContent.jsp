@@ -93,6 +93,14 @@ section .img img{
 	background-image: url("/moim/img/icon02.png");
 	background-size: cover;
 }
+.con-icon3{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	vertical-align: top;
+	background-image: url("/moim/img/icon03.png");
+	background-size: cover;
+}
 .moiminfo table{
 	width:650px;
 	margin:0 10px 0 6px;
@@ -312,6 +320,14 @@ function qnaWrite(){
 	 
 	window.open('/moim/noimg/qnaWrite.jsp?idx_info=<%=idx_info%>', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
+function validate(){
+	var content=document.getElementById("content");
+
+	if(content.value=="" || content==null){
+		window.alert('내용을 입력해주세요');
+		return false;
+	}
+}
 </script>
 </head>
 
@@ -350,8 +366,7 @@ if(cp%pageSize==0)userGroup--;
             <tr class="moimtext">
 				<td>
 					<div class="moim-content">
-						<span class="con-icon3"></span>
-						내용 :<br>
+						<span class="con-icon3"></span>&nbsp;내용 :<br>
 						<%=dto.getContent().replaceAll("\n","<br>") %>
 					</div>
 				</td>
@@ -456,11 +471,12 @@ if(cp%pageSize==0)userGroup--;
 						<div class="rewrite">
 							<fieldset>
 							<legend>답변작성</legend>
-							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&ref=<%=arr.get(i).getRef() %>">
+							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&ref=<%=arr.get(i).getRef() %>"
+							   onsubmit="return validate()">
 							<table>
 								<tr> 
 									<td>
-										<textarea name="content" rows="3" cols="94" style="resize:none"></textarea>
+										<textarea name="content" id="content" rows="3" cols="94" style="resize:none"></textarea>
 									</td>
 								</tr>
 								<tr>

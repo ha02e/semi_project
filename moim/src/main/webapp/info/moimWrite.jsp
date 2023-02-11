@@ -23,18 +23,29 @@ return;
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
 section{
 	width:800px;
 	margin:0 auto;
+	padding:50px 0;
 }
 section h2{
-	margin:40px 0 0 0;
+	font-size:45px;
+	width: 85%;
+	margin:0 auto;	
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	text-align: center;
 }
 section p{
-	font-size: 14px;
-	margin:10px 0 20px 0;
+	font-size: 15px;
+	margin:4px 0 20px 0;
 	color:#666666;
+	text-align: center;
 }
 
 section .write table{
@@ -73,6 +84,7 @@ input[type="text"] {
 textarea{
 	border: 1px solid #999999; 
 	border-radius: 0px; 
+	padding:8px;
 }
 
 .button{
@@ -102,10 +114,16 @@ function pageBack(){
 }
 
 function validate(){
+	var moimname=document.getElementById("moimname");
 	var content=document.getElementById("content");
-	if(content.vlaue==""){
+	
+	if(moimname.value=="" || moimname==null){
+		window.alert('모임이름을 입력해주세요');
+		moimname.focus();
+		return false;
+	}
+	if(content.value=="" || content==null){
 		window.alert('내용을 입력해주세요');
-		content.focus();
 		return false;
 	}
 }
@@ -119,7 +137,8 @@ function validate(){
 	<p>모임의 기본 정보를 입력해주세요 :)</p>
 	<div class="moimcontent">
 		<div class="contents write">
-		<form name="moimWrite" action="moimWrite_ok.jsp" method="post" enctype="multipart/form-data" onsubmit="return validate()">
+		<form name="moimWrite" action="moimWrite_ok.jsp" method="post" 
+			enctype="multipart/form-data" onsubmit="return validate()">
 			<table>
 				<tr>
 					<th>카테고리</th>
@@ -139,7 +158,7 @@ function validate(){
 				<tr>
 					<th>모임이름</th>
 					<td>
-						<input type="text" name="moimname" size="52" placeholder="모임이름을 입력해주세요.">
+						<input type="text" name="moimname" id="moimname" size="52" placeholder="모임이름을 입력해주세요.">
 					</td>
 				</tr>
 				<tr>
@@ -196,8 +215,8 @@ function validate(){
 		</div>
 
 		<div class="button">
-			<input type="button" value="취소하기" onclick="pageBack();">
 			<input type="submit" value="모임 만들기">
+			<input type="button" value="취소하기" onclick="pageBack();">
 		</div>
 		</form>
 </article>
