@@ -12,83 +12,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
-.container{
-	display:flex;
-	width:800px;
-}
 section{
 	width:1280px;
 	margin:0px auto;
 	padding:50px 0;
 }
 
-h2{
+h3.my-title{
 	font-size:32px;
-	width: 85%;
 	margin:0 auto;
-	padding-bottom:20px;
-	border-bottom:1px solid #A6A6A6;
-}
-
-/* 검색창 */
-form{
-	width: 85%;
-	margin:40px auto 16px auto;
-	text-align: right;
-}
-form select{
-	border: 2px solid #00cdac; 
-	border-radius: 0px; 
-	padding:7px;
-}
-form input[type="text"] {
-	border: 2px solid #00cdac; 
-	border-radius: 0px; 
-	padding:8px;
-}
-form input[type="submit"] {
-	border:0; 
-	background-color:transparent;
-	background-image:url("/moim/img/search.png");
-	background-position:center;
-	background-repeat:no-repeat;
-	width:30px;
-	height:40px;
-	cursor: pointer;
-	margin:-16px 0;
+	padding-bottom:10px;
+	width: 54%;
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	color: #333333;
 }
 
 /* 게시판 리스트 */
 table {
-	width: 85%;
+	width: 74%;
 	margin:0 auto 0px auto;
 	text-align: center;
 	border-collapse: collapse;
 }
 
-table a:link, table a:visited{
-	text-decoration: none;
-	color:#333333;
-}
-.subject_r a:hover{
-	font-weight: 800;
-	color:black;
-}
 
-.category_r{
-	width:15%;
-}
-.moimname_r{
-	width:30%;
-}
-.subject_r{
-	width:55%;
-}
-td.subject_r{
-	text-align: left;
-	margin-left:20px;
-}
+
 table th {
 	height: 46px;
 	border-top: 2px solid #4C7C77; 
@@ -102,52 +56,88 @@ table td {
 	height: 46px;	
 }
 
-table #idx {
-	width: 5%;
+.my-review input[type="button"]{
+	outline: none;
+	background:#999999;
+	color:white;
+	border:0;
+	border-radius: 4px;
+	padding:4px 10px;
+	cursor:pointer;
 }
-
-table #subject {
-	width: 70%;
+.my-review input[type="button"]:hover{
+	transition: 0.3s;
+	background: #00cdac;
+}
+.my-write input[type="submit"]{
+	outline: none;
+	background:#999999;
+	color:white;
+	border:0;
+	border-radius: 4px;
+	padding:4px 10px;
+	cursor:pointer;
+}
+.my-write input[type="submit"]:hover{
+	transition: 0.3s;
+	background: #00cdac;
+}
+.my-review table #hobby {
+	width: 10%;
+	text-align: center;
+}
+.my-review table #subject {
+	width: 60%;
+}
+.my-review table td#subject {
 	text-align: left;
+	padding-left:20px;
+	/*말줄임표*/
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
-table #writedate {
+.my-review table #writedate {
 	width: 15%;
 }
 
-#b {
+.my-review table #update{
+	width:15%;
+}
+
+.my-review table #moimname {
+	width: 18%;
 	text-align: center;
-	margin: 10px;
+	/*말줄임표*/
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.my-review a:hover{
+	font-weight: bold;
+}
+.my-review a:link, .my-review a:visited{
+	text-decoration: none;
+	color:#333333;
 }
 
-.bottom{
-	width:1280px;
+.my-write table #subject {
+	width: 55%;
+}
+.my-write table td#subject{
+	text-align: left;
+	padding-left:30px;
+	/*말줄임표*/
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.my-write table #writedate {
+	width: 15%;
 }
 
-.button {
-	width:85%;
-	margin:0 auto;
-	text-align: right;
-	padding: 0px 0 40px 0;
-}
-
-.button input{
-	border: 0;
-	outline: none;
-	width: 160px;
-	height: 40px;
-	cursor: pointer;
-	background: #999999;
-	color: white;
-}
-
-.button input[type="submit"] {
-	background: #333333;
-}
-
-.button input:hover {
-	background: #00cdac;
-	transition: 0.3s;
+.my-write table #update{
+	width:10%;
 }
 
 /* 페이징 */
@@ -210,18 +200,19 @@ if(totalCnt2%listSize==0)totalPage2--;
 %>
 <body>
 <%@include file="/header.jsp" %>
-<%@include file = "sideBoard.jsp" %>
 <div class="container">
 <section>
+<%@include file = "sideBoard.jsp" %>
 	<article>
-		<h3>내가 쓴 후기</h3>
-		<table >
+	<div class="my-review">
+		<h3 class="my-title">내가 쓴 후기</h3>
+		<table>
 			<thead>
 				<tr>
-				<th>카테고리</th>
-				<th>제목</th>
-				<th>등록일자</th>
-				<th>수정 &nbsp; 삭제</th>
+					<th id="hobby">카테고리</th>
+					<th id="subject">제목</th>
+					<th id="writedate">등록일자</th>
+					<th id="update">수정 &nbsp; 삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -254,40 +245,39 @@ if(totalCnt2%listSize==0)totalPage2--;
 			%>
 			</tbody>
 		</table>
-			<div class = "bottom">
-			<div class = "paging">
-				<%
-				if(userGroup!=0){
-					%><a href="myWriting.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
-				}
-				%>
-				<%
-				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-					%>&nbsp;&nbsp;<a href="myWriting.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
-					if(i==totalPage)break;
-				}
-				%>
-				<%
-				if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
-					%><a href="myWriting.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
-				}
-				%>
-			</div>
-			</div>
-			</article>
-			<article>
-	
-		<h3>내가 쓴 댓글(QnA)</h3>
-			<table>
-				<thead>
-					<tr>
-					<th>모임이름</th>
-					<th>제목</th>
-					<th>등록일자</th>
-					<th>삭제</th>
-					</tr>
-				</thead>
-				<tbody>
+		<div class = "paging">
+			<%
+			if(userGroup!=0){
+				%><a href="myWriting.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+			}
+			%>
+			<%
+			for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
+				%>&nbsp;&nbsp;<a href="myWriting.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+				if(i==totalPage)break;
+			}
+			%>
+			<%
+			if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
+				%><a href="myWriting.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+			}
+			%>
+		</div>
+	</div>
+	</article>
+	<article>
+	<div class="my-write">
+		<h3 class="my-title">내가 쓴 글(QnA)</h3>
+		<table>
+			<thead>
+				<tr>
+					<th id="moimname">모임이름</th>
+					<th id="subject">제목</th>
+					<th id="writedate">등록일자</th>
+					<th id="update">삭제</th>
+				</tr>
+			</thead>
+			<tbody>
 				<%
 				HashMap<Integer,String> map1=mdao.moimName();
 				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, idx_member,listSize,cp);
@@ -306,18 +296,16 @@ if(totalCnt2%listSize==0)totalPage2--;
 							<td id="moimname"><%=map1.get(dto2.get(i).getIdx_info())%></td>
 							<td id="subject"><%=dto2.get(i).getSubject() %></td>
 							<td id="writedate"><%=dto2.get(i).getWritedate() %></td>
-							<td id="update"><input type="submit" value="삭제" onclick="javascript:location.href='myWritingDelQna_ok.jsp?idx=<%=dto2.get(i).getIdx()%>'"></td>
-						</tr>
+							<td id="update">
+								<input type="submit" value="삭제" onclick="javascript:location.href='myWritingDelQna_ok.jsp?idx=<%=dto2.get(i).getIdx()%>'"></td>
+							</tr>
 						<%
 					}
 				}
 				%>
-				</tbody>
-				
+			</tbody>	
 			</table>
-			
-				<div class = "bottom">
-				<div class = "paging">
+			<div class = "paging">
 				<%
 				if(userGroup!=0){
 					%><a href="myWriting.jsp?=idx_member=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
@@ -335,9 +323,9 @@ if(totalCnt2%listSize==0)totalPage2--;
 				}
 				
 				%>
-				</div>
-				</div>
-				</article>
+			</div>
+	</div>
+	</article>
 </section>
 </div>
 <%@include file="/footer.jsp" %>
