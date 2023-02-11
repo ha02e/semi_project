@@ -8,6 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>모임게시판</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
 section{
 	width: 1280px;
@@ -19,24 +22,18 @@ section article{
 	margin:0 auto;
 }
 article h3{
-	font-size: 24px;
+	font-size: 32px;
 	margin:30px 0 0 0;
-}
-
-
-#buttondiv{
-	text-align: right;
-
-}
-#detaildiv{
-	height:100px;
-	margin-top:20px;
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	color: #333333;
 }
 
 /* 검색창 */
 .search-bar{
 	vertical-align: middle;
 	margin: 30px 0;
+	text-align: center;
 }
 .search-bar input[type="text"]{
 	border: 2px solid #00cdac; 
@@ -75,13 +72,29 @@ label.detail{
 	color:white;
 	display:inline-block; 
 	width:100px;
-	line-height: 30px;
+	line-height: 32px;
 	padding:2px 0;
 	cursor:pointer;
+	text-align: center;
+	font-size:14px;
 }
 label:hover, label:active, input:hover+label, input:active+label {
     background:#00cdac;
 	transition: 0.3s;
+}
+#detaildiv{
+	height:100px;
+	margin-top:10px;
+	border-radius:12px;
+	border:2px solid #DDDDDF;
+	background:white;
+}
+#detaildiv fieldset{
+	border:0;
+	padding:20px 0;
+}
+#detaildiv table{
+	margin:0 auto;
 }
 input#detail{
 	display:none;
@@ -92,41 +105,48 @@ div#detaildiv{
 input#detail:checked + div#detaildiv{
 	display: block;
 }
-.button{
-	border:0;
-	outline:none;
-	width:100px;
-	height:30px;
-	cursor: pointer;
-	background:#999999;
-	color:white;
-}
-
-.button:hover{
-	background: #00cdac;
-	transition: 0.3s;
+#detaildiv select{
+	padding: 4px 10px; 
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	margin-left:10px;
 }
 input[type="text"]{
-	width:200px;
+	padding:0 10px;
 	height:30px;
 }
 
+/*추천 모임*/
 .infodiv1{
 	display: flex;
-	justify-content: flex-start;
-	padding:0 0 40px 0;
-	border-bottom:1px solid #A6A6A6;
-}
-.moim-info{
-	display: flex;
-	align-items: center
-	border:1px solid red;
-	padding:20px 20px 10px 0px;
+	justify-content:space-between;
+	padding: 10px 0;
+	border-bottom: 1px solid #A6A6A6;
 }
 .moim-info a{
+	display: flex;
+	padding: 12px 10px;
+	width: 506px;
+	align-items: center;
+	border-radius: 14px;
+	border:2px solid #ebedee;
+	transition:0.4s;
+	margin:10px 0 40px 0;
+	background:white;
+}
+.moim-info a:hover{
+	border-radius: 14px;
+	border:2px solid #00cdac;
+}
+.info1 h3{
+	border-top: 1px solid #A6A6A6;
+	padding-top:30px;
+	padding-bottom:0;
 }
 .moim-con ul{
 	list-style: none;
+	padding:0;
+	margin-left:10px;
 }
 .thumb1{
 	width: 260px;
@@ -134,7 +154,6 @@ input[type="text"]{
 	overflow: hidden;
 	position: relative;	
 	border-radius: 12px;
-	margin-bottom: 10px;
 }
 .thumb1 img{
 	position:absolute;
@@ -148,14 +167,15 @@ input[type="text"]{
 	transform: translate(-50%, -50%) scale(1.2);
 }
 
-.infoh3{
+/*현재 모집중인 모임*/
+.info2{
 	list-style: none;
 	width:100%;
 	padding:0;
 }
-.infoh3 li{
+.info2 li{
 	display: inline-block;
-	width:49%;
+	width:49.5%;
 }
 .li2{
 	text-align: right;
@@ -168,6 +188,7 @@ input[type="text"]{
 	background:#999999;
 	color:white;
 	text-align: center;
+	font-size: 14px;
 }
 .more-btn a{
 	text-decoration:none;
@@ -179,18 +200,29 @@ input[type="text"]{
 .infodiv2{
 	display:flex;
 	justify-content: space-between;
-	margin-bottom:20px;
+	margin-bottom:30px;
 }
 .infodiv1 a, .infodiv2 a{
 	text-decoration: none;
+	color: #333333;
 }
 .infodiv1 a:link, .infodiv2 a:visited, .infodiv1 a:link, .infodiv2 a:visited{
 	color: #333333;
 }
+.infotable{
+	border-radius: 14px;
+	border:2px solid #ebedee;
+	transition:0.4s;
+	background:white;
+}
+.infotable:hover{
+	border-radius: 14px;
+	border:2px solid #00cdac;
+}
 .info_top{
 	font-size: 14px;
 	color:#666666;
-	margin:4px 0;
+	margin:8px 0 4px 10px;
 }
 .thumb2{
 	width: 240px;
@@ -214,7 +246,7 @@ input[type="text"]{
 .title{
 	font-size: 20px;
 	font-weight: 600;
-	margin:4px 0;
+	margin:4px 0 0 10px;
 	/*말줄임표*/
 	overflow: hidden;
     text-overflow: ellipsis;
@@ -224,25 +256,30 @@ input[type="text"]{
 	color: #00cdac;
 }
 .mem{
-	margin:4px 0;
+	margin:4px 0 10px 14px;
+	color: #f09819;
+	font-weight: bold;
 }
 
+/*모임만들기 버튼*/
+#buttondiv{
+	text-align: right;
 
-
+}
 .button{
 	border: 0;
 	outline: none;
 	width: 160px;
 	height: 40px;
 	cursor: pointer;
-	background: #999999;
-	color: white;
-	margin-bottom:30px;
-}
-
-.button:hover {
 	background: #00cdac;
+	color: white;
+	margin-bottom:40px;
+	font-size: 14px;
+}
+.button:hover {
 	transition: 0.3s;
+	background:#333333;
 }
 </style>
 </head>
@@ -262,9 +299,9 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 	<article>
 		<form name="infoSearch" action="infoSearch.jsp">
 			<div class="search-bar">
-				<input type="text" name="keyword" placeholder="검색어를 입력하세요">
+				<input type="text" name="keyword" placeholder="검색어를 입력하세요" size="60">
 				<input type="submit" value="">
-			<label class="detail" for="detail">&nbsp;&nbsp;&nbsp;세부검색</label>
+			<label class="detail" for="detail">세부검색</label>
 			<input type="checkbox" id="detail">
 				<div id="detaildiv">
 				<fieldset>
@@ -273,13 +310,13 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 					<th>
 					관심사
 					</th>
-						<td><input type="checkbox" name="hobby" value="운동">운동</td>
-						<td><input type="checkbox" name="hobby" value="게임">게임</td>
-						<td><input type="checkbox" name="hobby" value="여행">여행</td>
-						<td><input type="checkbox" name="hobby" value="공연">공연</td>
-						<td><input type="checkbox" name="hobby" value="요리">요리</td>
-						<td><input type="checkbox" name="hobby" value="음악">음악</td>
-						<td><input type="checkbox" name="hobby" value="봉사">봉사</td>
+						<td><input type="checkbox" name="hobby" value="운동">운동&nbsp;</td>
+						<td><input type="checkbox" name="hobby" value="게임">게임&nbsp;</td>
+						<td><input type="checkbox" name="hobby" value="여행">여행&nbsp;</td>
+						<td><input type="checkbox" name="hobby" value="공연">공연&nbsp;</td>
+						<td><input type="checkbox" name="hobby" value="요리">요리&nbsp;</td>
+						<td><input type="checkbox" name="hobby" value="음악">음악&nbsp;</td>
+						<td><input type="checkbox" name="hobby" value="봉사">봉사&nbsp;</td>
 						<td><input type="checkbox" name="hobby" value="댄스">댄스</td>
 					</tr>
 					<tr>
@@ -313,18 +350,17 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 				</div>
 		</form>				
 	</article>
-	<hr>
+
 	
-	<article>
-	<h3>맞춤 추천</h3>
+	<article class="info1">
+	<h3>이런 모임은 어때요?</h3>
 		<div class="infodiv1">
 		<%
 		ArrayList<InfoDTO> fitarr=idao.getList(hobby);
 		if(fitarr!=null){
 		for(int i=0;i<fitarr.size()&&i<=1;i++){ %>
-
-			<a href="moimContent.jsp?idx=<%=fitarr.get(i).getIdx()%>">
 			<div class="moim-info">
+			<a href="moimContent.jsp?idx=<%=fitarr.get(i).getIdx()%>">
 			<div class="thumb1">
 				<img alt="fitimg<%=i%> %>" src="/moim/userimg/<%=fitarr.get(i).getImg()%>">
 			</div>
@@ -335,8 +371,8 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 					<li class="mem"><%=fitarr.get(i).getNowmem() %>/<%=fitarr.get(i).getMaxmem() %></li>
 				</ul>
 			</div>
-			</div>
 			</a>
+			</div>
 
 			<%
 		}
@@ -348,9 +384,9 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 	
 	
 	<article>
-		<ul class="infoh3">
-			<li><h3>현재 모집중인 소모임</h3></li>
-			<li class="li2"><div class="more-btn"><a href="infoSearch.jsp">더보기+</a></div></li>
+		<ul class="info2">
+			<li><h3>현재 모집중인 모임</h3></li>
+			<li class="li2"><div class="more-btn"><a href="infoSearch.jsp">더보기 +</a></div></li>
 		</ul>
 			<div class="infodiv2">
 			<%

@@ -10,6 +10,95 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
+<style>
+section{
+	width:800px;
+	margin:0 auto;
+	padding:50px 0;
+}
+section h2{
+	font-size:45px;
+	width: 85%;
+	margin:0 auto 20px auto;	
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	text-align: center;
+}
+
+table{
+	width:800px;
+	border-top:3px solid #333333;
+	border-bottom:3px solid #333333;
+	padding:10px 20px 20px 20px;
+	background:#f6f6f6;
+}
+table th{
+	text-align:left;
+	font-size:18px;
+	padding:14px 10px 14px 0;
+}
+table td{
+	padding:4px 0;
+}
+select{
+	width: 100px; 
+	padding: 6px 18px; 
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	font-size: 14px;
+}
+input[type="text"] {
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	padding:8px;
+}
+textarea{
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	padding:8px;
+}
+
+.button{
+	text-align: center;
+	padding:20px 0 40px 0;
+}
+.button input{
+	border:0;
+	outline:none;
+	width:160px;
+	height:40px;
+	cursor: pointer;
+	background:#999999;
+	color:white;
+}
+.button input[type="submit"]{
+	background:#333333;
+}
+.button input:hover{
+	background: #00cdac;
+	transition: 0.3s;
+}
+</style>
+<script>
+function validate(){
+	var subject=document.getElementById("subject");
+	var content=document.getElementById("content");
+	
+	if(subject.value=="" || subject==null){
+		window.alert('제목을 입력해주세요');
+		subject.focus();
+		return false;
+	}
+	if(content.value=="" || content==null){
+		window.alert('내용을 입력해주세요');
+		return false;
+	}
+}
+</script>
 </head>
 <%
 Integer idx=(Integer)session.getAttribute("idx");
@@ -22,8 +111,8 @@ MemberDTO dto=mdao.getMem(idx);
 <%@include file="/header.jsp" %>
 <section>
 	<article>
-		<h3>모임게시판 글쓰기</h3>
-		<form name="writeChat" action="writeChat_ok.jsp">
+		<h2>모임게시판 글쓰기</h2>
+		<form name="writeChat" action="writeChat_ok.jsp" onsubmit="return validate()">
 		<table>
 			<tr>
 				<th>작성자</th>
@@ -31,20 +120,20 @@ MemberDTO dto=mdao.getMem(idx);
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td colspan="3"><input type="text" name="subject">
+				<td colspan="3"><input type="text" name="subject" id="subject" size="52" placeholder="제목을 입력해주세요.">
 				</td>
 			</tr>
 			<tr>
+				<th>내용</th>
 				<td colspan="4">
-					<textarea rows="10" cols="55" name="content"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="4" align="center"><input type="submit" value="글쓰기">
+					<textarea id="content" rows="10" cols="80" placeholder="내용을 입력해주세요." style="resize:none" ></textarea>
 				</td>
 			</tr>
 		</table>
 		</form>
+		<div class="button">
+			<input type="submit" value="글쓰기">
+		</div>
 	</article>
 </section>
 <%@include file="/footer.jsp" %>

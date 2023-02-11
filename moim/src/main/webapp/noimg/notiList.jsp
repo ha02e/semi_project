@@ -93,11 +93,6 @@ form{
 	margin:10px auto 20px auto;
 	text-align: right;
 }
-form select{
-	border: 2px solid #00cdac; 
-	border-radius: 0px; 
-	padding:7px;
-}
 form input[type="text"] {
 	border: 2px solid #00cdac; 
 	border-radius: 0px; 

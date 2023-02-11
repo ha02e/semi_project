@@ -61,6 +61,14 @@ div input{
 function popupclose(){
 	window.close();
 }
+function validate(){
+	var content=document.getElementById("content");
+
+	if(content.value=="" || content==null){
+		window.alert('내용을 입력해주세요');
+		return false;
+	}
+}
 </script>
 </head>
 <%
@@ -83,14 +91,14 @@ if(dto_s==null){ //신청하지 않은 상태
 <body>
 <h2>모임 가입하기</h2>
 <p>모임 가입을 위해 인사말을 작성해주세요.</p>
-<form name="reqMem" action="reqMem_ok.jsp">
+<form name="reqMem" action="reqMem_ok.jsp" onsubmit="return validate()">
 <table>
 	<tr>
 		<th>인사말</th>
 	</tr>
 	<tr>
 		<td>
-		<textarea name="contentApply" rows="3" cols="36" maxlength="50" placeholder="50자 이내로 입력해주세요."></textarea>
+		<textarea name="contentApply" id="content" rows="3" cols="36" maxlength="50" placeholder="50자 이내로 입력해주세요."></textarea>
 		</td>
 	</tr>
 </table>
