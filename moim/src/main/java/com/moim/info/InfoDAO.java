@@ -494,17 +494,3 @@ public class InfoDAO {
 			}
 		}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
