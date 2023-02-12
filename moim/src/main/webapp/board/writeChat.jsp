@@ -105,6 +105,16 @@ Integer idx=(Integer)session.getAttribute("idx");
 if(idx==null){
 	idx=0;
 }
+
+int idx_info=0;
+if(request.getParameter("idx_info")!=null&&!request.getParameter("idx_info").equals("")){
+	idx_info=Integer.parseInt(request.getParameter("idx_info"));
+}
+
+int idx_member=0;
+if(request.getParameter("idx_member")!=null&&!request.getParameter("idx_member").equals("")){
+	idx_member=Integer.parseInt(request.getParameter("idx_member"));
+}
 MemberDTO dto=mdao.getMem(idx);
 %>
 <body>
@@ -113,6 +123,8 @@ MemberDTO dto=mdao.getMem(idx);
 	<article>
 		<h2>모임게시판 글쓰기</h2>
 		<form name="writeChat" action="writeChat_ok.jsp" onsubmit="return validate()">
+		<input type="hidden" name="idx_member" value="<%=idx_member%>">
+		<input type="hidden" name="idx_info" value="<%=idx_info%>">
 		<table>
 			<tr>
 				<th>작성자</th>
@@ -126,14 +138,14 @@ MemberDTO dto=mdao.getMem(idx);
 			<tr>
 				<th>내용</th>
 				<td colspan="4">
-					<textarea id="content" rows="10" cols="80" placeholder="내용을 입력해주세요." style="resize:none" ></textarea>
+					<textarea name="content" id="content" rows="10" cols="80" placeholder="내용을 입력해주세요." style="resize:none" ></textarea>
 				</td>
 			</tr>
 		</table>
-		</form>
 		<div class="button">
 			<input type="submit" value="글쓰기">
 		</div>
+		</form>
 	</article>
 </section>
 <%@include file="/footer.jsp" %>

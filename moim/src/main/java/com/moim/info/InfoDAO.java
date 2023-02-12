@@ -474,5 +474,37 @@ public class InfoDAO {
 				}catch(Exception e2) {}
 			}
 		}	
-		
+		/**모임 삭제 이후 QnA 게시판에서 삭제하는 메서드*/
+		public int delQna(int idx_info) {
+			try {
+				conn=com.moim.db.MoimDB.getConn();
+				String sql="delete from moim_noimg where idx_info=? and category in(2,3)";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, idx_info);
+				int count=ps.executeUpdate();
+				return count;
+			}catch(Exception e) {
+				e.printStackTrace();
+				return -1;
+			}finally {
+				try {
+					if(ps!=null)ps.close();
+					if(conn!=null)conn.close();
+				}catch( Exception e2) {}
+			}
+		}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

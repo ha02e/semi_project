@@ -24,7 +24,7 @@ location.href='login.jsp';
 	session.setAttribute("name", dto.getName());
 	session.setAttribute("manager", dto.getManager());
 	session.setAttribute("hobby", dto.getHobby());
-
+	session.setMaxInactiveInterval(60*60);
 	//아이디 저장하기
 	if(saveid==null){
 		Cookie cookie=new Cookie("saveid",id);

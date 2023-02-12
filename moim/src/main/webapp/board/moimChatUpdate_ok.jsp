@@ -9,5 +9,5 @@ String msg=result>0?"글 수정 완료!":"수정 실패..";
 %>
 <script>
 window.alert('<%=msg%>');
-location.href='moimChat.jsp';
+location.href='moimChat.jsp?idx=<%=ndto.getIdx_info()%>';
 </script>
