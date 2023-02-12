@@ -39,7 +39,7 @@ return;
 	int idx_info=idx;
 %>	
 <meta charset="UTF-8">
-<title>모임</title>
+<title><%=dto.getMoimname() %></title>
 <style>
 section{
 	width:800px;

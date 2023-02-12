@@ -20,7 +20,7 @@ String content=request.getParameter("content");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>notiUpdate</title>
+<title>공지사항 수정</title>
 <style>
 body{
 	width:1280px;

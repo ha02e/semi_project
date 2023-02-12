@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QnA 업데이트</title>
 <style>
 table th{
 	text-align:left;

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>notiWrite</title>
+<title>공지사항 글쓰기</title>
 <style>
 body{
 	width:1280px;
