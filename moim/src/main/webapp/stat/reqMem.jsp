@@ -56,6 +56,9 @@ div input{
 	background: gray;
 	color:white;
 }
+textarea{
+	resize: none;
+}
 </style>
 <script>
 function popupclose(){

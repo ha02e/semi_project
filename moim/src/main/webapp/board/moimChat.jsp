@@ -3,7 +3,6 @@
 <%@ page import="com.moim.member.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.net.*" %>
 <jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
 <jsp:useBean id="ndto" class="com.moim.noimg.NoimgDTO"></jsp:useBean>
 <!DOCTYPE html>
@@ -160,10 +159,14 @@ if(request.getParameter("cul")!=null){
 	cul=request.getParameter("cul");
 }
 
-
-int idx=21;
-MemberDTO dto=mdao.getMem(idx);
-
+int idx_info=0;
+if(request.getParameter("idx")!=null&&!request.getParameter("idx").equals("")){
+	idx_info=Integer.parseInt(request.getParameter("idx"));
+}
+Integer idx=(Integer)session.getAttribute("idx");
+if(idx==null){
+	idx=0;
+}
 
 
 int listSize=10;
@@ -210,7 +213,7 @@ if(cp%pageSize==0)userGroup--;
 		</thead>
 		<tbody>
 		<%
-		ArrayList<NoimgDTO> dto2=mdao.getList(0, 3, listSize, cp,cul,keyword);
+		ArrayList<NoimgDTO> dto2=mdao.getList(idx_info, 3, listSize, cp,cul,keyword);
 		if(dto2==null||dto2.size()==0){
 			%>
 			<tr>
@@ -230,7 +233,7 @@ if(cp%pageSize==0)userGroup--;
 							out.println("&nbsp;&nbsp;");
 						}
 						%>
-						<a href="moimChatContent.jsp?idx=<%=dto2.get(i).getIdx()%>"><%=dto2.get(i).getSubject() %></a></td>
+						<a href="moimChatContent.jsp?idx=<%=dto2.get(i).getIdx()%>&idx_info=<%=idx_info%>"><%=dto2.get(i).getSubject() %></a></td>
 					<td class="writedate"><%=dto2.get(i).getWritedate() %></td>
 				</tr>
 				<%
@@ -260,6 +263,8 @@ if(cp%pageSize==0)userGroup--;
 		<div class="button">
 			<form name="writeChat" action="writeChat.jsp">
 			<input type="submit" value="글작성">
+			<input type="hidden" name="idx_member" value="<%=idx %>">
+			<input type="hidden" name="idx_info" value="<%=idx_info%>">
 			</form>
 		</div>
 </article>

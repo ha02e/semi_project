@@ -108,9 +108,9 @@ HashMap<Integer, String> hm = sdao.getName();
 
 
 <%
-int idx_info=19;
-if(request.getParameter("idx_info")!=null&&!request.getParameter("idx_info").equals("")){
-	idx_info=Integer.parseInt(request.getParameter("idx_info"));
+int idx_info=0;
+if(request.getParameter("idx")!=null&&!request.getParameter("idx").equals("")){
+	idx_info=Integer.parseInt(request.getParameter("idx"));
 }
 int cp=1;
 if(request.getParameter("cp")!=null&&!request.getParameter("cp").equals("")){

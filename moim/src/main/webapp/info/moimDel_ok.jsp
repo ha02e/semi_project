@@ -12,6 +12,7 @@ int result=idao.delInfo(idx_info);
 String msg="실패!";
 if(result>0){
 	result=idao.delStat(idx_info);
+	idao.delQna(idx_info);
 	msg=result>0?"삭제 완료!":"삭제 실패";
 }
 

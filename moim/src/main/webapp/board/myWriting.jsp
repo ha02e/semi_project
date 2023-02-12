@@ -175,7 +175,6 @@ if(idx_member==null){
 	idx_member=0;
 }
 
-int totalCnt=mdao.getTotal("moim_review", idx, 1);
 int listSize=5;
 int pageSize=5;
 
@@ -185,6 +184,13 @@ if(cp_s==null||cp_s.equals("")){
 }
 int cp=Integer.parseInt(cp_s);
 
+String cp2_s=request.getParameter("cp2");
+if(cp2_s==null||cp2_s.equals("")){
+	cp2_s="1";
+}
+int cp2=Integer.parseInt(cp2_s);
+
+int totalCnt=mdao.getTotal("moim_review", idx, 1);
 int totalPage=totalCnt/listSize+1;
 if(totalCnt%listSize==0)totalPage--;
 
@@ -195,6 +201,8 @@ int totalCnt2=mdao.getTotal("moim_noimg", idx, 2);
 
 int totalPage2=totalCnt2/listSize+1;
 if(totalCnt2%listSize==0)totalPage2--;
+int userGroup2=cp2/pageSize;
+if(cp2%pageSize==0)userGroup2--;
 
 
 %>
@@ -248,18 +256,18 @@ if(totalCnt2%listSize==0)totalPage2--;
 		<div class = "paging">
 			<%
 			if(userGroup!=0){
-				%><a href="myWriting.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+				%><a href="myWriting.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&cp2=<%=cp2%>">&lt;&lt;</a><%
 			}
 			%>
 			<%
 			for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-				%>&nbsp;&nbsp;<a href="myWriting.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+				%>&nbsp;&nbsp;<a href="myWriting.jsp?cp=<%=i%>&cp2=<%=cp2%>"><%=i %></a>&nbsp;&nbsp;<%
 				if(i==totalPage)break;
 			}
 			%>
 			<%
 			if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
-				%><a href="myWriting.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+				%><a href="myWriting.jsp?cp=<%=(userGroup+1)*pageSize+1%>&cp2=<%=cp2%>">&gt;&gt;</a><%
 			}
 			%>
 		</div>
@@ -307,19 +315,19 @@ if(totalCnt2%listSize==0)totalPage2--;
 			</table>
 			<div class = "paging">
 				<%
-				if(userGroup!=0){
-					%><a href="myWriting.jsp?=idx_member=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a><%
+				if(userGroup2!=0){
+					%><a href="myWriting.jsp?cp2=<%=(userGroup2-1)*pageSize+pageSize%>&cp=<%=cp%>">&lt;&lt;</a><%
 				}
 				%>
 				<%
-				for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-					%>&nbsp;&nbsp;<a href="myWriting.jsp?idx_member=<%=idx%>&cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+				for(int i=userGroup2*pageSize+1;i<=userGroup2*pageSize+pageSize;i++){
+					%>&nbsp;&nbsp;<a href="myWriting.jsp?cp2=<%=i%>&cp=<%=cp%>"><%=i %></a>&nbsp;&nbsp;<%
 					if(i==totalPage2)break;
 				}
 				%>
 				<%
-				if(userGroup!=(totalPage2/pageSize-(totalPage2%pageSize==0?1:0))){
-					%><a href="myWriting.jsp?idx_member=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a><%
+				if(userGroup2!=(totalPage2/pageSize-(totalPage2%pageSize==0?1:0))){
+					%><a href="myWriting.jsp?cp2=<%=(userGroup2+1)*pageSize+1%>&cp=<%=cp%>">&gt;&gt;</a><%
 				}
 				
 				%>

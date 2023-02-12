@@ -3,7 +3,6 @@
 <%@ page import="com.moim.member.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.net.*" %>
 <!DOCTYPE html>
 <jsp:useBean id="mdao" class="com.moim.member.MemberDAO" scope="session"></jsp:useBean>
 <%
@@ -13,6 +12,12 @@ if(idx_s==null||idx_s.equals("")){
 	idx_s="0";
 }
 int idx=Integer.parseInt(idx_s);
+
+String idx_info_s=request.getParameter("idx_info");
+if(idx_info_s==null||idx_info_s.equals("")){
+	idx_info_s="0";
+}
+int idx_info=Integer.parseInt(idx_info_s);
 
 NoimgDTO dto=mdao.getContent(idx,3);
 if(dto==null){
@@ -57,7 +62,7 @@ if(dto==null){
 			</tr>
 			<tr>
 				<td colspan="4" align="center">
-				<a href="moimChatUpdate.jsp?idx=<%=dto.getIdx() %>&writer=<%=dto.getWriter()%>&subject=<%=dto.getSubject()%>&content=<%=dto.getContent()%>">수정</a> | <a href="moimChat.jsp">목록</a> | <a href="writeReChat.jsp?subject=<%=dto.getSubject()%>&ref=<%=dto.getRef()%>&lev=<%=dto.getLev()%>&sunbun=<%=dto.getSunbun()%>">답변</a>
+				<a href="moimChatUpdate.jsp?idx=<%=dto.getIdx() %>&writer=<%=dto.getWriter()%>&subject=<%=dto.getSubject()%>&content=<%=dto.getContent()%>&idx_info=<%=idx_info %>">수정</a> | <a href="moimChat.jsp?idx=<%=idx_info%>">목록</a> | <a href="writeReChat.jsp?subject=<%=dto.getSubject()%>&ref=<%=dto.getRef()%>&lev=<%=dto.getLev()%>&sunbun=<%=dto.getSunbun()%>">답변</a>
 				</td>
 			</tr>
 		</table>

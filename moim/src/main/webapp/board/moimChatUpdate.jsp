@@ -18,8 +18,11 @@ if(idx_s==null||idx_s.equals("")){
 	idx_s="0";
 }
 int idx=Integer.parseInt(idx_s);
-System.out.println(idx);
-
+String idx_info_s=request.getParameter("idx_info");
+if(idx_info_s==null||idx_info_s.equals("")){
+	idx_info_s="0";
+}
+int idx_info=Integer.parseInt(idx_info_s);
 String writer=request.getParameter("writer");
 String subject=request.getParameter("subject");
 String content=request.getParameter("content");
@@ -32,6 +35,7 @@ MemberDTO dto2=mdao.getMem(idx);
 		<h3>모임게시판 글 수정하기</h3>
 		<form name="moimChatUpdate" action="moimChatUpdate_ok.jsp" enctype="UTF-8">
 		<input type="hidden" name="idx" value="<%=idx%>">
+		<input type="hidden" name="idx_info" value="<%=idx_info%>">
 		<table>
 			<tr>
 				<th>작성자</th>
