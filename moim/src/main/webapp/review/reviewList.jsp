@@ -10,6 +10,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
 section{
 	width:1280px;
@@ -18,17 +22,18 @@ section{
 }
 
 h2{
-	font-size:32px;
+	font-size:45px;
 	width: 85%;
 	margin:0 auto;
-	padding-bottom:20px;
-	border-bottom:1px solid #A6A6A6;
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	text-align: center;
 }
 
 /* 검색창 */
 form{
 	width: 85%;
-	margin:40px auto 16px auto;
+	margin:10px auto 20px auto;
 	text-align: right;
 }
 form select{
@@ -89,6 +94,7 @@ table th {
 	border-bottom: 1px solid #4C7C77;
 	text-align: center;
 	vertical-align: inherit;
+	background: #f3f3f3;
 }
 
 table td {
@@ -130,17 +136,16 @@ table #writedate {
 	outline: none;
 	width: 160px;
 	height: 40px;
-	cursor: pointer;
-	background: #999999;
+	cursor: pointer;	
 	color: white;
 }
 
-.button input[type="submit"] {
-	background: #333333;
+.button input[type="button"] {
+	background: #00cdac;
 }
 
 .button input:hover {
-	background: #00cdac;
+	background: #333333;
 	transition: 0.3s;
 }
 
@@ -212,7 +217,7 @@ if (cp % pageSize == 0)
 <%@include file="/header.jsp"%>
 	<section>
 		<article>
-				<h2>후기 게시판</h2>
+				<h2>모임 후기 보기</h2>
 	
 				<form name="search" action="reviewList.jsp">
 					<div class ="search2">
@@ -226,7 +231,7 @@ if (cp % pageSize == 0)
 							<option value="음악">음악</option>
 							<option value="봉사활동">봉사활동</option>
 							<option value="댄스">댄스</option>
-						</select> <input type="text" name="keyword"> <input type="submit"
+						</select> <input type="text" name="keyword" size="30"> <input type="submit"
 							value="">
 					</div>
 				</form>

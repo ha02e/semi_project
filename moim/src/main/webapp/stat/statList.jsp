@@ -9,57 +9,99 @@
 <head>
 <meta charset="UTF-8">
 <title>모임 관리</title>
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
-table{
-	width:80%;
-	margin-left:auto;
-	margin-right:auto;
-	text-align:center;
-	border-collapse:collapse;
+section{
+	width:1280px;
+	margin:0px auto;
+	padding:50px 0;
+	min-height: 550px;
 }
 
-table th{
-	height:30px;
-	border-top:1px solid #f0f0f0;
-	border-bottom:1px solid #f0f0f0;
-	background-color:#f8f8f8;
-	text-align:center;
-	vertical-align:inherit;
+h3.my-title{
+	font-size:32px;
+	margin:0 auto;
+	padding-bottom:10px;
+	width: 54%;
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	color: #333333;
 }
 
-table td{
-	border-bottom:1px solid #f0f0f0;
-	padding: 10px;
+table {
+	width: 74%;
+	margin:0 auto 0px auto;
+	text-align: center;
+	border-collapse: collapse;
 }
 
-table #idx{
+table th {
+	height: 46px;
+	border-top: 2px solid #4C7C77; 
+	border-bottom: 1px solid #4C7C77;
+	text-align: center;
+	vertical-align: inherit;
+}
+
+table td {
+	border-bottom: 1px solid #e5e5e5;
+	height: 46px;	
+}
+
+table #name{
+	width:40%;
+}
+
+table #joindate{
 	width:30%;
 }
 
-table #subject{
+table #sbutton{
 	width:30%;
 }
 
-table #writedate{
-	width:15%;
-}
-
-.button{
-	border:0;
-	outline:none;
-	width:100px;
-	height:30px;
-	cursor: pointer;
+table input[type="button"]{
+	outline: none;
 	background:#999999;
 	color:white;
+	border:0;
+	border-radius: 4px;
+	padding:4px 10px;
+	cursor:pointer;
+}
+table input[type="button"]:hover{
+	transition: 0.3s;
+	background: #00cdac;
 }
 
-.button:hover{
-	background: #00cdac;
-	transition: 0.3s;
+/* 페이징 */
+.paging{
+	width: 85%;
+	margin: 20px auto;
+	text-align: center;
+}
+.paging a{
+	display: inline-block;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	transition:0.2s;
+}
+.paging a:link,a:visited{
+	text-decoration: none;
+	color:#333333;
+}
+.paging a:hover{	
+	font-weight: 800;
+	color:#ffffff;
+	background:#00cdac;
+	border-radius: 100%;
 }
 </style>
+</head>
 <%
 HashMap<Integer, String> hm = sdao.getName();
 %>
@@ -100,33 +142,33 @@ if (cp2 % pageSize == 0)userGroup2--;
 %>
 <body>
    <%@include file="/header.jsp"%>
-   <%@include file="/board/sideBoard.jsp"%>
  <section>
+	<%@include file = "/board/sideBoard.jsp" %>
  	<article>
- 		<h3>&nbsp;&nbsp;&nbsp;참여자</h3>
+ 		<div class="mem1">
+ 		<h3 class="my-title">참여자</h3>
  		<table>
  			<thead>
  				<tr>
- 					<th>이름</th>
- 					<th>가입일자</th>
- 					<th></th>
+ 					<th id="name">이름</th>
+ 					<th id="joindate">가입일자</th>
+ 					<th id="sbutton">&nbsp;</th>
  				</tr>
  			</thead>
  			<tbody>
  			<%for(int i=0;i<inarr.size();i++){ %>
  				<tr>
- 					<td id="idx"><%=hm.get(inarr.get(i).getIdx_member()) %></td>
- 					<td id="subject"><%=inarr.get(i).getJoindate() %></td>
- 					<td id="joindate">
+ 					<td id="name"><%=hm.get(inarr.get(i).getIdx_member()) %></td>
+ 					<td id="joindate"><%=inarr.get(i).getJoindate() %></td>
+ 					<td id="sbutton">
  					<input type="button" class="button" value="내보내기" onclick="javascript:location.href='delMem_ok.jsp?idx=<%=inarr.get(i).getIdx()%>&idx_info=<%=idx_info%>'">
  					<input type="button" class="button" value="관리자 임명하기" onclick="javascript:location.href='giveMan_ok.jsp?idx=<%=inarr.get(i).getIdx()%>'">
  					</td>
  				</tr>
  			<%} %>
  			</tbody>
- 			<tfoot>
- 				<tr>
- 					<td colspan="3" align="center">
+ 		</table>
+ 		<div class="paging">
  					<%
 							if(userGroup!=0){
 								%><a href="statList.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&cp2=<%=cp2%>&idx_info=<%=idx_info%>">&lt;&lt;</a><%
@@ -143,34 +185,32 @@ if (cp2 % pageSize == 0)userGroup2--;
 								%><a href="statList.jsp?cp=<%=(userGroup+1)*pageSize+1%>&cp2=<%=cp2%>&idx_info=<%=idx_info%>">&gt;&gt;</a><%
 							}
 						%>
- 					</td>
- 				</tr>
- 			</tfoot>
- 		</table>
+ 		</div>
+ 		</div>
  	</article>
  	<article>
- 	<h3>&nbsp;&nbsp;&nbsp;대기자</h3>
- 	<table>
- 			<thead>
- 				<tr>
- 					<th>이름</th>
- 					<th>가입일자</th>
- 					<th></th>
- 				</tr>
- 			</thead>
- 			<tbody>
- 			<%for(int i=0;i<newarr.size();i++){ %>
- 				<tr>
- 					<td id="idx"><%=hm.get(newarr.get(i).getIdx_member()) %></td>
- 					<td id="subject"><%=newarr.get(i).getJoindate() %></td>
- 					<td id="joindate"><input type="button" class="button" value="내용보기" onclick="javascript:window.open('statContent.jsp?idx=<%=newarr.get(i).getIdx()%>','statcontet','width=550,height=250')"></td>
- 				</tr>
- 				
- 			<%} %>
- 			</tbody>
- 			<tfoot>
- 				<tr>
- 					<td colspan="3" align="center">
+ 	<div class="mem2">
+		<h3 class="my-title">대기자</h3>
+	 	<table>
+	 			<thead>
+	 				<tr>
+	 					<th id="name">이름</th>
+	 					<th id="subject">가입일자</th>
+	 					<th id="sbutton"></th>
+	 				</tr>
+	 			</thead>
+	 			<tbody>
+	 			<%for(int i=0;i<newarr.size();i++){ %>
+	 				<tr>
+	 					<td id="name"><%=hm.get(newarr.get(i).getIdx_member()) %></td>
+	 					<td id="subject"><%=newarr.get(i).getJoindate() %></td>
+	 					<td id="sbutton"><input type="button" class="button" value="내용보기" onclick="javascript:window.open('statContent.jsp?idx=<%=newarr.get(i).getIdx()%>','statcontet','width=550,height=250')"></td>
+	 				</tr>
+	 				
+	 			<%} %>
+	 			</tbody>
+	 		</table>
+ 		<div class="paging">
  					<%
 							if(userGroup2!=0){
 								%><a href="statList.jsp?cp2=<%=(userGroup2-1)*pageSize+pageSize%>&cp=<%=cp%>&idx_info=<%=idx_info%>">&lt;&lt;</a><%
@@ -187,10 +227,9 @@ if (cp2 % pageSize == 0)userGroup2--;
 								%><a href="statList.jsp?cp2=<%=(userGroup2+1)*pageSize+1%>&cp=<%=cp%>&idx_info=<%=idx_info%>">&gt;&gt;</a><%
 							}
 						%>
- 					</td>
- 				</tr>
- 			</tfoot>
- 		</table>
+
+ 		</div>
+	</div>
  	</article>
  </section>
    <%@include file="/footer.jsp"%>

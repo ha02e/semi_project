@@ -66,6 +66,9 @@ if(manager==null){
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 
 <style>
 section{
@@ -75,23 +78,20 @@ section{
 }
 
 h2{
-	font-size:32px;
+	font-size:45px;
 	width: 85%;
-	margin:0 auto;
-	padding-bottom:20px;
-	border-bottom:1px solid #A6A6A6;
+	margin:0 auto;	
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	text-align: center;
 }
+
 
 /* 검색창 */
 form{
 	width: 85%;
-	margin:40px auto 16px auto;
+	margin:10px auto 20px auto;
 	text-align: right;
-}
-form select{
-	border: 2px solid #00cdac; 
-	border-radius: 0px; 
-	padding:7px;
 }
 form input[type="text"] {
 	border: 2px solid #00cdac; 
@@ -127,18 +127,18 @@ table a:link, table a:visited{
 	color:black;
 }
 
-.category_r{
-	width:15%;
+.num{
+	width:10%;
 }
-.moimname_r{
-	width:30%;
+.title{
+	width:70%;
 }
-.subject_r{
-	width:55%;
+.date{
+	width:20%;
 }
-td.subject_r{
+#subject{
 	text-align: left;
-	margin-left:20px;
+	padding-left: 30px;
 }
 table th {
 	height: 46px;
@@ -146,6 +146,7 @@ table th {
 	border-bottom: 1px solid #4C7C77;
 	text-align: center;
 	vertical-align: inherit;
+	background: #f3f3f3;
 }
 
 table td {
@@ -153,33 +154,17 @@ table td {
 	height: 46px;	
 }
 
-table #idx {
-	width: 5%;
-}
-
-table #subject {
-	width: 70%;
-	text-align: left;
-}
-
-table #writedate {
-	width: 15%;
-}
-
+/*글쓰기 버튼*/
 #b {
 	text-align: center;
 	
-}
-
-.bottom{
-	width:1280px;
 }
 
 .button {
 	width:85%;
 	margin:0 auto;
 	text-align: right;
-	padding: 0px 0 40px 0;
+	padding: 0px 0 20px 0;
 }
 
 .button input{
@@ -192,12 +177,12 @@ table #writedate {
 	color: white;
 }
 
-.button input[type="submit"] {
-	background: #333333;
+.button input[type="button"] {
+	background: #00cdac;
 }
 
 .button input:hover {
-	background: #00cdac;
+	background:#333333;
 	transition: 0.3s;
 }
 
@@ -245,20 +230,19 @@ function write_button(){
 <%@include file="/header.jsp"%>
 	<section >
 		<article>
-		<h3>공지사항</h3>
+		<h2>공지사항</h2>
 		<form name="search" action="notiList.jsp">
 		<div class ="search2">
-		<input type="text" name="keyword"> <input type="submit"
-							value="">
-							</div>
-							</form>
+		<input type="text" name="keyword" size="30"> <input type="submit" value="">
+		</div>
+		</form>
 							
 			<table>
 				<thead>
 					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>작성일</th>
+						<th class="num">번호</th>
+						<th class="title">제목</th>
+						<th class="date">작성일</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -272,9 +256,9 @@ function write_button(){
 					<%}else{ 
 					for(int i=0;i<arr.size();i++){	%>
 					<tr>
-						<td id="idx"><%=arr.get(i).getIdx()%></td>
-						<td id="subject"><a href="notiContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject() %></a></td>
-						<td id="writedate"><%=arr.get(i).getWritedate() %></td>
+						<td id="idx" class="num"><%=arr.get(i).getIdx()%></td>
+						<td id="subject" class="title"><a href="notiContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject() %></a></td>
+						<td id="writedate" class="date"><%=arr.get(i).getWritedate() %></td>
 					</tr>
 					<%}
 					}%>
