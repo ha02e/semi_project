@@ -6,11 +6,14 @@ int idx=0;
 if(request.getParameter("idx")!=null&&!request.getParameter("idx").equals("")){
 	idx=Integer.parseInt(request.getParameter("idx"));
 }
+int idx_info=0;
+if(request.getParameter("idx_info")!=null&&!request.getParameter("idx_info").equals("")){
+	idx_info=Integer.parseInt(request.getParameter("idx_info"));
+}
 int result=sdao.giveMan(idx);
 String msg=result>0?"권한 주기 완료!":"권한주기 실패...";
 %>
 <script>
 window.alert('<%=msg%>');
-opener.location.reload();
-window.close();
+location.href='statList.jsp?idx_info=<%=idx_info%>';
 </script>
