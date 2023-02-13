@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.moim.member.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.net.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.review.*" %>
 <jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
@@ -21,6 +20,7 @@ section{
 	width:1280px;
 	margin:0px auto;
 	padding:50px 0;
+	min-height: 560px;
 }
 
 h3.my-title{
@@ -163,6 +163,10 @@ table td {
 	background:#00cdac;
 	border-radius: 100%;
 }
+
+.paging2{
+	padding-left:140px;
+}
 </style>
 </head>
 <%
@@ -302,7 +306,7 @@ if(cp2%pageSize==0)userGroup2--;
 						%>
 						<tr>
 							<td id="moimname"><%=map1.get(dto2.get(i).getIdx_info())%></td>
-							<td id="subject"><%=dto2.get(i).getSubject() %></td>
+							<td id="subject"><a href="/moim/info/moimContent.jsp?idx=<%=dto2.get(i).getIdx_info()%>"><%=dto2.get(i).getSubject() %></a></td>
 							<td id="writedate"><%=dto2.get(i).getWritedate() %></td>
 							<td id="update">
 								<input type="submit" value="삭제" onclick="javascript:location.href='myWritingDelQna_ok.jsp?idx=<%=dto2.get(i).getIdx()%>'"></td>
@@ -313,7 +317,7 @@ if(cp2%pageSize==0)userGroup2--;
 				%>
 			</tbody>	
 			</table>
-			<div class = "paging">
+			<div class = "paging paging2">
 				<%
 				if(userGroup2!=0){
 					%><a href="myWriting.jsp?cp2=<%=(userGroup2-1)*pageSize+pageSize%>&cp=<%=cp%>">&lt;&lt;</a><%

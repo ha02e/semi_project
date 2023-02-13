@@ -251,14 +251,12 @@ li{
 }
 
 /*공지사항*/
-.notice{
-   height:300px;
-} 
-
 .notice h3{
    padding-bottom:0px;
 }
-
+.notice .sbutton{
+	margin:10px 0 30px 0;
+}
 .notice #notice_tb{
    justify-content:center;
    align-items:center;
@@ -391,7 +389,7 @@ tr a:visited, tr a:link{
       <li>
          <div>
             <label for="slide01" class="left"></label>
-            <a href="/moim/noimg/notiList.jsp">
+            <a href="/moim/review/reviewList.jsp">
             <img src="/moim/img/banner_main.jpg" alt="매인 배너">
             </a>
             <label for="slide03" class="right"></label>
