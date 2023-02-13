@@ -3,7 +3,6 @@
 <%@page import="com.moim.review.*"%>
 <%@page import="com.moim.info.*"%>
 <jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
-<!-- login -->
 <%
 Integer idx_l = (Integer) session.getAttribute("idx");
 if (idx_l==null) {
