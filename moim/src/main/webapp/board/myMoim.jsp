@@ -8,82 +8,32 @@
 <head>
 <meta charset="UTF-8">
 <title>참여중인 모임</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
-.container{
-	display:flex;
-	width:800px;
-}
 section{
 	width:1280px;
 	margin:0px auto;
 	padding:50px 0;
 }
 
-h2{
+h3.my-title{
 	font-size:32px;
-	width: 85%;
 	margin:0 auto;
-	padding-bottom:20px;
-	border-bottom:1px solid #A6A6A6;
-}
-
-/* 검색창 */
-form{
-	width: 85%;
-	margin:40px auto 16px auto;
-	text-align: right;
-}
-form select{
-	border: 2px solid #00cdac; 
-	border-radius: 0px; 
-	padding:7px;
-}
-form input[type="text"] {
-	border: 2px solid #00cdac; 
-	border-radius: 0px; 
-	padding:8px;
-}
-form input[type="submit"] {
-	border:0; 
-	background-color:transparent;
-	background-image:url("/moim/img/search.png");
-	background-position:center;
-	background-repeat:no-repeat;
-	width:30px;
-	height:40px;
-	cursor: pointer;
-	margin:-16px 0;
+	padding-bottom:10px;
+	width: 54%;
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	color: #333333;
 }
 
 /* 게시판 리스트 */
 table {
-	width: 85%;
+	width: 74%;
 	margin:0 auto 0px auto;
 	text-align: center;
 	border-collapse: collapse;
-}
-
-table a:link, table a:visited{
-	text-decoration: none;
-	color:#333333;
-}
-.subject_r a:hover{
-	font-weight: 800;
-	color:black;
-}
-
-.category_r{
-	width:15%;
-}
-.moimname_r{
-	width:30%;
-}
-.subject_r{
-	width:55%;
-}
-td.subject_r{
-	text-align: left;
-	margin-left:20px;
 }
 table th {
 	height: 46px;
@@ -97,53 +47,41 @@ table td {
 	border-bottom: 1px solid #e5e5e5;
 	height: 46px;	
 }
-
-table #idx {
-	width: 5%;
+table a{
+	text-decoration: none;
+	color:#333333;
 }
-
-table #subject {
-	width: 70%;
-	text-align: left;
+table a:hover{
+	font-weight: bold;
 }
-
-table #writedate {
-	width: 15%;
+table a:visited, .my-review a:link{
+	color:#333333;
 }
-
-#b {
-	text-align: center;
-	margin: 10px;
-}
-
-.bottom{
-	width:1280px;
-}
-
-.button {
-	width:85%;
-	margin:0 auto;
-	text-align: right;
-	padding: 0px 0 40px 0;
-}
-
-.button input{
-	border: 0;
+table input[type="button"]{
 	outline: none;
-	width: 160px;
-	height: 40px;
-	cursor: pointer;
-	background: #999999;
-	color: white;
+	background:#999999;
+	color:white;
+	border:0;
+	border-radius: 4px;
+	padding:4px 10px;
+	cursor:pointer;
 }
-
-.button input[type="submit"] {
-	background: #333333;
-}
-
-.button input:hover {
-	background: #00cdac;
+table input[type="button"]:hover{
 	transition: 0.3s;
+	background: #00cdac;
+}
+table #hobby {
+	width: 10%;
+	text-align: center;
+}
+table #moimname {
+	width: 55%;
+}
+table #mem {
+	width: 10%;
+}
+table #sbutton{
+	width: 25%;
 }
 
 /* 페이징 */
@@ -209,18 +147,17 @@ if(cp2%pageSize==0)manuserGroup--;
 %>
 <body>
 <%@include file="/header.jsp" %>
-<%@include file="sideBoard.jsp" %>
-<div class="container">
 <section>
+<%@include file="sideBoard.jsp" %>
 	<article>
-		<h3>참여중인 모임</h3>
-		<table>
+		<h3 class="my-title">참여중인 모임</h3>
+		<table class="moim1">
 			<thead>
 				<tr>
-				<th>카테고리</th>
-				<th>모임 이름</th>
-				<th>모임인원</th>
-				<th>모임게시판 후기쓰기</th>
+				<th id="hobby">카테고리</th>
+				<th id="moimname">모임 이름</th>
+				<th id="mem">모임인원</th>
+				<th id="sbutton">모임게시판&nbsp;&nbsp;후기쓰기</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -233,22 +170,22 @@ if(cp2%pageSize==0)manuserGroup--;
 			if(alldto==null||alldto.size()==0){
 				%>
 				<tr>
-				<td>
-				참여중인 모임이 없습니다.
-				</td>
+					<td colspan="4" text-align:center;>
+					참여중인 모임이 없습니다.
+					</td>
 				</tr>
 				<%
 			}else{
 				for(int i=0;i<alldto.size();i++){
 					%>
 					<tr>
-					<td><%=hobbymap.get(alldto.get(i).getIdx_info())%></td>
-					<td><a href="/moim/info/moimContent.jsp?idx=<%=alldto.get(i).getIdx_info()%>"><%=namemap.get(alldto.get(i).getIdx_info())%></a></td>
-					<td><%=memmap.get(alldto.get(i).getIdx_info())%></td>
-					<td>
-					<input type="button" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=alldto.get(i).getIdx_info()%>'">
-					<input type="button" value="후기쓰기" onclick="javascript:location.href='/moim/review/writeReview.jsp?idx_info=<%=alldto.get(i).getIdx_info()%>'">
-					</td>
+						<td id="hobby"><%=hobbymap.get(alldto.get(i).getIdx_info())%></td>
+						<td id="moimname"><a href="/moim/info/moimContent.jsp?idx=<%=alldto.get(i).getIdx_info()%>"><%=namemap.get(alldto.get(i).getIdx_info())%></a></td>
+						<td id="mem"><%=memmap.get(alldto.get(i).getIdx_info())%></td>
+						<td id="sbutton">
+							<input type="button" value="모임게시판" onclick="javascript:location.href='moimChat.jsp?idx=<%=alldto.get(i).getIdx_info()%>'">
+							<input type="button" value="후기쓰기" onclick="javascript:location.href='/moim/review/writeReview.jsp?idx_info=<%=alldto.get(i).getIdx_info()%>'">
+						</td>
 					</tr>
 					<%
 				}
@@ -277,14 +214,14 @@ if(cp2%pageSize==0)manuserGroup--;
 					</div>
 					</div>
 					
-		<h3>내가 만든 모임</h3>
-		<table>
+		<h3 class="my-title">내가 만든 모임</h3>
+		<table class="moim2">
 			<thead>
 				<tr>
-				<th>카테고리</th>
-				<th>모임 이름</th>
-				<th>모임 인원</th>
-				<th>관리 삭제</th>
+				<th id="hobby">카테고리</th>
+				<th id="moimname">모임 이름</th>
+				<th id="mem">모임 인원</th>
+				<th id="sbutton">관리&nbsp;&nbsp;삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -292,7 +229,7 @@ if(cp2%pageSize==0)manuserGroup--;
 			if(mandto==null||mandto.size()==0){
 				%>
 				<tr>
-					<td colspan="5" align="center">
+					<td colspan="4" align="center">
 					내가 만든 모임이 없습니다.
 					</td>
 				</tr>
@@ -301,10 +238,10 @@ if(cp2%pageSize==0)manuserGroup--;
 				for(int i=0;i<mandto.size();i++){
 					%>
 					<tr>
-					<td><%=hobbymap.get(mandto.get(i).getIdx_info()) %></td>
-					<td><a href="/moim/info/moimContent.jsp?idx=<%=mandto.get(i).getIdx_info()%>"><%=namemap.get(mandto.get(i).getIdx_info()) %></a></td>
-					<td><%=memmap.get(mandto.get(i).getIdx_info())%></td>
-					<td>
+					<td id="hobby"><%=hobbymap.get(mandto.get(i).getIdx_info()) %></td>
+					<td id="moimname"><a href="/moim/info/moimContent.jsp?idx=<%=mandto.get(i).getIdx_info()%>"><%=namemap.get(mandto.get(i).getIdx_info()) %></a></td>
+					<td id="mem"><%=memmap.get(mandto.get(i).getIdx_info())%></td>
+					<td id="sbutton">
 					<input type="button" value="모임관리" onclick="javascript:location.href='/moim/stat/statList.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">
 					<input type="button" value="모임삭제" onclick="javascript:location.href='/moim/info/moimDel_ok.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">					
 					</td>
@@ -337,7 +274,6 @@ if(cp2%pageSize==0)manuserGroup--;
 					</div>
 	</article>
 </section>
-</div>
 
 <%@include file="/footer.jsp" %>
 </body>

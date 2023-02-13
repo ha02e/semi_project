@@ -8,26 +8,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>모임 가입</title>
+<title>모임 검색</title>
 <style>
-section {
-	width:1280px;
+section{
+	width: 1280px;
 	padding: 20px;
+	margin:0 auto;
 }
-section table{
-	margin: 0px auto;
-	width: 1100px;
-	border-spacing: 0px;
-	border-collapse: collapse;
+section article{
+	width: 85%;
+	margin:0 auto;
 }
-section img{
-	width: 200px;
-	height:200px;
+
+
+/* 검색창 */
+.search-bar{
+	vertical-align: middle;
+	margin: 30px 0;
+	text-align: center;
 }
-section table .intab{
-	border-bottom: 1px solid black;
-	height: 200px;
+.search-bar input[type="text"]{
+	border: 2px solid #00cdac; 
+	border-radius: 0px; 
+	height:40px;
 }
+.search-bar input[type="submit"]{
+	border:0; 
+	background-color:transparent;
+	background-image:url("/moim/img/search.png");
+	background-position:center;
+	background-repeat:no-repeat;
+	width:30px;
+	height:40px;
+	cursor: pointer;
+	margin:-10px 20px -14px 2px;
+}
+
 /*세부검색 내 관심사*/
 input[type="checkbox"] {
     width: 10px;
@@ -44,17 +60,33 @@ input[type="checkbox"] {
   }
   /*세부사항 토글관련*/
 label.detail{
-	border: 1px groove black;
-	background:#999999;
+	background: #00cdac;
 	color:white;
 	display:inline-block; 
 	width:100px;
-	line-height: 30px;
-	cursor: pointer;
+	line-height: 32px;
+	padding:2px 0;
+	cursor:pointer;
+	text-align: center;
+	font-size:14px;
 }
 label:hover, label:active, input:hover+label, input:active+label {
     background:#00cdac;
 	transition: 0.3s;
+}
+#detaildiv{
+	height:100px;
+	margin-top:10px;
+	border-radius:12px;
+	border:2px solid #DDDDDF;
+	background:white;
+}
+#detaildiv fieldset{
+	border:0;
+	padding:20px 0;
+}
+#detaildiv table{
+	margin:0 auto;
 }
 input#detail{
 	display:none;
@@ -65,27 +97,140 @@ div#detaildiv{
 input#detail:checked + div#detaildiv{
 	display: block;
 }
+#detaildiv select{
+	padding: 4px 10px; 
+	border: 1px solid #999999; 
+	border-radius: 0px; 
+	margin-left:10px;
+}
+input[type="text"]{
+	padding:0 10px;
+	height:30px;
+}
+
+/*모임 목록*/
+.search-moim{
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0 20px;
+}
+.moim-list{
+	background:white;
+}
+.moim-list td{
+	height: 140px;
+	border-top: 1px solid #DDDDDF;
+	border-bottom: 1px solid #DDDDDF;
+
+}
+.moimimg{
+	width: 20%;
+	padding-left:30px;
+	border-left: 1px solid #DDDDDF;
+}
+.thumb{
+	width: 180px;
+	height: 110px;
+	overflow: hidden;
+	position: relative;	
+	border-radius: 12px;
+	margin: 10px 20px;
+}
+.thumb img{
+	position:absolute;
+	height:100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(1.2);
+	transition:all 0.5s;
+}
+.thumb img:hover{
+	transform: translate(-50%, -50%) scale(1.3);
+}
+.title{
+	width:50%;
+	padding-left:40px;
+	/*말줄임표*/
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.title a{
+	padding: 50px 100px;
+}
+.title a:hover{
+	font-weight: 600;
+}
+.loc{
+	text-align: center;
+}
+.category{
+	text-align: center;
+}
+.mem{
+	color: #f09819;
+	font-weight: bold;
+	text-align: center;
+	padding-right:30px;
+	border-right: 1px solid #DDDDDF;
+}
+.search-moim a{
+	text-decoration: none;
+	color: #333333;
+}
+.search-moim a:link, .search-moim a:visited{
+	color: #333333;
+}
+
 #buttondiv{
 	text-align: right;
 
 }
-.button{
-	border:0;
-	outline:none;
-	width:100px;
-	height:30px;
-	cursor: pointer;
-	background:#999999;
-	color:white;
+
+/* 페이징 */
+.paging{
+	width: 85%;
+	margin: 0 auto 20px auto;
+	text-align: center;
+}
+.paging a{
+	display: inline-block;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	transition:0.2s;
+}
+.paging a:link,a:visited{
+	text-decoration: none;
+	color:#333333;
+}
+.paging a:hover{	
+	font-weight: 800;
+	color:#ffffff;
+	background:#00cdac;
+	border-radius: 100%;
 }
 
-.button:hover{
-	background: #00cdac;
-	transition: 0.3s;
+/*모임만들기 버튼*/
+#buttondiv{
+	text-align: right;
+	width:85%;
+	margin: 0 auto;
 }
-input[type="text"]{
-	width:200px;
-	height:30px;
+.button{
+	border: 0;
+	outline: none;
+	width: 160px;
+	height: 40px;
+	cursor: pointer;
+	background: #00cdac;
+	color: white;
+	margin-bottom:40px;
+	font-size: 14px;
+}
+.button:hover {
+	transition: 0.3s;
+	background:#333333;
 }
 </style>
 </head>
@@ -143,9 +288,10 @@ if(cp%pageSize==0)userGroup--;
 <section>
 	<article>
 		<form name="infoSearch" action="infoSearch.jsp">
-			<input type="submit" value="검색" class="button">
-			<input type="text" name="keyword" placeholder="검색어를 입력하세요">
-			<label class="detail" for="detail">&nbsp;&nbsp;&nbsp;세부검색</label>
+			<div class="search-bar">
+				<input type="text" name="keyword" placeholder="검색어를 입력하세요" size="60">
+				<input type="submit" value="">
+			<label class="detail" for="detail">세부검색</label>
 			<input type="checkbox" id="detail">
 				<div id="detaildiv">
 				<fieldset>
@@ -172,7 +318,7 @@ if(cp%pageSize==0)userGroup--;
 							<option value="경기">경기</option>
 							<option value="인천">인천</option>
 							<option value="강원">강원</option>
-							<option value="충북도">충북</option>
+							<option value="충북">충북</option>
 							<option value="충남">충남</option>
 							<option value="대전">대전</option>
 							<option value="세종">세종</option>
@@ -191,37 +337,50 @@ if(cp%pageSize==0)userGroup--;
 				</table>
 				</fieldset>
 				</div>
-		</form>
+				</div>
+		</form>	
 	</article>
+	
 	<article>
-		<table>
+		<table class="search-moim">
 		<%
 		
 			if(arr!=null){
 				for(int i=0;i<arr.size();i++){
-		%>
-			<tr>
+		%>			
+			<tr class="moim-list">
+
 			<%if(arr.get(i).getImg()!=null&&!arr.get(i).getImg().equals("")){ %>
-				<td class="intab"><img alt="img<%=i %>" src="/moim/userimg/<%=arr.get(i).getImg()%>"></td>
+				<td class="intab moimimg"><div class="thumb"><img alt="img<%=i %>" src="/moim/userimg/<%=arr.get(i).getImg()%>"></div></td>
 			<%}else{ %>	
-				<td class="intab"><img alt="img<%=i %>" src="/moim/img/noimg.png"></td>
+				<td class="intab moimimg"><div class="thumb"><img alt="img<%=i %>" src="/moim/img/noimg.png"></div></td>
 			<%} %>
-				<td class="intab"><a href="moimContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname() %></a></td>
-				<td class="intab"><%=arr.get(i).getLocal() %></td>
-				<td class="intab"><%=arr.get(i).getHobby() %></td>
-				<td class="intab"><%=arr.get(i).getNowmem() %>/<%=arr.get(i).getMaxmem() %></td>
+			
+				<td class="intab title"><a href="moimContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname() %></a></td>
+				<td class="intab loc"><%=arr.get(i).getLocal() %></td>
+				<td class="intab category"><%=arr.get(i).getHobby() %></td>
+				<td class="intab mem"><%=arr.get(i).getNowmem() %>/<%=arr.get(i).getMaxmem() %></td>
+
 			</tr>
+
 		<%		}		
 			}else{ %>
 			<tr>
 				<td colspan="4"><h2>게시글이 없습니다</h2></td>
 			</tr>
-			
 			<%} %>
 		<tfoot>
 				<tr>
 					<td colspan="4" align="center">
-						<%
+
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</article>
+
+	<div class="paging">
+							<%
 							if(userGroup!=0){
 								%><a href="infoSearch.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&local=<%=local%>&keyword=<%=keyword%>
 								<%if(hobby!=null)for(int i=0;i<hobby.length;i++){
@@ -246,15 +405,10 @@ if(cp%pageSize==0)userGroup--;
 								}%>">&gt;&gt;</a><%
 							}
 						%>
-					</td>
-				</tr>
-			</tfoot>
-		</table>
-	</article>
-	<hr>
+	</div>
 	<div id="buttondiv">
 		<input type="button" value="모임만들기" class="button" onclick="javascript:location.href='moimWrite.jsp'">
-		</div>
+	</div>
 </section>
 <%@include file="/footer.jsp" %>
 </body>

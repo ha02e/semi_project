@@ -10,7 +10,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>후기 작성하기</title><title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <%
 Integer idx_member = (Integer) session.getAttribute("idx");
 if (idx_member == null) {
@@ -23,24 +27,25 @@ if (idx_member == null) {
 return;
 }
 %>
-
-
-
-
 <style>
-section {
-	width: 800px;
-	margin: 0 auto;
+section{
+	width:800px;
+	margin:0 auto;
+	padding:50px 0;
 }
-
-section h2 {
-	margin: 40px 0 0 0;
+section h2{
+	font-size:45px;
+	width: 85%;
+	margin:0 auto;	
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	text-align: center;
 }
-
-section p {
-	font-size: 14px;
-	margin: 10px 0 20px 0;
-	color: #666666;
+section p{
+	font-size: 15px;
+	margin:4px 0 20px 0;
+	color:#666666;
+	text-align: center;
 }
 
 section .write table {
@@ -84,6 +89,7 @@ input[type="text"] {
 textarea {
 	border: 1px solid #999999;
 	border-radius: 0px;
+	padding: 8px;
 }
 
 .button {
@@ -119,6 +125,13 @@ textarea {
 			return false;
 		}
 	}
+	
+	function checkSize(input) {
+	    if (input.files && input.files[0].size > (2 * 1024 * 1024)) {
+	        alert("파일 사이즈가 2mb 를 넘습니다.");
+	        input.value = null;
+	    }
+	}
 </script>
 </head>
 <%
@@ -136,11 +149,6 @@ String img = request.getParameter("img");
 
 InfoDTO info = rdao.getInfo(idx_info);
 %>
-<!-- 
-info에서 넘겨 받아야할 것들 카테고리, 모임이름, 지역 / 현재 카테고리는 idx_member 에서 가져오고 있다 
-
- -->
-
 
 <body>
 	<%@include file="/header.jsp"%>
@@ -148,33 +156,34 @@ info에서 넘겨 받아야할 것들 카테고리, 모임이름, 지역 / 현�
 		enctype="multipart/form-data" onsubmit="return validate()">
 		<section>
 			<article>
-				<h2>후기 게시판 작성</h2>
+				<h2>후기 작성하기</h2>
+				<p>후기를 솔직하게 작성해주세요.</p>
 				<div class="moimcontent">
 					<div class="contents write">
 						<table>
 							<tr>
 								<th>제목</th>
 								<td><input type="text" name="subject"
-									placeholder="내용을 입력해주세요"></td>
+									placeholder="내용을 입력해주세요" size="52"></td>
 							</tr>
 							<tr>
 								<th>모임이름</th>
 								<td><input type="text" name="moimname" size="52"
-									value="<%=info.getMoimname()%>"> <!-- readonly --></td>
+									value="<%=info.getMoimname()%>" readonly > </td>
 							</tr>
 							<tr>
 								<th>지역</th>
 								<td><input type="text" name="local"
-									value="<%=info.getLocal()%>"> <!-- readonly --></td>
+									value="<%=info.getLocal()%>" size="6" readonly> </td>
 							</tr>
 							<tr>
 								<th>내용</th>
 								<td><textarea name="content" id="content" rows="10"
-										cols="50" placeholder="내용을 입력해주세요"></textarea></td>
+										cols="80" placeholder="내용을 입력해주세요" style="resize:none" ></textarea></td>
 							</tr>
 							<tr>
 								<th>이미지</th>
-								<td><input type="file" name="upload">*최대 업로드 파일
+								<td><input type="file" name="upload" onchange ="checkSize(this)">*최대 업로드 파일
 									크기:2 MB</td>
 							</tr>
 							<tr>

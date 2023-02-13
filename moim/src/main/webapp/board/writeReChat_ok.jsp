@@ -14,5 +14,5 @@ String msg=result>0?"답변 글쓰기 성공":"답변 글쓰기 실패!";
 %>
 <script>
 window.alert('<%=msg%>');
-location.href='moimChat.jsp';
+location.href='moimChat.jsp?idx=<%=ndto.getIdx_info()%>';
 </script>

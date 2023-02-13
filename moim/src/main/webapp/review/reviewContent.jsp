@@ -26,50 +26,76 @@ return;
 <head>
 <meta charset="UTF-8">
 <title><%=dto.getSubject() %></title>
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
+
 <style>
-section {
-	width: 800px;
-	margin: 0 auto;
+section{
+	width:1280px;
+	margin:0px auto;
+	padding:50px 0;
+}
+h2{
+	font-size:45px;
+	width: 85%;
+	margin:0 auto;	
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	text-align: center;
+	padding-bottom:20px;
+	border-bottom: 2px solid #4C7C77; 
 }
 
-section h2 {
-	margin: 50px 0 10px 0;
-}
 
 section .moiminfo {
-	width: 800px;
-	height: 240px;
+	width: 85%;
 	display: flex;
-	margin-bottom: 30px;
+	align-items:center;
+	justify-content:space-around;
+	margin:0 auto 30px auto;
+	border-bottom: 1px solid #4C7C77;
+	padding-bottom:30px;
+	
 }
-
+h3{
+	width:80%;
+	margin:30px auto 14px auto;
+	font-size:32px;
+}
 .moimimg {
 	padding: 10px 0;
+	width: 30%;
+	margin-left:20px;
 }
-
+.moimtext{
+	width: 50%;
+}
 section .img {
-	width: 284px;
-	height: 226px;
+	width: 300px;
+	height: 240px;
 	position: relative;
 	overflow: hidden;
 }
 
 section .img img {
 	position: absolute;
-	width: 100%;
+	height:100%;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
 
 .moim-content {
-	width: 320px;
+	width: 100%;
 	height: 130px;
 	overflow: auto;
 	word-wrap: break-word;
 }
-
+.moimtext td{
+	width:200px;
+}
 .con-icon1 {
 	display: inline-block;
 	width: 18px;
@@ -78,7 +104,6 @@ section .img img {
 	background-image: url("/moim/img/icon01.png");
 	background-size: cover;
 }
-
 .con-icon2 {
 	display: inline-block;
 	width: 18px;
@@ -87,178 +112,117 @@ section .img img {
 	background-image: url("/moim/img/icon02.png");
 	background-size: cover;
 }
-
+.con-icon3{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	vertical-align: top;
+	background-image: url("/moim/img/icon03.png");
+	background-size: cover;
+}
 .moiminfo table {
-	width: 650px;
-	margin: 0 10px 0 6px;
-	border-spacing: 10px;
+	width: 100%;
+	margin: 0 10px;
+	border-spacing: 12px;
 }
 
 .moiminfo table td {
 	padding: 4px 6px;
-	border: 2px solid #f0f0f0;
+	border: 2px solid #ebedee;
 	border-radius: 4px;
 	background: #f8f8f8;
 }
 
-section .button {
-	display: flex;
-	flex-direction: column;
-}
-
-section .button div {
-	margin: 10px;
-	align-items: center;
-}
-
-.button a:link, a:visited {
-	background-color: #999999;
-	color: white;
-	width: 90px;
-	heigth: 30px;
-	padding: 10px 20px;
-	border-radius: 6px;
+.button{
 	text-align: center;
-	text-decoration: none;
-	display: inline-block;
+	padding:20px 0 40px 0;
+	display: flex;
+	justify-content: space-around;
+	width:440px;
+	margin:0 auto;
 	font-size: 14px;
 }
-
-.qnabbs-title {
-	list-style: none;
-	width: 800px;
-	padding: 30px 0 0 0;
-	border-top: 1px solid #999999;
-}
-
-.qnabbs-title li {
-	display: inline-block;
-	width: 396px;
-}
-
-.qnabbs-title h2 {
-	margin: 0;
-}
-
-.qnabbs-btn {
-	text-align: right;
-}
-
-.qnabbs-btn input {
-	border: 0;
-	outline: none;
-	width: 100px;
-	height: 30px;
+.button a{
+	display:inline-block;
+	width:120px;
+	height:40px;
+	line-height:40px;
 	cursor: pointer;
-	background: #999999;
-	color: white;
+	background:#999999;
+	color:white;
+	text-decoration: none;
+}
+.list-btn a{
+	background:#333333;
+}
+.button a:hover{
+	background: #00cdac;
+	transition: 0.3s;
 }
 
-input[id*="click"] {
-	display: none;
-}
-
-input[id*="click"]+label {
-	display: block;
-	padding: 10px 20px;
-	border: 1px solid #e8e8e8;
-	cursor: pointer;
-}
-
-input[id*="click"]+label span.go {
-	display: inline-bolck;
-	width: 30px;
-	height: 30px;
-	margin-left: 10px;
-	font-weight: 900;
-	color: red;
-}
-
-input[id*="click"]+label+div {
-	max-height: 0;
-	transition: max-height 0.5s;
-	overflow: hidden;
-	background: #eeeeee;
-	border-left: 1px solid #eeeeee;
-	border-right: 1px solid #eeeeee;
-}
-
-input[id*="click"]+label+div p {
-	display: inline-block;
-	padding: 10px 40px 0 40px;
-}
-
-input[id*="click"]:checked+label+div {
-	max-height: 500px;
-}
 </style>
+</head>
 <body>
 	<%@include file="/header.jsp"%>
+<section>
+	<article>
+		<h2>모임 후기 보기</h2>
+			
 	<input type="hidden" name="idx" value="<%=idx%>">
+	
+	<h3><%=dto.getSubject()%></h3>
+	<div class="moiminfo">
+		<div class="moimContent moimimg">
 	<%
 	if (dto.getImg() == null || dto.getImg().equals("")) {
 	%>
-	<section>
-		<article>
-			<h2>
-				제목 :
-				<%=dto.getSubject()%></h2>
-
-			<div class="moiminfo">
-				<div class="moimContent moimimg">
-					<div class="img">
-						<img alt="이미지" src="/moim/img/noimg.png">
-					</div>
+				<div class="img">
+					<img alt="이미지" src="/moim/img/noimg.png">
 				</div>
-				<%
-				} else {
-				%>
 
-				<section>
-					<article>
-						<h2>
-							제목 :
-							<%=dto.getSubject()%></h2>
-						<div class="moiminfo">
-							<div class="moimContent moimimg">
-								<div class="img">
-									<img alt="이미지" src="img/<%=dto.getImg()%>">
-								</div>
-							</div>
-							<%
-							}
-							%>
-							<table class="moimContent">
-								<tr class="moimtext">
-									<td><span class="con-icon1"></span>모임명 : <%=dto.getMoimname()%></td>
-								</tr>
-								<tr class="moimtext">
-									<td><span class="con-icon2"></span>지역 : <%=dto.getLocal()%></td>
-								</tr>
-								<tr class="moimtext">
-									<td>
-										<div class="moim-content">
-											<span class="con-icon3"></span>&nbsp;&nbsp;&nbsp;내용 :<br>
-											<%=dto.getContent().replaceAll("\n", "<br>")%>
-										</div>
-									</td>
-								</tr>
-							</table>
-							<div class="button">
-								<div>
-									<a href="reviewList.jsp">목록</a>
-								</div>
-								<div>
-									<a
-										href="javascript:location.href='updateReview.jsp?idx=<%=idx%>'">수정</a>
-								</div>
-								<div>
-									<a href="javascript:location.href='reviewDel.jsp?idx=<%=idx%>'">삭제</a>
-								</div>
-							</div>
-						</div>
-					</article>
-				</section>
-				<%@include file="/footer.jsp"%>
+				<%
+	} else {
+				%>
+				<div class="img">
+					<img alt="이미지" src="img/<%=dto.getImg()%>">
+				</div>
+
+				<%
+	}
+				%>		
+		</div>
+		<table class="moimContent moimtext">
+			<tr>
+				<td><span class="con-icon1"></span>&nbsp;모임명 : <%=dto.getMoimname()%></td>
+			</tr>
+			<tr>
+				<td><span class="con-icon2"></span>&nbsp;지역 : <%=dto.getLocal()%></td>
+			</tr>
+			<tr>
+				<td>
+					<div class="moim-content">
+						<span class="con-icon3"></span>&nbsp;내용 :<br>
+						<%=dto.getContent().replaceAll("\n", "<br>")%>
+					</div>
+				</td>
+			</tr>
+		</table>							
+	</div>
+	<div class="button">
+		<div>
+			<a href="javascript:location.href='updateReview.jsp?idx=<%=idx%>'">수정</a>
+		</div>
+		<div>
+			<a href="javascript:location.href='reviewDel.jsp?idx=<%=idx%>'">삭제</a>
+		</div>
+		<div class="list-btn">
+			<a href="reviewList.jsp">목록</a>
+		</div>
+		</div>
+
+	</article>
+
+</section>
+<%@include file="/footer.jsp"%>
 </body>
 </html>

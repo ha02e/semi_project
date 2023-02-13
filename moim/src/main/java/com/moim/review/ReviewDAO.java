@@ -1,6 +1,7 @@
 package com.moim.review;
 
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
@@ -306,7 +307,7 @@ public class ReviewDAO {
 
 	/** 이미지 관련 등록 관련 메서드 */
 
-	public int addImage(MultipartRequest mr, int idx_member) {
+	public int addImage(MultipartRequest mr, int idx_member){
 		try {
 			conn = com.moim.db.MoimDB.getConn();
 			String sql = "insert into moim_review values(moim_review_idx.nextval,?,?,?,?,?,?,?,?,sysdate)";
@@ -330,10 +331,13 @@ public class ReviewDAO {
 			ps.setString(8, img);
 			int count = ps.executeUpdate();
 			return count;
-
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
+			
+			
 		} finally {
 			try {
 				if (ps != null)

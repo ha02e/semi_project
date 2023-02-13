@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="com.moim.review.*"%>
+<%@page import="com.moim.info.*"%>
 <jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
 <!-- login -->
 <%
@@ -15,7 +16,16 @@ if (idx_l==null) {
 return;
 }
 %>
+<script>
+function checkSize(input) {
+    if (input.files && input.files[0].size > (2 * 1024 * 1024)) {
+        alert("파일 사이즈가 2mb 를 넘습니다.");
+        input.value = null;
+    }
+}
+</script>
 <%
+
 String idx_s = request.getParameter("idx");
 if (idx_s == null || idx_s.equals("")) {
 	idx_s = "0";
@@ -36,25 +46,46 @@ String hobby = request.getParameter("hobby");
 String writer = request.getParameter("writer");
 String subect = request.getParameter("subject");
 String img = request.getParameter("img");
+
+
+if(idx_l != dto.getIdx_member()){
+	%>
+	<script>
+		window.alert('자신의 게시물만 수정하실 수 있습니다.');
+		location.href = '/moim/review/reviewList.jsp';
+	</script>
+	<%	
+}
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
 section{
 	width:800px;
 	margin:0 auto;
+	padding:50px 0;
 }
 section h2{
-	margin:40px 0 0 0;
+	font-size:45px;
+	width: 85%;
+	margin:0 auto;	
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	text-align: center;
 }
 section p{
-	font-size: 14px;
-	margin:10px 0 20px 0;
+	font-size: 15px;
+	margin:4px 0 20px 0;
 	color:#666666;
+	text-align: center;
 }
 
 section .write table{
@@ -121,21 +152,23 @@ textarea{
 		document.getElementByld("imgchange").src = "";
 	}
 </script>
+</head>
 <body>
 	<%@include file="/header.jsp"%>
 	<section>
 		<%
 		if (dto.getImg() == null || dto.getImg().equals("")) {
 		%>
-		<article>
+		<article>				
+			<h2>후기 수정하기</h2>
+			<p>수정할 내용을 작성해주세요.</p>
 			<form name="reviewupdate" action="updateReviewImg.jsp" method="post">
-				<h2>후기 게시판 수정</h2>
 				<div class="moimcontent">
 					<div class="contents write">
 						<table>
 							<tr>
 								<th>제목</th>
-								<td><input type="text" name ="subject" value="<%=dto.getSubject()%>"></td>
+								<td><input type="text" name ="subject" value="<%=dto.getSubject()%>" size="52"></td>
 							</tr>
 							<tr>
 								<th>모임이름</th>
@@ -147,12 +180,12 @@ textarea{
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><textarea name="content" rows="10" cols="50"
-										><%=dto.getContent()%></textarea></td>
+								<td><textarea name="content" rows="10" cols="80" style="resize:none">
+								<%=dto.getContent()%></textarea></td>
 							</tr>
 							<tr>
 								<th>이미지</th>
-								<td><input type="file" name="upload"></td>
+								<td><input type="file" name="upload" onchange ="checkSize(this)"></td>
 							</tr>
 <tr>							<td>
 									<input type="hidden" name="hobby" value="<%=hobby%>">
@@ -198,12 +231,12 @@ textarea{
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><textarea name="content" rows="10" cols="50">
+								<td><textarea name="content" rows="10" cols="50" style="resize:none">
 										<%=dto.getContent()%></textarea></td>
 							</tr>
 							<tr>
 								<th>이미지</th>
-								<td><input type="file" name="upload"></td><td></td>
+								<td><input type="file" name="upload" onchange ="checkSize(this)"></td><td></td>
 							</tr>
 							<tr>
 								<td>

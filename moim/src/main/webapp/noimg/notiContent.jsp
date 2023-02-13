@@ -34,27 +34,41 @@ return;}
 %>
 <meta charset="UTF-8">
 <title><%=dto.getSubject() %></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 
 <style>
+section{
+	width:1280px;
+	margin:0px auto;
+	padding:50px 0;
+}
+h2{
+	font-size:45px;
+	width: 85%;
+	margin:0 auto;	
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+	text-align: center;
+	padding-bottom:20px;
+}
 table{
-	width:80%;
-	margin-left:auto;
-	margin-right:auto;
-	text-align:center;
-	border-collapse:collapse;
-	border-bottom: 1px solid gray;
+	width: 85%;
+	margin:0 auto 0px auto;
+	text-align: center;
+	border-collapse: collapse;
 }
 
 table th{
-	height:40px;
-	border-top:1px double gray;
-	border-bottom:1px solid gray;
-	background-color:gray;
-	vertical-align:inherit;
+	height:46px;
+	background: #f3f3f3;
+	border-top: 2px solid #4C7C77; 
+	border-bottom: 1px solid #4C7C77;
 }
 
 table td{
-border-bottom:1px solid gray;
+	border-bottom:1px solid gray;
 	padding: 10px;
 }
 
@@ -62,20 +76,18 @@ table #subject{
 	width:70%;
 	text-align:left;
 	font-size: 20px;
-	font-weight:bold;
-	padding-left:15px;
+	padding-left:30px;
 }
-
+table #writedate{
+	width:30%;
+	font-size: 15px;
+	text-align:center;
+	font-weight: normal;
+}
 table #content{
 	text-align:left;
-	padding-left:15px;
-}
-
-table #writedate{
-	width:20%;
-	font-size: 15px;
-	text-align:right;
-	padding-right:15px;
+	padding:40px 30px;
+	vertical-align: top;
 }
 
 table div{
@@ -89,14 +101,17 @@ table div{
 .button input{
 	border:0;
 	outline:none;
-	width:100px;
+	width:120px;
 	height:40px;
 	cursor: pointer;
 	background:#999999;
 	color:white;
 }
-.button input[type="submit"]{
+input.list-btn{
 	background:#333333;
+}
+.button input[type="submit"]{
+	background:#999999;
 }
 .button input:hover{
 	background: #00cdac;
@@ -126,8 +141,8 @@ function write_button(){
 <%@include file="/header.jsp"%>
 	<section >
 		<article>
-		<h3>공지사항</h3>
-		<hr>
+		<h2>공지사항</h2>
+
 			<table>
 				<thead>
 					<tr>
@@ -137,31 +152,20 @@ function write_button(){
 				<tbody>
 					<tr>
 					<td colspan="2" id="content"><%=dto.getContent().replaceAll("\n", "<br>") %></td>
-			
-				</tbody>
-				<tfoot>
-					<tr>
-					<td>
-					<div class="button">
-					<form name="update1" action="notiUpdate.jsp">
-						<input type="hidden" name="idx" value="<%=dto.getIdx() %>">
-						<input type="hidden" name="subject" value="<%=dto.getSubject() %>">
-						<input type="hidden" name="content" value="<%=dto.getContent()%>">
-						<input type="submit" value="수정" id="a">
-						<input type="button" value="삭제" id="b" 
-						onclick="javascript:location.href='notiDel.jsp?idx=<%=dto.getIdx()%>'">
-					</form>
-					</div>
-					</td>
-					<td>
-					<div class="button">
-						<input type="button" value="목록" id="c" onclick="javascript:location.href='notiList.jsp?idx_info=<%=dto.getIdx_info()%>&category=<%=dto.getCategory()%>'">
-					</div>
-					</td>
 					</tr>
-				</tfoot>
+				</tbody>
 			</table>
-
+			<div class="button">
+				<form name="update1" action="notiUpdate.jsp">
+					<input type="hidden" name="idx" value="<%=dto.getIdx() %>">
+					<input type="hidden" name="subject" value="<%=dto.getSubject() %>">
+					<input type="hidden" name="content" value="<%=dto.getContent()%>">
+					<input type="submit" value="수정" id="a">
+					<input type="button" value="삭제" id="b" 
+						onclick="javascript:location.href='notiDel.jsp?idx=<%=dto.getIdx()%>'">
+					<input type="button" value="목록" id="c" class="list-btn" onclick="javascript:location.href='notiList.jsp?idx_info=<%=dto.getIdx_info()%>&category=<%=dto.getCategory()%>'">
+				</form>
+			</div>
 		</article>
 	</section>
 <%@include file="/footer.jsp" %>

@@ -52,18 +52,33 @@ div input{
 function popupclose(){
 	window.close();
 }
+function validate(){
+	var subject=document.getElementById("subject");
+	var content=document.getElementById("content");
+	
+	if(subject.value=="" || subject==null){
+		window.alert('제목을 입력해주세요');
+		subject.focus();
+		return false;
+	}
+	if(content.value=="" || content==null){
+		window.alert('내용을 입력해주세요');
+		content.focus();
+		return false;
+	}
+}
 </script>
 </head>
 <body>
 <h2>QnA 글 작성하기</h2>
-	<form name="qnaWrite" action="qnaWrite_ok.jsp">
+	<form name="qnaWrite" action="qnaWrite_ok.jsp" onsubmit="return validate()">
 <table>
 	<tr>
 		<th>제목</th>
 	</tr>
 	<tr>
 		<td>
-			<input type="text" name="subject" size="38">
+			<input type="text" name="subject" id="subject" size="38">
 		</td>
 	</tr>
 	<tr>
@@ -71,7 +86,7 @@ function popupclose(){
 	</tr>
 	<tr>
 		<td>
-			<textarea name="content" rows="3" cols="38" style="resize:none"></textarea>
+			<textarea name="content" id="content"  rows="3" cols="38" style="resize:none"></textarea>
 		</td>
 	</tr>
 </table>

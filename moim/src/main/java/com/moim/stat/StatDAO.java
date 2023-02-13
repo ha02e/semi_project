@@ -3,6 +3,8 @@ package com.moim.stat;
 import java.sql.*;
 import java.util.*;
 
+import com.moim.info.InfoDAO;
+
 
 public class StatDAO {
 
@@ -424,6 +426,8 @@ public class StatDAO {
 				for(int i=0;i<arr.size();i++) {
 					int nowmem=getMemNum(arr.get(i));
 					if((nowmem-1)==0) {
+						InfoDAO idao=new InfoDAO();
+						idao.delQna(arr.get(i));
 						sql="delete from moim_info where idx=?";
 						ps=conn.prepareStatement(sql);
 						ps.setInt(1, arr.get(i));

@@ -11,13 +11,14 @@
 body{
 	margin:0;
 	padding:0;
+	background: #f9f9f9;
 }
 section{
 	width:1280;
 	margin:0 auto;
 }
 .id_bg{
-	background: #F2F2F2;
+	background: #2DC6A2;
 	width:100vw;
 	height:30px;
 	padding:8px 0 1px;
@@ -27,19 +28,21 @@ section{
 	margin:0px auto;
 	text-align:right;
 	font-size:14px;
+	color:white;
 }
 .id a{
-	color:#1E1C26;
+	color:white;
 	text-decoration:none;
 }
 .id a:hover{
-	color:#1E1C26;
+	color:white;
 	font-weight: 600;
 }
 
 .navbar{
 	width:100vw;
 	border-bottom: 1px solid #A6A6A6;
+	background:#ffffff;
 }
 
 .navbar_ul{
@@ -77,7 +80,7 @@ section{
 	padding: 4px;
 }
 .navbar_ul a:hover{
-	color:#30BF97;
+	color:#2DC6A2;
 }
 .navbar_ul a::after{
 	content:"";
@@ -87,12 +90,12 @@ section{
 	transform:translateX(-50%);
 	width: 0%;
 	height:3px;	
-	background:#8BD9CA;
+	background:#2DC6A2;
 	transition:all 0.3s ease-out;
 }
 .navbar_ul a:hover::after{
 	width: 100%;
-	color:#30BF97;
+	color:#2DC6A2;
 }
 .logo a:hover::after{
 	width: 0%;
