@@ -65,12 +65,12 @@ section{
 }
 
 .navbar_ul .logo{
-	height:74px;
+
 }
 .navbar_ul Img{
-	width:106px;
-	height:70px;
-	padding-top:8px;
+	width:110px;
+	height:51px;
+	padding-top:4px;
 }
 
 .navbar_ul a{	
