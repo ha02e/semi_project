@@ -457,7 +457,7 @@ if(cp%pageSize==0)userGroup--;
 	</li>
 	</ul>
 	
-   <form name="qna">
+
 	<div class="qnabbs">
 		<div class="qnahead">
 			<span class="qnawriter">작성자</span>
@@ -508,12 +508,21 @@ if(cp%pageSize==0)userGroup--;
 						</div>
 					</div>
 					<p><%=arr.get(i).getContent()%></p>
-					<div class="qnabutton">
+
+					<%
+					if(idx_member==arr.get(i).getIdx_member()){
+						%>
+						<div class="qnabutton">
 						<input type="button" value="수정" 
 								onclick="javascript:window.open('/moim/noimg/qnaUpdate.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&content=<%=arr.get(i).getContent() %>', 
 								'qnaUpdate', 'width=500px, height=340px')">
-							<input type="button" value="삭제" onclick="javascript:location.href='/moim/noimg/qnaDelete_ok.jsp?idx=<%=arr.get(i).getIdx() %>&idx_info=<%=idx_info %>'">
-					</div>
+								
+						<input type="button" value="삭제" onclick="javascript:location.href='/moim/noimg/qnaDelete_ok.jsp?idx=<%=arr.get(i).getIdx() %>&idx_info=<%=idx_info %>'">
+						</div>
+						<%
+					}
+					%>
+					
 					<%
 					if(arr.get(i).getLev()==0){	
 					%>
@@ -530,6 +539,7 @@ if(cp%pageSize==0)userGroup--;
 								</tr>
 								<tr>
 									<td>	
+										<input type="hidden" name="idx_member" value="<%=idx_member %>">
 										<input type="hidden" name="idx_info" value="<%=idx_info %>">
 										<input type="submit" value="작성">
 									</td>
@@ -575,7 +585,7 @@ if(cp%pageSize==0)userGroup--;
       }
       %>
 	</div>
-	</form>
+
 	<div class="bottom-btn">
 		<a href="infoList.jsp" class="list-btn">목록으로</a>
 	</div>

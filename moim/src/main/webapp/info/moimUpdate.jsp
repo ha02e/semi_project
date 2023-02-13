@@ -16,7 +16,8 @@ int idx = Integer.parseInt(idx_s);
 
 --%>  
 <%
-int idx=14;
+String idx_s=request.getParameter("idx");
+int idx=Integer.parseInt(idx_s);
 InfoDTO dto = mdao.getMoimCon(idx);  
 %> 
     
@@ -99,14 +100,11 @@ textarea{
 </style>
 <script>
 function pageBack(){
-	location.href='';
+	location.href='/moim/board/myMoim.jsp';
 }
 </script>
 </head>
 <%
-//int idx=11;
-System.out.println(idx);
-//String idx=request.getParameter("idx");
 String hobby=request.getParameter("hobby");
 String moimname=request.getParameter("moimname");
 String content=request.getParameter("content");
