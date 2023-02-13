@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>모임 가입</title>
+<title>모임 검색</title>
 <style>
 section{
 	width: 1280px;
@@ -354,7 +354,7 @@ if(cp%pageSize==0)userGroup--;
 			<%if(arr.get(i).getImg()!=null&&!arr.get(i).getImg().equals("")){ %>
 				<td class="intab moimimg"><div class="thumb"><img alt="img<%=i %>" src="/moim/userimg/<%=arr.get(i).getImg()%>"></div></td>
 			<%}else{ %>	
-				<td class="intab moimimg"><div class="thumb"><img alt="img<%=i %>" src="/moim/img/noimg.png"></div></td>
+				<td class="intab moimimg"><div class="thumb"><img alt="noimg<%=i %>" src="/moim/img/noimg.png"></div></td>
 			<%} %>
 			
 				<td class="intab title"><a href="moimContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname() %></a></td>

@@ -39,7 +39,7 @@ return;
 	int idx_info=idx;
 %>	
 <meta charset="UTF-8">
-<title>모임</title>
+<title><%=dto.getMoimname() %></title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
@@ -407,7 +407,23 @@ if(cp%pageSize==0)userGroup--;
 	<h2><%=dto.getMoimname()%></h2>
 		<div class="moiminfo">
 		<div class="moimimg">
-			<div class="img"><img src="/moim/userimg/<%=dto.getImg()%>"></div>
+		<%
+			if (dto.getImg() == null || dto.getImg().equals("")) {
+			%>
+						<div class="img">
+							<img alt="이미지" src="/moim/img/noimg.png">
+						</div>
+		
+						<%
+			} else {
+						%>
+						<div class="img">
+							<img src="/moim/userimg/<%=dto.getImg()%>">
+						</div>
+		
+						<%
+			}
+		%>
 		</div>	
 		<table class="moimContent">
 			<tr class="moimtext">
@@ -457,7 +473,7 @@ if(cp%pageSize==0)userGroup--;
 	</li>
 	</ul>
 	
-   <form name="qna">
+
 	<div class="qnabbs">
 		<div class="qnahead">
 			<span class="qnawriter">작성자</span>
@@ -508,17 +524,21 @@ if(cp%pageSize==0)userGroup--;
 						</div>
 					</div>
 					<p><%=arr.get(i).getContent()%></p>
-					<div class="qnabutton">
+
+					<%
+					if(idx_member==arr.get(i).getIdx_member()){
+						%>
+						<div class="qnabutton">
 						<input type="button" value="수정" 
 								onclick="javascript:window.open('/moim/noimg/qnaUpdate.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&content=<%=arr.get(i).getContent() %>', 
 								'qnaUpdate', 'width=500px, height=340px')">
 								
-						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
-							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
-							<input type="hidden" name="idx_info" value="<%=idx_info %>">
-							<input type="submit" value="삭제">
-						</form>
-					</div>
+						<input type="button" value="삭제" onclick="javascript:location.href='/moim/noimg/qnaDelete_ok.jsp?idx=<%=arr.get(i).getIdx() %>&idx_info=<%=idx_info %>'">
+						</div>
+						<%
+					}
+					%>
+					
 					<%
 					if(arr.get(i).getLev()==0){	
 					%>
@@ -535,6 +555,7 @@ if(cp%pageSize==0)userGroup--;
 								</tr>
 								<tr>
 									<td>	
+										<input type="hidden" name="idx_member" value="<%=idx_member %>">
 										<input type="hidden" name="idx_info" value="<%=idx_info %>">
 										<input type="submit" value="작성">
 									</td>
@@ -580,7 +601,7 @@ if(cp%pageSize==0)userGroup--;
       }
       %>
 	</div>
-	</form>
+
 	<div class="bottom-btn">
 		<a href="infoList.jsp" class="list-btn">목록으로</a>
 	</div>

@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.moim.member.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.net.*" %>
 <%@ page import="com.moim.noimg.*" %>
 <%@ page import="com.moim.review.*" %>
 <jsp:useBean id="mdao" class="com.moim.member.MemberDAO"></jsp:useBean>
@@ -11,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내가 쓴 글</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
@@ -293,7 +292,7 @@ if(cp2%pageSize==0)userGroup2--;
 			<tbody>
 				<%
 				HashMap<Integer,String> map1=mdao.moimName();
-				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, idx_member,listSize,cp);
+				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, idx_member,listSize,cp2);
 				if(dto2==null||dto2.size()==0){
 					%>
 					<tr>
@@ -307,7 +306,7 @@ if(cp2%pageSize==0)userGroup2--;
 						%>
 						<tr>
 							<td id="moimname"><%=map1.get(dto2.get(i).getIdx_info())%></td>
-							<td id="subject"><%=dto2.get(i).getSubject() %></td>
+							<td id="subject"><a href="/moim/info/moimContent.jsp?idx=<%=dto2.get(i).getIdx_info()%>"><%=dto2.get(i).getSubject() %></a></td>
 							<td id="writedate"><%=dto2.get(i).getWritedate() %></td>
 							<td id="update">
 								<input type="submit" value="삭제" onclick="javascript:location.href='myWritingDelQna_ok.jsp?idx=<%=dto2.get(i).getIdx()%>'"></td>

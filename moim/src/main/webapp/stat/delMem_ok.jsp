@@ -10,16 +10,9 @@ if(request.getParameter("idx_info")!=null&&!request.getParameter("idx_info").equ
 int result=sdao.delMem(idx, idx_info);
 ArrayList<Integer> arr=new ArrayList<Integer>();
 arr.add(idx_info);
-String msg="실패";
-if(result>0){
+String msg=result>0?"성공":"실패";
 	result=sdao.makeMan(arr);
-	msg=result>0?"관리자 임명 성공":"관리자 임명 실패";
-}
-if(result>0){
 	result=sdao.minusMem(arr);
-	msg=result>0?"탈퇴 성공!":"탙퇴 실패...";
-}
-
 %>
 <script type="text/javascript">
 window.alert('<%=msg%>');
