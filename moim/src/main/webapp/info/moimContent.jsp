@@ -39,7 +39,7 @@ return;
 	int idx_info=idx;
 %>	
 <meta charset="UTF-8">
-<title>모임</title>
+<title><%=dto.getMoimname() %></title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">

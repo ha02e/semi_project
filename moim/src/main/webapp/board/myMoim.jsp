@@ -151,7 +151,7 @@ int pageSize=5;
 
 
 int alltotalPage=alltotalCnt/listSize+1;
-if(alltotalPage%listSize==0)alltotalPage--;
+if(alltotalCnt%listSize==0)alltotalPage--;
 
 int mantotalPage=mantotalCnt/listSize+1;
 if(mantotalCnt%listSize==0)mantotalPage--;
@@ -159,7 +159,7 @@ if(mantotalCnt%listSize==0)mantotalPage--;
 int alluserGroup=cp/pageSize;
 if(cp%pageSize==0)alluserGroup--;
 
-int manuserGroup=cp/pageSize;
+int manuserGroup=cp2/pageSize;
 if(cp2%pageSize==0)manuserGroup--;
 %>
 <body>
@@ -183,7 +183,7 @@ if(cp2%pageSize==0)manuserGroup--;
 			HashMap<Integer,String> hobbymap=mdao.moimCategory();
 			HashMap<Integer,String> memmap=mdao.getNowMem();
 			ArrayList<StatDTO> alldto=mdao.getMyStat(idx,listSize,cp,1);
-			ArrayList<StatDTO> mandto=mdao.getMyStat(idx,listSize,cp,0);
+			ArrayList<StatDTO> mandto=mdao.getMyStat(idx,listSize,cp2,0);
 			if(alldto==null||alldto.size()==0){
 				%>
 				<tr>

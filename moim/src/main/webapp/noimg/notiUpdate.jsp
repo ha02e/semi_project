@@ -101,7 +101,7 @@ function pageBack(){
 <body>
 <%@include file="/header.jsp" %>
 <section>
-<h2>공지사항 수정하기</h2>
+<h2>공지사항 업데이트</h2>
 <p>수정할 공지사항 내용을 입력해주세요.</p>
 <form name="update2" action="notiUpdate_ok.jsp" >
 <div class="update_table">
