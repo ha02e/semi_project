@@ -362,7 +362,11 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 			<div class="moim-info">
 			<a href="moimContent.jsp?idx=<%=fitarr.get(i).getIdx()%>">
 			<div class="thumb1">
-				<img alt="fitimg<%=i%> %>" src="/moim/userimg/<%=fitarr.get(i).getImg()%>">
+				<%if(fitarr.get(i).getImg()!=null&&!fitarr.get(i).getImg().equals("")){ %>
+				<img alt="img<%=i %>" src="/moim/userimg/<%=fitarr.get(i).getImg()%>">
+			<%}else{ %>	
+				<img alt="noimg<%=i %>" src="/moim/img/noimg.png">
+			<%} %>
 			</div>
 			<div class="moim-con">
 				<ul>
@@ -397,7 +401,13 @@ if(session.getAttribute("hobby")!=null&&!session.getAttribute("hobby").equals(""
 				for (int i=0;i<needarr.size()&&i<4;i++){ %>
 				<div class="infotable" id="infotab">
 				<a href="moimContent.jsp?idx=<%=needarr.get(i).getIdx()%>">
-					<div class="thumb2"><img alt="needimg<%=i %>" src="/moim/userimg/<%=needarr.get(i).getImg()%>"></div>
+					<div class="thumb2">
+					<%if(needarr.get(i).getImg()!=null&&!needarr.get(i).getImg().equals("")){ %>
+				<img alt="img<%=i %>" src="/moim/userimg/<%=needarr.get(i).getImg()%>">
+			<%}else{ %>	
+				<img alt="noimg<%=i %>" src="/moim/img/noimg.png">
+			<%} %>
+					</div>
 					<div class="info_top"><%=needarr.get(i).getHobby() %>&nbsp;/&nbsp;<%=needarr.get(i).getLocal() %></div>
 					<div class="title"><%=needarr.get(i).getMoimname() %></div>
 					<div class="mem"><%=needarr.get(i).getNowmem() %>/<%=needarr.get(i).getMaxmem() %></div>
