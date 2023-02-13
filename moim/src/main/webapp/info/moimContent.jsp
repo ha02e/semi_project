@@ -261,10 +261,6 @@ input[id*="click"]:checked + label + div{
 	color:red;
 }
 
-#qnabbs-write{
-	display:none;
-}
-
 .rewrite fieldset{
 	width:90%;
 	margin:0 auto 20px auto;
@@ -497,36 +493,33 @@ if(cp%pageSize==0)userGroup--;
 				</label>
 				
 				<div class="display">
-					<div id="qnabbs-write">
-						<ul>
-							<li><span class="title">제목</span><span><input type="text" name="subject"></span></li>
-							<li><span class="text">내용</span><span><textarea name="content" rows="10" cols="50">내용을 입력해주세요.</textarea></span></li>
-						</ul>
-						<div>
-							<span class="qnabbs-write-btn">취소</span>
-							<span class="qnabbs-write-btn btn-ok"><input type="submit" value="수정" onclick="open_write();"></span>
-						</div>
-					</div>
+					
 					<p><%=arr.get(i).getContent()%></p>
-					<div class="qnabutton">
+
+					<%
+					if(idx_member==arr.get(i).getIdx_member()){
+						%>
+						<div class="qnabutton">
 						<input type="button" value="수정" 
 								onclick="javascript:window.open('/moim/noimg/qnaUpdate.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&content=<%=arr.get(i).getContent() %>', 
 								'qnaUpdate', 'width=500px, height=340px')">
 								
-						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp">
+						<form name="qnaDelete" action="/moim/noimg/qnaDelete_ok.jsp?idx=<%=arr.get(i).getIdx() %>">
 							<input type="hidden" name="idx" value="<%=arr.get(i).getIdx() %>">
 							<input type="hidden" name="idx_info" value="<%=idx_info %>">
-							<input type="submit" value="삭제">
+							<input type="submit" value="삭제" >
 						</form>
-					</div>
+						</div>
+						<%
+					}
+					%>
+					
 					<%
 					if(arr.get(i).getLev()==0){	
 					%>
 						<div class="rewrite">
 							<fieldset>
 							<legend>답글작성</legend>
-							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&ref=<%=arr.get(i).getRef() %>"
-							   onsubmit="return validate()">
 							<table>
 								<tr> 
 									<td>
@@ -535,12 +528,13 @@ if(cp%pageSize==0)userGroup--;
 								</tr>
 								<tr>
 									<td>	
+										<input type="hidden" name="idx_member" value="<%=idx_member %>">
 										<input type="hidden" name="idx_info" value="<%=idx_info %>">
-										<input type="submit" value="작성">
+										<input type="button" value="작성" onclick="javascript:window.open('/moim/noimg/qnaReWrite_ok.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&ref=<%=arr.get(i).getRef() %>', 
+								'qnaReWrite', 'width=500px, height=340px')" onsubmit="return validate()">
 									</td>
 								</tr>
 							</table>
-							</form>
 							</fieldset>
 						</div>
 						<%
