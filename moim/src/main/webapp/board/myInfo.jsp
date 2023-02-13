@@ -18,6 +18,7 @@ section{
 	width:1280px;
 	margin:0px auto;
 	padding:50px 0;
+	min-height: 560px;
 }
 section h2{
 	margin:10px 0;	

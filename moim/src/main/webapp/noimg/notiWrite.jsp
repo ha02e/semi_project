@@ -46,6 +46,10 @@ table th{
 	text-align:left;
 	font-size:18px;
 	padding:14px 10px 14px 0;
+	width:60px;
+}
+table td{
+	text-align: left;
 }
 input[type="text"] {
 	border: 1px solid #999999; 
@@ -105,11 +109,11 @@ function pageBack(){
 	<table>
 	<tr>
 		<th>제목</th>
-		<td><input type="text" name="subject" size=" 96" placeholder="제목을 입력해주세요"></td>
+		<td><input type="text" name="subject" size=" 84" placeholder="제목을 입력해주세요"></td>
 	</tr>
 	<tr>
 		<th>내용</th>
-		<td colspan="2"><textarea name="content" id="content" rows="15" cols="98" placeholder="내용을 입력해주세요" style="resize:none" ></textarea></td>
+		<td colspan="2"><textarea name="content" id="content" rows="15" cols="84" placeholder="내용을 입력해주세요" style="resize:none" ></textarea></td>
 	</tr>
 	</table>
 </div>

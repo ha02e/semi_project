@@ -21,6 +21,7 @@ section{
 	width:1280px;
 	margin:0px auto;
 	padding:50px 0;
+	min-height: 560px;
 }
 
 h3.my-title{
@@ -162,6 +163,10 @@ table td {
 	color:#ffffff;
 	background:#00cdac;
 	border-radius: 100%;
+}
+
+.paging2{
+	padding-left:140px;
 }
 </style>
 </head>
@@ -313,7 +318,7 @@ if(cp2%pageSize==0)userGroup2--;
 				%>
 			</tbody>	
 			</table>
-			<div class = "paging">
+			<div class = "paging paging2">
 				<%
 				if(userGroup2!=0){
 					%><a href="myWriting.jsp?cp2=<%=(userGroup2-1)*pageSize+pageSize%>&cp=<%=cp%>">&lt;&lt;</a><%

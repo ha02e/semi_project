@@ -16,6 +16,7 @@ section{
 	width:1280px;
 	margin:0px auto;
 	padding:50px 0;
+	min-height: 560px;
 }
 
 h3.my-title{
@@ -107,7 +108,9 @@ table #sbutton{
 	background:#00cdac;
 	border-radius: 100%;
 }
-
+.paging2{
+	padding-left:140px;
+}
 </style>
 </head>
 <%
@@ -211,8 +214,8 @@ if(cp2%pageSize==0)manuserGroup--;
 						%><a href="myMoim.jsp?cp=<%=(alluserGroup+1)*pageSize+1%>&cp2=<%=cp2%>">&gt;&gt;</a><%
 					}
 					%>
-					</div>
-					</div>
+			</div>
+		</div>
 					
 		<h3 class="my-title">내가 만든 모임</h3>
 		<table class="moim2">
@@ -253,7 +256,7 @@ if(cp2%pageSize==0)manuserGroup--;
 			</tbody>
 		</table>
 		<div class="bottom">
-			<div class="paging">
+			<div class="paging paging2">
 					<%
 					if(manuserGroup!=0){
 						%><a href="myMoim.jsp?cp2=<%=(manuserGroup-1)*pageSize+pageSize%>&cp=<%=cp%>">&lt;&lt;</a><%
@@ -270,8 +273,8 @@ if(cp2%pageSize==0)manuserGroup--;
 						%><a href="myMoim.jsp?cp2=<%=(manuserGroup+1)*pageSize+1%>&cp=<%=cp%>">&gt;&gt;</a><%
 					}
 					%>
-					</div>
-					</div>
+			</div>
+		</div>
 	</article>
 </section>
 
