@@ -78,11 +78,14 @@ table a:link, table a:visited{
 .category_r{
 	width:15%;
 }
+.writer_r{
+	width: 15%;
+}
 .moimname_r{
 	width:30%;
 }
 .subject_r{
-	width:55%;
+	width:40%;
 }
 td.subject_r{
 	text-align: left;
@@ -192,7 +195,7 @@ if (userhobby.equals("전체") && keyword.equals("")) {
 	boo = false;
 }
 
-int listSize = 10;//내 맘
+int listSize = 5;//내 맘
 int pageSize = 5;//내 맘
 String cp_s = request.getParameter("cp");
 if (cp_s == null || cp_s.equals("")) {
@@ -242,6 +245,7 @@ if (cp % pageSize == 0)
 					<tr>
 
 						<th class="category_r">카테고리</th>
+						<th class="writer_r">작성자</th>
 						<th class="moimname_r">모임이름</th>
 						<th class="subject_r">제목</th>
 					</tr>
@@ -252,7 +256,7 @@ if (cp % pageSize == 0)
 					%>
 
 					<tr>
-						<td colspan="3">등록된 글이 없습니다</td>
+						<td colspan="4">등록된 글이 없습니다</td>
 					</tr>
 					<%
 					} else {
@@ -262,6 +266,7 @@ if (cp % pageSize == 0)
 					<tr>
 						<td class="category_r"><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getHobby()%></a>
 						</td>
+						<td class ="writer_r"><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getWriter()%></a></td>
 						<td class="moimname_r"><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getMoimname()%></a></td>
 						<td class="subject_r"><a href="reviewContent.jsp?idx=<%=arr.get(i).getIdx()%>"><%=arr.get(i).getSubject()%></a></td>
 					</tr>
