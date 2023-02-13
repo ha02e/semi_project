@@ -85,6 +85,20 @@ table #sbutton{
 	width: 25%;
 }
 
+table #hobby2 {
+	width: 10%;
+	text-align: center;
+}
+table #moimname2 {
+	width: 50%;
+}
+table #mem2 {
+	width: 10%;
+}
+table #sbutton2{
+	width: 30%;
+}
+
 /* 페이징 */
 .paging{
 	width: 85%;
@@ -221,10 +235,10 @@ if(cp2%pageSize==0)manuserGroup--;
 		<table class="moim2">
 			<thead>
 				<tr>
-				<th id="hobby">카테고리</th>
-				<th id="moimname">모임 이름</th>
-				<th id="mem">모임 인원</th>
-				<th id="sbutton">관리&nbsp;&nbsp;삭제</th>
+				<th id="hobby2">카테고리</th>
+				<th id="moimname2">모임 이름</th>
+				<th id="mem2">모임 인원</th>
+				<th id="sbutton2">관리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;수정&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -241,11 +255,12 @@ if(cp2%pageSize==0)manuserGroup--;
 				for(int i=0;i<mandto.size();i++){
 					%>
 					<tr>
-					<td id="hobby"><%=hobbymap.get(mandto.get(i).getIdx_info()) %></td>
-					<td id="moimname"><a href="/moim/info/moimContent.jsp?idx=<%=mandto.get(i).getIdx_info()%>"><%=namemap.get(mandto.get(i).getIdx_info()) %></a></td>
-					<td id="mem"><%=memmap.get(mandto.get(i).getIdx_info())%></td>
-					<td id="sbutton">
+					<td id="hobby2"><%=hobbymap.get(mandto.get(i).getIdx_info()) %></td>
+					<td id="moimname2"><a href="/moim/info/moimContent.jsp?idx=<%=mandto.get(i).getIdx_info()%>"><%=namemap.get(mandto.get(i).getIdx_info()) %></a></td>
+					<td id="mem2"><%=memmap.get(mandto.get(i).getIdx_info())%></td>
+					<td id="sbutton2">
 					<input type="button" value="모임관리" onclick="javascript:location.href='/moim/stat/statList.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">
+					<input type="button" value="모임수정" onclick="javascript:location.href='/moim/info/moimUpdate.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">
 					<input type="button" value="모임삭제" onclick="javascript:location.href='/moim/info/moimDel_ok.jsp?idx=<%=mandto.get(i).getIdx_info()%>'">					
 					</td>
 					</tr>
