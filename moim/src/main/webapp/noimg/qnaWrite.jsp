@@ -25,7 +25,7 @@ int idx_info=Integer.parseInt(idx_s);
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QnA 글 작성하기</title>
 <style>
 table th{
 	text-align:left;

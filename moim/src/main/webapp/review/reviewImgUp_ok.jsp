@@ -8,8 +8,12 @@ request.setCharacterEncoding("utf-8");
 
 Integer idx_member = (Integer)session.getAttribute("idx");
 
+int maxImg = 2097152;
+
 String savepath = request.getRealPath("/review/img");
-MultipartRequest mr = new MultipartRequest(request, savepath, 2097152, "utf-8");
+MultipartRequest mr = new MultipartRequest(request, savepath, maxImg, "utf-8");
+
+
 
 String moimname = mr.getParameter("moimname");
 String local = mr.getParameter("local");

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>idCheck</title>
+<title>중복확인</title>
 <script>
 function check(){
 	var userid=document.getElementById("userid");
