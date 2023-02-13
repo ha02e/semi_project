@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title><title>Insert title here</title>
+<title>후기 작성하기</title><title>Insert title here</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
@@ -125,6 +125,13 @@ textarea {
 			return false;
 		}
 	}
+	
+	function checkSize(input) {
+	    if (input.files && input.files[0].size > (2 * 1024 * 1024)) {
+	        alert("파일 사이즈가 2mb 를 넘습니다.");
+	        input.value = null;
+	    }
+	}
 </script>
 </head>
 <%
@@ -142,11 +149,6 @@ String img = request.getParameter("img");
 
 InfoDTO info = rdao.getInfo(idx_info);
 %>
-<!-- 
-info에서 넘겨 받아야할 것들 카테고리, 모임이름, 지역 / 현재 카테고리는 idx_member 에서 가져오고 있다 
-
- -->
-
 
 <body>
 	<%@include file="/header.jsp"%>
@@ -167,12 +169,12 @@ info에서 넘겨 받아야할 것들 카테고리, 모임이름, 지역 / 현�
 							<tr>
 								<th>모임이름</th>
 								<td><input type="text" name="moimname" size="52"
-									value="<%=info.getMoimname()%>"> <!-- readonly --></td>
+									value="<%=info.getMoimname()%>" readonly > </td>
 							</tr>
 							<tr>
 								<th>지역</th>
 								<td><input type="text" name="local"
-									value="<%=info.getLocal()%>" size="6"> <!-- readonly --></td>
+									value="<%=info.getLocal()%>" size="6" readonly> </td>
 							</tr>
 							<tr>
 								<th>내용</th>
@@ -181,7 +183,7 @@ info에서 넘겨 받아야할 것들 카테고리, 모임이름, 지역 / 현�
 							</tr>
 							<tr>
 								<th>이미지</th>
-								<td><input type="file" name="upload">*최대 업로드 파일
+								<td><input type="file" name="upload" onchange ="checkSize(this)">*최대 업로드 파일
 									크기:2 MB</td>
 							</tr>
 							<tr>

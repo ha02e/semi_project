@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="com.moim.review.*"%>
+<%@page import="com.moim.info.*"%>
 <jsp:useBean id="rdao" class="com.moim.review.ReviewDAO"></jsp:useBean>
 <!-- login -->
 <%
@@ -15,7 +16,16 @@ if (idx_l==null) {
 return;
 }
 %>
+<script>
+function checkSize(input) {
+    if (input.files && input.files[0].size > (2 * 1024 * 1024)) {
+        alert("파일 사이즈가 2mb 를 넘습니다.");
+        input.value = null;
+    }
+}
+</script>
 <%
+
 String idx_s = request.getParameter("idx");
 if (idx_s == null || idx_s.equals("")) {
 	idx_s = "0";
@@ -36,7 +46,18 @@ String hobby = request.getParameter("hobby");
 String writer = request.getParameter("writer");
 String subect = request.getParameter("subject");
 String img = request.getParameter("img");
+
+
+if(idx_l != dto.getIdx_member()){
+	%>
+	<script>
+		window.alert('자신의 게시물만 수정하실 수 있습니다.');
+		location.href = '/moim/review/reviewList.jsp';
+	</script>
+	<%	
+}
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -164,7 +185,7 @@ textarea{
 							</tr>
 							<tr>
 								<th>이미지</th>
-								<td><input type="file" name="upload"></td>
+								<td><input type="file" name="upload" onchange ="checkSize(this)"></td>
 							</tr>
 <tr>							<td>
 									<input type="hidden" name="hobby" value="<%=hobby%>">
@@ -210,12 +231,12 @@ textarea{
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><textarea name="content" rows="10" cols="50">
+								<td><textarea name="content" rows="10" cols="50" style="resize:none">
 										<%=dto.getContent()%></textarea></td>
 							</tr>
 							<tr>
 								<th>이미지</th>
-								<td><input type="file" name="upload"></td><td></td>
+								<td><input type="file" name="upload" onchange ="checkSize(this)"></td><td></td>
 							</tr>
 							<tr>
 								<td>

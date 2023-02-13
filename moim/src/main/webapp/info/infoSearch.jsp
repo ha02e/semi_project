@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>모임 가입</title>
+<title>모임 검색</title>
 <style>
 section{
 	width: 1280px;
