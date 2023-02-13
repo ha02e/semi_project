@@ -32,44 +32,76 @@ return;
 <!DOCTYPE html>
 <html>
 <head>
+<%
+	String idx_s=request.getParameter("idx");
+	int idx=Integer.parseInt(idx_s);
+	InfoDTO dto=mdao2.getInfo(idx);
+	int idx_info=idx;
+%>	
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>모임</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
 section{
-	width:800px;
+	width:1280px;
+	margin:0px auto;
+	padding:50px 0;
+}
+h2{
+	width: 100%;
+	font-size:32px;
+	margin:0 auto;
+	padding-bottom:10px;
+	color: #333333;
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: normal;
+}
+
+article{
+	width: 85%;
 	margin:0 auto;
 }
-section h2{
-	margin:50px 0 10px 0;
-}
 section .moiminfo{
-	width:800px;
+	width: 100%;
 	height:240px;
 	display: flex;
-	margin-bottom:30px;
+	align-items:flex-start;
+	justify-content:space-between;
+	margin:0 auto 30px auto;
+	border-bottom: 1px solid #4C7C77;
+	padding-bottom:40px;
+	
 }
 .moimimg{
-	padding:10px 0;
+	padding: 10px 0;
+	width: 30%;
 }
-section .img{
-	width:284px;
-	height:226px;
+.moimContent{
+	width: 60%;
+}
+section .img {
+	width: 300px;
+	height: 240px;
 	position: relative;
 	overflow: hidden;
 }
-section .img img{
-	position:absolute;
-	width: 100%;
+
+section .img img {
+	position: absolute;
+	height:100%;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-
 }
-.moim-content{
-	width:320px;
-	height:130px;
-	overflow:auto;
-	word-wrap:break-word;
+
+.moim-content {
+	width: 100%;
+	height: 130px;
+	overflow: auto;
+	word-wrap: break-word;
 }
 .con-icon1{
 	display:inline-block;
@@ -87,13 +119,20 @@ section .img img{
 	background-image: url("/moim/img/icon02.png");
 	background-size: cover;
 }
+.con-icon3{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	vertical-align: top;
+	background-image: url("/moim/img/icon03.png");
+	background-size: cover;
+}
 .moiminfo table{
-	width:650px;
 	margin:0 10px 0 6px;
 	border-spacing:10px;
 }
 .moiminfo table td{
-	padding:4px 6px;
+	padding: 6px;
 	border:2px solid #f0f0f0;
 	border-radius: 4px;
 	background:#f8f8f8;
@@ -102,6 +141,7 @@ section .img img{
 section .button{
 	display:flex;
 	flex-direction: column;
+	width:15%;
 }
 section .button div{
 	margin:10px;
@@ -127,19 +167,11 @@ section .button div{
 }
 .qnabbs-title{
 	list-style: none;
-	width:800px;
-	padding:30px 0 0 0;
-	border-top:1px solid #999999;
-}
-.qnabbs-title li{
-	display: inline-block;
-	width:396px;
-}
-.qnabbs-title h2{
-	margin:0;
-}
-.qnabbs-btn{
-	text-align:right;
+	width:100%;
+	padding:0;
+	display:flex;
+	justify-content: space-between;
+	align-items: baseline;
 }
 .qnabbs-btn input{
 	border:0;
@@ -147,17 +179,22 @@ section .button div{
 	width:100px;
 	height:30px;
 	cursor: pointer;
-	background:#999999;
+	background: #00cdac;
 	color:white;
+}
+.qnabbs-btn input[type="submit"]:hover{
+	background:#333333;
+	transition: 0.3s;
 }
 input[id*="click"]{
 	display:none;
 }
 input[id*="click"] + label{
 	display:block;
-	padding:10px 20px;
-	border:1px solid #e8e8e8;
+	border:1px solid #e5e5e5;
 	cursor:pointer;
+	height: 46px;	
+	line-height: 46px;
 }
 input[id*="click"] + label span.go{
 	display:inline-bolck;
@@ -165,7 +202,6 @@ input[id*="click"] + label span.go{
 	height:30px;
 	margin-left:10px;
 	font-weight:900;
-	color:red;
 }
 input[id*="click"] + label + div{
 	max-height:0;
@@ -194,24 +230,27 @@ input[id*="click"]:checked + label + div{
 }
 
 .qnahead{
-	padding:10px 20px;
 	border:1px solid #e8e8e8;
-	
+	font-weight: 600;
 	background:#f3f3f3;
+	border-top: 2px solid #4C7C77; 
+	border-bottom: 1px solid #4C7C77;
+	height: 46px;
+	line-height: 46px;
 }
 .qnawriter{
 	display:inline-block;
-	width:100px;
+	width:16%;
 	text-align:center;
 }
 .qnasubject{
 	display:inline-block;
-	width:460px;
+	width:60%;
 	padding-left:20px;
 }
 .qnadate{
 	display:inline-block;
-	width:140px;
+	width:20%;
 	text-align:center;
 }
 .qnahead .qnasubject{
@@ -227,7 +266,7 @@ input[id*="click"]:checked + label + div{
 }
 
 .rewrite fieldset{
-	width:700px;
+	width:90%;
 	margin:0 auto 20px auto;
 	border:1px solid #999999;
 	
@@ -249,15 +288,43 @@ input[id*="click"]:checked + label + div{
 	height:30px;
 	cursor: pointer;
 }
+.qnabutton input[type="button"], .qnabutton input[type="submit"], .rewrite input[type="submit"]{
+	outline: none;
+	background:#999999;
+	color:white;
+	border:0;
+	border-radius: 4px;
+	padding:4px 10px;
+	cursor:pointer;
+}
+.qnabutton input[type="button"]:hover, .qnabutton input[type="submit"]:hover, .rewrite input[type="submit"]:hover{
+	transition: 0.3s;
+	background: #00cdac;
+}
+
 .paging{
-	text-align:center;
-	margin:10px 0 30px 0;
+	width: 85%;
+	margin: 20px auto;
+	text-align: center;
 }
-.paging a:link, .paging a:visited{
+.paging a{
+	display: inline-block;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	transition:0.2s;
+}
+.paging a:link,a:visited{
+	text-decoration: none;
 	color:#333333;
-    text-decoration: none;
-    font-size:13px;
 }
+.paging a:hover{	
+	font-weight: 800;
+	color:#ffffff;
+	background:#00cdac;
+	border-radius: 100%;
+}
+
 .bottom-btn{
 	text-align: center;
 	padding:20px 0 40px 0;
@@ -276,12 +343,7 @@ input[id*="click"]:checked + label + div{
 	transition: 0.3s;
 }
 </style>
-<%
-	String idx_s=request.getParameter("idx");
-	int idx=Integer.parseInt(idx_s);
-	InfoDTO dto=mdao2.getInfo(idx);
-	int idx_info=idx;
-%>	
+
 <script>
 function moimApply(){
 	var w=500;
@@ -311,6 +373,14 @@ function qnaWrite(){
 	 
 	window.open('/moim/noimg/qnaWrite.jsp?idx_info=<%=idx_info%>', 'qnaWrite', 'width='+w+', height='+h+', left='+left+', top='+top);
 }
+function validate(){
+	var content=document.getElementById("content");
+
+	if(content.value=="" || content==null){
+		window.alert('내용을 입력해주세요');
+		return false;
+	}
+}
 </script>
 </head>
 
@@ -336,7 +406,7 @@ if(cp%pageSize==0)userGroup--;
 <article>
 	<h2><%=dto.getMoimname()%></h2>
 		<div class="moiminfo">
-		<div class="moimContent moimimg">
+		<div class="moimimg">
 			<div class="img"><img src="/moim/userimg/<%=dto.getImg()%>"></div>
 		</div>	
 		<table class="moimContent">
@@ -349,8 +419,7 @@ if(cp%pageSize==0)userGroup--;
             <tr class="moimtext">
 				<td>
 					<div class="moim-content">
-						<span class="con-icon3"></span>
-						내용 :<br>
+						<span class="con-icon3"></span>&nbsp;내용 :<br>
 						<%=dto.getContent().replaceAll("\n","<br>") %>
 					</div>
 				</td>
@@ -384,9 +453,10 @@ if(cp%pageSize==0)userGroup--;
 	<ul class="qnabbs-title">
 	<li><h2>QnA</h2></li>
 	<li class="qnabbs-btn">
-	<input type="submit" value="문의하기" onclick="qnaWrite();">
+		<input type="submit" value="문의하기" onclick="qnaWrite();">
 	</li>
 	</ul>
+	
    <form name="qna">
 	<div class="qnabbs">
 		<div class="qnahead">
@@ -454,12 +524,13 @@ if(cp%pageSize==0)userGroup--;
 					%>
 						<div class="rewrite">
 							<fieldset>
-							<legend>답변작성</legend>
-							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&ref=<%=arr.get(i).getRef() %>">
+							<legend>답글작성</legend>
+							<form name="qnaReWrite" method="post" action="/moim/noimg/qnaReWrite_ok.jsp?idx=<%=arr.get(i).getIdx() %>&subject=<%=arr.get(i).getSubject() %>&ref=<%=arr.get(i).getRef() %>"
+							   onsubmit="return validate()">
 							<table>
 								<tr> 
 									<td>
-										<textarea name="content" rows="3" cols="94" style="resize:none"></textarea>
+										<textarea name="content" id="content" rows="3" cols="140" style="resize:none"></textarea>
 									</td>
 								</tr>
 								<tr>

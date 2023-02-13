@@ -4,14 +4,15 @@
 <%
 
 int idx_info=0;
-if(request.getParameter("idx_info")!=null&&!request.getParameter("idx_info").equals("")){
-	idx_info=Integer.parseInt(request.getParameter("idx_info"));
+if(request.getParameter("idx")!=null&&!request.getParameter("idx").equals("")){
+	idx_info=Integer.parseInt(request.getParameter("idx"));
 }
 
 int result=idao.delInfo(idx_info);
 String msg="실패!";
 if(result>0){
 	result=idao.delStat(idx_info);
+	idao.delQna(idx_info);
 	msg=result>0?"삭제 완료!":"삭제 실패";
 }
 
