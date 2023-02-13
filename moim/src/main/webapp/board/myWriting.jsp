@@ -292,7 +292,7 @@ if(cp2%pageSize==0)userGroup2--;
 			<tbody>
 				<%
 				HashMap<Integer,String> map1=mdao.moimName();
-				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, idx_member,listSize,cp);
+				ArrayList<NoimgDTO> dto2=mdao.getMyQna(2, idx_member,listSize,cp2);
 				if(dto2==null||dto2.size()==0){
 					%>
 					<tr>
