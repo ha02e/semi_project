@@ -127,6 +127,12 @@ function validate(){
 		return false;
 	}
 }
+function checkSize(input) {
+    if (input.files && input.files[0].size > (2 * 1024 * 1024)) {
+        alert("파일 사이즈가 2mb 를 넘습니다.");
+        input.value = null;
+    }
+}
 </script>
 </head>
 <body>
@@ -219,7 +225,7 @@ function validate(){
 				</tr>
 				<tr>
 					<th>이미지</th>
-					<td><input type="file" name="upload" value="이미지 올리기" accept="image/*">*최대 업로드 파일 크기:2 MB</td>
+					<td><input type="file" name="upload" value="이미지 올리기" accept="image/*" onchange ="checkSize(this)">*최대 업로드 파일 크기:2 MB</td>
 				</tr>
 			</table>
 		</div>
