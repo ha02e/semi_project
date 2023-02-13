@@ -407,7 +407,23 @@ if(cp%pageSize==0)userGroup--;
 	<h2><%=dto.getMoimname()%></h2>
 		<div class="moiminfo">
 		<div class="moimimg">
-			<div class="img"><img src="/moim/userimg/<%=dto.getImg()%>"></div>
+		<%
+			if (dto.getImg() == null || dto.getImg().equals("")) {
+			%>
+						<div class="img">
+							<img alt="이미지" src="/moim/img/noimg.png">
+						</div>
+		
+						<%
+			} else {
+						%>
+						<div class="img">
+							<img src="/moim/userimg/<%=dto.getImg()%>">
+						</div>
+		
+						<%
+			}
+		%>
 		</div>	
 		<table class="moimContent">
 			<tr class="moimtext">
