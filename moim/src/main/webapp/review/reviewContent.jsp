@@ -174,7 +174,7 @@ section .img img {
 	<div class="moiminfo">
 		<div class="moimContent moimimg">
 	<%
-	if (dto.getImg() == null || dto.getImg().equals("")||dto.getImg()=="0") {
+	if (dto.getImg() == null || dto.getImg().equals("")) {
 	%>
 				<div class="img">
 					<img alt="이미지" src="/moim/img/noimg.png">

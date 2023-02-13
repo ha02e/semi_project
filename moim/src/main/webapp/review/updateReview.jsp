@@ -11,12 +11,12 @@ if (idx_l==null) {
 <script>
 	window.alert('로그인 후 이용가능합니다');
 	location.href = '/moim/review/reviewList.jsp';
-</script>
+
 <%
 return;
 }
 %>
-<script>
+
 function checkSize(input) {
     if (input.files && input.files[0].size > (2 * 1024 * 1024)) {
         alert("파일 사이즈가 2mb 를 넘습니다.");
