@@ -10,27 +10,50 @@
 - 프로젝트 MOIM은 **model1 방식**으로 개발하였습니다.
 <br>
 
-## 사용된 기술
-- 언어
+## 사용 기술
+<table>
+<tr>
+ <td align="center">언어</td>
+ <td>
+  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">&nbsp
+ </td>
+</tr>
+<tr>
+ <td align="center">웹 서버</td>
+ <td>
+  <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=black"/> &nbsp 
+</tr>
+<tr>
+ <td align="center">데이터베이스</td>
+ <td>
+  <img src="https://img.shields.io/badge/ORACLE-F80000?style=for-the-badge&logo=oracle&logoColor=white"/>&nbsp
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+ <td align="center">프론트엔드</td>
+ <td>
+    <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+ </td>
+</tr>
+<tr>
+ <td align="center">IDE</td>
+ <td>
+  <img src="https://img.shields.io/badge/eclipseide-2C2255?style=for-the-badge&logo=eclipseide&logoColor=white"/>&nbsp 
+ </td>
+</tr>
+<tr>
+ <td align="center">협업툴</td>
+ <td>
+    <img src="https://img.shields.io/badge/GitHub-181710?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white"/>&nbsp 
+ </td>
+</tr>
+</table>
 
-<p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> 
-&nbsp;
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> 
-&nbsp;
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> 
-&nbsp;
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> 
-</p>
-
-- 데이터베이스
-<p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/oracle/oracle-original.svg" alt="oracle" width="40" height="40"/> 
-</p>
-
-<br>
+<br> 
 
 ## 화면 설계
 
