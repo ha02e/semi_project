@@ -60,6 +60,7 @@
 <br>
 
 ## DB 설계
+![모임_테이블설계](https://github.com/ha02e/semi_project/assets/121777501/f5149e30-6c67-40dd-a896-3988f4616747)
 
 <br>
 
