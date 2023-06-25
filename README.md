@@ -56,7 +56,8 @@
 
 <br> 
 
-## 화면 설계
+## 메뉴 구조(사이트맵)
+![모임_사이트맵](https://github.com/ha02e/semi_project/assets/121777501/3dcf6099-bb92-456d-8b06-e1d300527cc3)
 
 <br>
 
